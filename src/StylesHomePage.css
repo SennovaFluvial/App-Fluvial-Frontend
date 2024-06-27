@@ -1,0 +1,48 @@
+.barraNavegacion {
+    background-color: #123F6F;
+    padding: 15px;
+}
+
+.navbar {
+    padding: 0px;
+}
+
+a {
+    color: white;
+}
+
+.enlace {
+    color: white;
+    font-size: 20px;
+}
+
+.enlace:hover {
+    transition: ease 0.1s;
+    color: #00AF00;
+    cursor: pointer;
+}
+
+.nombreApp {
+    padding-left: 10px;
+    font-weight: bold;
+    color: #00AF00;
+}
+
+
+.Btn_inicioSession {
+    border: none;
+    border-radius: 50px;
+    background-color: #FF7A00;
+    padding: 10px 20px;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    margin-left: 2em;
+    box-shadow: rgba(255, 122, 0, 8) 0px 0px 20px;
+     transition: ease 0.2s;
+}
+
+.Btn_inicioSession:hover {
+    box-shadow: rgba(255, 122, 0, 20) 0px 0px 30px;
+    transition: ease 0.2s;
+}
