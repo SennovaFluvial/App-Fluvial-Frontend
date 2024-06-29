@@ -1,0 +1,23 @@
+.titulo {
+    font-family: "Inria Sans", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #123F6F;
+}
+
+.parrafo {
+    font-size: 25px;
+    font-family: "Inter Tight", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.continerPar2 {
+    margin-top: 10em;
+}
+
+.iconoS {
+    font-size: 5em;
+    color: #00AF00;
+    margin-bottom: 40px;
+}

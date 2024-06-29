@@ -36,16 +36,6 @@ export const BodyPart1 = () => {
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
-
-
-
-            w
         </>
     )
 }

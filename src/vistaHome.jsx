@@ -1,5 +1,4 @@
 
-import gsap from 'gsap'
 import './StylesHomePage.css'
 
 import logoSena from './img/LogoSena.png'
@@ -14,7 +13,7 @@ const Items = ({ texto, tipo }) => {
 export const VistaHomePageOff = () => {
     return (
         <>
-            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
                 <div class="container-fluid barraNavegacion">
                     <a class="navbar-brand" href="#">
                         <img src={logoSena} alt="Logo App" width="60" class="d-inline-block align-text-top" />
