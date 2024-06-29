@@ -35,12 +35,12 @@ export const SeccionRastreo = () => {
 
             <div className="container selectContainer">
                 <div className="row">
-                    <div className="col-md-6 text-center contentContainerSection">
+                    <div className="col-md-6 text-center contentContainerSection mt-4 mb-4">
                         <p>
                             <b>Rastrear por...</b>
                         </p>
                     </div>
-                    <div className="col-md-6 text-center contentContainerSection">
+                    <div className="col-md-6 text-center mt-2 mb-2 contentContainerSection2">
                         <select class="form-select custom-input selectinput" aria-label="Default select example">
                             <option selected>Selecciona</option>
                             <option value="1">Opcion 1</option>

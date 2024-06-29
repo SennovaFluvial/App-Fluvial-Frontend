@@ -3,6 +3,7 @@
     color: #C6FF00;
     border: 0px;
     border-radius: 50px;
+    font-size: 20px;
 }
 
 .boton:hover {
@@ -39,12 +40,14 @@
     padding: 10px;
     margin-top: 22px;
     width: 679px;
-    height: 114px;
     background-color: #D9D9D9;
 }
 
-.contentContainerSection {
-    margin-top: 35px;
+
+@media (max-width: 767.98px) {
+    .selectContainer {
+        width: 100%;
+    }
 }
 
 .contentContainerSection p {
@@ -52,6 +55,10 @@
     color: #9A9A9A;
 }
 
-.selectinput {  
-    
+.selectinput {
+    font-size: 20px;
+    border: none;
+    background-color: #D9D9D9;
+    padding: 10px;
+    height: 4em;
 }
