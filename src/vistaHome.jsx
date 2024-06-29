@@ -1,4 +1,5 @@
 
+import gsap from 'gsap'
 import './StylesHomePage.css'
 
 import logoSena from './img/LogoSena.png'
@@ -8,6 +9,7 @@ const Items = ({ texto, tipo }) => {
         <button className={tipo == 1 ? 'Btn_inicioSession' : 'btn btn-primary'}>{texto}</button>
     )
 }
+
 
 export const VistaHomePageOff = () => {
     return (
@@ -41,7 +43,7 @@ export const VistaHomePageOff = () => {
                     </div>
 
 
-                    <Items texto='Iniciar Sesión' tipo={1}></Items>
+                    <Items texto='Iniciar Sesión' tipo={1} id='colorButton'></Items>
 
                 </div>
             </nav>

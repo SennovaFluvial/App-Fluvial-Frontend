@@ -28,6 +28,9 @@ a {
     color: #00AF00;
 }
 
+.active {
+    color: #00AF00;
+}
 
 .Btn_inicioSession {
     border: none;
@@ -39,7 +42,7 @@ a {
     font-size: 20px;
     margin-left: 2em;
     box-shadow: rgba(255, 122, 0, 8) 0px 0px 20px;
-     transition: ease 0.2s;
+    transition: ease 0.2s;
 }
 
 .Btn_inicioSession:hover {
