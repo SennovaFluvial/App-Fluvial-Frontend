@@ -1,8 +1,12 @@
 import './stylesRastreoSection.css'
-
+import gsap from 'gsap'
 import radarIcon from './img/IconRadar.png'
 
+
+// gsap.to('.boton', { borderRadius: 0, duration: 1, ease: "none" })
+
 export const SeccionRastreo = () => {
+
     return (
         <>
 

@@ -48,4 +48,5 @@ a {
 .Btn_inicioSession:hover {
     box-shadow: rgba(255, 122, 0, 20) 0px 0px 30px;
     transition: ease 0.2s;
+
 }

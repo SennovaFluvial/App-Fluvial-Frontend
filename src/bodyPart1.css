@@ -1,0 +1,23 @@
+.titulo {
+    font-family: "Inria Sans", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    color: #123F6F;
+}
+
+.contenedorPart1 {
+    margin-top: 10em;
+}
+
+.parrafo {
+    font-size: 25px;
+    font-family: "Inter Tight", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+@media (max-width: 767.98px) {
+    .parrafo {
+        font-size: 20px;
+    }
+}

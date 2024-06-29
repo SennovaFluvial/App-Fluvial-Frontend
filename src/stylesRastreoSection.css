@@ -4,6 +4,7 @@
     border: 0px;
     border-radius: 50px;
     font-size: 20px;
+    padding: 10px 20px;
 }
 
 .boton:hover {
@@ -17,8 +18,9 @@
 .contenedorRastreo {
     padding: 50px;
     margin-top: 50px;
-    border: 1px solid black;
+    border: 1px solid #ddd;
     border-radius: 20px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 }
 
 .entradatexto {
@@ -38,7 +40,7 @@
 .selectContainer {
     border-radius: 30px;
     padding: 10px;
-    margin-top: 22px;
+    margin-top: 50px;
     width: 679px;
     background-color: #D9D9D9;
 }
