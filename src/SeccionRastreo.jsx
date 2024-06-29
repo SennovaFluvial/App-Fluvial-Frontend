@@ -1,5 +1,5 @@
 import './stylesRastreoSection.css'
-import gsap from 'gsap'
+
 import radarIcon from './img/IconRadar.png'
 
 

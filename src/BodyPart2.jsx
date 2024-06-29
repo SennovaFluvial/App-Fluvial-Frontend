@@ -29,19 +29,18 @@ export const BodyPart2 = () => {
                         <p className="parrafo">Seguimiento de movimientos claves en el transporte fluvial</p>
                     </div>
                     <div className="col-md-4 text-center mt-5 pt-2 mb-5 pb-2">
-                        <i class="fa-solid fa-desktop iconoS"></i>
+                        <i class="fa-solid fa-folder-open iconoS"></i>
                         <p className="parrafo">sistematizar el sistema de información del transporte fluvial </p>
                     </div>
                     <div className="col-md-6 text-center mt-5 pt-2 mb-5 pb-2">
-                        <i class="fa-solid fa-desktop iconoS"></i>
+                        <i class="fa-solid fa-user-tie iconoS"></i>
                         <p className="parrafo">Administración logística de las motonaves y cargas</p>
                     </div>
                     <div className="col-md-6 text-center mt-5 pt-2 mb-5 pb-2">
-                        <i class="fa-solid fa-desktop iconoS"></i>
+                        <i class="fa-solid fa-arrows-rotate iconoS"></i>
                         <p className="parrafo">Trasabilidad de procesos</p>
                     </div>
                 </div>
-
             </div>
 
         </>
