@@ -21,3 +21,24 @@
         font-size: 20px;
     }
 }
+
+.iconoP1 {
+    font-size: 5em;
+    margin: 40% 0px;
+    color: #123F6F;
+}
+
+.contenedorEstilos {
+    background-color: #C6FF00;
+    padding: 20px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-left-radius: 50% 90px;
+    border-bottom-right-radius: 50% 90px;
+    overflow: hidden;
+}
+
+.contenedorEstilos {
+    margin-top: 5em;
+    padding: 40px;
+}
