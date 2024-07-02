@@ -1,3 +1,4 @@
+import './footerPage.css'
 
 export const FooterPage = () => {
     return (
