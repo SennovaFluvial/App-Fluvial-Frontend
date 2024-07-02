@@ -1,6 +1,4 @@
 
-import './footerPage.css'
-
 export const FooterPage = () => {
     return (
         <>
@@ -53,8 +51,5 @@ export const FooterPage = () => {
                 </div>
             </footer>
         </>
-    )
-}
-
-
-
+    );
+};
