@@ -1,4 +1,3 @@
-
 import './StylesHomePage.css'
 
 import logoSena from './img/LogoSena.png'

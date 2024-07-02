@@ -1,12 +1,13 @@
+import { motion } from "framer-motion"
 import './stylesRastreoSection.css'
 
 import radarIcon from './img/IconRadar.png'
 
-
-// gsap.to('.boton', { borderRadius: 0, duration: 1, ease: "none" })
-
 export const SeccionRastreo = () => {
-
+    <motion.button
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+    />
     return (
         <>
 
@@ -29,7 +30,15 @@ export const SeccionRastreo = () => {
                                 </div>
 
                                 <div className="col-md-12 section text-center">
-                                    <button className="btn btn-primary boton">¡Rastrear ahora!</button>
+
+
+                                    <motion.button className="btn btn-primary boton"
+                                        whileHover={{ scale: 1.2 }}
+                                        whileTap={{ scale: 0.9 }}
+                                    >
+                                        ¡Rastrear ahora!
+                                    </motion.button>
+
                                 </div>
                             </form>
                         </div>
