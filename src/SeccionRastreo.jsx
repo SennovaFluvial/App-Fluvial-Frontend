@@ -4,10 +4,6 @@ import './stylesRastreoSection.css'
 import radarIcon from './img/IconRadar.png'
 
 export const SeccionRastreo = () => {
-    <motion.button
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-    />
     return (
         <>
             <motion.div
