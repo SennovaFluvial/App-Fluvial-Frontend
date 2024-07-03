@@ -53,8 +53,5 @@ export const FooterPage = () => {
                 </div>
             </footer>
         </>
-    )
-}
-
-
-
+    );
+};
