@@ -1,6 +1,6 @@
-import './stylesRastreoSection.css'
+import './assets/css/stylesRastreoSection.css'
 
-import radarIcon from './img/IconRadar.png'
+import radarIcon from './assets/img/IconRadar.png'
 
 
 // gsap.to('.boton', { borderRadius: 0, duration: 1, ease: "none" })

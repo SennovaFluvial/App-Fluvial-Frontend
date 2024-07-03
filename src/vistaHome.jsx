@@ -1,7 +1,7 @@
 
-import './StylesHomePage.css'
+import './assets/css/StylesHomePage.css'
 
-import logoSena from './img/LogoSena.png'
+import logoSena from './assets/img/LogoSena.png'
 
 const Items = ({ texto, tipo }) => {
     return (

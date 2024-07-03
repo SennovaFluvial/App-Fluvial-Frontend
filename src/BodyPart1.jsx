@@ -1,4 +1,4 @@
-import './bodyPart1.css'
+import './assets/css/bodyPart1.css'
 
 export const BodyPart1 = () => {
     return (
