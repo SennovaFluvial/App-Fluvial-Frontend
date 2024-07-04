@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion'
-import './bodyPart1.css'
+import './assets/css/bodyPart1.css'
 
 export const BodyPart1 = () => {
 
