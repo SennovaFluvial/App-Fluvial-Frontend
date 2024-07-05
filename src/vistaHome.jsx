@@ -14,7 +14,6 @@ import { FooterPage } from './FooterPage.jsx' // Se importa el Footer del home p
 export const VistaHomePageOff = () => { // Vista completa de los componentes creados para el Home Page.
     return (
         <>
-
             <NavbarHomePage />
 
             <SeccionRastreo />

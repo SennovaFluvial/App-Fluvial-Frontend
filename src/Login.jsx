@@ -17,7 +17,7 @@ export const Login = () => {
                 </div>
 
                 <div className="bottom-side-container">
-                    <form action="" className="login-form">
+                    <form action="" method="GET" className="login-form">
                         <section className="login-form-title-wrapper">
                             <h2 className="login-form__title">Iniciar Sesión</h2>
                         </section>
