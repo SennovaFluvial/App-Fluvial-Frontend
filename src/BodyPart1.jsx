@@ -79,7 +79,7 @@ export const BodyPart1 = () => {
 
                             >
 
-                                <i class="fa-solid fa-ship iconoP1"></i>
+                                <i className="fa-solid fa-ship iconoP1"></i>
 
                             </motion.div>
                         </div>
@@ -115,7 +115,7 @@ export const BodyPart1 = () => {
 
                             >
 
-                                <i class="fa-solid fa-user iconoP1"></i>
+                                <i className="fa-solid fa-user iconoP1"></i>
 
                             </motion.div>
                         </div>

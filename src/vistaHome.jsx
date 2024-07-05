@@ -1,51 +1,32 @@
+import React from 'react';
 
-import './assets/css/StylesHomePage.css'
+import { NavbarHomePage } from './NavbarHomePage.jsx' // Se importa el Navbar del home page
 
-import logoSena from './assets/img/LogoSena.png'
+import { SeccionRastreo } from './SeccionRastreo.jsx' // Se importa la seccion del rastreo de paquetes.
 
-const Items = ({ texto, tipo }) => {
-    return (
-        <button className={tipo == 1 ? 'Btn_inicioSession' : 'btn btn-primary'}>{texto}</button>
-    )
-}
+import { BodyPart1 } from './BodyPart1.jsx' // Se importa la 1ra parte del home page.
+
+import { BodyPart2 } from './BodyPart2.jsx' // Se importa la 2ra parte del home page.
+
+import { FooterPage } from './FooterPage.jsx' // Se importa el Footer del home page.
 
 
-export const VistaHomePageOff = () => {
+export const VistaHomePageOff = () => { // Vista completa de los componentes creados para el Home Page.
     return (
         <>
-            <nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top">
-                <div class="container-fluid barraNavegacion">
-                    <a class="navbar-brand" href="#">
-                        <img src={logoSena} alt="Logo App" width="60" class="d-inline-block align-text-top" />
-                        <label className='nombreApp'>APP FLUVIAL</label>
-                    </a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="nav ms-auto">
-                            <li class="nav-item">
-                                <a class="nav-link active enlace" href="#">inicio</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link enlace" href="#">Blog</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link enlace">¿Quiénes somos?</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link enlace">Horarios</a>
-                            </li>
-                        </ul>
-                    </div>
 
+            <NavbarHomePage />
 
-                    <Items texto='Iniciar Sesión' tipo={1} id='colorButton'></Items>
+            <SeccionRastreo />
 
-                </div>
-            </nav>
+            <BodyPart1 />
+
+            <BodyPart2 />
+
+            <FooterPage />
+
         </>
     )
 }
+
+

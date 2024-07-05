@@ -1,6 +1,7 @@
 import React from 'react'
-import './login.css'
-import Logo from './assets/css/login.css'
+
+import './assets/css/login.css'
+import Logo from './assets/img/LogoSena.png'
 
 
 export const Login = () => {
