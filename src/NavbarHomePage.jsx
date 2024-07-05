@@ -3,6 +3,8 @@ import React from 'react'
 import './assets/css/StylesHomePage.css'
 import logoSena from './assets/img/LogoSena.png'
 
+import { Link } from 'react-router-dom'
+
 const Items = ({ texto, tipo }) => {
     return (
         <button className={tipo == 1 ? 'Btn_inicioSession' : 'btn btn-primary'}>{texto}</button>
@@ -43,7 +45,9 @@ export const NavbarHomePage = () => {
                         </div>
 
 
-                        <Items texto='Iniciar Sesión' tipo={1} id='colorButton' />
+                        <Link to={'/login'}>
+                            <Items texto='Iniciar Sesión' tipo={1} id='colorButton' />
+                        </Link>
 
                     </div>
                 </nav>
