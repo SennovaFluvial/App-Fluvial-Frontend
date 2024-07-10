@@ -10,11 +10,14 @@ import { BodyPart2 } from './BodyPart2.jsx' // Se importa la 2ra parte del home 
 
 import { FooterPage } from './FooterPage.jsx' // Se importa el Footer del home page.
 
-
+import './assets/css/vistaHome.css'
 export const VistaHomePageOff = () => { // Vista completa de los componentes creados para el Home Page.
     return (
         <>
-            <NavbarHomePage />
+        
+        <div class="cuerpito">
+
+        <NavbarHomePage />
 
             <SeccionRastreo />
 
@@ -23,6 +26,8 @@ export const VistaHomePageOff = () => { // Vista completa de los componentes cre
             <BodyPart2 />
 
             <FooterPage />
+            
+        </div>
 
         </>
     )
