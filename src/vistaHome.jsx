@@ -15,7 +15,7 @@ export const VistaHomePageOff = () => { // Vista completa de los componentes cre
     return (
         <>
         
-        <div class="cuerpito">
+        <div className="cuerpito">
 
         <NavbarHomePage />
 
