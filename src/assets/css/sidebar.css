@@ -1,0 +1,81 @@
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #343c43;
+    color: #ecf0f1;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    /* suceptible a cambios*/
+}
+
+.titulo-section {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    color: #01af01;
+    background-color: #000000;
+}
+
+.icono {
+    text-align: center;
+    padding: 10px 0;
+}
+
+.icono img {
+    width: 50px;
+}
+
+.menu {
+    flex: 1;
+    padding: 20px 0;
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu li {
+    padding: 10px 20px;
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+
+.logo-sena {
+    padding: 20px;
+    text-align: center;
+}
+
+.logo-sena img {
+    max-width: 100%
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .menu {
+        display: flex;
+        /* flex-direction: row;
+        justify-content: space-around; */
+        flex-direction: column;
+        padding: 20px 0;
+    }
+
+    .menu li {
+        padding: 10px;
+    }
+
+    .logo-sena {
+        display: none;
+    }
+}
