@@ -1,9 +1,6 @@
 import React, { useEffect } from 'react' // Importacion del UseEffect
 
-import { useState } from 'react'
-
 import { useNavigate } from "react-router" // Hook para redirecciones de react-router
-
 
 export const DashBoard = ({ user, setUser }) => {   // ***** ESTE ES UN COMPONENTE DE PRUEBA *****
 
@@ -12,7 +9,7 @@ export const DashBoard = ({ user, setUser }) => {   // ***** ESTE ES UN COMPONEN
     // Se utilza useEffect para cuando el componente se muestra por primera ves en la pantalla.
     useEffect(() => {
         // Verifica si existe un usuario;
-        if (!user) { // Si no existe un usuario lo redireccion a '/Login'
+        if (!user || user.state !== 'activo') { // Si no existe un usuario lo redireccion a '/Login'
             nav('/Login');
         }
     }, [user, nav]); // Se incluyen estas dependencias cuando el useEffect se ejecute siempre que cambie el estado del usuario o la navegacion.

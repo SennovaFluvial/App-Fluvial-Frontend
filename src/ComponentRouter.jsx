@@ -10,7 +10,12 @@ import { DashBoard } from './dashBoard.jsx'
 
 export const ComponentRouter = () => {
 
-    const [user, setUser] = useState(null) // Almacenar la variable de usuario
+    const [user, setUser] = useState(
+        {
+            username: '',
+            state: ''
+        }
+    ) // Almacenar la variable de usuario
 
     return (
         <Routes>
