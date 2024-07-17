@@ -1,8 +1,8 @@
 import React from 'react'
 import { useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
-
-
+import { Sidebar } from './Sidebar.jsx'
+import { AgregarVehiculo } from './AgregarVehiculo.jsx'
 import { ValidationPages } from './components/validation.jsx';
 import { VistaHomePageOff } from './vistaHome.jsx'
 import { Login } from './Login.jsx'
@@ -16,6 +16,8 @@ export const ComponentRouter = () => {
         <Routes>
             <Route exact path="/" element={<VistaHomePageOff />} />
             <Route exact path="/Login" element={<Login setUser={setUser} />} />
+            <Route exact path="DashBoard" element={< Sidebar />} />
+            <Route exact path="AgregarVehiculo" element={< AgregarVehiculo />} />
             <Route path="/adminSection" element={
 
                 <ValidationPages user={user}>

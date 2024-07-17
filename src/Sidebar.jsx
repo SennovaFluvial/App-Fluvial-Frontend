@@ -15,7 +15,7 @@ export const Sidebar = () => {
                 </div>
                 <nav className="menu">
                     <ul>
-                        <li><Link to="/agregar">Agregar</Link></li>
+                        <li><Link to={'/AgregarVehiculo'}>Agregar</Link></li>
                         <li><Link to="/actualizar">Actualizar</Link></li>
                         <li><Link to="/historiales">Historiales</Link></li>
                         <li><Link to="/informe">Informe</Link></li>

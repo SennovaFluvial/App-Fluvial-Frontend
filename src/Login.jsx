@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
-
+import { Link } from 'react-router-dom';
 import axios from 'axios'; // Se importa la libreria de axios
 
 import './assets/css/login.css'
@@ -76,7 +76,9 @@ export const Login = ({ setUser }) => {
                                 </div>
                             </section>
                             <section className="login-form-button-wrapper">
-                                <button className="btn button">Iniciar sesión</button>
+                                <Link to={'/DashBoard'}>
+                                    <button className="button" > Iniciar sesión </button>
+                                </Link>
                             </section>
 
                             {error ? <p className="error-message alert alert-danger">{error}</p> : ''}
