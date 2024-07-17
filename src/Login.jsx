@@ -9,6 +9,8 @@ import Logo from './assets/img/LogoSena.png'
 
 export const Login = ({ setUser }) => {
 
+
+   
     const [password, setPassword] = useState('') // Hook para el estado de password del usuario.
     const [username, setusername] = useState('') // Hook para el estado de username del usuario.
     const [error, setError] = useState(''); // Hook para el estado de los mensajes de errores.
@@ -28,12 +30,22 @@ export const Login = ({ setUser }) => {
             localStorage.setItem('token', response.data.jwt); // Almacena el token JSON si la solicitud es exitosa.
 
             console.log('Autenticacion exitosa'); // Muestra un mensaje de consola si fue correcto todo.
+            // Muestra un mensaje de consola si fue correcto todo.
 
             let userName = response.data.username;
-            //let status = response.status;
+            let userState = response.data.estado;
+            console.log(userState);
 
+            if (userState !== 'activo') { // Verfica si el estado del estado del usuario es diferente de activo
+                setError('El usuario se encuentra en un estado de Inactivo. Por favor, comuníquese con el gerente.'); // Crea un error
+                setUser(null); // Restablece el usuairo a nulo, no existe nigun usuario.
+                return;
+            }
+
+            // Si todo esta bien continua el flujo...
             setUser({
-                username: userName // Setea el estado del nombre para que se cambie por el data.name del usuario logueado
+                username: userName, // Setea el estado del nombre para que se cambie por el data.name del usuario logueado
+                state: userState
             });
 
             nav('/adminSection'); // Redirecciona hacia el componente donde se encontrara el menu del administrador dahsBoard
@@ -80,6 +92,7 @@ export const Login = ({ setUser }) => {
                             </section>
 
                             {error ? <p className="error-message alert alert-danger">{error}</p> : ''}
+
                         </form>
                     </div>
                 </div>
