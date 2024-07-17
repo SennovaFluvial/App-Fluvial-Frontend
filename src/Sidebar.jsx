@@ -21,10 +21,10 @@ export const Sidebar = () => {
                         <li><Link to="/informe">Informe</Link></li>
                         <li><Link to="/configuracion">Configuración</Link></li>
                     </ul>
-                    <div className='logo-sena'>
-                        <img src={Logo} alt="Logo SENA" />
-                    </div>
                 </nav>
+                <div className='logo-sena'>
+                    <img src={Logo} alt="Logo SENA" />
+                </div>
             </aside>
         </>
     )

@@ -7,7 +7,7 @@
 body {
     width: 100wv;
     height: 100hv;
-    display: flex;
+    /* display: flex; */
 }
 
 :root {
