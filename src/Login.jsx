@@ -10,7 +10,7 @@ import Logo from './assets/img/LogoSena.png'
 export const Login = ({ setUser }) => {
 
 
-   
+
     const [password, setPassword] = useState('') // Hook para el estado de password del usuario.
     const [username, setusername] = useState('') // Hook para el estado de username del usuario.
     const [error, setError] = useState(''); // Hook para el estado de los mensajes de errores.
@@ -30,7 +30,8 @@ export const Login = ({ setUser }) => {
             localStorage.setItem('token', response.data.jwt); // Almacena el token JSON si la solicitud es exitosa.
 
             console.log('Autenticacion exitosa'); // Muestra un mensaje de consola si fue correcto todo.
-            // Muestra un mensaje de consola si fue correcto todo.
+            console.log(response); // Muestra un mensaje de consola si fue correcto todo.
+
 
             let userName = response.data.username;
             let userState = response.data.estado;

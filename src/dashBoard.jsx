@@ -1,3 +1,4 @@
+import { Outlet, Link } from 'react-router';
 import React, { useEffect } from 'react' // Importacion del UseEffect
 
 import { useNavigate } from "react-router" // Hook para redirecciones de react-router
@@ -27,13 +28,47 @@ export const DashBoard = ({ user, setUser }) => {   // ***** ESTE ES UN COMPONEN
         <>
             {user ? ( // Verifica si existe un usuario. SI existe le da acceso al componente.
                 <>
-                    <h1>
-                        Usuario: {user.username /* Este es el userName del usuario autenticado */}
-                    </h1>
+                    <div className="container bg-dark text-white">
+                        <div className="row">
+                            <div className="col-md-12">
+                                <h1>
+                                    Usuario: {user.username /* Este es el userName del usuario autenticado */}
+                                </h1>
 
-                    <button className="btn btn-danger my-5 ms-5" onClick={logout}>
-                        Cerrar Sesión
-                    </button>
+                                <ul className="list-group my-4">
+                                    <li className="list-group-item list-group-item-action bg-dark text-white">
+                                        <Link to ="/">Agregar</Link>
+                                    </li>
+                                    <li className="list-group-item list-group-item-action bg-dark text-white">
+                                        <Link to ="/">Actualizar</Link>
+                                    </li>
+                                    <li className="list-group-item list-group-item-action bg-dark text-white">
+                                        <Link to ="/">Eliminar</Link>
+                                    </li>
+                                    <li className="list-group-item list-group-item-action bg-dark text-white">
+                                        <Link to ="/">Ajustes</Link>
+                                    </li>
+                                    <li className="list-group-item list-group-item-action bg-dark text-white">
+                                        <Link to ="/">Informes</Link>
+                                    </li>
+                                </ul>
+
+                                <button className="btn btn-danger my-5 ms-5" onClick={logout}>
+                                    Cerrar Sesión
+                                </button>
+                            </div>
+                            <div className="col-md-12">
+                                <div className="row">
+                                    <div className="col-md-12">
+
+                                        <Outlet />
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
 
                 </>
             ) :
