@@ -1,6 +1,7 @@
 import { Outlet, Link } from 'react-router-dom'; // Importaciones de los hooks de la libreria 'react-router-dom'
 import React, { useEffect } from 'react' // Importacion del UseEffect
 import { Sidebar } from './Sidebar';
+import './assets/css/DashBoard.css'
 import { useNavigate } from "react-router-dom" // Hook para redirecciones de react-router-dom
 export const DashBoard = ({ user, setUser }) => {   // ***** ESTE ES UN COMPONENTE DE PRUEBA *****
     const nav = useNavigate(); // Se utiliza el hook de useNavigation para realizar las redirecciones.

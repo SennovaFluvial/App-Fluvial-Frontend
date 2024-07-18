@@ -19,6 +19,8 @@ export const ComponentRouter = () => {
             <Route element={<ValidationPages user={user} />}>
                 <Route path="/adminSection" element={<DashBoard user={user} setUser={setUser} />}>
                     <Route path="addVehicle" element={< AgregarVehiculo />} />
+                    <Route path="addMariner" element={< AgregarMarinero />} />
+
                 </Route>
             </Route>
 
