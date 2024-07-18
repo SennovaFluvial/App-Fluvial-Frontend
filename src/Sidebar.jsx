@@ -26,7 +26,7 @@ export const Sidebar = () => {
                             <span>Agregar</span>
                             {isDropdownOpen && (
                                 <ul className="dropdown-menu">
-                                    <li><Link to={'Agregar-vehiculo'}>Agregar Vehículo</Link></li>
+                                    <li><Link to={'addVehicle'}>Agregar Vehículo</Link></li>
                                     <li><Link to={'Agregar-marinero'}>Agregar Marinero</Link></li>
                                 </ul>
                             )}

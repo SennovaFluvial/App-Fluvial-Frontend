@@ -1,6 +1,6 @@
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, Link } from 'react-router-dom'; // Importaciones de los hooks de la libreria 'react-router-dom'
 import React, { useEffect } from 'react' // Importacion del UseEffect
-
+import { Sidebar } from './Sidebar';
 import { useNavigate } from "react-router-dom" // Hook para redirecciones de react-router-dom
 export const DashBoard = ({ user, setUser }) => {   // ***** ESTE ES UN COMPONENTE DE PRUEBA *****
     const nav = useNavigate(); // Se utiliza el hook de useNavigation para realizar las redirecciones.
@@ -43,13 +43,10 @@ export const DashBoard = ({ user, setUser }) => {   // ***** ESTE ES UN COMPONEN
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-md-3">
-                                <h1>
-                                    Usuario: {user.username /* Este es el userName del usuario autenticado */}
-                                </h1>
-
+                                {/*
                                 <ul className="list-group my-3">
                                     <li className="list-group-item list-group-item-action bg-dark text-white">
-                                        <Link to="addVehicle">Agregar vehiculo</Link>
+                                        <Link to={"addVehicle"}>Agregar vehiculo</Link>
                                     </li>
                                     <li className="list-group-item list-group-item-action bg-dark text-white">
                                         s
@@ -64,17 +61,18 @@ export const DashBoard = ({ user, setUser }) => {   // ***** ESTE ES UN COMPONEN
                                         s
                                     </li>
                                 </ul>
-
                                 <button className="btn btn-danger my-5 ms-5" onClick={logout}>
                                     Cerrar Sesión
                                 </button>
+                                */}
+
+                                <Sidebar />
+
                             </div>
                             <div className="col-md-9">
                                 <div className="row">
                                     <div className="col-md-12">
-
                                         <Outlet />
-
                                     </div>
                                 </div>
                             </div>
