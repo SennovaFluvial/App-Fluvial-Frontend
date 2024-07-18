@@ -1,9 +1,16 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import './assets/css/sidebar.css'
-import Logo from './assets/img/LogoSena.png'
-import Icono from './assets/img/icono.png'
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import './assets/css/sidebar.css';
+import Logo from './assets/img/LogoSena.png';
+import Icono from './assets/img/icono.png';
+
 export const Sidebar = () => {
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+    const toggleDropdown = () => {
+        setIsDropdownOpen(!isDropdownOpen);
+    };
+
     return (
         <>
             <aside className="sidebar">
@@ -15,7 +22,15 @@ export const Sidebar = () => {
                 </div>
                 <nav className="menu">
                     <ul>
-                        <li><Link to={'/AgregarVehiculo'}>Agregar</Link></li>
+                        <li onClick={toggleDropdown} className="dropdown">
+                            <span>Agregar</span>
+                            {isDropdownOpen && (
+                                <ul className="dropdown-menu">
+                                    <li><Link to={'Agregar-vehiculo'}>Agregar Vehículo</Link></li>
+                                    <li><Link to={'Agregar-marinero'}>Agregar Marinero</Link></li>
+                                </ul>
+                            )}
+                        </li>
                         <li><Link to="/actualizar">Actualizar</Link></li>
                         <li><Link to="/historiales">Historiales</Link></li>
                         <li><Link to="/informe">Informe</Link></li>
@@ -27,5 +42,5 @@ export const Sidebar = () => {
                 </div>
             </aside>
         </>
-    )
+    );
 }

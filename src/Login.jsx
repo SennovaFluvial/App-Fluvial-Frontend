@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
 import { Link } from 'react-router-dom';
 import axios from 'axios'; // Se importa la libreria de axios
-
 import './assets/css/login.css'
 import Logo from './assets/img/LogoSena.png'
 

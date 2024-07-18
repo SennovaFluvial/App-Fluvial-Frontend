@@ -1,5 +1,5 @@
 
-.container {
+.container-av {
     max-width: 800px;
 }
 
@@ -39,7 +39,3 @@ h2 {
 .shadow {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-
-/* .rounded {
-    border-radius: 0.5rem;
-} */
