@@ -1,9 +1,10 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router"; // Se importa el hook de useNavigate para realziar las redirecciones rapidas
+import { useNavigate } from "react-router-dom"; // Se importa el hook de useNavigate para realziar las redirecciones rapidas
+import { Outlet } from "react-router-dom";
 export const ValidationPages = ({ user, children }) => {
 
     const nav = useNavigate(); // Se instancia el hook
-    
+
     useEffect(() => {
 
         // Verifica si el usuario está definido y si el estado es 'Activo'
@@ -12,6 +13,6 @@ export const ValidationPages = ({ user, children }) => {
         }
     }, [user, nav]);
 
-    return user && user.state === 'activo' ? children : null;
+    return user && user.state === 'activo' ? (children ? children : <Outlet />) : null;
 
 }

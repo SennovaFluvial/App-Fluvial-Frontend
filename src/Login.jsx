@@ -1,15 +1,12 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router';
-
+// import { Link } from 'react-router-dom';
 import axios from 'axios'; // Se importa la libreria de axios
-
 import './assets/css/login.css'
 import Logo from './assets/img/LogoSena.png'
 
 
 export const Login = ({ setUser }) => {
-
-
 
     const [password, setPassword] = useState('') // Hook para el estado de password del usuario.
     const [username, setusername] = useState('') // Hook para el estado de username del usuario.
@@ -35,7 +32,8 @@ export const Login = ({ setUser }) => {
 
             let userName = response.data.username;
             let userState = response.data.estado;
-            console.log(userState);
+
+            console.log(response);
 
             if (userState !== 'activo') { // Verfica si el estado del estado del usuario es diferente de activo
                 setError('El usuario se encuentra en un estado de Inactivo. Por favor, comuníquese con el gerente.'); // Crea un error
@@ -80,16 +78,18 @@ export const Login = ({ setUser }) => {
                             </section>
                             <section className="login-form-inputs">
                                 <div className="input-form">
-                                    <label htmlFor="" className="input-form__label">Usuario</label>
+                                    <label className="input-form__label">Usuario</label>
                                     <input type="text" className="form-control" value={username} onChange={(param) => setusername(param.target.value)} />
                                 </div>
                                 <div className="input-form">
-                                    <label htmlFor="" className="input-form__label">Contraseña</label>
+                                    <label className="input-form__label">Contraseña</label>
                                     <input type="password" className="form-control" value={password} onChange={(param) => setPassword(param.target.value)} />
                                 </div>
                             </section>
                             <section className="login-form-button-wrapper">
-                                <button className="btn button">Iniciar sesión</button>
+
+                                <button className="button" > Iniciar sesión </button>
+
                             </section>
 
                             {error ? <p className="error-message alert alert-danger">{error}</p> : ''}
