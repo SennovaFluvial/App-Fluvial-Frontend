@@ -11,13 +11,9 @@ export const Login = ({ setUser }) => {
     const [password, setPassword] = useState('') // Hook para el estado de password del usuario.
     const [username, setusername] = useState('') // Hook para el estado de username del usuario.
     const [error, setError] = useState(''); // Hook para el estado de los mensajes de errores.
-
     const nav = useNavigate();
-
     const login = async (event) => { // funcion asincrona
-
         event.preventDefault(); // Evita que la pagina se recarge cuando se envia el formulario.
-
         try {
             const response = await axios.post('https://fluvial.up.railway.app/auth/log-in', { // Esta es la url a la que se le pedira la respuesta.
                 username: username,     // Estos son los datos con los que se realizan la solicitud.
@@ -29,18 +25,14 @@ export const Login = ({ setUser }) => {
             console.log('Autenticacion exitosa'); // Muestra un mensaje de consola si fue correcto todo.
             console.log(response); // Muestra un mensaje de consola si fue correcto todo.
 
-
             let userName = response.data.username;
             let userState = response.data.estado;
-
-            console.log(response);
 
             if (userState !== 'activo') { // Verfica si el estado del estado del usuario es diferente de activo
                 setError('El usuario se encuentra en un estado de Inactivo. Por favor, comuníquese con el gerente.'); // Crea un error
                 setUser(null); // Restablece el usuairo a nulo, no existe nigun usuario.
                 return;
             }
-
             // Si todo esta bien continua el flujo...
             setUser({
                 username: userName, // Setea el estado del nombre para que se cambie por el data.name del usuario logueado
@@ -54,7 +46,6 @@ export const Login = ({ setUser }) => {
             setError('No fue posible el Login. Por favor, intenta nuevamente.'); // Muestra un mensaje de error
 
             console.error('No fue posible el Login', error); // Muestra un mensaje de consola que algo salio mal.
-
             setUser(null);
         }
     };

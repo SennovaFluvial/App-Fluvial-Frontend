@@ -1,78 +1,50 @@
-import { Outlet, Link } from 'react-router-dom'; // Importaciones de los hooks de la libreria 'react-router-dom'
-import React, { useEffect } from 'react' // Importacion del UseEffect
-import { Sidebar } from './Sidebar';
-import { useNavigate } from "react-router-dom" // Hook para redirecciones de react-router-dom
-export const DashBoard = ({ user, setUser }) => {   // ***** ESTE ES UN COMPONENTE DE PRUEBA *****
-    const nav = useNavigate(); // Se utiliza el hook de useNavigation para realizar las redirecciones.
-    // Se utilza useEffect para cuando el componente se muestra por primera ves en la pantalla.
+import { Outlet } from 'react-router-dom'; // Importa herramientas para navegación
+import React, { useEffect } from 'react' // Importa React y useEffect
+import { Sidebar } from './Sidebar'; // Importa el componente Sidebar
+import { useNavigate } from "react-router-dom" // Importa el hook para redirecciones
+
+/**
+ * Componente DashBoard
+ * 
+ * Este componente muestra la barra lateral y el contenido principal si el usuario está autenticado.
+ * Redirige a la página de inicio de sesión si el usuario no está autenticado o si no existe.
+ * 
+ * @param {Object} props - Propiedades del componente.
+ * @param {Object} props.user - Información del usuario.
+ * @param {Function} props.setUser - Función para actualizar el estado del usuario.
+ * @returns {React.ReactNode} - Muestra el contenido del tablero si el usuario está autenticado.
+ */
+export const DashBoard = ({ user, setUser }) => {
+    const nav = useNavigate(); // Prepara la función para redirigir
+
+    // Efecto para verificar el estado del usuario cuando el componente se muestra
     useEffect(() => {
-        // Verifica si existe un usuario;
+        
+        // Si el usuario no está activo, redirige a la página de inicio de sesión
         if (!user || user.state !== 'activo') { // Si no existe un usuario lo redireccion a '/Login'
             nav('/Login');
         }
-    }, [user, nav]); // Se incluyen estas dependencias cuando el useEffect se ejecute siempre que cambie el estado del usuario o la navegacion.
-    const logout = () => { // Funcion para desloguear al usuario.
-        setUser(null); // Se setea el estado del usuario
-        console.log('Logout exitosamente') // Mensaje de consola.
-        nav('/Login'); // Se redirigie a la seccion de login
-    };
+    }, [user, nav]); /// Ejecuta el efecto cuando cambian 'user' o 'nav'
 
-    /*
-    import React, { useEffect } from 'react';
-    import { useNavigate, Outlet } from 'react-router-dom';
-    import { Sidebar } from './Sidebar';
-    
-    export const DashBoard = ({ user, setUser }) => {
-        const nav = useNavigate();
-    
-        useEffect(() => {
-            if (!user || user.state !== 'activo') {
-                // nav('/login');
-            }
-        }, [user, nav]);
-    
-        const logout = () => {
-            setUser(null);
-            nav('/login');
-        };
-    */
+    // Función para cerrar sesión
+    const logout = () => {
+        setUser(null); // Limpia el estado del usuario
+        console.log('Logout exitosamente') // Mensaje en la consola
+        nav('/Login'); // Redirige a la página de inicio de sesión
+    };
     return (
         <>
-            {user ? ( // Verifica si existe un usuario. SI existe le da acceso al componente.
+            {user ? ( // Si hay un usuario autenticado, muestra el contenido del tablero
                 <>
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-md-3">
-                                {/*
-                                <ul className="list-group my-3">
-                                    <li className="list-group-item list-group-item-action bg-dark text-white">
-                                        <Link to={"addVehicle"}>Agregar vehiculo</Link>
-                                    </li>
-                                    <li className="list-group-item list-group-item-action bg-dark text-white">
-                                        s
-                                    </li>
-                                    <li className="list-group-item list-group-item-action bg-dark text-white">
-                                        s
-                                    </li>
-                                    <li className="list-group-item list-group-item-action bg-dark text-white">
-                                        s
-                                    </li>
-                                    <li className="list-group-item list-group-item-action bg-dark text-white">
-                                        s
-                                    </li>
-                                </ul>
-                                <button className="btn btn-danger my-5 ms-5" onClick={logout}>
-                                    Cerrar Sesión
-                                </button>
-                                */}
-
-                                <Sidebar />
-
+                                <Sidebar /> {/* Muestra la barra lateral */}
                             </div>
                             <div className="col-md-9">
                                 <div className="row">
                                     <div className="col-md-12">
-                                        <Outlet />
+                                        <Outlet /> {/* Muestra el contenido de las rutas hijas */}
                                     </div>
                                 </div>
                             </div>
@@ -82,7 +54,7 @@ export const DashBoard = ({ user, setUser }) => {   // ***** ESTE ES UN COMPONEN
 
                 </>
             ) :
-                null // Si no existe un usuario atenticado No muestra nada, no tendra ninguna render.
+                null // Si no hay un usuario autenticado, no muestra nada 
             }
 
         </>
