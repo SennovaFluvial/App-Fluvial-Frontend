@@ -19,19 +19,14 @@ export const DashBoard = ({ user, setUser }) => {
 
     // Efecto para verificar el estado del usuario cuando el componente se muestra
     useEffect(() => {
-        
+
         // Si el usuario no está activo, redirige a la página de inicio de sesión
-        if (!user || user.state !== 'activo') { // Si no existe un usuario lo redireccion a '/Login'
+        if (!user || user.status !== 'activo') { // Si no existe un usuario lo redireccion a '/Login'
             nav('/Login');
         }
     }, [user, nav]); /// Ejecuta el efecto cuando cambian 'user' o 'nav'
 
-    // Función para cerrar sesión
-    const logout = () => {
-        setUser(null); // Limpia el estado del usuario
-        console.log('Logout exitosamente') // Mensaje en la consola
-        nav('/Login'); // Redirige a la página de inicio de sesión
-    };
+
     return (
         <>
             {user ? ( // Si hay un usuario autenticado, muestra el contenido del tablero
@@ -39,7 +34,7 @@ export const DashBoard = ({ user, setUser }) => {
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-md-3">
-                                <Sidebar /> {/* Muestra la barra lateral */}
+                                <Sidebar user={user} setUser={setUser} /> {/* Muestra la barra lateral */}
                             </div>
                             <div className="col-md-9">
                                 <div className="row">

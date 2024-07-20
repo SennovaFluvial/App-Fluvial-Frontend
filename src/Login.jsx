@@ -26,17 +26,32 @@ export const Login = ({ setUser }) => {
             console.log(response); // Muestra un mensaje de consola si fue correcto todo.
 
             let userName = response.data.username;
-            let userState = response.data.estado;
 
-            if (userState !== 'activo') { // Verfica si el estado del estado del usuario es diferente de activo
+            let userStatus = response.data.estado;
+
+            let userCompanyStatus = response.data.companyStatus;
+
+            console.log('Estado del usuario', userStatus);
+
+            console.log('Estado de la compañia', userCompanyStatus);
+
+            if (userStatus !== 'activo') { // Verfica si el estado del estado del usuario es diferente de activo
                 setError('El usuario se encuentra en un estado de Inactivo. Por favor, comuníquese con el gerente.'); // Crea un error
                 setUser(null); // Restablece el usuairo a nulo, no existe nigun usuario.
                 return;
             }
+
+            if (userCompanyStatus !== 'activo') {
+                setError('La empresa a la que esta asociado se encuentra inactiva');
+                setUser(null);
+                return;
+            }
+
             // Si todo esta bien continua el flujo...
             setUser({
                 username: userName, // Setea el estado del nombre para que se cambie por el data.name del usuario logueado
-                state: userState
+                status: userStatus,
+                companyStatus: userCompanyStatus
             });
 
             nav('/adminSection'); // Redirecciona hacia el componente donde se encontrara el menu del administrador dahsBoard

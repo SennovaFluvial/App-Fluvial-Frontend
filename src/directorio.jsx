@@ -4,7 +4,7 @@ import { createRoot } from 'react-dom/client'
 
 import { BrowserRouter } from 'react-router-dom';
 
-import ComponentRouter from './ComponentRouter.jsx';
+import ComponentRouter from './components/router/ComponentRouter.jsx';
 
 
 

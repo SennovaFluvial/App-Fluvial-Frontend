@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Importa el componente para enlaces de navegación
 import './assets/css/sidebar.css'; // Importa los estilos CSS
 import Logo from './assets/img/LogoSena.png'; // Importa el logo
 import Icono from './assets/img/icono.png';
+import { useNavigate } from "react-router-dom" // Importa el hook para redirecciones
+/* Importaciones de componentes para el menu */
+import { Agregar } from './components/menu/Agregar';
+import { Actualizar } from './components/menu/Actualizar';
+import { Configuraciones } from './components/menu/Configuraciones';
+import { Historiales } from './components/menu/Historiales';
+import { Informes } from './components/menu/Informes';
 
 /**
  * Componente Sidebar
@@ -11,13 +17,20 @@ import Icono from './assets/img/icono.png';
  * 
  * @returns {React.ReactNode} - Renderiza la barra lateral con enlaces de navegación.
  */
-export const Sidebar = () => {
+export const Sidebar = ({ user, setUser }) => {
     // Estado para controlar la visibilidad del menú desplegable
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
+    // const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const nav = useNavigate(); // Prepara la función para redirigir
     // Función para alternar la visibilidad del menú desplegable
-    const toggleDropdown = () => {
-        setIsDropdownOpen(!isDropdownOpen);
+    // const toggleDropdown = () => {
+    //     setIsDropdownOpen(!isDropdownOpen);
+    // };
+
+    // Función para cerrar sesión
+    const logout = () => {
+        setUser(null); // Limpia el estado del usuario
+        console.log('Logout exitosamente') // Mensaje en la consola
+        nav('/Login'); // Redirige a la página de inicio de sesión
     };
 
     return (
@@ -27,24 +40,41 @@ export const Sidebar = () => {
                     <h1>Transporte Fluvial</h1>
                 </div>
                 <div className="icono">
-                    <img src={Icono} alt="Icono Sidebar" />
+                    <div className="row section-account">
+                        <div className="col-md-2 section-account-part1 text-center">
+                            <img src={Icono} alt="Icono Sidebar" />
+                        </div>
+                        <div className="col-md-10 text-center">
+                            <ul className='navbar-nav me-auto mb-2 mb-lg-0'>
+                                <li className="nav-item dropdown section-account-part2">
+                                    <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        {user.username}
+                                    </a>
+                                    <ul className="dropdown-menu menu-account">
+                                        <li><a className="dropdown-item text-black" href="#">Mi cuenta</a></li>
+                                        <li><a className="dropdown-item text-black" href="#">Administracion</a></li>
+                                        <li><hr className="dropdown-divider" /></li>
+                                        <li>
+                                            <button onClick={logout} className='btn btn-danger boton-logout ms-2'>
+                                                Cerrar sesion <i className="fa-solid fa-door-open"></i>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
                 <nav className="menu">
-                    <ul>
-                        <li onClick={toggleDropdown} className="dropdown">  {/* Opción de menú desplegable */}
-                            <span>Agregar</span>
-                            {isDropdownOpen && (
-                                <ul className="dropdown-menu"> {/* Menú desplegable */}
-                                    <li><Link to={'add-vehicle'}>Agregar Vehículo</Link></li>
-                                    <li><Link to={'add-salior'}>Agregar Marinero</Link></li>
-                                </ul>
-                            )}
-                        </li>
-                        <li><Link to="/actualizar">Actualizar</Link></li>
-                        <li><Link to="/historiales">Historiales</Link></li>
-                        <li><Link to="/informe">Informe</Link></li>
-                        <li><Link to="/configuracion">Configuración</Link></li>
-                    </ul>
+
+                    { /* Componentes que forman las acciones del menu */}
+
+                    <Agregar />
+                    <Actualizar />
+                    <Configuraciones />
+                    <Historiales />
+                    <Informes />
+
                 </nav>
                 <div className='logo-sena'>
                     <img src={Logo} alt="Logo SENA" />

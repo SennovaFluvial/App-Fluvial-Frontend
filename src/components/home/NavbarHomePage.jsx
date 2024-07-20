@@ -1,7 +1,7 @@
 import React from 'react'
 
-import './assets/css/StylesHomePage.css'
-import logoSena from './assets/img/LogoSena.png'
+import '../../assets/css/StylesHomePage.css'
+import logoSena from '../../assets/img/LogoSena.png'
 
 import { Link } from 'react-router-dom'
 

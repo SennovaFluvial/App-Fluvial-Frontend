@@ -1,33 +1,33 @@
 import React from 'react';
 
-import { NavbarHomePage } from './NavbarHomePage.jsx' // Se importa el Navbar del home page
+import { NavbarHomePage } from './components/home/NavbarHomePage.jsx' // Se importa el Navbar del home page
 
-import { SeccionRastreo } from './SeccionRastreo.jsx' // Se importa la seccion del rastreo de paquetes.
+import { SeccionRastreo } from './components/home/SeccionRastreo.jsx' // Se importa la seccion del rastreo de paquetes.
 
-import { BodyPart1 } from './BodyPart1.jsx' // Se importa la 1ra parte del home page.
+import { BodyPart1 } from './components/home/BodyPart1.jsx' // Se importa la 1ra parte del home page.
 
-import { BodyPart2 } from './BodyPart2.jsx' // Se importa la 2ra parte del home page.
+import { BodyPart2 } from './components/home/BodyPart2.jsx' // Se importa la 2ra parte del home page.
 
-import { FooterPage } from './FooterPage.jsx' // Se importa el Footer del home page.
+import { FooterPage } from './components/home/FooterPage.jsx' // Se importa el Footer del home page.
 
 import './assets/css/vistaHome.css'
 export const VistaHomePageOff = () => { // Vista completa de los componentes creados para el Home Page.
     return (
         <>
-        
-        <div className="cuerpito">
 
-        <NavbarHomePage />
+            <div className="cuerpito">
 
-            <SeccionRastreo />
+                <NavbarHomePage />
 
-            <BodyPart1 />
+                <SeccionRastreo />
 
-            <BodyPart2 />
+                <BodyPart1 />
 
-            <FooterPage />
-            
-        </div>
+                <BodyPart2 />
+
+                <FooterPage />
+
+            </div>
 
         </>
     )

@@ -1,12 +1,15 @@
 import React from 'react';
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom'; // Importa los componentes y funciones para manejar las rutas
-import { AgregarVehiculo } from './AgregarVehiculo.jsx'; // Importa el componente para agregar vehículos
-import { AgregarMarinero } from './AgregarMarinero.jsx'; // Importa el componente para agregar marineros
-import { ValidationPages } from './components/validation.jsx'; // Importa el componente que valida el estado del usuario
-import { VistaHomePageOff } from './vistaHome.jsx'; // Importa el componente para la página de inicio
-import { Login } from './Login.jsx'; // Importa el componente de inicio de sesión
-import { DashBoard } from './dashBoard.jsx'; // Importa el componente del panel de administración
+
+
+import { AgregarVehiculo } from '../menu/agregar/AgregarVehiculo.jsx'; // Importa el componente para agregar vehículos
+import { AgregarMarinero } from '../menu/agregar/AgregarMarinero.jsx'; // Importa el componente para agregar marineros
+import { ValidationPages } from './validation.jsx'; // Importa el componente que valida el estado del usuario
+import { VistaHomePageOff } from '../../vistaHome.jsx'; // Importa el componente para la página de inicio
+import { Login } from '../../Login.jsx'; // Importa el componente de inicio de sesión
+import { DashBoard } from '../../dashBoard.jsx'; // Importa el componente del panel de administración
+
 
 /**
  * Componente ComponentRouter
@@ -18,8 +21,9 @@ import { DashBoard } from './dashBoard.jsx'; // Importa el componente del panel 
 export const ComponentRouter = () => {
 
     // Estado para almacenar la información del usuario
-    const [user, setUser] = useState({ username: '', state: '' });
+    const [user, setUser] = useState({ username: '', status: '', companyStatus: '' });
     return (
+
         <Routes> {/* Configura las rutas de la aplicación */}
             <Route exact path="/" element={<VistaHomePageOff />} /> {/* Ruta para la página de inicio */}
             <Route exact path="/Login" element={<Login setUser={setUser} />} /> {/* Ruta para la página de inicio de sesión */}
@@ -28,6 +32,7 @@ export const ComponentRouter = () => {
                 <Route path="/adminSection" element={<DashBoard user={user} setUser={setUser} />}> {/* Ruta para el panel de administración */}
                     <Route path="add-vehicle" element={< AgregarVehiculo />} /> {/* Ruta para agregar vehículos */}
                     <Route path="add-salior" element={< AgregarMarinero />} /> {/* Ruta para agregar marinero */}
+                    {/* Agregar las rutas protegias aqui */}
                 </Route>
             </Route>
 

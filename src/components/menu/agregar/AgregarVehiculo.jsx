@@ -1,6 +1,7 @@
 import React from 'react';
-import './assets/css/AgregarVehiculo.css';
 
+import '../../../assets/css/AgregarVehiculo.css'
+import { Link } from 'react-router-dom'; // Importa el componente para enlaces de navegación
 export const AgregarVehiculo = () => {
     return (
         <>

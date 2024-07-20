@@ -1,5 +1,5 @@
 import React from 'react';
-import './assets/css/AgregarMarinero.css';
+import '../../../assets/css/AgregarMarinero.css';
 
 export const AgregarMarinero = () => {
     return (
@@ -17,7 +17,7 @@ export const AgregarMarinero = () => {
                     <div className="row my-4"> {/* Nombres y apellidos */}
                         <div className="col-md-6">
                             <div className="form-group">
-                                <label htmlFor="name_Marinero">Nombre</label>
+                                <label htmlFor="name_Marinero">Nombre </label>
                                 <input type="text" name='name_Marinero' className="form-control" id="name_Marinero" />
                             </div>
                         </div>
@@ -32,7 +32,7 @@ export const AgregarMarinero = () => {
                     <div className="row my-4">  {/* Identificacion */}
                         <div className="col-md-5">
                             <div className="form-group">
-                                <label htmlFor="type_document">Identificación <i class="fa-solid fa-hand-pointer ms-4"></i></label>
+                                <label htmlFor="type_document">Identificación <i className="fa-solid fa-hand-pointer ms-4"></i></label>
                                 <select id="tipo" name='type_document' className="form-control" defaultValue="">
                                     <option value="">Tipo de documento</option>
                                     <option value="0">C.C</option>
@@ -42,7 +42,7 @@ export const AgregarMarinero = () => {
                         </div>
                         <div className="col-md-7">
                             <div className="form-group">
-                                <label htmlFor="num_document">Numero de Documento <i class="fa-solid fa-id-card ms-4"></i></label>
+                                <label htmlFor="num_document">Numero de Documento <i className="fa-solid fa-id-card ms-4"></i></label>
                                 <input type="text" name='num_document' className="form-control" id="num_document" />
                             </div>
                         </div>
@@ -63,7 +63,7 @@ export const AgregarMarinero = () => {
                         </div>
                         <div className="col-md-7">
                             <div className="form-group">
-                                <label htmlFor="number_phone">Numero de telefono <i class="fa-solid fa-phone ms-4"></i></label>
+                                <label htmlFor="number_phone">Numero de telefono <i className="fa-solid fa-phone ms-4"></i></label>
                                 <input type="text" name='number_phone' className="form-control" id="number_phone" />
                             </div>
                         </div>
@@ -73,7 +73,7 @@ export const AgregarMarinero = () => {
                     <div className="row my-4">  {/* Contacto | correo */}
                         <div className="col-md-12">
                             <div className="form-group">
-                                <label htmlFor="mail">Correo <i class="fa-solid fa-envelope"></i></label>
+                                <label htmlFor="mail">Correo <i className="fa-solid fa-envelope"></i></label>
                                 <input type="email" name='mail' className="form-control" id="correo" />
                             </div>
                         </div>
@@ -82,14 +82,14 @@ export const AgregarMarinero = () => {
                     <div className="row my-4">  {/* adjunto de imagen */}
                         <div className="col-md-12">
                             <div className="form-group">
-                                <label htmlFor="img-of-sailor">Licencia (opcional) <i class="fa-solid fa-folder-plus ms-4"></i> </label>
+                                <label htmlFor="img-of-sailor">Licencia (opcional) <i className="fa-solid fa-folder-plus ms-4"></i> </label>
                                 <input type="file" name='img-of-sailor' className="form-control file-img" id="img-of-sailor" />
                             </div>
                         </div>
                     </div>
 
                     <div className="text-center">
-                        <button type="submit" className="btn btn-success">Guardar <i class="fa-solid fa-floppy-disk ms-2"></i></button>
+                        <button type="submit" className="btn btn-success">Guardar <i className="fa-solid fa-floppy-disk ms-2"></i></button>
                     </div>
                 </form >
             </div >

@@ -1,7 +1,8 @@
 import { motion } from "framer-motion"
-import './assets/css/stylesRastreoSection.css'
+import '../../assets/css/stylesRastreoSection.css'
 
-import radarIcon from './assets/img/IconRadar.png'
+import radarIcon from '../../assets/img/IconRadar.png'
+
 
 export const SeccionRastreo = () => {
     return (

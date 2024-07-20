@@ -1,5 +1,5 @@
 
-import './assets/css/footerPage.css'
+import '../../assets/css/footerPage.css'
 
 export const FooterPage = () => {
     return (
