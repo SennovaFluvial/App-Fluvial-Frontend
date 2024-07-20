@@ -1,5 +1,9 @@
+:root {
+    --green: #00AF00;
+}
+
 .boton {
-    background-color: #00AF00;
+    background-color: var(--green);
     color: #C6FF00;
     border: 0px;
     border-radius: 50px;
@@ -8,7 +12,7 @@
 }
 
 .boton:hover {
-    background-color: #00AF00;
+    background-color: var(--green);
 }
 
 .section {

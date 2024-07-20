@@ -3,6 +3,11 @@
     /* width: 100%; */
 }
 
+:root {
+    --white: #fff;
+    --green: #00AF00;
+}
+
 .d-flex {
     display: flex;
 }
@@ -58,15 +63,15 @@
     font-size: 1rem;
     line-height: 1.5;
     color: #495057;
-    background-color: #fff;
+    background-color:var(--white);
     background-clip: padding-box;
-    border: 2px solid #00AF00;
+    border: 2px solid var(--green);
     border-radius: 0.75rem;
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
 .form-control:focus {
-    border-color: #00AF00;
+    border-color: var(--green);
     box-shadow: 0 0 0 0.2rem rgba(0, 175, 0, 0.25);
 }
 
@@ -88,9 +93,9 @@
 }
 
 .btn-success {
-    color: #fff;
-    background-color: #00AF00;
-    border-color: #00AF00;
+    color: var(--white);
+    background-color: var(--green);
+    border-color: var(--green);
 }
 
 h3 {
