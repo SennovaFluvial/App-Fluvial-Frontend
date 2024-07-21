@@ -1,0 +1,9 @@
+.icon-option {
+    font-size: 25px;
+    transition: ease 0.3s;
+}
+
+.icon-option:hover {
+    font-size: 20px;
+    transition: ease 0.3s;
+}

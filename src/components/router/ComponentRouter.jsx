@@ -9,8 +9,9 @@ import { ValidationPages } from './validation.jsx'; // Importa el componente que
 import { VistaHomePageOff } from '../../vistaHome.jsx'; // Importa el componente para la página de inicio
 import { Login } from '../../Login.jsx'; // Importa el componente de inicio de sesión
 import { DashBoard } from '../../dashBoard.jsx'; // Importa el componente del panel de administración
-import { ShowCompany } from '../menu/history/ShowCompany.jsx';
-
+import { ShowCompany } from '../menu/history/Show-Company.jsx';
+import { ShowCustomers } from '../menu/history/Show-customers.jsx';
+import { ShowUsers } from '../menu/history/Show-users.jsx';
 /**
  * Componente ComponentRouter
  * 
@@ -33,6 +34,8 @@ export const ComponentRouter = () => {
                     <Route path="add-vehicle" element={< AgregarVehiculo />} /> {/* Ruta para agregar vehículos */}
                     <Route path="add-salior" element={< AgregarMarinero />} /> {/* Ruta para agregar marinero */}
                     <Route path="show-companys" element={< ShowCompany />} /> {/* Ruta para agregar marinero */}
+                    <Route path="show-customers" element={< ShowCustomers />} /> {/* Ruta para agregar marinero */}
+                    <Route path="show-users" element={< ShowUsers />} /> {/* Ruta para agregar marinero */}
                     {/* Agregar las rutas protegias aqui */}
                 </Route>
             </Route>
