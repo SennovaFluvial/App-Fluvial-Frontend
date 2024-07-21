@@ -12,8 +12,18 @@ export const Login = ({ setUser }) => {
     const [username, setusername] = useState('') // Hook para el estado de username del usuario.
     const [error, setError] = useState(''); // Hook para el estado de los mensajes de errores.
     const nav = useNavigate();
+
+
+
     const login = async (event) => { // funcion asincrona
+
         event.preventDefault(); // Evita que la pagina se recarge cuando se envia el formulario.
+
+        if (!username || !password) {
+            setError('Ingrese datos validos');
+            return;
+        }
+
         try {
             const response = await axios.post('https://fluvial.up.railway.app/auth/log-in', { // Esta es la url a la que se le pedira la respuesta.
                 username: username,     // Estos son los datos con los que se realizan la solicitud.

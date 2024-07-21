@@ -9,7 +9,7 @@ import { ValidationPages } from './validation.jsx'; // Importa el componente que
 import { VistaHomePageOff } from '../../vistaHome.jsx'; // Importa el componente para la página de inicio
 import { Login } from '../../Login.jsx'; // Importa el componente de inicio de sesión
 import { DashBoard } from '../../dashBoard.jsx'; // Importa el componente del panel de administración
-
+import { ShowCompany } from '../menu/history/ShowCompany.jsx';
 
 /**
  * Componente ComponentRouter
@@ -32,6 +32,7 @@ export const ComponentRouter = () => {
                 <Route path="/adminSection" element={<DashBoard user={user} setUser={setUser} />}> {/* Ruta para el panel de administración */}
                     <Route path="add-vehicle" element={< AgregarVehiculo />} /> {/* Ruta para agregar vehículos */}
                     <Route path="add-salior" element={< AgregarMarinero />} /> {/* Ruta para agregar marinero */}
+                    <Route path="show-companys" element={< ShowCompany />} /> {/* Ruta para agregar marinero */}
                     {/* Agregar las rutas protegias aqui */}
                 </Route>
             </Route>
