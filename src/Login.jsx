@@ -5,73 +5,89 @@ import axios from 'axios'; // Se importa la libreria de axios
 import './assets/css/login.css'
 import Logo from './assets/img/LogoSena.png'
 
-
+/**
+ * Componente Login
+ * 
+ * Este componente proporciona una interfaz para que los usuarios inicien sesión. 
+ * Valida las credenciales del usuario, maneja errores y redirige a la sección de administración si el inicio de sesión es exitoso.
+ * 
+ * @param {Object} props - Propiedades del componente.
+ * @param {Function} props.setUser - Función para actualizar el estado del usuario autenticado.
+ * @returns {React.ReactNode} - Renderiza el formulario de inicio de sesión y mensajes de error.
+ */
 export const Login = ({ setUser }) => {
 
-    const [password, setPassword] = useState('') // Hook para el estado de password del usuario.
-    const [username, setusername] = useState('') // Hook para el estado de username del usuario.
-    const [error, setError] = useState(''); // Hook para el estado de los mensajes de errores.
-    const nav = useNavigate();
+    // Estado para manejar la contraseña del usuario
+    const [password, setPassword] = useState('')
+    // Estado para manejar el nombre de usuario del usuario
+    const [username, setUsername] = useState('')
+    // Estado para manejar mensajes de error
+    const [error, setError] = useState('')
+    // Hook para redirigir a otras páginas
+    const nav = useNavigate()
 
-
+    /**
+     * Función para manejar el inicio de sesión del usuario.
+     * 
+     * @param {React.FormEvent} event - Evento del formulario de inicio de sesión.
+     */
 
     const login = async (event) => { // funcion asincrona
 
         event.preventDefault(); // Evita que la pagina se recarge cuando se envia el formulario.
 
+        // Verifica que se hayan ingresado tanto el nombre de usuario como la contraseña
         if (!username || !password) {
-            setError('Ingrese datos validos');
+            setError('Ingrese datos validos'); // Muestra un mensaje de error si los datos no son válidos.
             return;
         }
 
         try {
+            // Realiza una solicitud POST para autenticar al usuario
             const response = await axios.post('https://fluvial.up.railway.app/auth/log-in', { // Esta es la url a la que se le pedira la respuesta.
-                username: username,     // Estos son los datos con los que se realizan la solicitud.
-                password: password      // Estos son los datos con los que se realizan la solicitud.
+                username: username, // Nombre de usuario proporcionado por el usuario
+                password: password  // Contraseña proporcionada por el usuario
             });
 
+            // Almacena el token en el localStorage si la solicitud es exitosa
             localStorage.setItem('token', response.data.jwt); // Almacena el token JSON si la solicitud es exitosa.
 
-            console.log('Autenticacion exitosa'); // Muestra un mensaje de consola si fue correcto todo.
-            console.log(response); // Muestra un mensaje de consola si fue correcto todo.
+            // Crea un objeto de usuario con la información recibida
+            const user = {
+                username: response.data.username,
+                status: response.data.estado,
+                companyStatus: response.data.companyStatus,
+                rol: response.data.roles[0]
+            };
+            // Almacena la información del usuario en el localStorage
+            localStorage.setItem('user', JSON.stringify(user));
 
-            let userName = response.data.username;
-
-            let userStatus = response.data.estado;
-
-            let userCompanyStatus = response.data.companyStatus;
-
-            console.log('Estado del usuario', userStatus);
-
-            console.log('Estado de la compañia', userCompanyStatus);
-
-            if (userStatus !== 'activo') { // Verfica si el estado del estado del usuario es diferente de activo
-                setError('El usuario se encuentra en un estado de Inactivo. Por favor, comuníquese con el gerente.'); // Crea un error
-                setUser(null); // Restablece el usuairo a nulo, no existe nigun usuario.
+            // Verifica el estado del usuario
+            if (user.status !== 'activo') {
+                setError('El usuario se encuentra en un estado de Inactivo. Por favor, comuníquese con el gerente.');
+                setUser(null);// Restablece el usuario a nulo si el estado es inactivo
                 return;
             }
 
-            if (userCompanyStatus !== 'activo') {
-                setError('La empresa a la que esta asociado se encuentra inactiva');
-                setUser(null);
+            // Verifica el estado de la empresa del usuario
+            if (user.companyStatus !== 'activo') {
+                setError('La empresa a la que está asociado se encuentra inactiva');
+                setUser(null); // Restablece el usuario a nulo si la empresa está inactiva
                 return;
             }
 
-            // Si todo esta bien continua el flujo...
-            setUser({
-                username: userName, // Setea el estado del nombre para que se cambie por el data.name del usuario logueado
-                status: userStatus,
-                companyStatus: userCompanyStatus
-            });
+            // Actualiza el estado del usuario si todo es correcto
+            setUser(user);
 
-            nav('/adminSection'); // Redirecciona hacia el componente donde se encontrara el menu del administrador dahsBoard
+            // Redirige a la sección del panel de administración
+            nav('/adminSection');
 
-        } catch (error) { // En caso de error.
-
+        } catch (error) {
+            // Maneja errores en caso de fallo de la solicitud
             setError('No fue posible el Login. Por favor, intenta nuevamente.'); // Muestra un mensaje de error
-
             console.error('No fue posible el Login', error); // Muestra un mensaje de consola que algo salio mal.
-            setUser(null);
+            setUser(null); // Restablece el usuario a nulo en caso de error
+
         }
     };
 
@@ -95,7 +111,7 @@ export const Login = ({ setUser }) => {
                             <section className="login-form-inputs">
                                 <div className="input-form">
                                     <label className="input-form__label">Usuario</label>
-                                    <input type="text" className="form-control" value={username} onChange={(param) => setusername(param.target.value)} />
+                                    <input type="text" className="form-control" value={username} onChange={(param) => setUsername(param.target.value)} />
                                 </div>
                                 <div className="input-form">
                                     <label className="input-form__label">Contraseña</label>

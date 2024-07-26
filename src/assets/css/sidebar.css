@@ -271,3 +271,8 @@
 .menu-account {
     background-color: #D6D6D6;
 }
+
+.form-select {
+    border: 2px solid var(--green);
+    border-radius: 0.75rem;
+}

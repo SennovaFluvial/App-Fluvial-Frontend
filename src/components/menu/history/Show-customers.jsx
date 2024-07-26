@@ -1,7 +1,8 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
-import instance from '../../../config/AxiosApi';
 import '../../../assets/css/show/styles-Show.css'
+
+import { useNewContext } from '../../../Context/Provider';
 
 import { Spinner } from '../../animations/Spiner';
 import { Grid } from '../../animations/Grid';
@@ -9,45 +10,17 @@ import { Grid } from '../../animations/Grid';
 
 export const ShowCustomers = () => {
 
-  const [customers, setCustomers] = useState([])
+  const { customers, getCustomers } = useNewContext();
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    getCustomers();
-  }, [])
-
-  const getCustomers = async () => {
-    try {
-      setLoading(true);
-      const response = await instance.get('/customers');
-
-      setCustomers(response.data);
+    const loadUsers = async () => {
+      await getCustomers();
       setLoading(false);
-      // console.log(response.data)
+    };
 
-    } catch (error) {
-      console.error('error al intentar obtener los datos', error)
-    }
-
-  }
-
-  const deleteCustomers = async (id_customer) => {
-
-    console.log('id a elimianr ', id_customer)
-
-    try {
-      const response = await instance.delete(`/customer/delete/${id_customer}`)
-
-      console.log('la data: ', response.data);
-
-      setCustomers(customers.filter(customer => customer.id !== id_customer));
-
-      console.log('Cliente borrado')
-
-    } catch (error) {
-      console.log(error);
-    }
-  }
+    loadUsers();
+  }, [getCustomers]);
 
   if (loading) {
     return (
@@ -59,13 +32,14 @@ export const ShowCustomers = () => {
     )
   }
 
+
   return (
     <>
       <div className="container my-5">
 
         <div className="row text-center bg-warning">
           <div className="col-md-12 py-3">
-            <h1> <b>TABLA DE CLIENTES</b> <i class="fa-solid fa-people-robbery ms-5"></i></h1>
+            <h1> <b>TABLA DE CLIENTES</b> <i className="fa-solid fa-people-robbery ms-5"></i></h1>
           </div>
         </div>
         <table className="table table-hover border table-striped my-5">
@@ -83,9 +57,9 @@ export const ShowCustomers = () => {
             </tr>
           </thead>
           <tbody>
-            {customers.map(item => (
+            {customers.map((item, index) => (
               <tr key={item.id}>
-                <td> <b>{item.id}</b> </td>
+                <td> <b>{index + 1}</b> </td>
                 <td>{item.numDocument}</td>
                 <td>{item.name}</td>
                 <td>{item.lastName}</td>

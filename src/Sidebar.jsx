@@ -18,18 +18,15 @@ import { Informes } from './components/menu/Informes';
  * @returns {React.ReactNode} - Renderiza la barra lateral con enlaces de navegación.
  */
 export const Sidebar = ({ user, setUser }) => {
-    // Estado para controlar la visibilidad del menú desplegable
-    // const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
     const nav = useNavigate(); // Prepara la función para redirigir
-    // Función para alternar la visibilidad del menú desplegable
-    // const toggleDropdown = () => {
-    //     setIsDropdownOpen(!isDropdownOpen);
-    // };
 
     // Función para cerrar sesión
     const logout = () => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user'); // Asegúrate de limpiar también el usuario
         setUser(null); // Limpia el estado del usuario
-        console.log('Logout exitosamente') // Mensaje en la consola
+        console.log('Logout exitosamente'); // Mensaje en la consola
         nav('/Login'); // Redirige a la página de inicio de sesión
     };
 
@@ -72,7 +69,7 @@ export const Sidebar = ({ user, setUser }) => {
                     <Agregar />
                     <Actualizar />
                     <Configuraciones />
-                    <Historiales />
+                    <Historiales user={user} />
                     <Informes />
 
                 </nav>
