@@ -10,7 +10,7 @@ export const AgregarMarinero = () => {
 
 
                     <div className="text-center mt-5">
-                        <h3>
+                        <h3 className='form-title'>
                             <b> INFORMACIÓN PERSONAL</b>
                         </h3>
                     </div>
@@ -49,7 +49,7 @@ export const AgregarMarinero = () => {
                     </div>
 
                     <div className="text-center mt-5">
-                        <h3>
+                        <h3 className='form-title'>
                             <b>CONTACTO</b>
                         </h3>
                     </div>

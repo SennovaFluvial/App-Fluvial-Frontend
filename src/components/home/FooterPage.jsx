@@ -14,7 +14,7 @@ export const FooterPage = () => {
 
                     </div>
                     <div className="col-md-4">
-                        <h3>Directrices y Servicios</h3>
+                        <h3 className='text-white'>Directrices y Servicios</h3>
                         <ul className="list-unstyled py-2">
                             <li className='py-2'>Politicas y privacidad.</li>
                             <li className='py-2'>Terminos y condiciones.</li>
@@ -23,7 +23,7 @@ export const FooterPage = () => {
                         </ul>
                     </div>
                     <div className="col-md-4">
-                        <h3>Colaboradores</h3>
+                        <h3 className='text-white'>Colaboradores</h3>
                         <ul className="list-unstyled py-2">
                             <li className='py-2'>Asociados</li>
                             <li className='py-2'>Contribuyentes</li>

@@ -1,6 +1,5 @@
-.container-am {
+.container-ac {
     max-width: 600px;
-    /* width: 100%; */
 }
 
 :root {
@@ -40,10 +39,6 @@
     padding: 1.5rem;
 }
 
-.mt-4 {
-    margin-top: 1.5rem;
-}
-
 .text-center {
     text-align: center;
 }
@@ -63,7 +58,7 @@
     font-size: 1rem;
     line-height: 1.5;
     color: #495057;
-    background-color:var(--white);
+    background-color: var(--white);
     background-clip: padding-box;
     border: 2px solid var(--green);
     border-radius: 0.75rem;
@@ -100,10 +95,5 @@
 
 .form-title {
     font-weight: bold;
-    color: #5c5c5c;  
-}
-
-
-.file-img { 
-    height: 13em;
+    color: #5c5c5c;
 }
