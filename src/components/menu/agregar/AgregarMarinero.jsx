@@ -33,7 +33,7 @@ export const AgregarMarinero = () => {
                         <div className="col-md-5">
                             <div className="form-group">
                                 <label htmlFor="type_document">Identificación <i className="fa-solid fa-hand-pointer ms-4"></i></label>
-                                <select id="tipo" name='type_document' className="form-control" defaultValue="">
+                                <select id="tipo" name='type_document' className="form-select" defaultValue="">
                                     <option value="">Tipo de documento</option>
                                     <option value="0">C.C</option>
                                     <option value="1">C.E</option>

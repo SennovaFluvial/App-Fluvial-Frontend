@@ -1,34 +1,26 @@
 // import axios from 'axios'
 import React from 'react'
 import { useEffect, useState } from 'react'
-import instance from '../../../config/AxiosApi';
+
 import '../../../assets/css/show/styles-Show.css';
 
 import { Spinner } from '../../animations/Spiner';
 import { Grid } from '../../animations/Grid';
+import { useNewContext } from '../../../Context/Provider';
 
 export const ShowCompany = () => {
 
-  const [companys, setCompanys] = useState([]);
+  const { companies, getCompanies } = useNewContext();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getCompanys();
-  }, [])
-
-  const getCompanys = async () => {
-    try {
-      setLoading(true);
-      const response = await instance.get('/v1/findAll');
-
-      setCompanys(response.data);
+    const loadUsers = async () => {
+      await getCompanies();
       setLoading(false);
-      // console.log(response.data)
+    };
 
-    } catch (error) {
-      console.error('error al intentar obtener los datos', error)
-    }
-  }
+    loadUsers();
+  }, [getCompanies]);
 
   if (loading) {
     return (
@@ -40,12 +32,14 @@ export const ShowCompany = () => {
     )
   }
 
+
+
   return (
     <>
       <div className="container my-5">
         <div className="row text-center bg-info">
           <div className="col-md-12 py-3">
-            <h1> <b>TABLA DE EMPRESAS</b> <i class="fa-solid fa-building ms-5"></i></h1>
+            <h1> <b>TABLA DE EMPRESAS</b> <i className="fa-solid fa-building ms-5"></i></h1>
           </div>
         </div>
         <table className="table my-5">
@@ -61,9 +55,9 @@ export const ShowCompany = () => {
             </tr>
           </thead>
           <tbody>
-            {companys.map(item => (
+            {companies.map((item, index) => (
               <tr key={item.id}>
-                <td>{item.id}</td>
+                <td>{index + 1}</td>
                 <td>{item.nit}</td>
                 <td>{item.company}</td>
                 <td>{item.manager}</td>

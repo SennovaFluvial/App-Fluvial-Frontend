@@ -6,14 +6,16 @@ import { BrowserRouter } from 'react-router-dom';
 
 import ComponentRouter from './components/router/ComponentRouter.jsx';
 
-
+import { Provider } from './Context/Provider.jsx';
 
 
 // New Form correct.
 createRoot(document.getElementById('App')).render(
     <React.StrictMode>
         <BrowserRouter>
-            <ComponentRouter />
+            <Provider>
+                <ComponentRouter />
+            </Provider>
         </BrowserRouter>
     </React.StrictMode>
 );

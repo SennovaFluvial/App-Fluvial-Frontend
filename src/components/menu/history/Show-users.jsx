@@ -1,31 +1,27 @@
 import { useEffect, useState } from 'react'
-import instance from '../../../config/AxiosApi';
+// import instance from '../../../config/AxiosApi';
+import { useNewContext } from '../../../Context/Provider';
 import '../../../assets/css/show/styles-Show.css'
+
+import { Link, useParams } from 'react-router-dom';
 
 import { Spinner } from '../../animations/Spiner';
 import { Grid } from '../../animations/Grid';
 
 export const ShowUsers = () => {
-
-    const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true)
+    const { users, getUsers } = useNewContext();
+
+    // console.log(users)
 
     useEffect(() => {
-        getUsers();
-    }, [])
+        const loadUsers = async () => {
+            await getUsers();
+            setLoading(false);
+        };
 
-    const getUsers = async () => {
-        try {
-            setLoading(true);
-            const response = await instance.get('/v1/users');
-            setUsers(response.data);
-            setLoading(false);
-            // console.log(response.data)
-        } catch (error) {
-            console.error('error al intentar obtener los datos', error)
-            setLoading(false);
-        }
-    }
+        loadUsers();
+    }, [getUsers]);
 
     if (loading) {
         return (
@@ -43,7 +39,7 @@ export const ShowUsers = () => {
 
                 <div className="row text-center bg-warning">
                     <div className="col-md-12 py-3">
-                        <h1> <b>TABLA DE EMPLEADOS</b> <i class="fa-solid fa-address-card ms-5"></i></h1>
+                        <h1> <b>TABLA DE EMPLEADOS</b> <i className="fa-solid fa-address-card ms-5"></i></h1>
                     </div>
                 </div>
                 <table className="table table-hover border table-striped my-5">
@@ -61,10 +57,10 @@ export const ShowUsers = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {users.map(item => (
+                        {users.map((item, index) => (
                             <tr key={item.id}>
                                 <td>
-                                    <b>{item.id}</b>
+                                    <b>{index + 1}</b>
                                 </td>
                                 <td>
                                     {item.numDocument}
@@ -92,11 +88,12 @@ export const ShowUsers = () => {
                                 </td>
 
                                 <td>
-
-                                    <button
-                                        className='btn icon-link-hover ms-3 text-primary'>
-                                        <i className="fa-solid fa-pen-to-square icon-option"></i>
-                                    </button>
+                                    <Link to={`../update-user/${item.id}`}>
+                                        <button
+                                            className='btn icon-link-hover ms-3 text-primary'>
+                                            <i className="fa-solid fa-pen-to-square icon-option"></i>
+                                        </button>
+                                    </Link>
 
                                     <button
                                         className='btn icon-link-hover ms-3 text-warning'>

@@ -3,7 +3,7 @@ import axios from "axios"; // Se importa
 // / Se crea una instancia de Axios con una configuración básica
 const instance = axios.create({
     // Se define la URL base para todas las solicitudes realizadas con esta instancia de Axios
-    baseURL: 'https://fluvial.up.railway.app/api'
+    baseURL: 'https://fluvial.up.railway.app'
 })
 
 // Se configura un interceptor de solicitud
