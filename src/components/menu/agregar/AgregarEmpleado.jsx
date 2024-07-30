@@ -10,60 +10,60 @@ export const AgregarEmpleado = () => {
   const OptionsDepto = useOptionsDepto(); const OptionsComapnies = usePtionsCompaines(); const OptionsCities = usePtionsCities();
   return (
 <>
-      <div className="d-flex-am justify-content-center align-items-center vh-100">
-        <div className="container-am bg-light shadow rounded p-4">
-          <h2 className="text-center mb-4">CREAR EMPLEADO</h2>
+      <div className="d-flex-empleado justify-content-center align-items-center vh-100">
+        <div className="container-empleado bg-light shadow rounded p-4">
+          <h2 className="text-center mb-2">CREAR EMPLEADO</h2>
           <form>
-            <div className="text-center mt-5">
+            <div className="text-center">
               <h3><b>INFORMACIÓN PERSONAL</b></h3>
             </div>
-            <div className="row my-4"> {/* Nombres y apellidos */}
-              <div className="col-md-6">
+            <div className="row"> {/* Nombres y apellidos */}
+              <div className="col-md-4">
                 <Inputs text="Nombres" name="name" />
               </div>
-              <div className="col-md-6">
+              <div className="col-md-4">
                 <Inputs text="Apellidos" name="lastName" />
               </div>
-              <div className="col-md-5">
+              <div className="col-md-4">
                 <Select text="Tipo de Documento" options={OptionsTypeDocument} name="typeDocument" />
               </div>
-              <div className="col-md-7">
+              <div className="col-md-6">
                 <Inputs text="Número de Documento" name="numDocument" icon="fa-solid fa-address-card" />
               </div>
-              <div className="col-md-7">
+              <div className="col-md-6">
                 <Select text="Género" options={genero} name="sex" />
               </div>
             </div>
 
-            <div className="text-center mt-4">
+            <div className="text-center">
               <h3><b>UBICACIÓN</b></h3>
             </div>
-            <div className="row my-4"> {/* Ciudad y Departamento */}
-              <div className="col-md-6">
+            <div className="row"> {/* Ciudad y Departamento */}
+              <div className="col-md-4">
                 <Select text="Ciudad" options={OptionsCity} name="cityName" />
               </div>
-              <div className="col-md-6">
+              <div className="col-md-4">
                 <Select text="Departamento" options={OptionsDepto} name="departamento" />
               </div>
-              <div className="col-md-12">
+              <div className="col-md-4">
                 <Inputs text="Dirección" name="address" icon="fa-solid fa-map-pin" />
               </div>
             </div>
 
-            <div className="text-center mt-4">
+            <div className="text-center">
               <h3><b>CONTACTO</b></h3>
             </div>
-            <div className="row my-4">  {/* Contacto */}
-              <div className="col-md-4 d-flex align-items-center">
+            <div className="row">  {/* Contacto */}
+              <div className="col-md-2 d-flex align-items-center">
                 <Inputs text="Código de área" name="areaCode" icon="fa-solid fa-earth-americas"/>
               </div>
-              <div className="col-md-8">
+              <div className="col-md-4">
                 <Inputs text="Número de Teléfono" name="phone" icon="fa-solid fa-phone-volume" />
               </div>
-              <div className="col-md-6">
+              <div className="col-md-3">
                 <Inputs text="Usuario" name="username" icon="fa-solid fa-user" />
               </div>
-              <div className="col-md-6">
+              <div className="col-md-3">
                 <Inputs text="Confirmar Usuario" name="username" icon="fa-regular fa-envelope" />
               </div>
               <div className="col-md-6">
@@ -74,7 +74,7 @@ export const AgregarEmpleado = () => {
               </div>
             </div>
 
-            <div className="text-center mt-4">
+            <div className="text-center">
               <h3><b>INFORMACIÓN LABORAL</b></h3>
             </div>
             <div className="row mt-2"> {/* Rol y Empresa */}

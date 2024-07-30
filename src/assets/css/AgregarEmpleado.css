@@ -5,8 +5,8 @@
 
 .d-flex-empleado {
     display: flex;
-    margin-top: 140px;
-    margin-bottom: 140px;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 
 .justify-content-center {
@@ -22,7 +22,7 @@
 }
 
 .container_empleado{
-    max-width: 800px;
+    max-width: 1000px;
     width: 100%;
 }
 
@@ -39,7 +39,7 @@
 }
 
 .p-4 {
-    padding: 1.5rem;
+    padding: 1rem;
 }
 
 h2 {
