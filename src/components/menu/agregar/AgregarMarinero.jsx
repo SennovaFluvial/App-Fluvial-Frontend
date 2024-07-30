@@ -3,14 +3,14 @@ import '../../../assets/css/AgregarMarinero.css';
 
 export const AgregarMarinero = () => {
     return (
-        <div className="d-flex justify-content-center align-items-center vh-100">
+        <div className="d-flex-am justify-content-center align-items-center vh-100">
             <div className="container-am bg-light shadow rounded p-4">
                 <h2 className="text-center mb-4">AGREGAR MARINERO</h2>
                 <form>
 
 
                     <div className="text-center mt-5">
-                        <h3 className='form-title'>
+                        <h3 className='form-title'> {/* conel uso de mudule esposible que el aquitar la calse de h3 funcione bien*/}
                             <b> INFORMACIÓN PERSONAL</b>
                         </h3>
                     </div>

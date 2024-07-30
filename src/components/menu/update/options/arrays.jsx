@@ -58,9 +58,9 @@ export const usePtionsCities = () => {
 
 
 export const OptionsTypeDocument = [
-    { label: 'C.c', value: 'Cedula' },
-    { label: 'T.i', value: 'tarjeta de identidad' },
-    { label: 'C.e', value: 'cedula extranjera' },
+    { label: 'C.C', value: 'Cedula' },
+    { label: 'T.I', value: 'tarjeta de identidad' },
+    { label: 'C.E', value: 'cedula extranjera' },
     { label: 'Pasaporte', value: 'Passport' }
 ]
 
@@ -82,7 +82,8 @@ export const roles = [
 
 export const genero = [
     { label: 'Femenino', value: 'Femenino' },
-    { label: 'Masculino', value: 'Masculino' }
+    { label: 'Masculino', value: 'Masculino' },
+    { label: 'Otro', value: 'Otro' }
 ];
 export const status = [
     { label: 'Activo', value: 'activo' },

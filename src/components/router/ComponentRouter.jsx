@@ -14,6 +14,7 @@ import { ShowUsers } from '../menu/history/Show-users.jsx'; // Importa el compon
 
 import { UpdateUsers } from '../menu/update/Update-users.jsx'; // Importa el componente para actualizar usuarios
 
+import { AgregarEmpleado } from '../menu/agregar/AgregarEmpleado.jsx';
 /**
  * Componente ComponentRouter
  * 
@@ -64,6 +65,7 @@ export const ComponentRouter = () => {
                     <Route path="show-customers" element={< ShowCustomers />} /> {/* Ruta para agregar marinero */}
                     <Route path="show-users" element={< ShowUsers />} /> {/* Ruta para agregar marinero */}
                     <Route path="update-user/:id" element={< UpdateUsers />} /> {/* Ruta para agregar marinero */}
+                    <Route path="add-employed" element={< AgregarEmpleado />} />
                     {/* Agregar las rutas protegias aqui */}
                 </Route>
             </Route>

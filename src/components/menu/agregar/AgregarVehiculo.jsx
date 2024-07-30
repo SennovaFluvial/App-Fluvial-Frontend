@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom'; // Importa el componente para enlaces d
 export const AgregarVehiculo = () => {
     return (
         <>
-            <div className="d-flex justify-content-center align-items-center vh-100">
-                <div className="container-av p-4 rounded bg-light shadow">
+            <div className="d-flex-a justify-content-center align-items-center vh-100">
+                <div className="container-a bg-light shadow rounded p-4">
                     <h2 className="text-center mb-4">AGREGAR VEHICULO</h2>
                     <form>
                         <div className="row">
