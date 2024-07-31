@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const Inputs = ({ text, name, value, event, icon = null }) => {
+export const Inputs = ({ type, text, name, value, event, icon = null }) => {
     return (
         <>
             <div className="form-group">
@@ -12,7 +12,7 @@ export const Inputs = ({ text, name, value, event, icon = null }) => {
                         </span>
                     )}
                     <input
-                        type="text"
+                        type={type}
                         name={name}
                         id={name}
                         className="form-control"

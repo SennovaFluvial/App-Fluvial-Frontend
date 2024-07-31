@@ -89,3 +89,7 @@ export const status = [
     { label: 'Activo', value: 'activo' },
     { label: 'Inactivo', value: 'inactivo' }
 ];
+export const codigoPaises= [
+    { label: '+57', value: 'colombia' },
+    { label: '+52', value: 'mexico'}
+]
