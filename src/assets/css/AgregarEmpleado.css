@@ -55,9 +55,11 @@ h2 {
 .mb-4 {
     margin-bottom: 1.5rem;
 }
-
+.text-danger{
+    margin-bottom: 5px;
+}
 .form-group {
-    margin-bottom: 1rem;
+    margin-bottom: 13px;
 }
 
 .form-group label {

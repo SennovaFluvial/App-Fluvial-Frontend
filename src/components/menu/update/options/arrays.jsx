@@ -68,12 +68,12 @@ export const OptionsCity = [
     { label: 'Villavicencio', value: 'Villavicencio' },
     { label: 'San Jóse del Guaviare', value: 'San Jóse del Guaviare' },
 ]
-/*
+
 export const OptionsDepto = [
     { label: 'Guaviare', value: 'Guaviare' },
     { label: 'Meta', value: 'Meta' }
 ]
-*/
+
 export const roles = [
     { label: 'Administrador', value: 'ADMIN' },
     { label: 'Super Administrador', value: 'SUPERADMIN' },
