@@ -155,20 +155,12 @@ export const Provider = ({ children }) => {
         }
     }, [])
 
-    useEffect(() => {
-        const checkAuth = () => {
-            const token = localStorage.getItem('token');
-            if (token) {
-                setIsAuthenticated(true);
-                fetchData(); // Solo si está autenticado, realiza las solicitudes
-            } else {
-                setIsAuthenticated(false);
-                nav('/login'); // Redirige al login si no está autenticado
-            }
-        };
-
-        checkAuth();
-    }, [])
+     useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            fetchData(); // Solo si está autenticado, realiza las solicitudes
+        }
+    }, [fetchData]);
 
     // Devuelve el contexto con el estado y funciones disponibles para los componentes hijos.
     return (
