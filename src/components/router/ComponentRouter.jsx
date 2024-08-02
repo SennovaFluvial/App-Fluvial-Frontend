@@ -35,15 +35,16 @@ export const ComponentRouter = () => {
             <Route path="/" element={<VistaHomePageOff />} />
             <Route path="/Login" element={<Login setUser={setUser} />} />
 
-            {/* Rutas Protegidas envueltas en ValidationPages */}
-            <Route element={<ValidationPages user={user} setUser={setUser} />}>
-                <Route path="/adminSection" element={<DashBoard user={user} setUser={setUser} />}>
-                    <Route path="add-vehicle" element={<AgregarVehiculo />} />
-                    <Route path="add-sailor" element={<AgregarMarinero />} />
-                    <Route path="show-companies" element={<ShowCompany />} />
-                    <Route path="show-customers" element={<ShowCustomers />} />
-                    <Route path="show-users" element={<ShowUsers />} />
-                    <Route path="update-user/:id" element={<UpdateUsers />} />
+            <Route element={<ValidationPages user={user} setUser={setUser} />}> {/* Ruta protegida que requiere validación */}
+                <Route path="/adminSection" element={<DashBoard user={user} setUser={setUser} />}> {/* Ruta para el panel de administración */}
+                    <Route path="add-vehicle" element={< AgregarVehiculo />} /> {/* Ruta para agregar vehículos */}
+                    <Route path="add-sailor" element={< AgregarMarinero />} /> {/* Ruta para agregar marinero */}
+                    <Route path="show-companies" element={< ShowCompany />} /> {/* Ruta para agregar marinero */}
+                    <Route path="show-customers" element={< ShowCustomers />} /> {/* Ruta para agregar marinero */}
+                    <Route path="show-users" element={< ShowUsers />} /> {/* Ruta para agregar marinero */}
+                    <Route path="update-user/:id" element={< UpdateUsers />} /> {/* Ruta para agregar marinero */}
+                    <Route path="add-employed" element={< AgregarEmpleado />} />
+                    {/* Agregar las rutas protegias aqui */}
                 </Route>
             </Route>
 

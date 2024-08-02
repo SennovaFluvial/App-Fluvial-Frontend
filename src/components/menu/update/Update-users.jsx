@@ -76,7 +76,7 @@ export const UpdateUsers = () => {
         <>
 
             <div
-                className="d-flex justify-content-center align-items-center vh-100 mt-5">
+                className="d-flex justify-content-center align-items-center vh-100">
                 <div className="container-am bg-light shadow rounded p-4">
                     <h2 className="text-center mb-4">ACTUALIZAR USUARIO</h2>
                     <form onSubmit={handleSubmit}>

@@ -1,13 +1,14 @@
+.container-ac {
+    max-width: 600px;
+}
 
 :root {
     --white: #fff;
     --green: #00AF00;
 }
 
-.d-flex-am {
+.d-flex {
     display: flex;
-    margin-top: 140px;
-    margin-bottom: 140px;
 }
 
 .justify-content-center {
@@ -22,10 +23,6 @@
     height: 100vh;
 }
 
-.container-am {
-    max-width: 800px;
-    width: 100%;
-}
 .bg-light {
     background-color: #f8f9fa;
 }
@@ -40,10 +37,6 @@
 
 .p-4 {
     padding: 1.5rem;
-}
-
-.mt-4 {
-    margin-top: 1.5rem;
 }
 
 .text-center {
@@ -65,7 +58,7 @@
     font-size: 1rem;
     line-height: 1.5;
     color: #495057;
-    background-color:var(--white);
+    background-color: var(--white);
     background-clip: padding-box;
     border: 2px solid var(--green);
     border-radius: 0.75rem;
@@ -95,19 +88,12 @@
 }
 
 .btn-success {
-    margin-top: 0.60rem;
     color: var(--white);
     background-color: var(--green);
     border-color: var(--green);
-
 }
 
 .form-title {
     font-weight: bold;
-    color: #5c5c5c;  
-}
-
-
-.file-img { 
-    height: 10em;
+    color: #5c5c5c;
 }

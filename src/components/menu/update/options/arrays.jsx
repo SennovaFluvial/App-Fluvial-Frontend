@@ -58,9 +58,9 @@ export const usePtionsCities = () => {
 
 
 export const OptionsTypeDocument = [
-    { label: 'C.c', value: 'Cedula' },
-    { label: 'T.i', value: 'tarjeta de identidad' },
-    { label: 'C.e', value: 'cedula extranjera' },
+    { label: 'C.C', value: 'Cedula' },
+    { label: 'T.I', value: 'tarjeta de identidad' },
+    { label: 'C.E', value: 'cedula extranjera' },
     { label: 'Pasaporte', value: 'Passport' }
 ]
 
@@ -68,12 +68,12 @@ export const OptionsCity = [
     { label: 'Villavicencio', value: 'Villavicencio' },
     { label: 'San Jóse del Guaviare', value: 'San Jóse del Guaviare' },
 ]
-/*
+
 export const OptionsDepto = [
     { label: 'Guaviare', value: 'Guaviare' },
     { label: 'Meta', value: 'Meta' }
 ]
-*/
+
 export const roles = [
     { label: 'Administrador', value: 'ADMIN' },
     { label: 'Super Administrador', value: 'SUPERADMIN' },
@@ -82,9 +82,14 @@ export const roles = [
 
 export const genero = [
     { label: 'Femenino', value: 'Femenino' },
-    { label: 'Masculino', value: 'Masculino' }
+    { label: 'Masculino', value: 'Masculino' },
+    { label: 'Otro', value: 'Otro' }
 ];
 export const status = [
     { label: 'Activo', value: 'activo' },
     { label: 'Inactivo', value: 'inactivo' }
 ];
+export const codigoPaises = [
+    { label: '+57', value: 'colombia' },
+    { label: '+52', value: 'mexico' }
+]

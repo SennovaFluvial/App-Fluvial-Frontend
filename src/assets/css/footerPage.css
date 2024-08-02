@@ -1,6 +1,7 @@
 .footerPage {
     background-color: #123F6F;
     color: #E1E5F2;
+    max-width: 100%;
 }
 
 
@@ -12,4 +13,9 @@
 
 .phone {
     margin-right: 20px;
+}
+
+.row {
+    width: 100%;
+
 }
