@@ -8,8 +8,14 @@ import { useParams } from 'react-router'
 import { useNewContext } from '../../../Context/Provider.jsx'
 
 export const UpdateUsers = () => {
-    const OptionsDepto = useOptionsDepto(); const OptionsComapnies = usePtionsCompaines(); const OptionsCities = usePtionsCities(); const { updateUser } = useNewContext();
-    const { id } = useParams(); const { users } = useNewContext(); const { deptos } = useNewContext(); const userId = parseInt(id, 10);
+    const OptionsDepto = useOptionsDepto();
+    const OptionsComapnies = usePtionsCompaines();
+    const OptionsCities = usePtionsCities();
+    const { updateUser } = useNewContext();
+    const { id } = useParams();
+    const { users } = useNewContext();
+    const { deptos } = useNewContext();
+    const userId = parseInt(id, 10);
     const [formData, setFormData] = useState({
         username: "",
         password: "",

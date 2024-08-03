@@ -11,6 +11,7 @@ import { ShowCustomers } from '../menu/history/Show-customers.jsx';
 import { ShowUsers } from '../menu/history/Show-users.jsx';
 import { UpdateUsers } from '../menu/update/Update-users.jsx';
 import { NotFound } from './notFound.jsx';
+import { AgregarEmpleado } from '../menu/agregar/AgregarEmpleado.jsx';
 export const ComponentRouter = () => {
     const [user, setUser] = useState(null);
 
@@ -23,7 +24,7 @@ export const ComponentRouter = () => {
                 setUser(storedUser);
             } else {
                 localStorage.removeItem('token');
-                localStorage.removeItem('user');
+                localStorage.removeItem('user');F
             }
         }
     }, []);

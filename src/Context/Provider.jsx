@@ -20,8 +20,6 @@ export const Provider = ({ children }) => {
     const [deptos, setDeptos] = useState([]);
     const [cities, setCities] = useState([]);
     const [customers, setCustomers] = useState([]);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-
 
     /* F U N C I O N E S */
 
@@ -116,6 +114,31 @@ export const Provider = ({ children }) => {
         }
     }
 
+    const createUser = async ({ dataUser }) => {
+        try {
+            // Se configura el tipo especifico de dato a enviar en la solicitud JSON
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            };
+            // Convierte los datos a formato JSON
+            const jsonData = JSON.stringify(dataUser);
+            // Convierte los datos a formato JSON
+            const response = await instance.post('/auth/sign-up', jsonData, config);
+            // console.log('Usuario actualizado:', response.data);
+
+            // Actualiza la lista de usuarios
+            getUsers();
+
+            // Navega a la sección de administración
+            nav('adminSection/show-users');
+
+        } catch (error) {
+            console.error('Error al actualizar el usuario:', error.response ? error.response.data : error.message);
+        }
+    }
+
     /**
      * Obtiene la lista de ciudades desde la API y actualiza el estado `cities`.
      * @async
@@ -145,6 +168,9 @@ export const Provider = ({ children }) => {
             console.log('error en obtener clientes')
         }
     })
+
+
+
     /* LLAMADO FETCH */
 
     const fetchData = useCallback(async () => {
@@ -155,7 +181,7 @@ export const Provider = ({ children }) => {
         }
     }, [])
 
-     useEffect(() => {
+    useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
             fetchData(); // Solo si está autenticado, realiza las solicitudes

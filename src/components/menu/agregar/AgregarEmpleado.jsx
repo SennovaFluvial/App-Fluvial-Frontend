@@ -29,13 +29,14 @@ export const AgregarEmpleado = () => {
   const [codigoPais, setCodigoPais] = useState('');
   const [errors, setErrors] = useState({});
 
-  useEffect(() => {
+  useEffect(() => { // line 32
     const newErrors = {};
 
     // Validación de nombres
     if (!name) {
       newErrors.name = 'Este campo es obligatorio';
     }
+
 
     // Validación de apellidos
     if (!lastName) {
