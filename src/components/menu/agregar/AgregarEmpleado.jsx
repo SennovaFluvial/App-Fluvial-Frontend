@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Select } from '../../html components/Selects';
 import { Inputs } from '../../html components/Inputs';
 import { useOptionsDepto, usePtionsCompaines, usePtionsCities } from '../update/options/arrays.jsx';
-import { OptionsCity, OptionsTypeDocument, roles, genero, status, codigoPaises } from '../update/options/arrays.jsx';
+import { OptionsDepto, OptionsCity, OptionsTypeDocument, roles, genero, status, codigoPaises } from '../update/options/arrays.jsx';
 import '../../../assets/css/AgregarEmpleado.css';
 
 export const AgregarEmpleado = () => {
 
-  const OptionsDepto = useOptionsDepto();
+  // const OptionsDepto = useOptionsDepto();
   const OptionsComapnies = usePtionsCompaines();
   const OptionsCities = usePtionsCities();
 
@@ -27,23 +27,35 @@ export const AgregarEmpleado = () => {
     confirmUsername: '',
     password: '',
     confirmPassword: '',
-    role: '',
+    roleRequest: {
+      roleListName: []
+    },
     estado: ''
   });
-  
+
   const [errorsForms, setErrorsForms] = useState({});
 
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    if (value.trim()) {
-      const { [name]: removed, ...rest } = errorsForms;
-      setErrorsForms(rest);
+    if (name === 'roleListName') {
+      setFormData({
+        ...formData,
+        roleRequest: {
+          ...formData.roleRequest,
+          roleListName: value
+        }
+      });
     } else {
+      if (value.trim()) {
+        const { [name]: removed, ...rest } = errorsForms;
+        setErrorsForms(rest);
+      } else {
       setErrorsForms({...errorsForms, [name]: "Campo obligatorio"});
     }
 
-    setFormData({...formData, [name]: value});
+      setFormData({ ...formData, [name]: value });
+    }
   }
 
   const handleErrors = (name, message) => {
@@ -78,9 +90,12 @@ export const AgregarEmpleado = () => {
 
     const newErrors = {};
 
-    for(let [name, value] of Object.entries(formData)){
-      
-      if(value.trim()) {
+    for (let [name, value] of Object.entries(formData)) {
+      if (name === 'roleRequest') {
+        if (!formData.roleRequest.roleListName || formData.roleRequest.roleListName.length === 0) {
+          newErrors['roleRequest'] = "Campo obligatorio";
+        }
+      } else if (value.trim()) {
         const { [name]: removed, ...rest } = errorsForms;
         setErrorsForms(rest);
       
@@ -96,8 +111,7 @@ export const AgregarEmpleado = () => {
       return;
     }
 
-
-    const confirmationMessage = `¿Está seguro que quiere crear el usuario?\nUsuario: ${formData.username}\nRol: ${formData.role}`;
+    const confirmationMessage = `¿Está seguro que quiere crear el usuario?\nUsuario: ${formData.username}\nRol: ${formData.roleRequest.roleListName[0]}`;
     const userConfirmed = window.confirm(confirmationMessage);
 
     if (userConfirmed) {
@@ -199,8 +213,8 @@ export const AgregarEmpleado = () => {
             </div>
             <div className="row mt-2">
               <div className="col-md-6">
-                <Select event={handleChange} text="Rol" options={roles} name="role" />
-                {errorsForms.role && <div className="text-danger">{errorsForms.role}</div>}
+                <Select event={handleChange} text="Rol" options={roles} name="roleListName" />
+                {errorsForms.roleListName && <div className="text-danger">{errorsForms.roleListName}</div>}
               </div>
               <div className="col-md-6">
                 <Select event={handleChange} text="Estado" options={status} name="estado" />
