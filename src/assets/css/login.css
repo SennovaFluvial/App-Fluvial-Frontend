@@ -5,8 +5,8 @@
 }
 
 body {
-    width: 100wv;
-    height: 100hv;
+    width: 100vw;
+    height: 100vh;
 }
 
 :root {
@@ -15,12 +15,12 @@ body {
     --whitesmoke: whitesmoke;
 }
 
-
 #Login {
     position: absolute;
     display: flex;
     width: 100%;
     height: 100%;
+    overflow: hidden;
 }
 
 .hero-image {
@@ -47,18 +47,30 @@ body {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    align-items: center;
+    overflow: auto;
+    padding: 1rem;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.top-side-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
 .side-conainter__title {
     color: var(--green);
-    margin: 6rem 0;
+    margin: 4rem 0;
     text-align: center;
+    justify-content: center;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     font-size: 1.5rem;
-    max-width: 75%;
+    max-width: 400px;
     line-height: 2.5rem;
     white-space: pre-line;
-    /* Permite que los saltos de línea se muestren */
 }
 
 .bottom-side-container {
@@ -74,6 +86,7 @@ body {
     padding: 0 4rem;
     background-color: var(--green);
     border-radius: 50px 50px 0 0;
+    max-width: 400px;
 }
 
 .login-form-title-wrapper {
@@ -105,7 +118,6 @@ body {
     color: var(--whitesmoke);
     margin-bottom: .3rem;
     font-size: 20px;
-
 }
 
 .input-form__input {
@@ -113,12 +125,10 @@ body {
     outline: none;
     border: none;
     border-radius: 5px;
-
 }
 
 .login-form-button-wrapper {
     margin: 1rem 0 2rem 0;
-
 }
 
 .button {
@@ -131,135 +141,13 @@ body {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-/* * {
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    padding: 0;
-}
-:root {
-    --green: #00AF00;
-    --button-orange: #FF8C4f;
-    --whitesmoke: whitesmoke;
-}
+@media (max-width: 768px) {
+    .hero-image {
+        display: none;
+    }
 
-#Login {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    min-height: 100vh;
-    background: url("../img/puerto.jpg") no-repeat;
-    background-position: center;
-    background-size: cover;
-    position: relative;
+    .side-container {
+        width: 100%;
+        max-width: 100%;
+    }
 }
-
-.hero-image {
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
-}
-
-.logo {
-    width: 100px;
-    height: 100px;
-}
-
-.side-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 500px;
-    padding: 2rem;
-    border: 2px solid rgba(255, 255, 255, .6);
-    border-radius: 20px;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.side-conainter__title {
-    font-size: 2.3rem;
-    color: #fff;
-    text-align: center;
-    margin-bottom: 2rem;
-    color: #00AF00;
-}
-
-.login-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-}
-
-.login-form__title {
-    font-size: 2.3rem;
-    color: #fff;
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.input-form {
-    position: relative;
-    width: 100%;
-    margin-bottom: 1.5rem;
-}
-
-.input-form__label {
-    position: absolute;
-    top: 50%;
-    left: 10px;
-    transform: translateY(-50%);
-    color: #fff;
-    font-size: 1rem;
-    pointer-events: none;
-    transition: .6s;
-    font-weight: bold;
-}
-
-.input-form input:focus~.input-form__label,
-.input-form input:valid~.input-form__label {
-    top: -10px;
-    font-size: 0.8rem;
-}
-
-.input-form input {
-    width: calc(100% + 40px);
-    padding: 10px;
-    margin-left: -20px;
-    background-color: transparent;
-    border: none;
-    border-bottom: 2px solid #fff;
-    outline: none;
-    color: #fff;
-    font-size: 1rem;
-}
-
-.login-form-button-wrapper {
-    width: 100%;
-    margin-top: 1rem;
-}
-
-.button {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 20px;
-    background-color: #fff;
-    color: #000;
-    font-weight: bold;
-    cursor: pointer;
-    outline: none;
-    font-size: 1rem;
-    transition: .4s;
-}
-
-.button:hover {
-    opacity: 0.9;
-}
-
-.error-message {
-    color: #ff4d4d;
-    text-align: center;
-    margin-top: 1rem;
-} */

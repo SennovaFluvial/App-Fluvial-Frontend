@@ -11,9 +11,9 @@ export const Agregar = () => {
                         Agregar
                     </a>
                     <ul className="dropdown-menu menu-account">
+                        <li className='dropdown-item text-blcak'> <Link to={'add-employed'}>Agregar Empleado</Link> </li>
                         <li className='dropdown-item text-black' ><Link to={'add-vehicle'}>Agregar Vehículo</Link></li>
                         <li className='dropdown-item text-black' ><Link to={'add-sailor'}>Agregar Marinero</Link></li>
-                        <li className='dropdown-item text-blcak'> <Link to={'add-employed'}>Agregar Empleado</Link> </li>
                     </ul>
                 </li>
             </ul>

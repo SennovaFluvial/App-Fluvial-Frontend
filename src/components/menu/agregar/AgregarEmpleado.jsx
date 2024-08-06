@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Select } from '../../html components/Selects';
 import { Inputs } from '../../html components/Inputs';
 import { useOptionsDepto, usePtionsCompaines, usePtionsCities } from '../update/options/arrays.jsx';
-import { OptionsDepto, OptionsCity, OptionsTypeDocument, roles, genero, status, codigoPaises } from '../update/options/arrays.jsx';
+import { OptionsDepto, OptionsCity, OptionsTypeDocument, roles, genero, status, codigoPaises, maritalStatus } from '../update/options/arrays.jsx';
 import '../../../assets/css/AgregarEmpleado.css';
 
 export const AgregarEmpleado = () => {
@@ -30,7 +30,8 @@ export const AgregarEmpleado = () => {
     roleRequest: {
       roleListName: []
     },
-    estado: ''
+    estado: '',
+    maritalStatus: ''
   });
 
   const [errorsForms, setErrorsForms] = useState({});
@@ -51,8 +52,8 @@ export const AgregarEmpleado = () => {
         const { [name]: removed, ...rest } = errorsForms;
         setErrorsForms(rest);
       } else {
-      setErrorsForms({...errorsForms, [name]: "Campo obligatorio"});
-    }
+        setErrorsForms({ ...errorsForms, [name]: "Campo obligatorio" });
+      }
 
       setFormData({ ...formData, [name]: value });
     }
@@ -104,8 +105,8 @@ export const AgregarEmpleado = () => {
       }
     }
 
-    setErrorsForms({...errorsForms, ...newErrors});
-    
+    setErrorsForms({ ...errorsForms, ...newErrors });
+
     if (Object.keys(newErrors).length > 0) {
       alert('Por favor, complete todos los campos obligatorios correctamente.');
       return;
@@ -146,17 +147,21 @@ export const AgregarEmpleado = () => {
                 <Select event={handleChange} text="Tipo de Documento" options={OptionsTypeDocument} name="typeDocument" />
                 {errorsForms.typeDocument && <div className="text-danger">{errorsForms.typeDocument}</div>}
               </div>
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <Inputs event={handleChange} text="Número de Documento" name="numDocument" icon="fa-solid fa-address-card" />
                 {errorsForms.numDocument && <div className="text-danger">{errorsForms.numDocument}</div>}
               </div>
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <Inputs event={handleChange} type="date" text="Fecha de Nacimiento" name="dateOfBirth" icon="fa-solid fa-calendar-days" />
                 {errorsForms.dateOfBirth && <div className="text-danger">{errorsForms.dateOfBirth}</div>}
               </div>
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <Select event={handleChange} text="Género" options={genero} name="sex" />
                 {errorsForms.sex && <div className="text-danger">{errorsForms.sex}</div>}
+              </div>
+              <div className="col-md-3">
+                <Select event={handleChange} text="Estado civil" options={maritalStatus} name="maritalStatus" />
+                {errorsForms.maritalStatus && <div className="text-danger">{errorsForms.maritalStatus}</div>}
               </div>
             </div>
 

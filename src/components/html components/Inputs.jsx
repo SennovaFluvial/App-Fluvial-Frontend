@@ -1,26 +1,36 @@
-import React from 'react'
+import React, { useState } from 'react';
+import '../../assets/css/input.css'
 
-export const Inputs = ({ type, text, name, value, event, icon = null }) => {
+export const Inputs = ({ type = 'text', text, name, event, icon }) => {
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
     return (
-        <>
-            <div className="form-group">
-                <label htmlFor={name}>{text}</label>
-                <div className="input-group">
-                    {icon && (
-                        <span className="input-group-text" id="basic-addon1">
-                            <i className={icon}></i>
+        <div className="form-group">
+            <label htmlFor={name}>{text}</label>
+            <div className="input-group">
+                {icon && (
+                <span className="input-group-text" id="basic-addon1">
+                    <i className={icon}></i>
+                </span>
+            )}
+                <input
+                    type={type === 'password' && showPassword ? 'text' : type}
+                    className="form-control"
+                    name={name}
+                    onChange={event}
+                />
+                {type === 'password' && (
+                    <div className="password-icon">
+                        <span onClick={togglePasswordVisibility}>
+                            <i className={showPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'}></i>
                         </span>
-                    )}
-                    <input
-                        type={type}
-                        name={name}
-                        id={name}
-                        className="form-control"
-                        value={value}
-                        onChange={event}
-                    />
-                </div>
+                    </div>
+                )}
             </div>
-        </>
-    )
-}
+        </div>
+    );
+};
