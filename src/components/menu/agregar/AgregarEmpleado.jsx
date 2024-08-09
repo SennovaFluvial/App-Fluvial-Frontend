@@ -227,7 +227,7 @@ export const AgregarEmpleado = () => {
               </div>
             </div>
             <div className="text-center">
-              <button type="submit" className="btn btn-success">Crear <i className="fa-solid fa-square-pen"></i></button>
+                <button type="submit" className="btn btn-success">Crear Empleado <i class="fa-solid fa-building-user"></i></button>
             </div>
           </form>
         </div>

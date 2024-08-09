@@ -110,7 +110,7 @@ export const AgregarCliente = () => {
                           </div>
                       </div>
                       <div className="text-center">
-                          <button type="submit" className="btn btn-success">Guardar</button>
+                          <button type="submit" className="btn btn-success">Agregar Cliente</button>
                       </div>
                   </form>
               </div>

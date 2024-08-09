@@ -15,6 +15,10 @@ import { ShowUsers } from '../menu/history/Show-users.jsx'; // Importa el compon
 import { UpdateUsers } from '../menu/update/Update-users.jsx'; // Importa el componente para actualizar usuarios
 
 import { AgregarEmpleado } from '../menu/agregar/AgregarEmpleado.jsx';
+
+import { AgregarEmpresa } from '../menu/agregar/AgregarEmpresa.jsx';
+import { AgregarCapitan } from '../menu/agregar/AgregarCapitan.jsx';
+import { AgregarMotorista } from '../menu/agregar/AgregarMotorista.jsx';
 /**
  * Componente ComponentRouter
  * 
@@ -61,11 +65,15 @@ export const ComponentRouter = () => {
                 <Route path="/adminSection" element={<DashBoard user={user} setUser={setUser} />}> {/* Ruta para el panel de administración */}
                     <Route path="add-vehicle" element={< AgregarVehiculo />} /> {/* Ruta para agregar vehículos */}
                     <Route path="add-sailor" element={< AgregarMarinero />} /> {/* Ruta para agregar marinero */}
-                    <Route path="show-companies" element={< ShowCompany />} /> {/* Ruta para agregar marinero */}
-                    <Route path="show-customers" element={< ShowCustomers />} /> {/* Ruta para agregar marinero */}
-                    <Route path="show-users" element={< ShowUsers />} /> {/* Ruta para agregar marinero */}
-                    <Route path="update-user/:id" element={< UpdateUsers />} /> {/* Ruta para agregar marinero */}
+                    <Route path="show-companies" element={< ShowCompany />} /> {/* Ruta para ver compañias */}
+                    <Route path="show-customers" element={< ShowCustomers />} /> {/* Ruta para ver clientes */}
+                    <Route path="show-users" element={< ShowUsers />} /> {/* Ruta para ver usuarios */}
+                    <Route path="update-user/:id" element={< UpdateUsers />} /> {/* Ruta actualizar usuario */}
                     <Route path="add-employed" element={< AgregarEmpleado />} />
+                    <Route path="add-company" element={< AgregarEmpresa />} />
+                    <Route path="add-captain" element={< AgregarCapitan />} />
+                    <Route path="add-boat-driver" element={< AgregarMotorista />} />
+
                     {/* Agregar las rutas protegias aqui */}
                 </Route>
             </Route>

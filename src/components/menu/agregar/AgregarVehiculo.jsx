@@ -1,68 +1,109 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Inputs } from '../../html components/Inputs';
+import { Select } from '../../html components/Selects';
+import '../../../assets/css/AgregarEmpleado.css';
 
-import '../../../assets/css/AgregarVehiculo.css'
-import { Link } from 'react-router-dom'; // Importa el componente para enlaces de navegación
 export const AgregarVehiculo = () => {
+    const [formData, setFormData] = useState({
+        tipo: '',
+        otro: '',
+        modelo: '',
+        matricula: '',
+        peso: '',
+        volumen: '',
+        pasajeros: ''
+    });
+
+    const [errorsForms, setErrorsForms] = useState({});
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+
+        if (value.trim()) {
+            const { [name]: removed, ...rest } = errorsForms;
+            setErrorsForms(rest);
+        } else {
+            setErrorsForms({ ...errorsForms, [name]: "Campo obligatorio" });
+        }
+
+        setFormData({ ...formData, [name]: value });
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        const newErrors = {};
+
+        for (let [name, value] of Object.entries(formData)) {
+            if (!value.trim()) {
+                newErrors[name] = "Campo obligatorio";
+            }
+        }
+
+        setErrorsForms({ ...errorsForms, ...newErrors });
+
+        if (Object.keys(newErrors).length > 0) {
+            alert('Por favor, complete todos los campos obligatorios correctamente.');
+            return;
+        }
+
+        alert('Vehículo agregado correctamente');
+        console.log('Formulario de vehículo enviado:', formData);
+        window.location.reload();
+    };
+
     return (
         <>
-            <div className="d-flex-a justify-content-center align-items-center vh-100">
-                <div className="container-a bg-light shadow rounded p-4">
-                    <h2 className="text-center mb-4">AGREGAR VEHICULO</h2>
-                    <form>
+            <div className="d-flex-empleado justify-content-center align-items-center vh-100">
+                <div className="container-empleado bg-light shadow rounded p-4">
+                    <h2 className="text-center mb-2">AGREGAR VEHÍCULO</h2>
+                    <form onSubmit={handleSubmit}>
                         <div className="row">
                             <div className="col-md-6">
-                                <div className="form-group">
-                                    <label htmlFor="tipo">Tipo</label>
-                                    <select id="tipo" className="form-control" defaultValue="">
-                                        <option value="">Seleccionar</option>
-                                        <option value="opcion1">Opción 1</option>
-                                        <option value="opcion2">Opción 2</option>
-                                    </select>
-                                </div>
+                                <Select event={handleChange} text="Tipo" name="tipo" options={[
+                                    { value: '', label: 'Seleccionar' },
+                                    { value: 'opcion1', label: 'Opción 1' },
+                                    { value: 'opcion2', label: 'Opción 2' }
+                                ]} />
+                                {errorsForms.tipo && <div className="text-danger">{errorsForms.tipo}</div>}
                             </div>
                             <div className="col-md-6">
-                                <div className="form-group">
-                                    <label htmlFor="otro">Otro</label>
-                                    <input type="text" className="form-control" id="otro" />
-                                </div>
+                                <Inputs event={handleChange} text="Otro" name="otro" />
+                                {errorsForms.otro && <div className="text-danger">{errorsForms.otro}</div>}
                             </div>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="modelo">Modelo</label>
-                            <input type="text" className="form-control" id="modelo" />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="matricula">Matrícula/Patente</label>
-                            <input type="text" className="form-control" id="matricula" />
                         </div>
                         <div className="row">
                             <div className="col-md-6">
-                                <div className="form-group">
-                                    <label htmlFor="peso">Capacidad de peso</label>
-                                    <input type="text" className="form-control" id="peso" />
-                                </div>
+                                <Inputs event={handleChange} text="Modelo" name="modelo" icon="fa-solid fa-car" />
+                                {errorsForms.modelo && <div className="text-danger">{errorsForms.modelo}</div>}
                             </div>
                             <div className="col-md-6">
-                                <div className="form-group">
-                                    <label htmlFor="volumen">Capacidad de volumen</label>
-                                    <input type="text" className="form-control" id="volumen" />
-                                </div>
+                                <Inputs event={handleChange} text="Matrícula/Patente" name="matricula" icon="fa-solid fa-id-card" />
+                                {errorsForms.matricula && <div className="text-danger">{errorsForms.matricula}</div>}
                             </div>
                         </div>
-                        <div className="form-group">
-                            <label htmlFor="pasajeros">Espacio de pasajeros</label>
-                            <input type="text" className="form-control" id="pasajeros" />
+                        <div className="row">
+                            <div className="col-md-6">
+                                <Inputs event={handleChange} text="Capacidad de Peso" name="peso" icon="fa-solid fa-weight-hanging" />
+                                {errorsForms.peso && <div className="text-danger">{errorsForms.peso}</div>}
+                            </div>
+                            <div className="col-md-6">
+                                <Inputs event={handleChange} text="Capacidad de Volumen" name="volumen" icon="fa-solid fa-box" />
+                                {errorsForms.volumen && <div className="text-danger">{errorsForms.volumen}</div>}
+                            </div>
                         </div>
-                        <div className="d-flex justify-content-center">
-                            <button type="submit" className="btn btn-success">Guardar</button>
+                        <div className="row">
+                            <div className="col-md-12">
+                                <Inputs event={handleChange} text="Espacio de Pasajeros" name="pasajeros" icon="fa-solid fa-users" />
+                                {errorsForms.pasajeros && <div className="text-danger">{errorsForms.pasajeros}</div>}
+                            </div>
+                        </div>
+                        <div className="text-center">
+                            <button type="submit" className="btn btn-success">Crear Vehiculo <i className="fa-solid fa-floppy-disk"></i></button>
                         </div>
                     </form>
                 </div>
             </div>
-            {/* <div className="titulo">
-        <h1>Hola</h1>
-            </div> */}
         </>
-    );
-};
-
+    )
+}
