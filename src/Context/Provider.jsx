@@ -135,7 +135,7 @@ export const Provider = ({ children }) => {
             nav('adminSection/show-users');
 
         } catch (error) {
-            console.error('Error al actualizar el usuario:', error.response ? error.response.data : error.message);
+            console.error('Error al crear el usuario:', error.response ? error.response.data : error.message);
         }
     }
 
@@ -190,7 +190,7 @@ export const Provider = ({ children }) => {
 
     // Devuelve el contexto con el estado y funciones disponibles para los componentes hijos.
     return (
-        <NewContext.Provider value={{ users, getUsers, companies, getCompanies, deptos, updateUser, cities, customers, getCustomers }}>
+        <NewContext.Provider value={{ users, getUsers, companies, getCompanies, deptos, updateUser, cities, customers, getCustomers, createUser }}>
             {children}
         </NewContext.Provider>
 
