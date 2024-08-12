@@ -4,7 +4,7 @@ import { Select } from '../../html components/Selects';
 import { OptionsDepto, OptionsCity, status, OptionsTypeDocument, genero, maritalStatus } from '../update/options/arrays.jsx';
 import '../../../assets/css/AgregarEmpleado.css';
 
-export const AgregarMarinero = () => {
+export const AgregarCapitan = () => {
     const [formData, setFormData] = useState({
         name: '',
         lastName: '',
@@ -88,7 +88,7 @@ export const AgregarMarinero = () => {
     return (
         <div className="d-flex-empleado justify-content-center align-items-center vh-100">
             <div className="container-empleado bg-light shadow rounded p-4">
-                <h2 className="text-center mb-2">CREAR MARINERO</h2>
+                <h2 className="text-center mb-2">CREAR CAPITAN</h2>
                 <form onSubmit={handleSubmit}>
                     {/* Información Personal */}
                     <div className="text-center">
@@ -161,7 +161,7 @@ export const AgregarMarinero = () => {
                     </div>
 
                     <div className="text-center mt-3">
-                        <button type="submit" className="btn btn-success">Crear Marinero <i className="fa-solid fa-ship"></i></button>
+                        <button type="submit" className="btn btn-success">Crear Capitan <i class="fa-solid fa-id-card-clip"></i></button>
                     </div>
                 </form>
             </div>

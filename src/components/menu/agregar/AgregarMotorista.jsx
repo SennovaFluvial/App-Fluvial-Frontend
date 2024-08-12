@@ -4,7 +4,7 @@ import { Select } from '../../html components/Selects';
 import { OptionsDepto, OptionsCity, status, OptionsTypeDocument, genero, maritalStatus } from '../update/options/arrays.jsx';
 import '../../../assets/css/AgregarEmpleado.css';
 
-export const AgregarMarinero = () => {
+export const AgregarMotorista = () => {
     const [formData, setFormData] = useState({
         name: '',
         lastName: '',
@@ -161,10 +161,10 @@ export const AgregarMarinero = () => {
                     </div>
 
                     <div className="text-center mt-3">
-                        <button type="submit" className="btn btn-success">Crear Marinero <i className="fa-solid fa-ship"></i></button>
+                        <button type="submit" className="btn btn-success">Crear Motorista <i class="fa-solid fa-vest"></i></button>
                     </div>
                 </form>
             </div>
         </div>
-    )
-}
+    );
+};

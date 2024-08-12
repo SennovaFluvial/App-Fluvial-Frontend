@@ -89,7 +89,15 @@ export const status = [
     { label: 'Activo', value: 'activo' },
     { label: 'Inactivo', value: 'inactivo' }
 ];
-export const codigoPaises = [
+
+export const codigoPaises= [
     { label: '+57', value: 'colombia' },
-    { label: '+52', value: 'mexico' }
+    { label: '+52', value: 'mexico'}
+]
+
+export const maritalStatus = [
+    { label: 'Soltero', value: 'soltero'},
+    { label: 'Casado', value: 'sasado' },
+    { label: 'Divorciado', value: 'divorciado' },
+    { label: 'Unión libre', value: 'unión libre' }
 ]

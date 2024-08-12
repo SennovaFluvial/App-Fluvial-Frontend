@@ -1,0 +1,24 @@
+.input-group {
+    position: relative;
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-wrapper .form-control {
+    padding-right: 3rem;
+    border-radius: 0.25rem;
+}
+
+
+.password-icon {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0 0.75rem;
+    cursor: pointer;
+    z-index: 2;
+    border-left: none;
+}

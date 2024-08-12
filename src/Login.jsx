@@ -100,7 +100,9 @@ export const Login = ({ setUser }) => {
 
                 <div className="side-container">
                     <div className="top-side-container">
-                        <h1 className="side-conainter__title">Sistemas de operaciones Logísticas del transporte Fluvial - Guaviare</h1>
+                        <h1 className="side-conainter__title">Sistemas de operaciones <br />
+                        Logísticas del transporte <br />
+                         Fluvial - Guaviare</h1>
                     </div>
 
                     <div className="bottom-side-container">
