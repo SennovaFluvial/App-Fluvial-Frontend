@@ -55,7 +55,7 @@ export const AgregarVehiculo = () => {
     return (
         <>
             <div className="d-flex-empleado justify-content-center align-items-center vh-100">
-                <div className="container-empleado bg-light shadow rounded p-4">
+                <div className="container bg-light shadow rounded p-4">
                     <h2 className="text-center mb-2">AGREGAR VEHÍCULO</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="row">

@@ -1,5 +1,5 @@
-import React from 'react'
-
+import React from 'react';
+import Flag from 'react-world-flags';
 
 export const Select = ({ text, options = [], name, value, event, icon }) => {
     return (
@@ -29,4 +29,3 @@ export const Select = ({ text, options = [], name, value, event, icon }) => {
         </div>
     )
 }
-
