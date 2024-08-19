@@ -4,6 +4,7 @@ import { Select } from '../../html components/Selects';
 import { useOptionsDepto, useOptionsCities, status, OptionsTypeDocument, genero, maritalStatus } from '../update/options/arrays.jsx';
 import '../../../assets/css/AgregarEmpleado.css';
 import instance from '../../../config/AxiosApi.jsx';
+import { Navigate } from 'react-router';
 
 export const AgregarMarinero = () => {
 
@@ -37,7 +38,7 @@ export const AgregarMarinero = () => {
             };
             const jsonData = JSON.stringify(dataUser);
             await instance.post('/employeefluvial/save', jsonData, config);
-            navigate('adminSection/show-users');
+            // Navigate('adminSection/show-users');
         } catch (error) {
             console.error('Error al crear el usuario:', error.response ? error.response.data : error.message);
         }

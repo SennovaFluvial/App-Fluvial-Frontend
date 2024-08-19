@@ -6,6 +6,7 @@ import { status, OptionsTypeDocument, genero, maritalStatus, useOptionsCities } 
 import '../../../assets/css/AgregarEmpleado.css';
 
 export const AgregarMotorista = () => {
+
     const [formData, setFormData] = useState({
         name: '',
         lastName: '',
@@ -20,12 +21,26 @@ export const AgregarMotorista = () => {
         address: '',
         sex: '',
         status: '',
-        employeeType: { typeName: 'Marinero' },
-        createdBy: 'karen'
+        employeeType: { typeName: 'Motorista' },
     });
 
     const [errorsForms, setErrorsForms] = useState({});
 
+
+    const createUser = async (dataUser) => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            };
+            const jsonData = JSON.stringify(dataUser);
+            await instance.post('/employeefluvial/save', jsonData, config);
+            // navigate('adminSection/show-users');
+        } catch (error) {
+            console.error('Error al crear el usuario:', error.response ? error.response.data : error.message);
+        }
+    };
     const handleChange = (event) => {
         const { name, value } = event.target;
 
@@ -48,7 +63,7 @@ export const AgregarMotorista = () => {
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         const newErrors = {};
@@ -78,6 +93,7 @@ export const AgregarMotorista = () => {
         const userConfirmed = window.confirm(confirmationMessage);
 
         if (userConfirmed) {
+            await createUser({ data: formData })
             alert('Marinero creado correctamente');
             console.log('Formulario enviado', formData);
             window.location.reload();

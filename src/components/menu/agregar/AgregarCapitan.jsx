@@ -20,6 +20,7 @@ export const AgregarCapitan = () => {
         sex: '',
         status: '',
         employeeType: { typeName: 'Capitan' },
+        employeeType: { typeName: 'Capitan' },
     });
 
     const [errorsForms, setErrorsForms] = useState({});
@@ -62,6 +63,7 @@ export const AgregarCapitan = () => {
     };
 
     const handleSubmit = async (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         const newErrors = {};
@@ -91,6 +93,7 @@ export const AgregarCapitan = () => {
         const userConfirmed = window.confirm(confirmationMessage);
 
         if (userConfirmed) {
+            await createUser({ data: formData })
             await createUser({ data: formData })
             alert('Marinero creado correctamente');
             console.log('Formulario enviado', formData);
