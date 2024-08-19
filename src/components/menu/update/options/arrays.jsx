@@ -102,20 +102,24 @@ export const status = [
     { label: 'Inactivo', value: 'inactivo' }
 ];
 
-export const codigoPaises= [
-    { label: <><Flag code="COL" style={{ width: '20px', marginRight: '8px' }} />+57 Colombia</>, value: 'colombia' },
-    { label: <><Flag code="MEX" style={{ width: '20px', marginRight: '8px' }} />+52 México</>, value: 'mexico' }
+// export const codigoPaises= [
+//     { label: <><Flag code="COL" style={{ width: '20px', marginRight: '8px' }} />+57 Colombia</>, value: 'colombia' },
+//     { label: <><Flag code="MEX" style={{ width: '20px', marginRight: '8px' }} />+52 México</>, value: 'mexico' }
+// ];
+export const codigoPaises = [
+    { label: +57, value: 'colombia' },
+    { label: +52, value: 'mexico' }
 ];
 
 export const maritalStatus = [
-    { label: 'Soltero', value: 'soltero'},
+    { label: 'Soltero', value: 'soltero' },
     { label: 'Casado', value: 'sasado' },
     { label: 'Divorciado', value: 'divorciado' },
     { label: 'Unión libre', value: 'unión libre' }
 ];
 
-export const nationality= [
-    { label: 'Colombiano', value: 'colombiano'},
+export const nationality = [
+    { label: 'Colombiano', value: 'colombiano' },
     { label: 'Ecuatoriano', value: 'ecuatoriano' },
     { label: 'Chileno', value: 'chileno' },
     { label: 'Argentino', value: 'argentino' },

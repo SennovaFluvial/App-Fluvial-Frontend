@@ -3,6 +3,8 @@ import { Inputs } from '../../html components/Inputs';
 import { Select } from '../../html components/Selects';
 import { useOptionsDepto, useOptionsCities, OptionsTypeDocument, status } from '../update/options/arrays.jsx';
 import '../../../assets/css/AgregarEmpleado.css';
+import instance from '../../../config/AxiosApi.jsx';
+import { Navigate } from 'react-router';
 
 export const AgregarEmpresa = () => {
     const [formData, setFormData] = useState({
@@ -19,6 +21,21 @@ export const AgregarEmpresa = () => {
 
     const [errorsForms, setErrorsForms] = useState({});
 
+    const createCompany = async (dataCompany) => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            };
+            const jsonData = JSON.stringify(dataCompany);
+            await instance.post('/save', jsonData, config);
+            Navigate('adminSection/show-companies');
+        } catch (error) {
+            console.error('Error al crear el usuario:', error.response ? error.response.data : error.message);
+        }
+    };
+
     const handleChange = (event) => {
         const { name, value } = event.target;
 
@@ -32,7 +49,7 @@ export const AgregarEmpresa = () => {
         setFormData({ ...formData, [name]: value });
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         const newErrors = {};
@@ -54,6 +71,7 @@ export const AgregarEmpresa = () => {
         const userConfirmed = window.confirm(confirmationMessage);
 
         if (userConfirmed) {
+            createCompany({ data: formData })
             alert('Empresa creada correctamente');
             console.log('Formulario enviado', formData);
             window.location.reload();

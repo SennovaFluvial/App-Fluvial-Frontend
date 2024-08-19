@@ -19,11 +19,26 @@ export const AgregarCapitan = () => {
         address: '',
         sex: '',
         status: '',
-        employeeType: { typeName: 'Marinero' },
-        createdBy: 'karen'
+        employeeType: { typeName: 'Capitan' },
     });
 
     const [errorsForms, setErrorsForms] = useState({});
+
+
+    const createUser = async (dataUser) => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            };
+            const jsonData = JSON.stringify(dataUser);
+            await instance.post('/employeefluvial/save', jsonData, config);
+            // navigate('adminSection/show-users');
+        } catch (error) {
+            console.error('Error al crear el usuario:', error.response ? error.response.data : error.message);
+        }
+    };
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -47,7 +62,7 @@ export const AgregarCapitan = () => {
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         const newErrors = {};
@@ -77,6 +92,7 @@ export const AgregarCapitan = () => {
         const userConfirmed = window.confirm(confirmationMessage);
 
         if (userConfirmed) {
+            await createUser({ data: formData })
             alert('Marinero creado correctamente');
             console.log('Formulario enviado', formData);
             window.location.reload();
