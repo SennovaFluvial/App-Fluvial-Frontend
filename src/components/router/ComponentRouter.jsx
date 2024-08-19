@@ -16,6 +16,7 @@ import { AgregarEmpleado } from '../menu/agregar/AgregarEmpleado.jsx';
 import { AgregarEmpresa } from '../menu/agregar/AgregarEmpresa.jsx';
 import { AgregarCapitan } from '../menu/agregar/AgregarCapitan.jsx';
 import { AgregarMotorista } from '../menu/agregar/AgregarMotorista.jsx';
+import { AgregarCliente } from '../menu/agregar/AgregarCliente.jsx';
 /**
  * Componente ComponentRouter
  * 
@@ -59,6 +60,7 @@ export const ComponentRouter = () => {
                     <Route path="add-company" element={< AgregarEmpresa />} />
                     <Route path="add-captain" element={< AgregarCapitan />} />
                     <Route path="add-boat-driver" element={< AgregarMotorista />} />
+                    <Route path="add-customer" element={< AgregarCliente />} />
 
                     {/* Agregar las rutas protegias aqui */}
                 </Route>

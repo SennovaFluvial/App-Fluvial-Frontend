@@ -21,10 +21,10 @@ export const DashBoard = ({ user, setUser }) => {
                 <>
                     <div className="container-fluid">
                         <div className="row">
-                            <div className="col-md-3">
+                            <div className="col-md-2">
                                 <Sidebar user={user} setUser={setUser} /> {/* Muestra la barra lateral */}
                             </div>
-                            <div className="col-md-9">
+                            <div className="col-md-10">
                                 <div className="row">
                                     <div className="col-md-12">
                                         <Outlet /> {/* Muestra el contenido de las rutas hijas */}

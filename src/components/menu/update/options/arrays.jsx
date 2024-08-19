@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Flag from "react-world-flags";
 import instance from "../../../../config/AxiosApi";
 
 // Hook para obtener la lista de departamentos desde la API
@@ -78,13 +79,12 @@ export const useOptionsCities = () => {
     return listCities;
 };
 
-// Opciones estáticas
 export const OptionsTypeDocument = [
-    { label: 'C.C', value: 'Cédula' },
-    { label: 'T.I', value: 'Tarjeta de identidad' },
-    { label: 'C.E', value: 'Cédula extranjera' },
-    { label: 'Pasaporte', value: 'Pasaporte' }
-];
+    { label: 'C.C', value: 'Cedula' },
+    { label: 'T.I', value: 'tarjeta de identidad' },
+    { label: 'C.E', value: 'cedula extranjera' },
+    { label: 'Pasaporte', value: 'Passport' }
+]
 
 export const roles = [
     { label: 'Administrador', value: 'ADMIN' },
@@ -97,20 +97,27 @@ export const genero = [
     { label: 'Masculino', value: 'Masculino' },
     { label: 'Otro', value: 'Otro' }
 ];
-
 export const status = [
     { label: 'Activo', value: 'activo' },
     { label: 'Inactivo', value: 'inactivo' }
 ];
 
-export const codigoPaises = [
-    { label: '+57', value: 'colombia' },
-    { label: '+52', value: 'mexico' }
+export const codigoPaises= [
+    { label: <><Flag code="COL" style={{ width: '20px', marginRight: '8px' }} />+57 Colombia</>, value: 'colombia' },
+    { label: <><Flag code="MEX" style={{ width: '20px', marginRight: '8px' }} />+52 México</>, value: 'mexico' }
 ];
 
 export const maritalStatus = [
-    { label: 'Soltero', value: 'soltero' },
-    { label: 'Casado', value: 'casado' }, // Corregido de 'sasado' a 'casado'
+    { label: 'Soltero', value: 'soltero'},
+    { label: 'Casado', value: 'sasado' },
     { label: 'Divorciado', value: 'divorciado' },
     { label: 'Unión libre', value: 'unión libre' }
+];
+
+export const nationality= [
+    { label: 'Colombiano', value: 'colombiano'},
+    { label: 'Ecuatoriano', value: 'ecuatoriano' },
+    { label: 'Chileno', value: 'chileno' },
+    { label: 'Argentino', value: 'argentino' },
+    { label: 'Chileno', value: 'chileno' },
 ];

@@ -8,7 +8,7 @@ export const ShowCustomers = () => {
   const [loading, setLoading] = useState(true);
   const [customers, setCustomers] = useState([]);
 
-  const getCustomers = useCallback(async () => {
+  const getCustomers = async () => {
     try {
       const response = await instance.get('/customers/all');
       setCustomers(response.data);
@@ -17,11 +17,11 @@ export const ShowCustomers = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  };
 
   useEffect(() => {
     getCustomers();
-  }, [getCustomers]);
+  }, []); // Arreglo vacío significa que el efecto solo se ejecuta al montar el componente
 
   if (loading) {
     return (
