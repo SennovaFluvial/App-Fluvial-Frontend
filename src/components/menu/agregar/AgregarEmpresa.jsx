@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Inputs } from '../../html components/Inputs';
 import { Select } from '../../html components/Selects';
-import { OptionsDepto, OptionsCity, status } from '../update/options/arrays.jsx';
+import { useOptionsDepto, useOptionsCities, OptionsTypeDocument, status } from '../update/options/arrays.jsx';
 import '../../../assets/css/AgregarEmpleado.css';
 
 export const AgregarEmpresa = () => {
@@ -104,11 +104,11 @@ export const AgregarEmpresa = () => {
                     </div>
                     <div className="row"> {/* Ubicación */}
                         <div className="col-md-6">
-                            <Select text="Departamento" name="department" event={handleChange} options={OptionsDepto} />
+                            <Select text="Departamento" name="department" event={handleChange} options={OptionsTypeDocument} />
                             {errorsForms.department && <div className="text-danger">{errorsForms.department}</div>}
                         </div>
                         <div className="col-md-6">
-                            <Select text="Municipio" name="municipality" event={handleChange} options={OptionsCity} />
+                            <Select text="Municipio" name="municipality" event={handleChange} options={useOptionsCities} />
                             {errorsForms.municipality && <div className="text-danger">{errorsForms.municipality}</div>}
                         </div>
                         <div className="col-md-6">

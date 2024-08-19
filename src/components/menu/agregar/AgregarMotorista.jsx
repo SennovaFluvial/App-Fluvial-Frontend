@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Inputs } from '../../html components/Inputs';
 import { Select } from '../../html components/Selects';
-import { OptionsDepto, OptionsCity, status, OptionsTypeDocument, genero, maritalStatus } from '../update/options/arrays.jsx';
+import { status, OptionsTypeDocument, genero, maritalStatus, useOptionsCities } from '../update/options/arrays.jsx';
+
 import '../../../assets/css/AgregarEmpleado.css';
 
 export const AgregarMotorista = () => {
@@ -116,7 +117,7 @@ export const AgregarMotorista = () => {
                             {errorsForms.dateOfBirth && <div className="text-danger">{errorsForms.dateOfBirth}</div>}
                         </div>
                         <div className="col-md-4">
-                            <Select text="Nacionalidad" name="nationality" event={handleChange} options={OptionsCity} />
+                            <Select text="Nacionalidad" name="nationality" event={handleChange} options={useOptionsCities} />
                             {errorsForms.nationality && <div className="text-danger">{errorsForms.nationality}</div>}
                         </div>
                         <div className="col-md-4">
@@ -161,7 +162,7 @@ export const AgregarMotorista = () => {
                     </div>
 
                     <div className="text-center mt-3">
-                        <button type="submit" className="btn btn-success">Crear Motorista <i class="fa-solid fa-vest"></i></button>
+                        <button type="submit" className="btn btn-success">Crear Motorista <i className="fa-solid fa-vest"></i></button>
                     </div>
                 </form>
             </div>

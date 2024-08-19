@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from 'react'
-
 import { Select } from '../../html components/Selects' // Componente reutlizable de Seleccion
 import { Inputs } from '../../html components/Inputs'
-import { useOptionsDepto, usePtionsCompaines, usePtionsCities } from '../update/options/arrays.jsx'
-import { OptionsCity, OptionsTypeDocument, roles, genero, status } from '../update/options/arrays.jsx'
+import { useOptionsDepto, useOptionsCompanies, useOptionsCities, OptionsTypeDocument, roles, genero, status } from '../update/options/arrays.jsx'
 import { useParams } from 'react-router'
-import { useNewContext } from '../../../Context/Provider.jsx'
 
 export const UpdateUsers = () => {
     const OptionsDepto = useOptionsDepto();
-    const OptionsComapnies = usePtionsCompaines();
-    const OptionsCities = usePtionsCities();
-    const { updateUser } = useNewContext();
+    const OptionsComapnies = useOptionsCompanies();
+    const OptionsCities = useOptionsCities(); // Se usa?
     const { id } = useParams();
-    const { users } = useNewContext();
-    const { deptos } = useNewContext();
     const userId = parseInt(id, 10);
     const [formData, setFormData] = useState({
         username: "",

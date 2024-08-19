@@ -1,38 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { Select } from '../../html components/Selects';
 import { Inputs } from '../../html components/Inputs';
-import { useOptionsDepto, usePtionsCompaines, usePtionsCities } from '../update/options/arrays.jsx';
-import { OptionsDepto, OptionsCity, OptionsTypeDocument, roles, genero, status, codigoPaises, maritalStatus } from '../update/options/arrays.jsx';
+import { useOptionsDepto, useOptionsCompanies, useOptionsCities, OptionsTypeDocument, roles, genero, status, maritalStatus, codigoPaises } from '../update/options/arrays.jsx';
 import '../../../assets/css/AgregarEmpleado.css';
-import { useNewContext } from '../../../Context/Provider.jsx';
 
 export const AgregarEmpleado = () => {
 
-  // const OptionsDepto = useOptionsDepto();
-  const OptionsComapnies = usePtionsCompaines();
-  const OptionsCities = usePtionsCities();
-  const { createUser } = useNewContext();
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-    roleRequest: {
-      roleListName: []
-    },
-    estado: "",
-    companyName: "",
-    name: "",
-    lastName: "",
-    typeDocument: "",
-    numDocument: "",
-    phone: "",
-    address: "",
-    sex: "",
-    cityName: "",
-
-    confirmUsername: "",
-    confirmPassword: "",
-    dateOfBirth: ""
-  });
+  const [formData, setFormData] = useState(
+    {
+      name: '',
+      lastName: '',
+      typeDocument: '',
+      numDocument: '',
+      dateOfBirth: '',
+      sex: '',
+      departamento: '',
+      cityName: '',
+      address: '',
+      codigoPais: '',
+      phone: '',
+      username: '',
+      confirmUsername: '',
+      password: '',
+      confirmPassword: '',
+      roleRequest: {
+        roleListName: []
+      },
+      estado: '',
+      maritalStatus: ''
+    }
+  );
 
 
   const [errorsForms, setErrorsForms] = useState({});
@@ -200,11 +197,11 @@ export const AgregarEmpleado = () => {
             </div>
             <div className="row"> {/* Ciudad y Departamento */}
               <div className="col-md-4">
-                <Select event={handleChange} text="Departamento" options={OptionsDepto} name="departamento" />
+                <Select event={handleChange} text="Departamento" options={useOptionsDepto} name="departamento" />
                 {errorsForms.departamento && <div className="text-danger">{errorsForms.departamento}</div>}
               </div>
               <div className="col-md-4">
-                <Select event={handleChange} text="Ciudad" options={OptionsCity} name="cityName" />
+                <Select event={handleChange} text="Ciudad" options={useOptionsCities} name="cityName" />
                 {errorsForms.cityName && <div className="text-danger">{errorsForms.cityName}</div>}
               </div>
               <div className="col-md-4">
@@ -257,7 +254,7 @@ export const AgregarEmpleado = () => {
               </div>
             </div>
             <div className="text-center">
-                <button type="submit" className="btn btn-success">Crear Empleado <i class="fa-solid fa-building-user"></i></button>
+              <button type="submit" className="btn btn-success">Crear Empleado <i className="fa-solid fa-building-user"></i></button>
             </div>
           </form>
         </div>

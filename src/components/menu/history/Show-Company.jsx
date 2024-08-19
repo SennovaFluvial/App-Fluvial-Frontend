@@ -1,26 +1,33 @@
 // import axios from 'axios'
 import React from 'react'
 import { useEffect, useState } from 'react'
-
 import '../../../assets/css/show/styles-Show.css';
-
 import { Spinner } from '../../animations/Spiner';
 import { Grid } from '../../animations/Grid';
-import { useNewContext } from '../../../Context/Provider';
+import instance from '../../../config/AxiosApi';
 
 export const ShowCompany = () => {
 
-  const { companies, getCompanies } = useNewContext();
   const [loading, setLoading] = useState(true);
+  const [companies, setCompanies] = useState([]);
+
+
+  const getCompanies = async () => {
+    try {
+      const response = await instance.get("/companie/findAll");
+      setCompanies(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching companies:", error);
+      setLoading(false);
+    }
+  };
+
 
   useEffect(() => {
-    const loadUsers = async () => {
-      await getCompanies();
-      setLoading(false);
-    };
+    getCompanies();
+  }, []);
 
-    loadUsers();
-  }, [getCompanies]);
 
   if (loading) {
     return (
@@ -29,17 +36,18 @@ export const ShowCompany = () => {
           <Spinner />
         </Grid>
       </div>
-    )
+    );
   }
 
-
-
+  // Muestra los datos en una tabla
   return (
     <>
       <div className="container my-5">
         <div className="row text-center bg-info">
           <div className="col-md-12 py-3">
-            <h1> <b>TABLA DE EMPRESAS</b> <i className="fa-solid fa-building ms-5"></i></h1>
+            <h1>
+              <b>TABLA DE EMPRESAS</b> <i className="fa-solid fa-building ms-5"></i>
+            </h1>
           </div>
         </div>
         <table className="table my-5">
@@ -64,14 +72,10 @@ export const ShowCompany = () => {
                 <td>{item.phone}</td>
                 <td>{item.status}</td>
                 <td>
-
-                  <button
-                    className='btn icon-link-hover ms-3 text-primary'>
+                  <button className='btn icon-link-hover ms-3 text-primary'>
                     <i className="fa-solid fa-pen-to-square icon-option"></i>
                   </button>
-
-                  <button
-                    className='btn icon-link-hover ms-3 text-warning'>
+                  <button className='btn icon-link-hover ms-3 text-warning'>
                     <i className="fa-solid fa-eye icon-option"></i>
                   </button>
                 </td>
