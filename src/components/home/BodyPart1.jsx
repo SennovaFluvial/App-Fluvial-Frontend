@@ -47,7 +47,7 @@ export const BodyPart1 = () => {
             >
 
                 <div className="container contenedorPart1">
-                    <h1 className='text-center titulo'>APLICACIÓN DE TRASABILIDAD DEL TRANSPORTE FLUVIAL</h1>
+                    <h1 className='text-center titulo'>APLICACIÓN DE TRAZABILIDAD DEL TRANSPORTE FLUVIAL</h1>
 
                     <p className='mt-5 parrafo'>
                         En un esfuerzo para reactivar y estimular una de las actividades más cruciales, pero menos impulsada de nuestro país Colombia.
