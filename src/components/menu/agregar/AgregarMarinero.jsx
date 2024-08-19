@@ -1,29 +1,47 @@
 import React, { useState } from 'react';
 import { Inputs } from '../../html components/Inputs';
 import { Select } from '../../html components/Selects';
-import { OptionsDepto, OptionsCity, status, OptionsTypeDocument, genero, maritalStatus } from '../update/options/arrays.jsx';
+import { useOptionsDepto, useOptionsCities, status, OptionsTypeDocument, genero, maritalStatus } from '../update/options/arrays.jsx';
 import '../../../assets/css/AgregarEmpleado.css';
+import instance from '../../../config/AxiosApi.jsx';
 
 export const AgregarMarinero = () => {
-    const [formData, setFormData] = useState({
-        name: '',
-        lastName: '',
-        typeDocument: '',
-        numDocument: '',
-        licencia: '',
-        email: '',
-        dateOfBirth: '',
-        nationality: '',
-        maritalStatus: '',
-        phone: '',
-        address: '',
-        sex: '',
-        status: '',
-        employeeType: { typeName: 'Marinero' },
-        createdBy: 'karen'
-    });
+
+    const [formData, setFormData] = useState(
+        {
+            name: '',
+            lastName: '',
+            typeDocument: '',
+            numDocument: '',
+            licencia: '',
+            email: '',
+            dateOfBirth: '',
+            nationality: '',
+            maritalStatus: '',
+            phone: '',
+            address: '',
+            sex: '',
+            status: '',
+            employeeType: { typeName: 'Marinero' },
+        }
+    );
 
     const [errorsForms, setErrorsForms] = useState({});
+
+    const createUser = async (dataUser) => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            };
+            const jsonData = JSON.stringify(dataUser);
+            await instance.post('/employeefluvial/save', jsonData, config);
+            navigate('adminSection/show-users');
+        } catch (error) {
+            console.error('Error al crear el usuario:', error.response ? error.response.data : error.message);
+        }
+    };
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -37,7 +55,7 @@ export const AgregarMarinero = () => {
                 const { dateOfBirth, ...rest } = errorsForms;
                 setErrorsForms(rest);
             }
-        } else if (value.trim()) {
+        } else if (typeof value === 'string' && value.trim()) {
             const { [name]: removed, ...rest } = errorsForms;
             setErrorsForms(rest);
         } else {
@@ -47,13 +65,13 @@ export const AgregarMarinero = () => {
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         const newErrors = {};
 
         for (let [name, value] of Object.entries(formData)) {
-            if (!value.trim()) {
+            if (typeof value === 'string' && !value.trim()) {
                 newErrors[name] = "Campo obligatorio";
             }
         }
@@ -77,6 +95,7 @@ export const AgregarMarinero = () => {
         const userConfirmed = window.confirm(confirmationMessage);
 
         if (userConfirmed) {
+            await createUser({ data: formData })
             alert('Marinero creado correctamente');
             console.log('Formulario enviado', formData);
             window.location.reload();
@@ -84,6 +103,8 @@ export const AgregarMarinero = () => {
             alert('Operación cancelada');
         }
     };
+
+    console.log(formData);
 
     return (
         <div className="d-flex-empleado justify-content-center align-items-center vh-100">
@@ -116,7 +137,7 @@ export const AgregarMarinero = () => {
                             {errorsForms.dateOfBirth && <div className="text-danger">{errorsForms.dateOfBirth}</div>}
                         </div>
                         <div className="col-md-4">
-                            <Select text="Nacionalidad" name="nationality" event={handleChange} options={OptionsCity} />
+                            <Select text="Nacionalidad" name="nationality" event={handleChange} options={useOptionsCities} />
                             {errorsForms.nationality && <div className="text-danger">{errorsForms.nationality}</div>}
                         </div>
                         <div className="col-md-4">

@@ -1,78 +1,89 @@
-import { useNewContext } from "../../../../Context/Provider";
 import { useState, useEffect } from "react";
-import Flag from 'react-world-flags';
+import Flag from "react-world-flags";
+import instance from "../../../../config/AxiosApi";
 
+// Hook para obtener la lista de departamentos desde la API
 export const useOptionsDepto = () => {
-    const { deptos } = useNewContext();
     const [listDeptos, setListDeptos] = useState([]);
 
-    useEffect(() => {
-        if (deptos) {
+    // Obtiene la lista de departamentos desde la API
+    const getDeptos = async () => {
+        try {
+            const response = await instance.get('/department/all');
             setListDeptos(
-                deptos.map(depto => ({
+                response.data.map(depto => ({
                     label: depto.departamento,
                     value: depto.departamento
                 }))
             );
+        } catch (error) {
+            console.error('Error en obtener departamentos', error);
         }
-    }, [deptos]);
+    };
+
+    useEffect(() => {
+        getDeptos();
+    }, []); // Solo se ejecuta una vez al montar el componente
 
     return listDeptos;
 };
 
+// Hook para obtener la lista de compañías desde la API
+export const useOptionsCompanies = () => {
+    const [listCompanies, setListCompanies] = useState([]);
 
-export const usePtionsCompaines = () => {
-    const { companies } = useNewContext();
-    const [listCompaines, setListCompaines] = useState([])
-
-    useEffect(() => {
-        if (companies) {
-            setListCompaines(
-                companies.map(company => ({
+    const getCompanies = async () => {
+        try {
+            const response = await instance.get("/companie/findAll");
+            setListCompanies(
+                response.data.map(company => ({
                     label: company.company,
                     value: company.company
                 }))
             );
+        } catch (error) {
+            console.error('Error en obtener las empresas', error);
         }
-    }, [companies]);
-
-    return listCompaines;
-};
-
-export const usePtionsCities = () => {
-    const { cities } = useNewContext();
-    const [listCities, setListCities] = useState([])
+    }
 
     useEffect(() => {
-        if (cities) {
+        getCompanies();
+    }, []);
+
+    return listCompanies;
+};
+
+// Hook para obtener la lista de ciudades desde la API
+export const useOptionsCities = () => {
+    const [listCities, setListCities] = useState([]);
+
+    // Obtiene la lista de ciudades desde la API
+    const getCities = async () => {
+        try {
+            const response = await instance.get('/city/all');
             setListCities(
-                cities.map(city => ({
+                response.data.map(city => ({
                     label: city.ciudad,
                     value: city.ciudad
                 }))
             );
+        } catch (error) {
+            console.error('Error en obtener ciudades', error);
         }
-    }, [cities]);
+    };
+
+    useEffect(() => {
+        getCities();
+    }, []); // Solo se ejecuta una vez al montar el componente
 
     return listCities;
 };
-
 
 export const OptionsTypeDocument = [
     { label: 'C.C', value: 'Cedula' },
     { label: 'T.I', value: 'tarjeta de identidad' },
     { label: 'C.E', value: 'cedula extranjera' },
     { label: 'Pasaporte', value: 'Passport' }
-]
-
-export const OptionsCity = [
-    { label: 'Villavicencio', value: 'Villavicencio' },
-    { label: 'San Jóse del Guaviare', value: 'San Jóse del Guaviare' },
-]
-
-export const OptionsDepto = [
-    { label: 'Guaviare', value: 'Guaviare' },
-    { label: 'Meta', value: 'Meta' }
 ]
 
 export const roles = [

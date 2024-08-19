@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Inputs } from '../../html components/Inputs';
 import { Select } from '../../html components/Selects';
-import { OptionsDepto, OptionsCity, status, OptionsTypeDocument, genero, maritalStatus } from '../update/options/arrays.jsx';
+import { useOptionsCities, status, OptionsTypeDocument, genero, maritalStatus } from '../update/options/arrays.jsx';
 import '../../../assets/css/AgregarEmpleado.css';
 
 export const AgregarCapitan = () => {
@@ -116,7 +116,7 @@ export const AgregarCapitan = () => {
                             {errorsForms.dateOfBirth && <div className="text-danger">{errorsForms.dateOfBirth}</div>}
                         </div>
                         <div className="col-md-4">
-                            <Select text="Nacionalidad" name="nationality" event={handleChange} options={OptionsCity} />
+                            <Select text="Nacionalidad" name="nationality" event={handleChange} options={useOptionsCities} />
                             {errorsForms.nationality && <div className="text-danger">{errorsForms.nationality}</div>}
                         </div>
                         <div className="col-md-4">
@@ -128,7 +128,6 @@ export const AgregarCapitan = () => {
                             {errorsForms.sex && <div className="text-danger">{errorsForms.sex}</div>}
                         </div>
                     </div>
-
                     {/* Contacto y Dirección */}
                     <div className="text-center mt-3">
                         <h3><b>CONTACTO Y DIRECCIÓN</b></h3>
@@ -161,7 +160,7 @@ export const AgregarCapitan = () => {
                     </div>
 
                     <div className="text-center mt-3">
-                        <button type="submit" className="btn btn-success">Crear Capitan <i class="fa-solid fa-id-card-clip"></i></button>
+                        <button type="submit" className="btn btn-success">Crear Capitan <i className="fa-solid fa-id-card-clip"></i></button>
                     </div>
                 </form>
             </div>

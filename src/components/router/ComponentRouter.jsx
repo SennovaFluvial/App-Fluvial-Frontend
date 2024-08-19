@@ -1,19 +1,16 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
-import { Route, Routes } from 'react-router-dom'; // Importa los componentes y funciones para manejar las rutas
-
-import { AgregarVehiculo } from '../menu/agregar/AgregarVehiculo.jsx'; // Importa el componente para agregar vehículos
-import { AgregarMarinero } from '../menu/agregar/AgregarMarinero.jsx'; // Importa el componente para agregar marineros
-import { ValidationPages } from './validation.jsx'; // Importa el componente que valida el estado del usuario
-import { VistaHomePageOff } from '../../vistaHome.jsx'; // Importa el componente para la página de inicio
-import { Login } from '../../Login.jsx'; // Importa el componente de inicio de sesión
-import { DashBoard } from '../../dashBoard.jsx'; // Importa el componente del panel de administración
-import { ShowCompany } from '../menu/history/Show-Company.jsx'; // Importa el componente para mostrar información de empresas
-import { ShowCustomers } from '../menu/history/Show-customers.jsx'; // Importa el componente para mostrar información de clientes
-import { ShowUsers } from '../menu/history/Show-users.jsx'; // Importa el componente para mostrar información de empleados
-
-import { UpdateUsers } from '../menu/update/Update-users.jsx'; // Importa el componente para actualizar usuarios
-
+import React, { useEffect, useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { AgregarVehiculo } from '../menu/agregar/AgregarVehiculo.jsx';
+import { AgregarMarinero } from '../menu/agregar/AgregarMarinero.jsx';
+import { ValidationPages } from './validation.jsx';
+import { VistaHomePageOff } from '../../vistaHome.jsx';
+import { Login } from '../../Login.jsx';
+import { DashBoard } from '../../dashBoard.jsx';
+import { ShowCompany } from '../menu/history/Show-Company.jsx';
+import { ShowCustomers } from '../menu/history/Show-customers.jsx';
+import { ShowUsers } from '../menu/history/Show-users.jsx';
+import { UpdateUsers } from '../menu/update/Update-users.jsx';
+import { NotFound } from './notFound.jsx';
 import { AgregarEmpleado } from '../menu/agregar/AgregarEmpleado.jsx';
 
 import { AgregarEmpresa } from '../menu/agregar/AgregarEmpresa.jsx';
@@ -28,39 +25,28 @@ import { AgregarCliente } from '../menu/agregar/AgregarCliente.jsx';
  * @returns {React.ReactNode} - Configuración de rutas para la aplicación.
  */
 export const ComponentRouter = () => {
-
-    // Estado para almacenar la información del usuario
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        // Obtiene el token almacenado en el localStorage
         const token = localStorage.getItem('token');
 
-        // Verifica si el token existe
         if (token) {
-
-            // Si el token existe, intenta obtener la información del usuario desde el localStorage
             const storedUser = JSON.parse(localStorage.getItem('user'));
-
-            // Verifica si la información del usuario existe
             if (storedUser) {
-
-                // Si la información del usuario existe, actualiza el estado del usuario con los datos obtenidos
                 setUser(storedUser);
             } else {
-
-                // Si no se encuentra la información del usuario, elimina el token y la información del usuario del localStorage
                 localStorage.removeItem('token');
-                localStorage.removeItem('user');
+                localStorage.removeItem('user');F
             }
         }
-    }, [])
+    }, []);
 
     return (
 
-        <Routes> {/* Configura las rutas de la aplicación */}
-            <Route exact path="/" element={<VistaHomePageOff />} /> {/* Ruta para la página de inicio */}
-            <Route exact path="/Login" element={<Login setUser={setUser} />} /> {/* Ruta para la página de inicio de sesión */}
+        <Routes>
+            {/* Rutas Públicas */}
+            <Route path="/" element={<VistaHomePageOff />} />
+            <Route path="/Login" element={<Login setUser={setUser} />} />
 
             <Route element={<ValidationPages user={user} setUser={setUser} />}> {/* Ruta protegida que requiere validación */}
                 <Route path="/adminSection" element={<DashBoard user={user} setUser={setUser} />}> {/* Ruta para el panel de administración */}
@@ -80,8 +66,9 @@ export const ComponentRouter = () => {
                 </Route>
             </Route>
 
+            <Route path="*" element={<NotFound />} />
         </Routes>
     );
-};
+}
 
 export default ComponentRouter;

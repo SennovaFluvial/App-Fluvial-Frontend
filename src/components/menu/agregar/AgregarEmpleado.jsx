@@ -1,43 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import { Select } from '../../html components/Selects';
 import { Inputs } from '../../html components/Inputs';
-import { useOptionsDepto, usePtionsCompaines, usePtionsCities } from '../update/options/arrays.jsx';
-import { OptionsDepto, OptionsCity, OptionsTypeDocument, roles, genero, status, codigoPaises, maritalStatus } from '../update/options/arrays.jsx';
+import { useOptionsDepto, useOptionsCompanies, useOptionsCities, OptionsTypeDocument, roles, genero, status, maritalStatus, codigoPaises } from '../update/options/arrays.jsx';
 import '../../../assets/css/AgregarEmpleado.css';
 
 export const AgregarEmpleado = () => {
 
-  // const OptionsDepto = useOptionsDepto();
-  const OptionsComapnies = usePtionsCompaines();
-  const OptionsCities = usePtionsCities();
+  const [formData, setFormData] = useState(
+    {
+      name: '',
+      lastName: '',
+      typeDocument: '',
+      numDocument: '',
+      dateOfBirth: '',
+      sex: '',
+      departamento: '',
+      cityName: '',
+      address: '',
+      codigoPais: '',
+      phone: '',
+      username: '',
+      confirmUsername: '',
+      password: '',
+      confirmPassword: '',
+      roleRequest: {
+        roleListName: []
+      },
+      estado: '',
+      maritalStatus: ''
+    }
+  );
 
-  const [formData, setFormData] = useState({
-    name: '',
-    lastName: '',
-    typeDocument: '',
-    numDocument: '',
-    dateOfBirth: '',
-    sex: '',
-    departamento: '',
-    cityName: '',
-    address: '',
-    codigoPais: '',
-    phone: '',
-    username: '',
-    confirmUsername: '',
-    password: '',
-    confirmPassword: '',
-    roleRequest: {
-      roleListName: []
-    },
-    estado: '',
-    maritalStatus: ''
-  });
 
   const [errorsForms, setErrorsForms] = useState({});
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+
+    setFormData(prevState => ({
+      ...prevState, [name]: value
+    }));
 
     if (name === 'roleListName') {
       setFormData({
@@ -65,8 +67,9 @@ export const AgregarEmpleado = () => {
     });
 
   }
+  console.log('Current formData:', formData);
 
-  useEffect(() => {
+  useEffect(() => { // --------
     if (formData.dateOfBirth) {
       const selectedDate = new Date(formData.dateOfBirth);
       const today = new Date();
@@ -78,15 +81,32 @@ export const AgregarEmpleado = () => {
 
     if (formData.confirmUsername && formData.username !== formData.confirmUsername) {
       handleErrors("confirmUsername", "Los nombres de usuario no coinciden")
+    } else {
+      // Update username if confirmation matches
+      if (formData.username === formData.confirmUsername) {
+        setFormData(prevState => ({
+          ...prevState,
+          username: formData.username
+        }));
+      }
     }
 
     if (formData.confirmPassword && formData.password !== formData.confirmPassword) {
       handleErrors("confirmPassword", "Las contraseñas no coinciden")
+    } else {
+      // Update password if confirmation matches
+      if (formData.password === formData.confirmPassword) {
+        setFormData(prevState => ({
+          ...prevState,
+          password: formData.password
+        }));
+      }
     }
 
   }, [formData.username, formData.confirmUsername, formData.password, formData.confirmPassword, formData.dateOfBirth]);
 
-  const handleSubmit = (event) => {
+
+  const handleSubmit = async (event) => { // ------------------
     event.preventDefault();
 
     const newErrors = {};
@@ -99,7 +119,6 @@ export const AgregarEmpleado = () => {
       } else if (value.trim()) {
         const { [name]: removed, ...rest } = errorsForms;
         setErrorsForms(rest);
-      
       } else {
         newErrors[name] = "Campo obligatorio";
       }
@@ -112,14 +131,22 @@ export const AgregarEmpleado = () => {
       return;
     }
 
-    const confirmationMessage = `¿Está seguro que quiere crear el usuario?\nUsuario: ${formData.username}\nRol: ${formData.roleRequest.roleListName[0]}`;
+    // Exclude confirmUsername and confirmPassword from the formData
+    const { confirmUsername, confirmPassword, ...dataToSend } = formData;
+
+    const confirmationMessage = `¿Está seguro que quiere crear el usuario?\nUsuario: ${dataToSend.username}\nRol: ${dataToSend.roleRequest.roleListName[0]}`;
     const userConfirmed = window.confirm(confirmationMessage);
 
     if (userConfirmed) {
-
-      alert('Usuario creado correctamente');
-      console.log('Formulario enviado');
-      window.location.reload();
+      try {
+        await createUser({ dataUser: dataToSend });
+        alert('Usuario creado correctamente');
+        console.log('Formulario enviado');
+        window.location.reload();
+      } catch (error) {
+        console.error('Error al crear el usuario:', error);
+        alert('Hubo un error al crear el usuario. Por favor, intente de nuevo.');
+      }
     } else {
       alert('Operación cancelada');
     }
@@ -170,11 +197,11 @@ export const AgregarEmpleado = () => {
             </div>
             <div className="row"> {/* Ciudad y Departamento */}
               <div className="col-md-4">
-                <Select event={handleChange} text="Departamento" options={OptionsDepto} name="departamento" />
+                <Select event={handleChange} text="Departamento" options={useOptionsDepto} name="departamento" />
                 {errorsForms.departamento && <div className="text-danger">{errorsForms.departamento}</div>}
               </div>
               <div className="col-md-4">
-                <Select event={handleChange} text="Ciudad" options={OptionsCity} name="cityName" />
+                <Select event={handleChange} text="Ciudad" options={useOptionsCities} name="cityName" />
                 {errorsForms.cityName && <div className="text-danger">{errorsForms.cityName}</div>}
               </div>
               <div className="col-md-4">
@@ -227,7 +254,7 @@ export const AgregarEmpleado = () => {
               </div>
             </div>
             <div className="text-center">
-                <button type="submit" className="btn btn-success">Crear Empleado <i class="fa-solid fa-building-user"></i></button>
+              <button type="submit" className="btn btn-success">Crear Empleado <i className="fa-solid fa-building-user"></i></button>
             </div>
           </form>
         </div>
