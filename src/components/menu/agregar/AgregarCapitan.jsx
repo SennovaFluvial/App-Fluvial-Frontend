@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Inputs } from '../../html components/Inputs';
 import { Select } from '../../html components/Selects';
-import { useOptionsCities, status, OptionsTypeDocument, genero, maritalStatus } from '../update/options/arrays.jsx';
+import { status, OptionsTypeDocument, genero, maritalStatus, nationality } from '../update/options/arrays.jsx';
 import '../../../assets/css/AgregarEmpleado.css';
 
 export const AgregarCapitan = () => {
@@ -19,11 +19,25 @@ export const AgregarCapitan = () => {
         address: '',
         sex: '',
         status: '',
-        employeeType: { typeName: 'Marinero' },
-        createdBy: 'karen'
+        employeeType: { typeName: 'Capitan' },
     });
 
     const [errorsForms, setErrorsForms] = useState({});
+
+    const createUser = async (dataUser) => {
+        try {
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            };
+            const jsonData = JSON.stringify(dataUser);
+            await instance.post('/employeefluvial/save', jsonData, config);
+            // navigate('adminSection/show-users');
+        } catch (error) {
+            console.error('Error al crear el usuario:', error.response ? error.response.data : error.message);
+        }
+    }
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -47,7 +61,7 @@ export const AgregarCapitan = () => {
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         const newErrors = {};
@@ -77,6 +91,7 @@ export const AgregarCapitan = () => {
         const userConfirmed = window.confirm(confirmationMessage);
 
         if (userConfirmed) {
+            await createUser({ data: formData })
             alert('Marinero creado correctamente');
             console.log('Formulario enviado', formData);
             window.location.reload();
@@ -116,7 +131,7 @@ export const AgregarCapitan = () => {
                             {errorsForms.dateOfBirth && <div className="text-danger">{errorsForms.dateOfBirth}</div>}
                         </div>
                         <div className="col-md-4">
-                            <Select text="Nacionalidad" name="nationality" event={handleChange} options={useOptionsCities} />
+                            <Select text="Nacionalidad" name="nationality" event={handleChange} options={nationality} />
                             {errorsForms.nationality && <div className="text-danger">{errorsForms.nationality}</div>}
                         </div>
                         <div className="col-md-4">
