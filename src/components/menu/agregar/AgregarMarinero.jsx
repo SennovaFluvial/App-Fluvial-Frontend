@@ -103,7 +103,7 @@ export const AgregarMarinero = () => {
             await createUser(formData)
             alert('Marinero creado correctamente');
             console.log('Formulario enviado', formData);
-            navigate('../../adminSection/show-users');
+            navigate('../../adminSection/show-crew');
         } else {
             alert('Operación cancelada');
         }

@@ -17,9 +17,11 @@ import { AgregarCliente } from '../menu/agregar/AgregarCliente.jsx';
 import { ShowCompany } from '../menu/history/Show-Company.jsx';
 import { ShowCustomers } from '../menu/history/Show-customers.jsx';
 import { ShowUsers } from '../menu/history/Show-users.jsx';
+import { ShowCrew } from '../menu/history/show-sailors.jsx';
 
 import { UpdateUsers } from '../menu/update/Update-users.jsx';
 import { UpdateCustomer } from '../menu/update/Update-customer.jsx';
+
 
 /**
  * Componente ComponentRouter
@@ -40,7 +42,7 @@ export const ComponentRouter = () => {
                 setUser(storedUser);
             } else {
                 localStorage.removeItem('token');
-                localStorage.removeItem('user');F
+                localStorage.removeItem('user'); F
             }
         }
     }, []);
@@ -54,7 +56,7 @@ export const ComponentRouter = () => {
 
             <Route element={<ValidationPages user={user} setUser={setUser} />}> {/* Ruta protegida que requiere validación */}
                 <Route path="/adminSection" element={<DashBoard user={user} setUser={setUser} />}> {/* Ruta para el panel de administración */}
-                
+
                     <Route path="add-company" element={< AgregarEmpresa />} />
                     <Route path="add-employed" element={< AgregarEmpleado />} />
                     <Route path="add-captain" element={< AgregarCapitan />} />
@@ -66,8 +68,9 @@ export const ComponentRouter = () => {
                     <Route path="show-companies" element={< ShowCompany />} /> {/* Ruta para ver compañias */}
                     <Route path="show-customers" element={< ShowCustomers />} /> {/* Ruta para ver clientes */}
                     <Route path="show-users" element={< ShowUsers />} /> {/* Ruta para ver usuarios */}
+                    <Route path="show-crew" element={< ShowCrew />} /> {/* Ruta para ver usuarios */}
 
-                    <Route path="update-customer/ :id" element={ < UpdateCustomer />} />
+                    <Route path="update-customer/ :id" element={< UpdateCustomer />} />
                     <Route path="update-user/:id" element={< UpdateUsers />} /> {/* Ruta actualizar usuario */}
 
                     {/* Agregar las rutas protegias aqui */}

@@ -3,7 +3,7 @@ import { Select } from '../../html components/Selects';
 import { Inputs } from '../../html components/Inputs';
 import '../../../assets/css/AgregarEmpleado.css';
 import { OptionsTypeDocument, genero, maritalStatus, nationality } from '../update/options/arrays.jsx';
-
+import instance from '../../../config/AxiosApi.jsx';
 export const AgregarCliente = () => {
 
     const [formData, setFormData] = useState({

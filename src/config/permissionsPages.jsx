@@ -5,7 +5,7 @@ export const role_permissions = {
     },
     SUPERADMIN: {
         allowedPaths: ['/adminSection/show-companies', '/adminSection/show-users'],
-        restrictedPaths: ['/adminSection/show-customers']
+        restrictedPaths: ['/adminSection/show-customers', '/adminSection/show-crew']
     }
 }
 

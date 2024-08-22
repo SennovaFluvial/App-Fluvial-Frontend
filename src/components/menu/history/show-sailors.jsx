@@ -1,24 +1,28 @@
 import React, { useEffect, useState } from 'react';
-
 import '../../../assets/css/show/styles-Show.css';
-
 import { Spinner } from '../../animations/Spiner';
 import { Grid } from '../../animations/Grid';
-import { useNewContext } from '../../../Context/Provider';
+import instance from '../../../config/AxiosApi.jsx';
+// Tripulacion
+export const ShowCrew = () => {
 
-export const ShowMarineros = () => {
-
-    const { marineros, getMarineros } = useNewContext();
     const [loading, setLoading] = useState(true);
+    const [crew, setCrew] = useState([])
+
+    const getCrew = async () => {
+        try {
+            const response = await instance.get("/employeefluvial/all");
+            setCrew(response.data);
+        } catch (error) {
+            console.error("Error fetching employed data:", error);
+        } finally {
+            setLoading(false);
+        }
+    }
 
     useEffect(() => {
-        const loadMarineros = async () => {
-            await getMarineros();
-            setLoading(false);
-        };
-
-        loadMarineros();
-    }, [getMarineros]);
+        getCrew();
+    }, []);
 
     if (loading) {
         return (
@@ -35,7 +39,7 @@ export const ShowMarineros = () => {
             <div className="container my-5">
                 <div className="row text-center bg-info">
                     <div className="col-md-12 py-3">
-                        <h1> <b>TABLA DE MARINEROS</b> <i className="fa-solid fa-anchor ms-5"></i></h1>
+                        <h1> <b>TABLA DE TRIPULACIÓN</b> <i className="fa-solid fa-anchor ms-5"></i></h1>
                     </div>
                 </div>
                 <table className="table my-5">
@@ -46,19 +50,21 @@ export const ShowMarineros = () => {
                             <th scope="col">Apellido</th>
                             <th scope="col">Número de documento</th>
                             <th scope="col">Teléfono</th>
+                            <th scope="col">Categoría</th>
                             <th scope="col">Estado</th>
                             <th scope="col"> </th>
                         </tr>
                     </thead>
                     <tbody>
-                        {marineros.map((item, index) => (
+                        {crew.map((item, index) => (
                             <tr key={item.id}>
                                 <td>{index + 1}</td>
-                                <td>{item.nombre}</td>
-                                <td>{item.apellido}</td>
-                                <td>{item.numDocumento}</td>
-                                <td>{item.telefono}</td>
-                                <td>{item.estado}</td>
+                                <td>{item.name}</td>
+                                <td>{item.lastName}</td>
+                                <td>{item.numDocument}</td>
+                                <td>{item.phone}</td>
+                                <td>{item.employeeType.typeName}</td>
+                                <td>{item.status}</td>
                                 <td>
 
                                     <button

@@ -9,13 +9,9 @@ export const ShowUsers = () => {
     const [loading, setLoading] = useState(true);
     const [employed, setEmployed] = useState([]);
 
-    const user = JSON.parse(localStorage.getItem('user'));
-    const role = user?.rol;
-    const url = role === "SUPERADMIN" ? "/companie/users" : (role === "ADMIN" ? "/employeefluvial/all" : null);
-
     const getEmployed = async () => {
         try {
-            const response = await instance.get(url);
+            const response = await instance.get("/companie/users");
             setEmployed(response.data);
         } catch (error) {
             console.error("Error fetching employed data:", error);
@@ -37,8 +33,6 @@ export const ShowUsers = () => {
             </div>
         );
     }
-
-    console.log("Empleados ", employed);
 
     return (
         <>
@@ -68,7 +62,7 @@ export const ShowUsers = () => {
                                 <td>{item.numDocument}</td>
                                 <td>{item.name}</td>
                                 <td>{item.lastName}</td>
-                                <td>{role === "SUPERADMIN" ? item.company.name : (role === "ADMIN" ? item.employeeType.typeName : null)}</td>
+                                <td>{item.company.name}</td>
                                 <td>{item.phone}</td>
                                 <td>{item.status}</td>
                                 <td>
