@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { Inputs } from '../../html components/Inputs';
 import { Select } from '../../html components/Selects';
-import { useOptionsCities, status, OptionsTypeDocument, genero, maritalStatus } from '../update/options/arrays.jsx';
+import { useOptionsCities, status, OptionsTypeDocument, genero, maritalStatus, nationality } from '../update/options/arrays.jsx';
 import '../../../assets/css/AgregarEmpleado.css';
+import { json, useNavigate } from 'react-router';
+import instance from '../../../config/AxiosApi.jsx';
 
 export const AgregarCapitan = () => {
+    const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         name: '',
         lastName: '',
@@ -27,14 +31,15 @@ export const AgregarCapitan = () => {
 
     const createUser = async (dataUser) => {
         try {
+            const jsonData = JSON.stringify(dataUser);
+
             const config = {
                 headers: {
                     'Content-Type': 'application/json',
                 },
             };
-            const jsonData = JSON.stringify(dataUser);
-            await instance.post('/employeefluvial/save', jsonData, config);
-            // navigate('adminSection/show-users');
+            const response = await instance.post('/employeefluvial/save', jsonData, config);
+            console.log("Respuesta del servidor:", response);
         } catch (error) {
             console.error('Error al crear el usuario:', error.response ? error.response.data : error.message);
         }
@@ -68,7 +73,7 @@ export const AgregarCapitan = () => {
         const newErrors = {};
 
         for (let [name, value] of Object.entries(formData)) {
-            if (!value.trim()) {
+            if (typeof value === 'string' && !value.trim()) {
                 newErrors[name] = "Campo obligatorio";
             }
         }
@@ -92,10 +97,10 @@ export const AgregarCapitan = () => {
         const userConfirmed = window.confirm(confirmationMessage);
 
         if (userConfirmed) {
-            await createUser({ data: formData })
+            await createUser(formData)
             alert('Marinero creado correctamente');
             console.log('Formulario enviado', formData);
-            window.location.reload();
+            navigate('../../adminSection/show-users');
         } else {
             alert('Operación cancelada');
         }
@@ -132,7 +137,7 @@ export const AgregarCapitan = () => {
                             {errorsForms.dateOfBirth && <div className="text-danger">{errorsForms.dateOfBirth}</div>}
                         </div>
                         <div className="col-md-4">
-                            <Select text="Nacionalidad" name="nationality" event={handleChange} options={useOptionsCities} />
+                            <Select text="Nacionalidad" name="nationality" event={handleChange} options={nationality} />
                             {errorsForms.nationality && <div className="text-danger">{errorsForms.nationality}</div>}
                         </div>
                         <div className="col-md-4">

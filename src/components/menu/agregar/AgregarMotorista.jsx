@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Inputs } from '../../html components/Inputs';
 import { Select } from '../../html components/Selects';
-import { status, OptionsTypeDocument, genero, maritalStatus, useOptionsCities } from '../update/options/arrays.jsx';
-
+import { status, OptionsTypeDocument, genero, maritalStatus, useOptionsCities, nationality } from '../update/options/arrays.jsx';
+import { useNavigate } from 'react-router';
+import instance from '../../../config/AxiosApi.jsx';
 import '../../../assets/css/AgregarEmpleado.css';
 
 export const AgregarMotorista = () => {
-
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: '',
         lastName: '',
@@ -29,18 +30,19 @@ export const AgregarMotorista = () => {
 
     const createUser = async (dataUser) => {
         try {
+            const jsonData = JSON.stringify(dataUser);
             const config = {
                 headers: {
                     'Content-Type': 'application/json',
                 },
             };
-            const jsonData = JSON.stringify(dataUser);
-            await instance.post('/employeefluvial/save', jsonData, config);
-            // navigate('adminSection/show-users');
+            const response = await instance.post('/employeefluvial/save', jsonData, config);
+            console.log("Respuesta del servidor:", response);
         } catch (error) {
             console.error('Error al crear el usuario:', error.response ? error.response.data : error.message);
         }
     };
+    
     const handleChange = (event) => {
         const { name, value } = event.target;
 
@@ -69,7 +71,7 @@ export const AgregarMotorista = () => {
         const newErrors = {};
 
         for (let [name, value] of Object.entries(formData)) {
-            if (!value.trim()) {
+            if (typeof value === 'string' && !value.trim()) {
                 newErrors[name] = "Campo obligatorio";
             }
         }
@@ -93,10 +95,10 @@ export const AgregarMotorista = () => {
         const userConfirmed = window.confirm(confirmationMessage);
 
         if (userConfirmed) {
-            await createUser({ data: formData })
+            await createUser(formData)
             alert('Marinero creado correctamente');
             console.log('Formulario enviado', formData);
-            window.location.reload();
+            navigate('../../adminSection/show-users');
         } else {
             alert('Operación cancelada');
         }
@@ -133,7 +135,7 @@ export const AgregarMotorista = () => {
                             {errorsForms.dateOfBirth && <div className="text-danger">{errorsForms.dateOfBirth}</div>}
                         </div>
                         <div className="col-md-4">
-                            <Select text="Nacionalidad" name="nationality" event={handleChange} options={useOptionsCities} />
+                            <Select text="Nacionalidad" name="nationality" event={handleChange} options={nationality} />
                             {errorsForms.nationality && <div className="text-danger">{errorsForms.nationality}</div>}
                         </div>
                         <div className="col-md-4">
