@@ -3,6 +3,8 @@ import '../../../assets/css/show/styles-Show.css';
 import instance from '../../../config/AxiosApi';
 import { Spinner } from '../../animations/Spiner';
 import { Grid } from '../../animations/Grid';
+import { Link } from 'react-router-dom';
+import { UpdateCustomer } from '../update/Update-customer';
 
 export const ShowCustomers = () => {
   const [loading, setLoading] = useState(true);
@@ -76,7 +78,9 @@ export const ShowCustomers = () => {
                     <i className="fa-solid fa-trash-can icon-option"></i>
                   </button>
                   <button className='btn icon-link-hover ms-3 text-primary'>
+                  <Link to={UpdateCustomer}>
                     <i className="fa-solid fa-pen-to-square icon-option"></i>
+                  </Link>
                   </button>
                   <button className='btn icon-link-hover ms-3 text-warning'>
                     <i className="fa-solid fa-eye icon-option"></i>

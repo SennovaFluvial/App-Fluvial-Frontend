@@ -24,10 +24,10 @@ export const AgregarCapitan = () => {
         sex: '',
         status: '',
         employeeType: { typeName: 'Capitan' },
+        employeeType: { typeName: 'Capitan' },
     });
 
     const [errorsForms, setErrorsForms] = useState({});
-
 
     const createUser = async (dataUser) => {
         try {
@@ -43,7 +43,7 @@ export const AgregarCapitan = () => {
         } catch (error) {
             console.error('Error al crear el usuario:', error.response ? error.response.data : error.message);
         }
-    };
+    }
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -68,41 +68,43 @@ export const AgregarCapitan = () => {
     };
 
     const handleSubmit = async (event) => {
-        event.preventDefault();
+        const handleSubmit = async (event) => {
+            event.preventDefault();
 
-        const newErrors = {};
+            const newErrors = {};
 
-        for (let [name, value] of Object.entries(formData)) {
-            if (typeof value === 'string' && !value.trim()) {
-                newErrors[name] = "Campo obligatorio";
+            for (let [name, value] of Object.entries(formData)) {
+                if (typeof value === 'string' && !value.trim()) {
+                    newErrors[name] = "Campo obligatorio";
+                }
             }
-        }
 
-        if (formData.dateOfBirth) {
-            const today = new Date();
-            const selectedDate = new Date(formData.dateOfBirth);
-            if (selectedDate > today) {
-                newErrors.dateOfBirth = "La fecha de nacimiento no puede ser una fecha futura";
+            if (formData.dateOfBirth) {
+                const today = new Date();
+                const selectedDate = new Date(formData.dateOfBirth);
+                if (selectedDate > today) {
+                    newErrors.dateOfBirth = "La fecha de nacimiento no puede ser una fecha futura";
+                }
             }
-        }
 
-        setErrorsForms({ ...errorsForms, ...newErrors });
+            setErrorsForms({ ...errorsForms, ...newErrors });
 
-        if (Object.keys(newErrors).length > 0) {
-            alert('Por favor, complete todos los campos obligatorios correctamente.');
-            return;
-        }
+            if (Object.keys(newErrors).length > 0) {
+                alert('Por favor, complete todos los campos obligatorios correctamente.');
+                return;
+            }
 
-        const confirmationMessage = `¿Está seguro que quiere crear al marinero?\nNombre: ${formData.name} ${formData.lastName}`;
-        const userConfirmed = window.confirm(confirmationMessage);
+            const confirmationMessage = `¿Está seguro que quiere crear al marinero?\nNombre: ${formData.name} ${formData.lastName}`;
+            const userConfirmed = window.confirm(confirmationMessage);
 
-        if (userConfirmed) {
-            await createUser(formData)
-            alert('Marinero creado correctamente');
-            console.log('Formulario enviado', formData);
-            navigate('../../adminSection/show-users');
-        } else {
-            alert('Operación cancelada');
+            if (userConfirmed) {
+                await createUser(formData)
+                alert('Marinero creado correctamente');
+                console.log('Formulario enviado', formData);
+                navigate('../../adminSection/show-users');
+            } else {
+                alert('Operación cancelada');
+            }
         }
     };
 
@@ -188,3 +190,4 @@ export const AgregarCapitan = () => {
         </div>
     )
 }
+

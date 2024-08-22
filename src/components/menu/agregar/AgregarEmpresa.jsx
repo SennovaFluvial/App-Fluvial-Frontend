@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Inputs } from '../../html components/Inputs';
 import { Select } from '../../html components/Selects';
-import { useOptionsDepto, useOptionsCities, OptionsTypeDocument, status } from '../update/options/arrays.jsx';
+import { useOptionsDepto, useOptionsCities, status } from '../update/options/arrays.jsx';
 import '../../../assets/css/AgregarEmpleado.css';
 import instance from '../../../config/AxiosApi.jsx';
 import { Navigate } from 'react-router';

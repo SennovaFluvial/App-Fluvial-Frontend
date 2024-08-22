@@ -39,7 +39,7 @@ export const BodyPart2 = () => {
                     </div>
                     <div className="col-md-6 text-center mt-5 pt-2 mb-5 pb-2">
                         <i className="fa-solid fa-arrows-rotate iconoS"></i>
-                        <p className="parrafo">Trasabilidad de procesos</p>
+                        <p className="parrafo">Trazabilidad de procesos</p>
                     </div>
                 </div>
             </div>

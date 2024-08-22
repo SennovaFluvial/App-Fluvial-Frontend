@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import axios from 'axios'; // Se importa la libreria de axios
 import './assets/css/login.css'
 import Logo from './assets/img/LogoSena.png'
+import { Link } from 'react-router-dom';
 
 /**
  * Componente Login
@@ -119,11 +120,11 @@ export const Login = ({ setUser }) => {
                                     <label className="input-form__label">Contraseña</label>
                                     <input type="password" className="form-control" value={password} onChange={(param) => setPassword(param.target.value)} />
                                 </div>
-                            </section>
                             <section className="login-form-button-wrapper">
-
                                 <button className="button" > Iniciar sesión </button>
-
+                                <br /><br />
+                                    <button className="button" > <Link to={'/'}>Home page</Link> </button>
+                            </section>
                             </section>
 
                             {error ? <p className="error-message alert alert-danger">{error}</p> : ''}

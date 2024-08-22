@@ -32,20 +32,18 @@ export const FooterPage = () => {
                 </div>
                 <div className="row">
                     <div className="col-md-4 text-center text-center">
-
-                        {/*
-                        <a href="#"><i className="fa-brands fa-facebook iconoF"></i></a>
+                        {/* <a href="#"><i className="fa-brands fa-facebook iconoF"></i></a>
                         <a href="#"><i className="fa-brands fa-whatsapp iconoF"></i></a>
-                        <a href="#"><i className="fa-brands fa-instagram iconoF"></i></a>
-                        */}
+                        <a href="#"><i className="fa-brands fa-instagram iconoF"></i></a> */}
+
 
                     </div>
                     <div className="col-md-4 text-center">
                         <b>Correo electrónico de soporte:</b> support@appfluvial.com
                     </div>
-                    <div className="col-md-4 text-center">
-                        <i className="fa-solid fa-phone-volume iconoF phone"></i> Teléfono: +57 316-448-2519
-                    </div>
+                    {/* <div className="col-md-4 text-center">
+                        <i className="fa-solid fa-phone-volume iconoF phone"></i> Teléfono: +57 345 258 252
+                    </div> */}
                 </div>
 
                 <div className="row">
