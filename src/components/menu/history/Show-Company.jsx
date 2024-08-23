@@ -14,7 +14,7 @@ export const ShowCompany = () => {
 
   const getCompanies = async () => {
     try {
-      const response = await ApiService.get("/companie/findAll");
+      const response = await ApiService.get("/api/v1/companie/findAll");
       setCompanies(response);
       setLoading(false);
     } catch (error) {

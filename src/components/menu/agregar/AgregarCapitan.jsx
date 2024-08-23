@@ -82,7 +82,7 @@ export const AgregarCapitan = () => {
 
         if (userConfirmed) {
             try {
-                await ApiService.post('/employeefluvial/save', formData);
+                await ApiService.post('/api/v1/employeefluvial/save', formData);
                 alert('Capitan creado correctamente');
                 console.log('Formulario enviado', formData);
                 navigate('../../adminSection/show-crew');

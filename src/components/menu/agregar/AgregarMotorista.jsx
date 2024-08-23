@@ -80,7 +80,7 @@ export const AgregarMotorista = () => {
 
         if (userConfirmed) {
             try {
-                await ApiService.post('/employeefluvial/save', formData);
+                await ApiService.post('/api/v1/employeefluvial/save', formData);
                 alert('Motorista creado correctamente');
                 console.log('Formulario enviado', formData);
                 navigate('../../adminSection/show-crew');
@@ -97,7 +97,7 @@ export const AgregarMotorista = () => {
     return (
         <div className="d-flex-empleado justify-content-center align-items-center vh-100">
             <div className="container-empleado bg-light shadow rounded p-4">
-                <h2 className="text-center mb-2">CREAR MARINERO</h2>
+                <h2 className="text-center mb-2">CREAR MOTORISTA</h2>
                 <form onSubmit={handleSubmit}>
                     {/* Información Personal */}
                     <div className="text-center">

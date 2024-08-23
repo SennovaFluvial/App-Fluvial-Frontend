@@ -11,7 +11,7 @@ export const ShowUsers = () => {
 
     const getEmployed = async () => {
         try {
-            const response = await ApiService.get("/companie/users");
+            const response = await ApiService.get("/api/v1/companie/users");
             setEmployed(response);
         } catch (error) {
             console.error("Error fetching employed data:", error);
@@ -62,7 +62,7 @@ export const ShowUsers = () => {
                                 <td>{item.numDocument}</td>
                                 <td>{item.name}</td>
                                 <td>{item.lastName}</td>
-                                <td>{item.company.name}</td>
+                                <td>{item.roles[0].roleEnum}</td>
                                 <td>{item.phone}</td>
                                 <td>{item.status}</td>
                                 <td>

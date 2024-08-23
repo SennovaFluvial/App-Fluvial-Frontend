@@ -9,7 +9,7 @@ export const useOptionsDepto = () => {
     // Obtiene la lista de departamentos desde la API
     const getDeptos = async () => {
         try {
-            const response = await instance.get('/department/all');
+            const response = await instance.get('/api/v1/department/all');
             setListDeptos(
                 response.data.map(depto => ({
                     label: depto.departamento,
@@ -34,7 +34,7 @@ export const useOptionsCompanies = () => {
 
     const getCompanies = async () => {
         try {
-            const response = await instance.get("/companie/findAll");
+            const response = await instance.get("/api/v1/companie/findAll");
             setListCompanies(
                 response.data.map(company => ({
                     label: company.company,
@@ -60,7 +60,7 @@ export const useOptionsCities = () => {
     // Obtiene la lista de ciudades desde la API
     const getCities = async () => {
         try {
-            const response = await instance.get('/city/all');
+            const response = await instance.get('/api/v1/city/all');
             setListCities(
                 response.data.map(city => ({
                     label: city.ciudad,

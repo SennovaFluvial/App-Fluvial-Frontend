@@ -57,9 +57,6 @@ export class ApiService {
             // Realiza la solicitud GET a la API y espera la respuesta
             const response = await instance.get(url_api);
 
-            // Muestra los datos obtenidos en la consola
-            console.log("Datos obtenidos correctamente", response.data);
-
             // Devuelve los datos obtenidos
             return response.data;
 

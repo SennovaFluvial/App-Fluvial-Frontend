@@ -85,7 +85,7 @@ export const AgregarMarinero = () => {
 
         if (userConfirmed) {
             try {
-                await ApiService.post('/employeefluvial/save', formData);
+                await ApiService.post('/api/v1/employeefluvial/save', formData);
                 alert('Marinero creado correctamente');
                 console.log('Formulario enviado', formData);
                 navigate('../../adminSection/show-crew');

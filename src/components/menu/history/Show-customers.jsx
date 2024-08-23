@@ -12,7 +12,7 @@ export const ShowCustomers = () => {
 
   const getCustomers = async () => {
     try {
-      const response = await ApiService.get('/customers/all');
+      const response = await ApiService.get('/api/v1/customers/all');
       setCustomers(response);
     } catch (error) {
       console.log('Error en obtener clientes', error);

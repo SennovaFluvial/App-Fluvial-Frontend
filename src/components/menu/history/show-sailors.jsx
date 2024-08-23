@@ -11,7 +11,7 @@ export const ShowCrew = () => {
 
     const getCrew = async () => {
         try {
-            const response = await ApiService.get("/employeefluvial/all");
+            const response = await ApiService.get("/api/v1/employeefluvial/all");
             setCrew(response);
         } catch (error) {
             console.error("Error fetching employed data:", error);

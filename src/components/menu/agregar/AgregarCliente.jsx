@@ -81,7 +81,7 @@ export const AgregarCliente = () => {
             alert('Por favor, complete todos los campos obligatorios correctamente.');
             return;
         }
-        await ApiService.post('/customers/save', formData);
+        await ApiService.post('/api/v1/customers/save', formData);
         alert('Cliente creado correctamente');
         console.log('Formulario enviado');
         nav("../../adminSection/show-customers");
