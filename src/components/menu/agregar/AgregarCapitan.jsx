@@ -3,8 +3,8 @@ import { Inputs } from '../../html components/Inputs';
 import { Select } from '../../html components/Selects';
 import { useOptionsCities, status, OptionsTypeDocument, genero, maritalStatus, nationality } from '../update/options/arrays.jsx';
 import '../../../assets/css/AgregarEmpleado.css';
-import { json, useNavigate } from 'react-router';
-import instance from '../../../config/AxiosApi.jsx';
+import { useNavigate } from 'react-router';
+import { ApiService } from '../../../class/ApiServices.jsx';
 
 export const AgregarCapitan = () => {
     const navigate = useNavigate();
@@ -24,26 +24,9 @@ export const AgregarCapitan = () => {
         sex: '',
         status: '',
         employeeType: { typeName: 'Capitan' },
-        employeeType: { typeName: 'Capitan' },
     });
 
     const [errorsForms, setErrorsForms] = useState({});
-
-    const createUser = async (dataUser) => {
-        try {
-            const jsonData = JSON.stringify(dataUser);
-
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            };
-            const response = await instance.post('/employeefluvial/save', jsonData, config);
-            console.log("Respuesta del servidor:", response);
-        } catch (error) {
-            console.error('Error al crear el usuario:', error.response ? error.response.data : error.message);
-        }
-    }
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -68,44 +51,49 @@ export const AgregarCapitan = () => {
     };
 
     const handleSubmit = async (event) => {
-        const handleSubmit = async (event) => {
-            event.preventDefault();
 
-            const newErrors = {};
+        event.preventDefault();
 
-            for (let [name, value] of Object.entries(formData)) {
-                if (typeof value === 'string' && !value.trim()) {
-                    newErrors[name] = "Campo obligatorio";
-                }
-            }
+        const newErrors = {};
 
-            if (formData.dateOfBirth) {
-                const today = new Date();
-                const selectedDate = new Date(formData.dateOfBirth);
-                if (selectedDate > today) {
-                    newErrors.dateOfBirth = "La fecha de nacimiento no puede ser una fecha futura";
-                }
-            }
-
-            setErrorsForms({ ...errorsForms, ...newErrors });
-
-            if (Object.keys(newErrors).length > 0) {
-                alert('Por favor, complete todos los campos obligatorios correctamente.');
-                return;
-            }
-
-            const confirmationMessage = `¿Está seguro que quiere crear al marinero?\nNombre: ${formData.name} ${formData.lastName}`;
-            const userConfirmed = window.confirm(confirmationMessage);
-
-            if (userConfirmed) {
-                await createUser(formData)
-                alert('Marinero creado correctamente');
-                console.log('Formulario enviado', formData);
-                navigate('../../adminSection/show-crew');
-            } else {
-                alert('Operación cancelada');
+        for (let [name, value] of Object.entries(formData)) {
+            if (typeof value === 'string' && !value.trim()) {
+                newErrors[name] = "Campo obligatorio";
             }
         }
+
+        if (formData.dateOfBirth) {
+            const today = new Date();
+            const selectedDate = new Date(formData.dateOfBirth);
+            if (selectedDate > today) {
+                newErrors.dateOfBirth = "La fecha de nacimiento no puede ser una fecha futura";
+            }
+        }
+
+        setErrorsForms({ ...errorsForms, ...newErrors });
+
+        if (Object.keys(newErrors).length > 0) {
+            alert('Por favor, complete todos los campos obligatorios correctamente.');
+            return;
+        }
+
+        const confirmationMessage = `¿Está seguro que quiere crear al marinero?\nNombre: ${formData.name} ${formData.lastName}`;
+        const userConfirmed = window.confirm(confirmationMessage);
+
+        if (userConfirmed) {
+            try {
+                await ApiService.post('/employeefluvial/save', formData);
+                alert('Capitan creado correctamente');
+                console.log('Formulario enviado', formData);
+                navigate('../../adminSection/show-crew');
+            } catch (error) {
+                console.error('Error al crear el marinero:', error);
+                alert('Error al crear el marinero');
+            }
+        } else {
+            alert('Operación cancelada');
+        }
+
     };
 
     return (

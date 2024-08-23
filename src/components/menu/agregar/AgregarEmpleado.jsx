@@ -6,7 +6,12 @@ import '../../../assets/css/AgregarEmpleado.css';
 
 export const AgregarEmpleado = () => {
 
+  const companies = useOptionsCompanies();
+  const cities = useOptionsCities();
+  const deptos = useOptionsDepto();
+
   const [formData, setFormData] = useState(
+    /*
     {
       name: '',
       lastName: '',
@@ -29,7 +34,33 @@ export const AgregarEmpleado = () => {
       estado: '',
       maritalStatus: ''
     }
+    */
+
+    {
+      username: '',
+      confirmUsername: '',
+      password: '',
+      confirmPassword: '',
+      roleRequest: {
+        roleListName: ['']
+      },
+      estado: '',
+      companyName: '',
+      name: '',
+      lastName: '',
+      typeDocument: '',
+      numDocument: '',
+      phone: '',
+      address: '',
+      cityName: '',
+      departmentName: '',
+      sex: '',
+      birthDate: '',
+      maritalStatus: ''
+    }
   );
+
+
 
 
   const [errorsForms, setErrorsForms] = useState({});
@@ -197,11 +228,11 @@ export const AgregarEmpleado = () => {
             </div>
             <div className="row"> {/* Ciudad y Departamento */}
               <div className="col-md-4">
-                <Select event={handleChange} text="Departamento" options={useOptionsDepto} name="departamento" />
+                <Select event={handleChange} text="Departamento" options={deptos} name="departamento" />
                 {errorsForms.departamento && <div className="text-danger">{errorsForms.departamento}</div>}
               </div>
               <div className="col-md-4">
-                <Select event={handleChange} text="Ciudad" options={useOptionsCities} name="cityName" />
+                <Select event={handleChange} text="Ciudad" options={cities} name="cityName" />
                 {errorsForms.cityName && <div className="text-danger">{errorsForms.cityName}</div>}
               </div>
               <div className="col-md-4">
@@ -244,11 +275,15 @@ export const AgregarEmpleado = () => {
               <h3><b>INFORMACIÓN LABORAL</b></h3>
             </div>
             <div className="row mt-2">
-              <div className="col-md-6">
+              <div className="col-md-4">
+                <Select event={handleChange} text="Empresa" options={companies} name="roleListName" />
+                {errorsForms.roleListName && <div className="text-danger">{errorsForms.roleListName}</div>}
+              </div>
+              <div className="col-md-4">
                 <Select event={handleChange} text="Rol" options={roles} name="roleListName" />
                 {errorsForms.roleListName && <div className="text-danger">{errorsForms.roleListName}</div>}
               </div>
-              <div className="col-md-6">
+              <div className="col-md-4">
                 <Select event={handleChange} text="Estado" options={status} name="estado" />
                 {errorsForms.estado && <div className="text-danger">{errorsForms.estado}</div>}
               </div>

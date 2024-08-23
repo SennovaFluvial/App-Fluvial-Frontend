@@ -3,8 +3,9 @@ import { Select } from '../../html components/Selects';
 import { Inputs } from '../../html components/Inputs';
 import '../../../assets/css/AgregarEmpleado.css';
 import { OptionsTypeDocument, genero, maritalStatus, nationality, useOptionsCities, useOptionsDepto } from '../update/options/arrays.jsx';
-import instance from '../../../config/AxiosApi.jsx';
 import { useNavigate } from 'react-router';
+import { ApiService } from '../../../class/ApiServices.jsx';
+
 export const AgregarCliente = () => {
     const nav = useNavigate();
     const user = JSON.parse(localStorage.getItem("user")); // Recuperar el JSON almacenado en el LocalStorage
@@ -27,26 +28,6 @@ export const AgregarCliente = () => {
     });
 
     const [errorsForms, setErrorsForms] = useState({});
-
-    const createCustomer = async (customerData) => {
-
-        try {
-
-            const jsonData = JSON.stringify(customerData);
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            };
-
-            const response = await instance.post("/customers/save", jsonData, config);
-            console.log("Respuesta del Servidor", response)
-
-        } catch (error) {
-            console.error('Error al crear el usuario:', error.response ? error.response.data : error.message);
-        }
-
-    }
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -100,7 +81,7 @@ export const AgregarCliente = () => {
             alert('Por favor, complete todos los campos obligatorios correctamente.');
             return;
         }
-        await createCustomer(formData);
+        await ApiService.post('/customers/save', formData);
         alert('Cliente creado correctamente');
         console.log('Formulario enviado');
         nav("../../adminSection/show-customers");

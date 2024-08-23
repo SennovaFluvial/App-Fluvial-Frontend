@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import '../../../assets/css/show/styles-Show.css';
 import { Spinner } from '../../animations/Spiner';
 import { Grid } from '../../animations/Grid';
-import instance from '../../../config/AxiosApi.jsx';
-// Tripulacion
+import { ApiService } from '../../../class/ApiServices.jsx';
+// Componente para ver el historial de Tripulacion de la empresa
 export const ShowCrew = () => {
 
     const [loading, setLoading] = useState(true);
@@ -11,8 +11,8 @@ export const ShowCrew = () => {
 
     const getCrew = async () => {
         try {
-            const response = await instance.get("/employeefluvial/all");
-            setCrew(response.data);
+            const response = await ApiService.get("/employeefluvial/all");
+            setCrew(response);
         } catch (error) {
             console.error("Error fetching employed data:", error);
         } finally {

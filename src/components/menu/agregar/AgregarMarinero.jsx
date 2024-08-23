@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { Inputs } from '../../html components/Inputs';
 import { Select } from '../../html components/Selects';
-// Para usar cuando se ingresen Ciudades a la base de datos
 import { useOptionsDepto, useOptionsCities, status, OptionsTypeDocument, genero, maritalStatus, nationality } from '../update/options/arrays.jsx';
 import '../../../assets/css/AgregarEmpleado.css';
-import instance from '../../../config/AxiosApi.jsx';
+import { ApiService } from '../../../class/ApiServices.jsx';
 import { useNavigate } from 'react-router';
 
 export const AgregarMarinero = () => {
@@ -32,21 +31,6 @@ export const AgregarMarinero = () => {
     );
 
     const [errorsForms, setErrorsForms] = useState({});
-
-    const createUser = async (dataUser) => {
-        try {
-            const jsonData = JSON.stringify(dataUser);
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            };
-            const response = await instance.post('/employeefluvial/save', jsonData, config);
-            console.log("Respuesta del servidor:", response);
-        } catch (error) {
-            console.error('Error al crear el usuario:', error.response ? error.response.data : error.message);
-        }
-    };
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -100,10 +84,15 @@ export const AgregarMarinero = () => {
         const userConfirmed = window.confirm(confirmationMessage);
 
         if (userConfirmed) {
-            await createUser(formData)
-            alert('Marinero creado correctamente');
-            console.log('Formulario enviado', formData);
-            navigate('../../adminSection/show-crew');
+            try {
+                await ApiService.post('/employeefluvial/save', formData);
+                alert('Marinero creado correctamente');
+                console.log('Formulario enviado', formData);
+                navigate('../../adminSection/show-crew');
+            } catch (error) {
+                console.error('Error al crear el marinero:', error);
+                alert('Error al crear el marinero');
+            }
         } else {
             alert('Operación cancelada');
         }

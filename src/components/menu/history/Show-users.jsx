@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import instance from '../../../config/AxiosApi';
 import '../../../assets/css/show/styles-Show.css'
 import { Link } from 'react-router-dom';
 import { Spinner } from '../../animations/Spiner';
 import { Grid } from '../../animations/Grid';
+import { ApiService } from '../../../class/ApiServices';
 
 export const ShowUsers = () => {
     const [loading, setLoading] = useState(true);
@@ -11,8 +11,8 @@ export const ShowUsers = () => {
 
     const getEmployed = async () => {
         try {
-            const response = await instance.get("/companie/users");
-            setEmployed(response.data);
+            const response = await ApiService.get("/companie/users");
+            setEmployed(response);
         } catch (error) {
             console.error("Error fetching employed data:", error);
         } finally {
