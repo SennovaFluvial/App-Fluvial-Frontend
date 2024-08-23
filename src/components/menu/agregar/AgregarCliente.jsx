@@ -2,10 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Select } from '../../html components/Selects';
 import { Inputs } from '../../html components/Inputs';
 import '../../../assets/css/AgregarEmpleado.css';
-import { OptionsTypeDocument, genero, maritalStatus, nationality } from '../update/options/arrays.jsx';
+import { OptionsTypeDocument, genero, maritalStatus, nationality, useOptionsCities, useOptionsDepto } from '../update/options/arrays.jsx';
 import instance from '../../../config/AxiosApi.jsx';
+import { useNavigate } from 'react-router';
 export const AgregarCliente = () => {
-
+    const nav = useNavigate();
+    const user = JSON.parse(localStorage.getItem("user")); // Recuperar el JSON almacenado en el LocalStorage
+    const userNameUser = user?.username || null; // Obtener el `userName` de usuario Logueado Si no es nulo
+    const cities = useOptionsCities(); // Se debe de hacer esto para mostrar las ciudades.
     const [formData, setFormData] = useState({
         name: '',
         lastName: '',
@@ -19,10 +23,30 @@ export const AgregarCliente = () => {
         address: '',
         sex: '',
         cityName: '',
-        userNames: ['']
+        userNames: [userNameUser]
     });
 
     const [errorsForms, setErrorsForms] = useState({});
+
+    const createCustomer = async (customerData) => {
+
+        try {
+
+            const jsonData = JSON.stringify(customerData);
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            };
+
+            const response = await instance.post("/customers/save", jsonData, config);
+            console.log("Respuesta del Servidor", response)
+
+        } catch (error) {
+            console.error('Error al crear el usuario:', error.response ? error.response.data : error.message);
+        }
+
+    }
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -33,14 +57,9 @@ export const AgregarCliente = () => {
             updatedUserNames[index] = value;
             setFormData({ ...formData, userNames: updatedUserNames });
         } else {
-            if (value.trim()) {
-                const { [name]: removed, ...rest } = errorsForms;
-                setErrorsForms(rest);
-            } else {
-                setErrorsForms({ ...errorsForms, [name]: "Campo obligatorio" });
-            }
-
-            setFormData({ ...formData, [name]: value });
+            // Solo aplicar trim() si el valor es una cadena
+            const updatedValue = typeof value === 'string' ? value.trim() : value;
+            setFormData({ ...formData, [name]: updatedValue });
         }
     };
 
@@ -59,19 +78,19 @@ export const AgregarCliente = () => {
         }
     }, [formData.dateOfBirth]);
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         const newErrors = {};
 
         for (let [name, value] of Object.entries(formData)) {
-            if (Array.isArray(value) && value.some((v) => !v.trim())) {
+            if (Array.isArray(value) && value.some((v) => typeof v === 'string' && !v.trim())) {
                 newErrors[name] = "Campo obligatorio";
-            } else if (value.trim()) {
+            } else if (typeof value === 'string' && !value.trim()) {
+                newErrors[name] = "Campo obligatorio";
+            } else {
                 const { [name]: removed, ...rest } = errorsForms;
                 setErrorsForms(rest);
-            } else {
-                newErrors[name] = "Campo obligatorio";
             }
         }
 
@@ -81,12 +100,14 @@ export const AgregarCliente = () => {
             alert('Por favor, complete todos los campos obligatorios correctamente.');
             return;
         }
-
+        await createCustomer(formData);
         alert('Cliente creado correctamente');
         console.log('Formulario enviado');
-        window.location.reload();
+        nav("../../adminSection/show-customers");
     };
 
+
+    console.log(formData)
     return (
         <>
             <div className="d-flex-empleado justify-content-center align-items-center vh-100">
@@ -148,7 +169,7 @@ export const AgregarCliente = () => {
                                 {errorsForms.address && <div className="text-danger">{errorsForms.address}</div>}
                             </div>
                             <div className="col-md-6">
-                                <Inputs event={handleChange} text="Ciudad" name="cityName" />
+                                <Select event={handleChange} text="Ciudad" options={cities} name="cityName" />
                                 {errorsForms.cityName && <div className="text-danger">{errorsForms.cityName}</div>}
                             </div>
                         </div>
