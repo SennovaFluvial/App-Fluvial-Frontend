@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Select } from '../../html components/Selects';
 import { Inputs } from '../../html components/Inputs';
-import { useOptionsDepto, useOptionsCompanies, useOptionsCities, OptionsTypeDocument, roles, genero, status, maritalStatus, codigoPaises } from '../update/options/arrays.jsx';
+import { useOptionsDepto, useOptionsCompanies, useOptionsCities, OptionsTypeDocument, useRoles, genero, status, maritalStatus, codigoPaises } from '../update/options/arrays.jsx';
 import '../../../assets/css/AgregarEmpleado.css';
 import { ApiService } from '../../../class/ApiServices.jsx';
 import { User } from '../../../class/User.jsx';
@@ -10,6 +10,7 @@ export const AgregarEmpleado = () => {
 
   const cities = useOptionsCities();
   const deptos = useOptionsDepto();
+  const roles = useRoles();
   const [nameCompany, setNameCompany] = useState("")
   const user = JSON.parse(localStorage.getItem("user"));
   const role = user?.rol;
@@ -98,7 +99,6 @@ export const AgregarEmpleado = () => {
     });
 
   }
-  console.log('Current formData:', formData);
 
   useEffect(() => {
     if (formData.dateOfBirth) {
@@ -173,7 +173,6 @@ export const AgregarEmpleado = () => {
 
         await User.sign_up(dataToSend);
         alert('Usuario creado correctamente');
-        console.log('Formulario enviado');
 
         nav("../../adminSection/show-users");
       } catch (error) {

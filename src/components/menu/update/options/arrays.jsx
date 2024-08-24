@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Flag from "react-world-flags";
 import instance from "../../../../config/AxiosApi";
 
+
 // Hook para obtener la lista de departamentos desde la API
 export const useOptionsDepto = () => {
     const [listDeptos, setListDeptos] = useState([]);
@@ -86,11 +87,25 @@ export const OptionsTypeDocument = [
     { label: 'Pasaporte', value: 'Passport' }
 ]
 
-export const roles = [
-    { label: 'Administrador', value: 'ADMIN' },
-    { label: 'Super Administrador', value: 'SUPERADMIN' },
-    { label: 'Empleado', value: 'INVITED' }
-];
+export const useRoles = () => {
+    const user = JSON.parse(localStorage.getItem("user"))
+    const role = user?.rol;
+    const [roles, setRoles] = useState([])
+
+    useEffect(() => {
+
+
+        const updatedRoles = [
+            { label: 'Administrador', value: 'ADMIN' },
+            ...(role === "SUPERADMIN" ? [{ label: 'Super Administrador', value: 'SUPERADMIN' }] : []),
+            { label: 'Empleado', value: 'INVITED' }
+        ];
+        setRoles(updatedRoles);
+
+    }, [user?.rol])
+
+    return roles;
+};
 
 export const genero = [
     { label: 'Femenino', value: 'Femenino' },
