@@ -98,7 +98,7 @@ export const useRoles = () => {
         const updatedRoles = [
             { label: 'Administrador', value: 'ADMIN' },
             ...(role === "SUPERADMIN" ? [{ label: 'Super Administrador', value: 'SUPERADMIN' }] : []),
-            { label: 'Empleado', value: 'INVITED' }
+            { label: 'Empleado', value: 'EMPLOYEE' }
         ];
         setRoles(updatedRoles);
 

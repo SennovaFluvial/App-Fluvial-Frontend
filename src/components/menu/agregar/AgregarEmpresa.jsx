@@ -67,7 +67,7 @@ export const AgregarEmpresa = () => {
         const userConfirmed = window.confirm(confirmationMessage);
 
         if (userConfirmed) {
-            await ApiService.post("/api/v1/save", formattedData)
+            await ApiService.post("/api/v1/companie/save", formattedData)
             alert('Empresa creada correctamente');
             nav("../../adminSection/show-companies")
         } else {
