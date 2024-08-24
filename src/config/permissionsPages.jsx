@@ -1,25 +1,30 @@
 export const role_permissions = {
     ADMIN: {
-        allowedPaths: ['/adminSection/show-customers', '/adminSection/show-users'],
-        restrictedPaths: ['/adminSection/show-companies']
+        paths: {
+            '/adminSection/show-customers': true,
+            '/adminSection/show-users': true,
+            '/adminSection/add-captain': true,
+            '/adminSection/add-sailor': true,
+            '/adminSection/add-boat-driver': true,
+            '/adminSection/add-vehicle': true,
+            '/adminSection/show-companies': false
+        }
     },
     SUPERADMIN: {
-        allowedPaths: ['/adminSection/show-companies', '/adminSection/show-users'],
-        restrictedPaths: ['/adminSection/show-customers', '/adminSection/show-crew']
+        paths: {
+            '/adminSection/show-companies': true,
+            '/adminSection/show-users': true,
+            '/adminSection/show-customers': false,
+            '/adminSection/show-crew': false,
+            '/adminSection/add-captain': false,
+            '/adminSection/add-sailor': false,
+            '/adminSection/add-boat-driver': false,
+            '/adminSection/add-vehicle': false
+        }
     }
 }
 
 export const canAccess = (role, path) => {
     const roleConfig = role_permissions[role];
-    if (!roleConfig) {
-        return false; // Rol no encontrado
-    }
-
-    // Verifica si la ruta está en las rutas restringidas para el rol
-    if (roleConfig.restrictedPaths.includes(path)) {
-        return false;
-    }
-
-    // Verifica si la ruta está en las rutas permitidas para el rol
-    return roleConfig.allowedPaths.includes(path);
+    return roleConfig?.paths?.[path] ?? false;
 };

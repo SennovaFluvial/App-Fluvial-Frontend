@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Select } from '../../html components/Selects' // Componente reutlizable de Seleccion
 import { Inputs } from '../../html components/Inputs'
-import { useOptionsDepto, useOptionsCompanies, useOptionsCities, OptionsTypeDocument, roles, genero, status } from '../update/options/arrays.jsx'
+import { useOptionsDepto, useOptionsCompanies, useOptionsCities, OptionsTypeDocument, useRoles, genero, status } from '../update/options/arrays.jsx'
 import { useParams } from 'react-router'
 
 export const UpdateUsers = () => {
     const OptionsDepto = useOptionsDepto();
     const OptionsComapnies = useOptionsCompanies();
     const OptionsCities = useOptionsCities(); // Se usa?
+    const roles = useRoles();
     const { id } = useParams();
     const userId = parseInt(id, 10);
     const [formData, setFormData] = useState({
