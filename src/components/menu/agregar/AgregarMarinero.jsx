@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Inputs } from '../../html components/Inputs';
 import { Select } from '../../html components/Selects';
-import { useOptionsDepto, useOptionsCities, status, OptionsTypeDocument, genero, maritalStatus } from '../update/options/arrays.jsx';
+import { useOptionsDepto, useOptionsCities, status, OptionsTypeDocument, genero, maritalStatus, nationality } from '../update/options/arrays.jsx';
 import '../../../assets/css/AgregarEmpleado.css';
-import instance from '../../../config/AxiosApi.jsx';
-import { Navigate } from 'react-router';
+import { ApiService } from '../../../class/ApiServices.jsx';
+import { useNavigate } from 'react-router';
 
 export const AgregarMarinero = () => {
 
+    const navigate = useNavigate();
     const [formData, setFormData] = useState(
         {
             name: '',
@@ -23,26 +24,13 @@ export const AgregarMarinero = () => {
             address: '',
             sex: '',
             status: '',
-            employeeType: { typeName: 'Marinero' },
+            employeeType: {
+                typeName: 'Marinero'
+            }
         }
     );
 
     const [errorsForms, setErrorsForms] = useState({});
-
-    const createUser = async (dataUser) => {
-        try {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            };
-            const jsonData = JSON.stringify(dataUser);
-            await instance.post('/employeefluvial/save', jsonData, config);
-            // Navigate('adminSection/show-users');
-        } catch (error) {
-            console.error('Error al crear el usuario:', error.response ? error.response.data : error.message);
-        }
-    };
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -96,16 +84,19 @@ export const AgregarMarinero = () => {
         const userConfirmed = window.confirm(confirmationMessage);
 
         if (userConfirmed) {
-            await createUser({ data: formData })
-            alert('Marinero creado correctamente');
-            console.log('Formulario enviado', formData);
-            window.location.reload();
+            try {
+                await ApiService.post('/api/v1/employeefluvial/save', formData);
+                alert('Marinero creado correctamente');
+                console.log('Formulario enviado', formData);
+                navigate('../../adminSection/show-crew');
+            } catch (error) {
+                console.error('Error al crear el marinero:', error);
+                alert('Error al crear el marinero');
+            }
         } else {
             alert('Operación cancelada');
         }
     };
-
-    console.log(formData);
 
     return (
         <div className="d-flex-empleado justify-content-center align-items-center vh-100">
@@ -138,7 +129,7 @@ export const AgregarMarinero = () => {
                             {errorsForms.dateOfBirth && <div className="text-danger">{errorsForms.dateOfBirth}</div>}
                         </div>
                         <div className="col-md-4">
-                            <Select text="Nacionalidad" name="nationality" event={handleChange} options={useOptionsCities} />
+                            <Select text="Nacionalidad" name="nationality" event={handleChange} options={nationality} />
                             {errorsForms.nationality && <div className="text-danger">{errorsForms.nationality}</div>}
                         </div>
                         <div className="col-md-4">

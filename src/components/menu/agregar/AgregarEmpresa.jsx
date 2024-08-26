@@ -3,12 +3,17 @@ import { Inputs } from '../../html components/Inputs';
 import { Select } from '../../html components/Selects';
 import { useOptionsDepto, useOptionsCities, status } from '../update/options/arrays.jsx';
 import '../../../assets/css/AgregarEmpleado.css';
-import instance from '../../../config/AxiosApi.jsx';
-import { Navigate } from 'react-router';
+import { ApiService } from '../../../class/ApiServices.jsx';
+import { useNavigate } from 'react-router';
 
 export const AgregarEmpresa = () => {
+
+    const nav = useNavigate();
+    const deptos = useOptionsDepto();
+    const cities = useOptionsCities();
+
     const [formData, setFormData] = useState({
-        nit: '',
+        nit: 0,
         company: '',
         status: '',
         manager: '',
@@ -20,21 +25,6 @@ export const AgregarEmpresa = () => {
     });
 
     const [errorsForms, setErrorsForms] = useState({});
-
-    const createCompany = async (dataCompany) => {
-        try {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            };
-            const jsonData = JSON.stringify(dataCompany);
-            await instance.post('/save', jsonData, config);
-            Navigate('adminSection/show-companies');
-        } catch (error) {
-            console.error('Error al crear el usuario:', error.response ? error.response.data : error.message);
-        }
-    };
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -67,14 +57,19 @@ export const AgregarEmpresa = () => {
             return;
         }
 
+        // Convertir el NIT a un número antes de enviar los datos
+        const formattedData = {
+            ...formData,
+            nit: Number(formData.nit), // Convertir a número
+        };
+
         const confirmationMessage = `¿Está seguro que quiere crear la empresa?\nEmpresa: ${formData.company}`;
         const userConfirmed = window.confirm(confirmationMessage);
 
         if (userConfirmed) {
-            createCompany({ data: formData })
+            await ApiService.post("/api/v1/companie/save", formattedData)
             alert('Empresa creada correctamente');
-            console.log('Formulario enviado', formData);
-            window.location.reload();
+            nav("../../adminSection/show-companies")
         } else {
             alert('Operación cancelada');
         }
@@ -91,7 +86,7 @@ export const AgregarEmpresa = () => {
                         </div>
                         <div className="row" > {/* Información de la Empresa */}
                             <div className="col-md-4">
-                                <Inputs text="NIT" name="nit" event={handleChange} />
+                                <Inputs type="number" text="NIT" name="nit" event={handleChange} />
                                 {errorsForms.nit && <div className="text-danger">{errorsForms.nit}</div>}
                             </div>
                             <div className="col-md-4">
@@ -109,11 +104,11 @@ export const AgregarEmpresa = () => {
                         </div>
                         <div className="row"> {/* Contacto */}
                             <div className="col-md-6">
-                                <Inputs text="Correo Electrónico" name="email" event={handleChange} icon={"fa-solid fa-at"} />
+                                <Inputs text="Correo Electrónico de la empresa" name="email" event={handleChange} icon={"fa-solid fa-at"} />
                                 {errorsForms.email && <div className="text-danger">{errorsForms.email}</div>}
                             </div>
                             <div className="col-md-6">
-                                <Inputs text="Número de Teléfono" name="phone" event={handleChange} icon="fa-solid fa-phone-volume" />
+                                <Inputs text="Número de Teléfono de la empresa" name="phone" event={handleChange} icon="fa-solid fa-phone-volume" />
                                 {errorsForms.phone && <div className="text-danger">{errorsForms.phone}</div>}
                             </div>
                         </div>
@@ -123,11 +118,11 @@ export const AgregarEmpresa = () => {
                         </div>
                         <div className="row"> {/* Ubicación */}
                             <div className="col-md-6">
-                                <Select text="Departamento" name="department" event={handleChange} options={useOptionsDepto} />
+                                <Select text="Departamento" name="department" event={handleChange} options={deptos} />
                                 {errorsForms.department && <div className="text-danger">{errorsForms.department}</div>}
                             </div>
                             <div className="col-md-6">
-                                <Select text="Municipio" name="municipality" event={handleChange} options={useOptionsCities} />
+                                <Select text="Municipio" name="municipality" event={handleChange} options={cities} />
                                 {errorsForms.municipality && <div className="text-danger">{errorsForms.municipality}</div>}
                             </div>
                             <div className="col-md-6">

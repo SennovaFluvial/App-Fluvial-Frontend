@@ -1,22 +1,18 @@
 import { useEffect, useState } from 'react'
-import instance from '../../../config/AxiosApi';
 import '../../../assets/css/show/styles-Show.css'
 import { Link } from 'react-router-dom';
 import { Spinner } from '../../animations/Spiner';
 import { Grid } from '../../animations/Grid';
+import { ApiService } from '../../../class/ApiServices';
 
 export const ShowUsers = () => {
     const [loading, setLoading] = useState(true);
     const [employed, setEmployed] = useState([]);
 
-    const user = JSON.parse(localStorage.getItem('user'));
-    const role = user?.rol;
-    const url = role === "SUPERADMIN" ? "/companie/users" : (role === "ADMIN" ? "/employeefluvial/all" : null);
-
     const getEmployed = async () => {
         try {
-            const response = await instance.get(url);
-            setEmployed(response.data);
+            const response = await ApiService.get("/api/v1/companie/users");
+            setEmployed(response);
         } catch (error) {
             console.error("Error fetching employed data:", error);
         } finally {
@@ -37,8 +33,6 @@ export const ShowUsers = () => {
             </div>
         );
     }
-
-    console.log("Empleados ", employed);
 
     return (
         <>
@@ -68,7 +62,7 @@ export const ShowUsers = () => {
                                 <td>{item.numDocument}</td>
                                 <td>{item.name}</td>
                                 <td>{item.lastName}</td>
-                                <td>{role === "SUPERADMIN" ? item.company.name : (role === "ADMIN" ? item.employeeType.typeName : null)}</td>
+                                <td>{item.roles[0].roleEnum}</td>
                                 <td>{item.phone}</td>
                                 <td>{item.status}</td>
                                 <td>

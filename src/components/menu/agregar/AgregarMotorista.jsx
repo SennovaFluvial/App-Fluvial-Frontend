@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Inputs } from '../../html components/Inputs';
 import { Select } from '../../html components/Selects';
-import { status, OptionsTypeDocument, genero, maritalStatus, useOptionsCities } from '../update/options/arrays.jsx';
-
+import { status, OptionsTypeDocument, genero, maritalStatus, useOptionsCities, nationality } from '../update/options/arrays.jsx';
+import { useNavigate } from 'react-router';
+import { ApiService } from '../../../class/ApiServices.jsx';
 import '../../../assets/css/AgregarEmpleado.css';
 
 export const AgregarMotorista = () => {
-
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: '',
         lastName: '',
@@ -26,21 +27,6 @@ export const AgregarMotorista = () => {
 
     const [errorsForms, setErrorsForms] = useState({});
 
-
-    const createUser = async (dataUser) => {
-        try {
-            const config = {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            };
-            const jsonData = JSON.stringify(dataUser);
-            await instance.post('/employeefluvial/save', jsonData, config);
-            // navigate('adminSection/show-users');
-        } catch (error) {
-            console.error('Error al crear el usuario:', error.response ? error.response.data : error.message);
-        }
-    };
     const handleChange = (event) => {
         const { name, value } = event.target;
 
@@ -69,7 +55,7 @@ export const AgregarMotorista = () => {
         const newErrors = {};
 
         for (let [name, value] of Object.entries(formData)) {
-            if (!value.trim()) {
+            if (typeof value === 'string' && !value.trim()) {
                 newErrors[name] = "Campo obligatorio";
             }
         }
@@ -93,10 +79,16 @@ export const AgregarMotorista = () => {
         const userConfirmed = window.confirm(confirmationMessage);
 
         if (userConfirmed) {
-            await createUser({ data: formData })
-            alert('Marinero creado correctamente');
-            console.log('Formulario enviado', formData);
-            window.location.reload();
+            try {
+                await ApiService.post('/api/v1/employeefluvial/save', formData);
+                alert('Motorista creado correctamente');
+                console.log('Formulario enviado', formData);
+                navigate('../../adminSection/show-crew');
+            } catch (error) {
+                console.error('Error al crear el marinero:', error);
+                alert('Error al crear el marinero');
+            }
+
         } else {
             alert('Operación cancelada');
         }
@@ -105,7 +97,7 @@ export const AgregarMotorista = () => {
     return (
         <div className="d-flex-empleado justify-content-center align-items-center vh-100">
             <div className="container-empleado bg-light shadow rounded p-4">
-                <h2 className="text-center mb-2">CREAR MARINERO</h2>
+                <h2 className="text-center mb-2">CREAR MOTORISTA</h2>
                 <form onSubmit={handleSubmit}>
                     {/* Información Personal */}
                     <div className="text-center">
@@ -133,7 +125,7 @@ export const AgregarMotorista = () => {
                             {errorsForms.dateOfBirth && <div className="text-danger">{errorsForms.dateOfBirth}</div>}
                         </div>
                         <div className="col-md-4">
-                            <Select text="Nacionalidad" name="nationality" event={handleChange} options={useOptionsCities} />
+                            <Select text="Nacionalidad" name="nationality" event={handleChange} options={nationality} />
                             {errorsForms.nationality && <div className="text-danger">{errorsForms.nationality}</div>}
                         </div>
                         <div className="col-md-4">

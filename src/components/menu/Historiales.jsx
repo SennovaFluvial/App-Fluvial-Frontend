@@ -21,13 +21,23 @@ export const Historiales = ({ user }) => {
                         )}
 
                         {!user?.rol?.includes('SUPERADMIN') && (
-                            <li className='dropdown-item text-black'>
-                                <Link to={'show-customers'}>
-                                    <i className="fa-solid fa-users me-2"></i>
-                                    Historial de Clientes
-                                </Link>
-                            </li>
+                            <>
+                                <li className='dropdown-item text-black'>
+                                    <Link to={'show-customers'}>
+                                        <i className="fa-solid fa-users me-2"></i>
+                                        Historial de Clientes
+                                    </Link>
+                                </li>
+                                <li className='dropdown-item text-black'>
+                                    <Link to={'show-crew'}>
+                                        <i className="fa-solid fa-users me-2"></i>
+                                        Historial de tripulación
+                                    </Link>
+                                </li>
+                            </>
+
                         )}
+
                         <li className='dropdown-item text-black' >
                             <Link to={'show-users'}>
                                 <i className="fa-solid fa-address-book me-2"></i>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../../assets/css/input.css'
 
-export const Inputs = ({ type = 'text', text, name, placeholder, event, icon }) => {
+export const Inputs = ({ type = 'text', text, name, event, icon }) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const togglePasswordVisibility = () => {
@@ -13,16 +13,17 @@ export const Inputs = ({ type = 'text', text, name, placeholder, event, icon }) 
             <label htmlFor={name}>{text}</label>
             <div className="input-group">
                 {icon && (
-                <span className="input-group-text" id="basic-addon1">
-                    <i className={icon}></i>
-                </span>
-            )}
+                    <span className="input-group-text" id="basic-addon1">
+                        <i className={icon}></i>
+                    </span>
+                )}
                 <input
                     type={type === 'password' && showPassword ? 'text' : type}
                     className="form-control"
                     name={name}
                     placeholder={placeholder}
                     onChange={event}
+                    value={value}
                 />
                 {type === 'password' && (
                     <div className="password-icon">

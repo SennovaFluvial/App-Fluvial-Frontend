@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import '../../../assets/css/show/styles-Show.css';
 import { Spinner } from '../../animations/Spiner';
 import { Grid } from '../../animations/Grid';
-import instance from '../../../config/AxiosApi';
+import { ApiService } from '../../../class/ApiServices';
 
 export const ShowCompany = () => {
 
@@ -14,8 +14,8 @@ export const ShowCompany = () => {
 
   const getCompanies = async () => {
     try {
-      const response = await instance.get("/companie/findAll");
-      setCompanies(response.data);
+      const response = await ApiService.get("/api/v1/companie/findAll");
+      setCompanies(response);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching companies:", error);

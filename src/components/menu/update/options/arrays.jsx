@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Flag from "react-world-flags";
 import instance from "../../../../config/AxiosApi";
 
+
 // Hook para obtener la lista de departamentos desde la API
 export const useOptionsDepto = () => {
     const [listDeptos, setListDeptos] = useState([]);
@@ -9,7 +10,7 @@ export const useOptionsDepto = () => {
     // Obtiene la lista de departamentos desde la API
     const getDeptos = async () => {
         try {
-            const response = await instance.get('/department/all');
+            const response = await instance.get('/api/v1/department/all');
             setListDeptos(
                 response.data.map(depto => ({
                     label: depto.departamento,
@@ -34,7 +35,7 @@ export const useOptionsCompanies = () => {
 
     const getCompanies = async () => {
         try {
-            const response = await instance.get("/companie/findAll");
+            const response = await instance.get("/api/v1/companie/findAll");
             setListCompanies(
                 response.data.map(company => ({
                     label: company.company,
@@ -60,7 +61,7 @@ export const useOptionsCities = () => {
     // Obtiene la lista de ciudades desde la API
     const getCities = async () => {
         try {
-            const response = await instance.get('/city/all');
+            const response = await instance.get('/api/v1/city/all');
             setListCities(
                 response.data.map(city => ({
                     label: city.ciudad,
@@ -86,11 +87,25 @@ export const OptionsTypeDocument = [
     { label: 'Pasaporte', value: 'Passport' }
 ]
 
-export const roles = [
-    { label: 'Administrador', value: 'ADMIN' },
-    { label: 'Super Administrador', value: 'SUPERADMIN' },
-    { label: 'Empleado', value: 'INVITED' }
-];
+export const useRoles = () => {
+    const user = JSON.parse(localStorage.getItem("user"))
+    const role = user?.rol;
+    const [roles, setRoles] = useState([])
+
+    useEffect(() => {
+
+
+        const updatedRoles = [
+            { label: 'Administrador', value: 'ADMIN' },
+            ...(role === "SUPERADMIN" ? [{ label: 'Super Administrador', value: 'SUPERADMIN' }] : []),
+            { label: 'Empleado', value: 'EMPLOYEE' }
+        ];
+        setRoles(updatedRoles);
+
+    }, [user?.rol])
+
+    return roles;
+};
 
 export const genero = [
     { label: 'Femenino', value: 'Femenino' },
