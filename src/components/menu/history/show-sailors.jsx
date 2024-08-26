@@ -4,21 +4,28 @@ import '../../../assets/css/show/styles-Show.css';
 
 import { Spinner } from '../../animations/Spiner';
 import { Grid } from '../../animations/Grid';
-import { useNewContext } from '../../../Context/Provider';
 
 export const ShowMarineros = () => {
 
-    const { marineros, getMarineros } = useNewContext();
     const [loading, setLoading] = useState(true);
+    const { sailors, setSailors } = useState([]);
+
+    const getSailors = async () => {
+        try {
+            const response = await instance.get('/customers/all');
+            setSailors(response.data);
+        } catch (error) {
+            console.log('Error en obtener Marineros', error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        const loadMarineros = async () => {
-            await getMarineros();
-            setLoading(false);
-        };
+        getSailors();
+    }, []);
 
-        loadMarineros();
-    }, [getMarineros]);
+
 
     if (loading) {
         return (
@@ -51,7 +58,7 @@ export const ShowMarineros = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {marineros.map((item, index) => (
+                        {sailors.map((item, index) => (
                             <tr key={item.id}>
                                 <td>{index + 1}</td>
                                 <td>{item.nombre}</td>

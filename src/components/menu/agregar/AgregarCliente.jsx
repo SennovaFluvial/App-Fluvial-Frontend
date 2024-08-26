@@ -144,7 +144,7 @@ export const AgregarCliente = () => {
                                 {errorsForms.phone && <div className="text-danger">{errorsForms.phone}</div>}
                             </div>
                             <div className="col-md-6">
-                                <Inputs event={handleChange} text="Dirección" name="address" icon="fa-solid fa-map-pin" />
+                                <Inputs event={handleChange} text="Dirección" name="address" placeholder="Calle XX #XX-XX Barrio" icon="fa-solid fa-map-pin" />
                                 {errorsForms.address && <div className="text-danger">{errorsForms.address}</div>}
                             </div>
                             <div className="col-md-6">

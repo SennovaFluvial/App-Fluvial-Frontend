@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../../assets/css/input.css'
 
-export const Inputs = ({ type = 'text', text, name, event, icon }) => {
+export const Inputs = ({ type = 'text', text, name, placeholder, event, icon }) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const togglePasswordVisibility = () => {
@@ -21,6 +21,7 @@ export const Inputs = ({ type = 'text', text, name, event, icon }) => {
                     type={type === 'password' && showPassword ? 'text' : type}
                     className="form-control"
                     name={name}
+                    placeholder={placeholder}
                     onChange={event}
                 />
                 {type === 'password' && (

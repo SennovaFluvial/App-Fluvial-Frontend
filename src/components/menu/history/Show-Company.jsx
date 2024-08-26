@@ -39,7 +39,6 @@ export const ShowCompany = () => {
     );
   }
 
-  // Muestra los datos en una tabla
   return (
     <>
       <div className="container my-5">

@@ -131,7 +131,7 @@ export const AgregarEmpresa = () => {
                                 {errorsForms.municipality && <div className="text-danger">{errorsForms.municipality}</div>}
                             </div>
                             <div className="col-md-6">
-                                <Inputs text="Dirección" name="address" event={handleChange} icon="fa-solid fa-map-pin" />
+                                <Inputs text="Dirección" name="address" placeholder="Calle XX #XX-XX Barrio" vent={handleChange}  icon="fa-solid fa-map-pin" />
                                 {errorsForms.address && <div className="text-danger">{errorsForms.address}</div>}
                             </div>
                         </div>
