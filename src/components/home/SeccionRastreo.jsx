@@ -48,24 +48,6 @@ export const SeccionRastreo = () => {
                         </div>
                     </div>
                 </div>
-
-                <div className="container selectContainer">
-                    <div className="row">
-                        <div className="col-md-6 text-center contentContainerSection mt-4 mb-4">
-                            <p>
-                                <b>Rastrear por...</b>
-                            </p>
-                        </div>
-                        <div className="col-md-6 text-center mt-2 mb-2 contentContainerSection2">
-                            <select className="form-select custom-input selectinput" aria-label="Default select example">
-                                <option defaultValue>Selecciona</option>
-                                <option value="1">Opcion 1</option>
-                                <option value="2">Opcion 2</option>
-                                <option value="3">Opcion 3</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
             </motion.div>
 
         </>

@@ -23,7 +23,7 @@ export class ApiService {
 
             // Convierte los datos a formato JSON
             const jsonData = JSON.stringify(data);
-            console.log(jsonData)
+
             // Realiza una solicitud POST a la API con los datos y encabezados proporcionados
             const response = await instance.post(url_api, jsonData, {
                 headers: {
@@ -38,6 +38,28 @@ export class ApiService {
 
             // Muestra un mensaje de error en la consola si ocurre un problema con la solicitud
             console.error('Error al crear el usuario:', error.response ? error.response.data : error.message);
+        }
+    }
+    static async put(url_api, data, headers = {}) {
+        try {
+
+            // Convierte los datos a formato JSON
+            const jsonData = JSON.stringify(data);
+
+            // Realiza una solicitud POST a la API con los datos y encabezados proporcionados
+            const response = await instance.put(url_api, jsonData, {
+                headers: {
+                    'Content-Type': 'application/json',  // Encabezado predeterminado para especificar el tipo de contenido
+                    ...headers // Combina encabezados predeterminados con los proporcionados por el usuario
+                },
+            });
+
+            // Muestra un mensaje en la consola si la solicitud es exitosa
+            console.log("Respuesta del servidor:", response);
+        } catch (error) {
+
+            // Muestra un mensaje de error en la consola si ocurre un problema con la solicitud
+            console.error('Error al Actualizar el usuario:', error.response ? error.response.data : error.message);
         }
     }
 

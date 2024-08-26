@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { Select } from '../../html components/Selects' // Componente reutlizable de Seleccion
 import { Inputs } from '../../html components/Inputs'
-import { useOptionsDepto, useOptionsCompanies, useOptionsCities, OptionsTypeDocument, useRoles, genero, status } from '../update/options/arrays.jsx'
-import { useParams } from 'react-router'
+import { useOptionsDepto, useOptionsCompanies, useOptionsCities, OptionsTypeDocument, genero, status, useRoles } from '../update/options/arrays.jsx'
+import { useNavigate, useParams } from 'react-router'
+import { ApiService } from '../../../class/ApiServices.jsx'
+
 
 export const UpdateUsers = () => {
     const OptionsDepto = useOptionsDepto();
-    const OptionsComapnies = useOptionsCompanies();
-    const OptionsCities = useOptionsCities(); // Se usa?
-    const roles = useRoles();
-    const { id } = useParams();
-    const userId = parseInt(id, 10);
+    const OptionsCompanies = useOptionsCompanies();
+    const OptionsCities = useOptionsCities();
+    const [users, setUsers] = useState([]);
+    const nav = useNavigate();
     const [formData, setFormData] = useState({
         username: "",
         password: "",
@@ -25,11 +26,37 @@ export const UpdateUsers = () => {
         numDocument: "",
         phone: "",
         address: "",
+        cityName: "",
+        departmentName: "",
         sex: "",
-        cityName: ""
+        birthDate: "",
+        maritalStatus: ""
     });
-    const filterUserId = users.filter(user => user.id === userId)
+    const { id } = useParams();
+    const userId = parseInt(id, 10);
+    const roles = useRoles();
 
+    // Actualiza el estado users con los datos de la API
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const listUsers = await ApiService.get("/api/v1/companie/users");
+                if (Array.isArray(listUsers)) {
+                    setUsers(listUsers);
+                } else {
+                    console.warn('Data from API is not an array or is empty');
+                    setUsers([]);
+                }
+            } catch (error) {
+                console.error('Error fetching users:', error);
+                setUsers([]);
+            }
+        };
+
+        fetchUsers();
+    }, []);
+
+    // Actualiza formData cuando users o userId cambian
     useEffect(() => {
         const filterUserId = users.find(user => user.id === userId);
         if (filterUserId) {
@@ -47,31 +74,46 @@ export const UpdateUsers = () => {
                 numDocument: filterUserId.numDocument,
                 phone: filterUserId.phone,
                 address: filterUserId.address,
+                cityName: filterUserId.city?.ciudad || "",
+                departmentName: filterUserId.departmentName || "",
                 sex: filterUserId.sex,
-                cityName: filterUserId.city?.ciudad || ""
+                birthDate: filterUserId.birthDate || "",
+                maritalStatus: filterUserId.maritalStatus || ""
             });
         }
     }, [users, userId]);
-    if (filterUserId.length === 0) {
+
+    // Verifica si el usuario existe en el estado users
+    if (!users.length || !users.some(user => user.id === userId)) {
         return <div>Usuario no encontrado</div>;
     }
-    const user = filterUserId[0];
 
-    const handleChange = async (e) => {
+    // Encuentra el usuario para su uso en la función `handleSubmit`
+    const user = users.find(user => user.id === userId);
+
+    // Maneja los cambios en el formulario
+    const handleChange = (e) => {
         const { name, value } = e.target;
-        //  console.log(`Changing ${name} to ${value}`);
-        setFormData(
-            prevState => ({
-                ...prevState, [name]: value
-            })
-        )
-    }
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
 
+    // Maneja el envío del formulario
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await updateUser({ id_user: userId, dataUser: formData });
-    }
-    // console.log('Current formData:', formData);
+        try {
+            await ApiService.put(`/auth/update/${userId}`, formData);
+            nav("../../adminSection/show-users");
+            // Manejo de exito en la actualizacion
+        } catch (error) {
+            // Manejo de error en la accion de actualizar
+            console.error('Error al actualizar el usuario:', error);
+        }
+    };
+
+    console.log(formData);
 
     return (
         <>
@@ -110,12 +152,12 @@ export const UpdateUsers = () => {
                             </h3>
                         </div>
 
-                        <div className="row my-4"> {/* Nombres y apellidos */}
+                        <div className="row my-4">
                             <div className="col-md-6"> {/* Ciudad */}
-                                <Select text="Ciudad" options={OptionsCity} name="cityName" value={formData.cityName} event={handleChange} />
+                                <Select text="Ciudad" options={OptionsCities} name="cityName" value={formData.cityName} event={handleChange} />
                             </div>
                             <div className="col-md-6"> {/* Departamento */}
-                                <Select text="Departamento" options={OptionsDepto} name="Departamento" value={formData.departamento} event={handleChange} />
+                                <Select text="Departamento" options={OptionsDepto} name="Departamento" value={formData.departmentName} event={handleChange} />
                             </div>
                             <div className="col-md-12">
                                 <Inputs text="Direccion" name="address" icon="fa-solid fa-map-pin" value={formData.address} event={handleChange} />
@@ -157,7 +199,7 @@ export const UpdateUsers = () => {
                                 <Select text="Rol" options={roles} name="roleListName" value={formData.roleRequest.roleListName[0]} event={handleChange} />
                             </div>
                             <div className="col-md-6">
-                                <Select text="Empresa" options={OptionsComapnies} name="companyName" value={formData.companyName} event={handleChange} />
+                                <Select text="Empresa" options={OptionsCompanies} name="companyName" value={formData.companyName} event={handleChange} />
                             </div>
 
                             <Select text="Estado" options={status} name="estado" value={formData.estado} event={handleChange} />
