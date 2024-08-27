@@ -86,15 +86,15 @@ export const AgregarEmpresa = () => {
                         </div>
                         <div className="row" > {/* Información de la Empresa */}
                             <div className="col-md-4">
-                                <Inputs type="number" text="NIT" name="nit" event={handleChange} />
+                                <Inputs type="number" text="NIT" name="nit" event={handleChange} value={formData.nit} />
                                 {errorsForms.nit && <div className="text-danger">{errorsForms.nit}</div>}
                             </div>
                             <div className="col-md-4">
-                                <Inputs text="Nombre de la Empresa" name="company" event={handleChange} />
+                                <Inputs text="Nombre de la Empresa" name="company" event={handleChange} value={formData.company} />
                                 {errorsForms.company && <div className="text-danger">{errorsForms.company}</div>}
                             </div>
                             <div className="col-md-4">
-                                <Inputs text="Nombre del Gerente" name="manager" event={handleChange} />
+                                <Inputs text="Nombre del Gerente" name="manager" event={handleChange} value={formData.manager} />
                                 {errorsForms.manager && <div className="text-danger">{errorsForms.manager}</div>}
                             </div>
                         </div>
@@ -104,11 +104,11 @@ export const AgregarEmpresa = () => {
                         </div>
                         <div className="row"> {/* Contacto */}
                             <div className="col-md-6">
-                                <Inputs text="Correo Electrónico de la empresa" name="email" event={handleChange} icon={"fa-solid fa-at"} />
+                                <Inputs text="Correo Electrónico de la empresa" name="email" event={handleChange} icon={"fa-solid fa-at"} value={formData.email} />
                                 {errorsForms.email && <div className="text-danger">{errorsForms.email}</div>}
                             </div>
                             <div className="col-md-6">
-                                <Inputs text="Número de Teléfono de la empresa" name="phone" event={handleChange} icon="fa-solid fa-phone-volume" />
+                                <Inputs text="Número de Teléfono de la empresa" name="phone" event={handleChange} icon="fa-solid fa-phone-volume" value={formData.phone} />
                                 {errorsForms.phone && <div className="text-danger">{errorsForms.phone}</div>}
                             </div>
                         </div>
@@ -126,7 +126,7 @@ export const AgregarEmpresa = () => {
                                 {errorsForms.municipality && <div className="text-danger">{errorsForms.municipality}</div>}
                             </div>
                             <div className="col-md-6">
-                                <Inputs text="Dirección" name="address" event={handleChange} icon="fa-solid fa-map-pin" />
+                                <Inputs text="Dirección" name="address" event={handleChange} icon="fa-solid fa-map-pin" value={formData.address} />
                                 {errorsForms.address && <div className="text-danger">{errorsForms.address}</div>}
                             </div>
                         </div>
