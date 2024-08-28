@@ -6,6 +6,7 @@ import '../../../assets/css/AgregarEmpleado.css';
 import { ApiService } from '../../../class/ApiServices.jsx';
 import { User } from '../../../class/User.jsx';
 import { useNavigate } from 'react-router';
+
 export const AgregarEmpleado = () => {
 
   const cities = useOptionsCities();
@@ -237,7 +238,7 @@ export const AgregarEmpleado = () => {
                 {errorsForms.cityName && <div className="text-danger">{errorsForms.cityName}</div>}
               </div>
               <div className="col-md-4">
-                <Inputs event={handleChange} text="Dirección" name="address" placeholder="Calle XX #XX-XX Barrio" icon="fa-solid fa-map-pin" />
+                <Inputs event={handleChange} text="Dirección" name="address" placeholder="Calle 123 #45-67, Barrio Central, Ciudad" icon="fa-solid fa-map-pin" />
                 {errorsForms.address && <div className="text-danger">{errorsForms.address}</div>}
               </div>
             </div>
@@ -259,7 +260,7 @@ export const AgregarEmpleado = () => {
                 {errorsForms.username && <div className="text-danger">{errorsForms.username}</div>}
               </div>
               <div className="col-md-3">
-                <Inputs event={handleChange} text="Confirmar Usuario" name="confirmUsername" icon="fa-regular fa-envelope" />
+                <Inputs event={handleChange} text="Confirmar Usuario" name="confirmUsername" icon="fa-solid fa-user" />
                 {errorsForms.confirmUsername && <div className="text-danger">{errorsForms.confirmUsername}</div>}
               </div>
               <div className="col-md-6">
@@ -276,16 +277,14 @@ export const AgregarEmpleado = () => {
               <h3><b>INFORMACIÓN LABORAL</b></h3>
             </div>
             <div className="row mt-2">
-              <div className="row">
+              {/* <div className="row"> */}
                 {role === 'SUPERADMIN' && (
-                  <div className="col-md-6">
-                    <Select
-                      event={handleChange} text="Empresa" options={companies} name="companyName"
-                    />
+                  <div className="col-md-4">
+                    <Select event={handleChange} text="Empresa" options={companies} name="companyName"/>
                     {errorsForms.companyName && <div className="text-danger">{errorsForms.companyName}</div>}
                   </div>
                 )}
-              </div>
+              {/* </div> */}
 
               <div className="col-md-4">
                 <Select event={handleChange} text="Rol" options={roles} name="roleListName" multiple />

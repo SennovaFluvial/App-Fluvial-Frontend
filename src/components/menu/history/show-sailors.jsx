@@ -2,21 +2,27 @@ import React, { useEffect, useState } from 'react';
 import '../../../assets/css/show/styles-Show.css';
 import { Spinner } from '../../animations/Spiner';
 import { Grid } from '../../animations/Grid';
-import { useNewContext } from '../../../Context/Provider';
+import { ApiService } from '../../../class/ApiServices.jsx';
+// Componente para ver el historial de Tripulacion de la empresa
+export const ShowCrew = () => {
 
-export const ShowMarineros = () => {
-
-    const { marineros, getMarineros } = useNewContext();
     const [loading, setLoading] = useState(true);
+    const [crew, setCrew] = useState([])
+
+    const getCrew = async () => {
+        try {
+            const response = await ApiService.get("/api/v1/employeefluvial/all");
+            setCrew(response);
+        } catch (error) {
+            console.error("Error fetching employed data:", error);
+        } finally {
+            setLoading(false);
+        }
+    }
 
     useEffect(() => {
-        const loadMarineros = async () => {
-            await getMarineros();
-            setLoading(false);
-        };
-
-        loadMarineros();
-    }, [getMarineros]);
+        getCrew();
+    }, []);
 
     if (loading) {
         return (
@@ -50,7 +56,7 @@ export const ShowMarineros = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {marineros.map((item, index) => (
+                        {crew.map((item, index) => (
                             <tr key={item.id}>
                                 <td>{index + 1}</td>
                                 <td>{item.name}</td>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Flag from "react-world-flags";
+// import Flag from "react-world-flags";
 import instance from "../../../../config/AxiosApi";
 
 
@@ -118,12 +118,12 @@ export const status = [
 ];
 
 // export const codigoPaises= [
-//     { label: <><Flag code="COL" style={{ width: '20px', marginRight: '8px' }} />+57 Colombia</>, value: 'colombia' },
-//     { label: <><Flag code="MEX" style={{ width: '20px', marginRight: '8px' }} />+52 México</>, value: 'mexico' }
+//     { label: <><Flag code="COL" />+57 Colombia </> , value: 'colombia' },
+//     { label: <><Flag code="MEX" />+52 México</>, value: 'mexico' }
 // ];
 export const codigoPaises = [
-    { label: +57, value: 'colombia' },
-    { label: +52, value: 'mexico' }
+    { label: "+57", value: 'colombia' },
+    { label: "+52", value: 'mexico' }
 ];
 
 export const maritalStatus = [

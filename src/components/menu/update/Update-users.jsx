@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Select } from '../../html components/Selects' // Componente reutlizable de Seleccion
+import { Select } from '../../html components/Selects'
 import { Inputs } from '../../html components/Inputs'
-import { useOptionsDepto, useOptionsCompanies, useOptionsCities, OptionsTypeDocument, genero, status, useRoles } from '../update/options/arrays.jsx'
+import { useOptionsDepto, useOptionsCompanies, useOptionsCities, OptionsTypeDocument, genero, status, useRoles, maritalStatus, codigoPaises } from '../update/options/arrays.jsx'
 import { useNavigate, useParams } from 'react-router'
 import { ApiService } from '../../../class/ApiServices.jsx'
-
+import '../../../assets/css/AgregarEmpleado.css';
 
 export const UpdateUsers = () => {
     const OptionsDepto = useOptionsDepto();
@@ -119,90 +119,104 @@ export const UpdateUsers = () => {
         <>
 
             <div
-                className="d-flex justify-content-center align-items-center vh-100">
-                <div className="container-am bg-light shadow rounded p-4">
-                    <h2 className="text-center mb-4">ACTUALIZAR USUARIO</h2>
+                className="d-flex-empleado justify-content-center align-items-center vh-100">
+                <div className="container-empleado bg-light shadow rounded p-4">
+                    <h2 className="text-center mb-2">ACTUALIZAR USUARIO</h2>
                     <form onSubmit={handleSubmit}>
-                        <div className="text-center mt-5">
+                        <div className="text-center">
                             <h3>
                                 <b> INFORMACIÓN PERSONAL</b>
                             </h3>
                         </div>
-                        <div className="row my-4"> {/* Nombres y apellidos */}
-                            <div className="col-md-6">
-                                <Inputs text="Nombes" name="name" value={formData.name} event={handleChange} />
+                        <div className="row"> {/* Nombres y apellidos */}
+                            <div className="col-md-4">
+                                <Inputs text="Nombres" name="name" value={formData.name} event={handleChange} />
                             </div>
-                            <div className="col-md-6">
+                            <div className="col-md-4">
                                 <Inputs text="Apellidos" name="lastName" value={formData.lastName} event={handleChange} />
                             </div>
-                            <div className="col-md-5">
+                            <div className="col-md-4">
                                 <Select text="Tipo de Documento" options={OptionsTypeDocument} name="typeDocument" value={formData.typeDocument} event={handleChange} />
                             </div>
-                            <div className="col-md-7">
-                                <Inputs text="Numero de Documento" name="numDocument" icon="fa-solid fa-address-card" value={formData.numDocument} event={handleChange} />
+                            <div className="col-md-3">
+                                <Inputs text="Número de Documento" name="numDocument" icon="fa-solid fa-address-card" value={formData.numDocument} event={handleChange} />
                             </div>
-                            <div className="col-md-7">
-                                <Select text="Genero" options={genero} name="sex" value={formData.genero} event={handleChange} />
+                            <div className="col-md-3">
+                                <Inputs type="date" text="Fecha de Nacimiento" name="birthDate" icon="fa-solid fa-calendar-days" value={formData.birthDate} />
                             </div>
+                            <div className="col-md-3">
+                                <Select text="Género" name="sex" value={formData.sex} options={genero} event={handleChange} />
+                            </div>
+                            <div className="col-md-3">
+                                <Select text="Estado civil" name="maritalStatus" value={formData.maritalStatus} options={maritalStatus} event={handleChange} />
+                            </div>
+
                         </div>
 
-                        <div className="text-center mt-4">
+                        <div className="text-center">
                             <h3>
                                 <b>UBICACIÓN</b>
                             </h3>
                         </div>
 
-                        <div className="row my-4">
-                            <div className="col-md-6"> {/* Ciudad */}
+                        <div className="row">
+                            <div className="col-md-4"> {/* Departamento */}
+                                <Select text="Departamento" options={OptionsDepto} name="departmentName" value={formData.departmentName} event={handleChange} />
+                            </div>
+                            <div className="col-md-4"> {/* Ciudad */}
                                 <Select text="Ciudad" options={OptionsCities} name="cityName" value={formData.cityName} event={handleChange} />
                             </div>
-                            <div className="col-md-6"> {/* Departamento */}
-                                <Select text="Departamento" options={OptionsDepto} name="Departamento" value={formData.departmentName} event={handleChange} />
-                            </div>
-                            <div className="col-md-12">
+                            <div className="col-md-4">
                                 <Inputs text="Direccion" name="address" icon="fa-solid fa-map-pin" value={formData.address} event={handleChange} />
                             </div>
                         </div>
 
-                        <div className="text-center mt-4">
+                        <div className="text-center">
                             <h3>
                                 <b>CONTACTO</b>
                             </h3>
                         </div>
 
-                        <div className="row my-4">  {/* Contacto | telefono */}
-                            <div className="col-md-12">
+                        <div className="row">  {/* Contacto | telefono */}
+                            {/* aun no estan para guararlo no actualizalo en el JSON */}
+                            <div className='col-md-2'>
+                                <Select text="Código País" name="codigoPais" options={codigoPaises} icon="fa-solid fa-earth-americas" value={formData} event={handleChange} />
+                            </div>
+                            <div className="col-md-4">
                                 <Inputs text="Numero de telefono" name="phone" icon="fa-solid fa-phone-volume" value={formData.phone} event={handleChange} />
                             </div>
-                            <div className="col-md-6">
-                                <Inputs text="Usuario" name="username" icon="fa-solid fa-envelope" value={formData.username} event={handleChange} />
+                            <div className="col-md-3">
+                                <Inputs text="Usuario" name="username" icon="fa-solid fa-user" value={formData.username} event={handleChange} />
+                            </div>
+                            {/* aun no estan para guararlo no actualizalo en el JASON */}
+                            <div className="col-md-3">
+                                <Inputs text="Confirmar Usuario" name="confirmUsername" icon="fa-solid fa-user" value={formData.confirmUsername} event={handleChange} />
                             </div>
                             <div className="col-md-6">
-                                <Inputs text="Confirmar Usuario" name="username" icon="fa-regular fa-envelope" value={formData.username} event={handleChange} />
+                                <Inputs type="password" text="Nueva Contraseña" name="password" icon="fa-solid fa-lock" value={formData.password} event={handleChange} />
                             </div>
+                            {/* aun no estan para guararlo no actualizalo en el JASON */}
                             <div className="col-md-6">
-                                <Inputs text="Nueva Contraseña" name="password" icon="fa-solid fa-lock" value={formData.password} event={handleChange} />
-                            </div>
-                            <div className="col-md-6">
-                                <Inputs text="Confirmar Contraseña" name="password" icon="fa-solid fa-lock" value={formData.password} event={handleChange} />
+                                <Inputs type="password" text="Confirmar Contraseña" name="confirmPassword" icon="fa-solid fa-lock" value={formData.confirmPassword} event={handleChange} />
                             </div>
                         </div>
 
-                        <div className="text-center mt-4">
+                        <div className="text-center">
                             <h3>
-                                <b>INFORMACION LABORAL</b>
+                                <b>INFORMACIÓN LABORAL</b>
                             </h3>
                         </div>
 
-                        <div className="row mt-2">  {/* Rol */}
-                            <div className="col-md-6">
-                                <Select text="Rol" options={roles} name="roleListName" value={formData.roleRequest.roleListName[0]} event={handleChange} />
-                            </div>
-                            <div className="col-md-6">
+                        <div className="row">  {/* Rol */}
+                            <div className="col-md-4">
                                 <Select text="Empresa" options={OptionsCompanies} name="companyName" value={formData.companyName} event={handleChange} />
                             </div>
-
-                            <Select text="Estado" options={status} name="estado" value={formData.estado} event={handleChange} />
+                            <div className="col-md-4">
+                                <Select text="Rol" options={roles} name="roleListName" value={formData.roleRequest.roleListName[0]} event={handleChange} />
+                            </div>
+                            <div className="col-md-4">
+                                <Select text="Estado" options={status} name="estado" value={formData.estado} event={handleChange} />
+                            </div>
                         </div>
                         <div className="text-center">
                             <button type="submit" className="btn btn-success">Actualizar <i className="fa-solid fa-square-pen"></i></button>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../../assets/css/input.css'
 
-export const Inputs = ({ type = 'text', text, name, event, icon }) => {
+export const Inputs = ({ type, text, name, event, placeholder, icon, value }) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const togglePasswordVisibility = () => {

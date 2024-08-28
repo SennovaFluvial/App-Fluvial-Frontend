@@ -51,7 +51,6 @@ export const AgregarCapitan = () => {
     };
 
     const handleSubmit = async (event) => {
-    const handleSubmit = async (event) => {
         event.preventDefault();
 
         const newErrors = {};
@@ -149,7 +148,7 @@ export const AgregarCapitan = () => {
                                 {errorsForms.phone && <div className="text-danger">{errorsForms.phone}</div>}
                             </div>
                             <div className="col-md-4">
-                            <Inputs text="Dirección" name="address" placeholder="Calle XX #XX-XX Barrio" event={handleChange} icon="fa-solid fa-map-pin" />
+                                <Inputs text="Dirección" name="address" placeholder="Calle XX #XX-XX Barrio" event={handleChange} icon="fa-solid fa-map-pin" />
                                 {errorsForms.address && <div className="text-danger">{errorsForms.address}</div>}
                             </div>
 
@@ -172,6 +171,5 @@ export const AgregarCapitan = () => {
                     </form>
                 </div>
             </div>
-    )
-}
-
+        )
+    }
