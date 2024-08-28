@@ -196,11 +196,11 @@ export const AgregarEmpleado = () => {
             </div>
             <div className="row"> {/* Nombres y apellidos */}
               <div className="col-md-4">
-                <Inputs text="Nombres" name="name" event={handleChange} />
+                <Inputs text="Nombres" name="name" event={handleChange} value={formData.name} />
                 {errorsForms.name && <div className="text-danger">{errorsForms.name}</div>}
               </div>
               <div className="col-md-4">
-                <Inputs event={handleChange} text="Apellidos" name="lastName" />
+                <Inputs event={handleChange} text="Apellidos" name="lastName" value={formData.lastName} />
                 {errorsForms.lastName && <div className="text-danger">{errorsForms.lastName}</div>}
               </div>
               <div className="col-md-4">
@@ -208,11 +208,11 @@ export const AgregarEmpleado = () => {
                 {errorsForms.typeDocument && <div className="text-danger">{errorsForms.typeDocument}</div>}
               </div>
               <div className="col-md-3">
-                <Inputs event={handleChange} text="Número de Documento" name="numDocument" icon="fa-solid fa-address-card" />
+                <Inputs event={handleChange} text="Número de Documento" name="numDocument" icon="fa-solid fa-address-card" value={formData.numDocument} />
                 {errorsForms.numDocument && <div className="text-danger">{errorsForms.numDocument}</div>}
               </div>
               <div className="col-md-3">
-                <Inputs event={handleChange} type="date" text="Fecha de Nacimiento" name="birthDate" icon="fa-solid fa-calendar-days" />
+                <Inputs event={handleChange} type="date" text="Fecha de Nacimiento" name="birthDate" icon="fa-solid fa-calendar-days" value={formData.birthDate} />
                 {errorsForms.birthDate && <div className="text-danger">{errorsForms.birthDate}</div>}
               </div>
               <div className="col-md-3">
@@ -238,7 +238,7 @@ export const AgregarEmpleado = () => {
                 {errorsForms.cityName && <div className="text-danger">{errorsForms.cityName}</div>}
               </div>
               <div className="col-md-4">
-                <Inputs event={handleChange} text="Dirección" name="address" placeholder="Calle 123 #45-67, Barrio Central, Ciudad" icon="fa-solid fa-map-pin" />
+                <Inputs event={handleChange} text="Dirección" name="address" icon="fa-solid fa-map-pin" value={formData.address} />
                 {errorsForms.address && <div className="text-danger">{errorsForms.address}</div>}
               </div>
             </div>
@@ -252,23 +252,23 @@ export const AgregarEmpleado = () => {
                 {errorsForms.codigoPais && <div className="text-danger">{errorsForms.codigoPais}</div>}
               </div>
               <div className="col-md-4">
-                <Inputs event={handleChange} text="Número de Teléfono" name="phone" icon="fa-solid fa-phone-volume" />
+                <Inputs event={handleChange} text="Número de Teléfono" name="phone" icon="fa-solid fa-phone-volume" value={formData.phone} />
                 {errorsForms.phone && <div className="text-danger">{errorsForms.phone}</div>}
               </div>
               <div className="col-md-3">
-                <Inputs event={handleChange} text="Usuario" name="username" icon="fa-solid fa-user" />
+                <Inputs event={handleChange} text="Usuario" name="username" icon="fa-solid fa-user" value={formData.username} />
                 {errorsForms.username && <div className="text-danger">{errorsForms.username}</div>}
               </div>
               <div className="col-md-3">
-                <Inputs event={handleChange} text="Confirmar Usuario" name="confirmUsername" icon="fa-solid fa-user" />
+                <Inputs event={handleChange} text="Confirmar Usuario" name="confirmUsername" icon="fa-regular fa-envelope" value={formData.confirmUsername} />
                 {errorsForms.confirmUsername && <div className="text-danger">{errorsForms.confirmUsername}</div>}
               </div>
               <div className="col-md-6">
-                <Inputs event={handleChange} type="password" text="Crear Contraseña" name="password" icon="fa-solid fa-lock" />
+                <Inputs event={handleChange} type="password" text="Crear Contraseña" name="password" icon="fa-solid fa-lock" value={formData.password} />
                 {errorsForms.password && <div className="text-danger">{errorsForms.password}</div>}
               </div>
               <div className="col-md-6">
-                <Inputs event={handleChange} type="password" text="Confirmar Contraseña" name="confirmPassword" icon="fa-solid fa-lock" />
+                <Inputs event={handleChange} type="password" text="Confirmar Contraseña" name="confirmPassword" icon="fa-solid fa-lock" value={formData.confirmPassword} />
                 {errorsForms.confirmPassword && <div className="text-danger">{errorsForms.confirmPassword}</div>}
               </div>
             </div>

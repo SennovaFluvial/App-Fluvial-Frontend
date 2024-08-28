@@ -100,11 +100,11 @@ export const AgregarCliente = () => {
                         </div>
                         <div className="row"> {/* Nombres y apellidos */}
                             <div className="col-md-4">
-                                <Inputs text="Nombres" name="name" event={handleChange} />
+                                <Inputs text="Nombres" name="name" event={handleChange} value={formData.name} />
                                 {errorsForms.name && <div className="text-danger">{errorsForms.name}</div>}
                             </div>
                             <div className="col-md-4">
-                                <Inputs event={handleChange} text="Apellidos" name="lastName" />
+                                <Inputs event={handleChange} text="Apellidos" name="lastName" value={formData.lastName} />
                                 {errorsForms.lastName && <div className="text-danger">{errorsForms.lastName}</div>}
                             </div>
                             <div className="col-md-4">
@@ -112,15 +112,15 @@ export const AgregarCliente = () => {
                                 {errorsForms.typeDocument && <div className="text-danger">{errorsForms.typeDocument}</div>}
                             </div>
                             <div className="col-md-4">
-                                <Inputs event={handleChange} text="Número de Documento" name="numDocument" icon="fa-solid fa-address-card" />
+                                <Inputs event={handleChange} text="Número de Documento" name="numDocument" icon="fa-solid fa-address-card" value={formData.numDocument} />
                                 {errorsForms.numDocument && <div className="text-danger">{errorsForms.numDocument}</div>}
                             </div>
                             <div className="col-md-4">
-                                <Inputs event={handleChange} text="Correo Electrónico" name="email" icon="fa-solid fa-envelope" />
+                                <Inputs event={handleChange} text="Correo Electrónico" name="email" icon="fa-solid fa-envelope" value={formData.email} />
                                 {errorsForms.email && <div className="text-danger">{errorsForms.email}</div>}
                             </div>
                             <div className="col-md-4">
-                                <Inputs event={handleChange} type="date" text="Fecha de Nacimiento" name="dateOfBirth" icon="fa-solid fa-calendar-days" />
+                                <Inputs event={handleChange} type="date" text="Fecha de Nacimiento" name="dateOfBirth" icon="fa-solid fa-calendar-days" value={formData.dateOfBirth} />
                                 {errorsForms.dateOfBirth && <div className="text-danger">{errorsForms.dateOfBirth}</div>}
                             </div>
                             <div className="col-md-4">
@@ -142,11 +142,11 @@ export const AgregarCliente = () => {
                         </div>
                         <div className="row">
                             <div className="col-md-6">
-                                <Inputs event={handleChange} text="Número de Teléfono" name="phone" icon="fa-solid fa-phone-volume" />
+                                <Inputs event={handleChange} text="Número de Teléfono" name="phone" icon="fa-solid fa-phone-volume" value={formData.phone} />
                                 {errorsForms.phone && <div className="text-danger">{errorsForms.phone}</div>}
                             </div>
                             <div className="col-md-6">
-                                <Inputs event={handleChange} text="Dirección" name="address" placeholder="Calle XX #XX-XX Barrio" icon="fa-solid fa-map-pin" />
+                                <Inputs event={handleChange} text="Dirección" name="address" icon="fa-solid fa-map-pin" value={formData.address} />
                                 {errorsForms.address && <div className="text-danger">{errorsForms.address}</div>}
                             </div>
                             <div className="col-md-6">
