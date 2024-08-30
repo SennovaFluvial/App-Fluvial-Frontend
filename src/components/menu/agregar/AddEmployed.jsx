@@ -5,18 +5,26 @@ import { useOptionsDepto, useOptionsCompanies, useOptionsCities, OptionsTypeDocu
 import '../../../assets/css/AgregarEmpleado.css';
 import { ApiService } from '../../../class/ApiServices.jsx';
 import { User } from '../../../class/User.jsx';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
 
 export const AddEmployed = () => {
 
   const cities = useOptionsCities();
   const deptos = useOptionsDepto();
   const roles = useRoles();
-  const [nameCompany, setNameCompany] = useState("")
+  const [users, setUsers] = useState([]);
+  const [nameCompany, setNameCompany] = useState("");
+  const [errorsForms, setErrorsForms] = useState({});
   const user = JSON.parse(localStorage.getItem("user"));
   const role = user?.rol;
+  const location = useLocation();
+  const queryParam = new URLSearchParams(location.search);
+  const action = queryParam.get('action'); // Parámetro GET que define la acción (update o create)
+  const { id } = useParams();
+  const userId = parseInt(id, 10); // ID del usuario
   const nav = useNavigate();
   const companies = role === "SUPERADMIN" ? useOptionsCompanies() : null;
+
   const [formData, setFormData] = useState({
     username: '',
     confirmUsername: '',
@@ -41,23 +49,94 @@ export const AddEmployed = () => {
   });
 
   useEffect(() => {
-    if (role === "ADMIN") {
-      const getCompanyUser = async () => {
-        try {
-          const response = await ApiService.get("/api/v1/companie/users");
-          if (response && response.length > 0) {
-            setNameCompany(response[0].company.name);
-          } else {
-            console.error("No se encontraron datos en la respuesta.");
-          }
-        } catch (error) {
-          console.error("Error al obtener el nombre de la compañía:", error);
-        }
-      };
-
-      getCompanyUser();
+    if (!action && !userId) {
+      setFormData({
+        username: '',
+        confirmUsername: '',
+        password: '',
+        confirmPassword: '',
+        roleRequest: {
+          roleListName: []
+        },
+        estado: '',
+        companyName: nameCompany,
+        name: '',
+        lastName: '',
+        typeDocument: '',
+        numDocument: '',
+        phone: '',
+        address: '',
+        cityName: '',
+        departmentName: '',
+        sex: '',
+        birthDate: '',
+        maritalStatus: ''
+      });
+      setErrorsForms({});
     }
-  }, [role]);
+  }, [action, userId]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const listUsers = await ApiService.get('/api/v1/companie/users');
+        if (Array.isArray(listUsers)) {
+          setUsers(listUsers);
+        } else {
+          console.warn('Data from API is not an array or is empty');
+        }
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
+  useEffect(() => {
+    if (action === 'update' && userId) {
+      const filterUserId = users.find(user => user.id === userId);
+      if (filterUserId) {
+        setFormData({
+          username: filterUserId.username,
+          confirmUsername: filterUserId.username,
+          password: '',
+          confirmPassword: '',
+          roleRequest: {
+            roleListName: [filterUserId.roles[0]?.roleEnum || ""]
+          },
+          estado: filterUserId.status,
+          companyName: filterUserId.company?.name || '',
+          name: filterUserId.name,
+          lastName: filterUserId.lastName,
+          typeDocument: filterUserId.typeDocument,
+          numDocument: filterUserId.numDocument,
+          phone: filterUserId.phone,
+          address: filterUserId.address,
+          cityName: filterUserId.city?.ciudad || "",
+          departmentName: filterUserId.departmentName || "",
+          sex: filterUserId.sex,
+          birthDate: filterUserId.birthDate || "",
+          maritalStatus: filterUserId.maritalStatus || ""
+        });
+      } else if (role === "ADMIN") {
+        const getCompanyUser = async () => {
+          try {
+            const response = await ApiService.get("/api/v1/companie/users");
+            if (response && response.length > 0) {
+              setNameCompany(response[0].company.name);
+            } else {
+              console.error("No se encontraron datos en la respuesta.");
+            }
+          } catch (error) {
+            console.error("Error al obtener el nombre de la compañía:", error);
+          }
+        };
+
+        getCompanyUser();
+      }
+    }
+  }, [action, userId, role, users]);
 
   useEffect(() => {
     setFormData(prevFormData => ({
@@ -65,8 +144,6 @@ export const AddEmployed = () => {
       companyName: nameCompany
     }));
   }, [nameCompany]);
-
-  const [errorsForms, setErrorsForms] = useState({});
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -76,7 +153,7 @@ export const AddEmployed = () => {
         ...prevState,
         roleRequest: {
           ...prevState.roleRequest,
-          roleListName: value ? [value] : []
+          roleListName: [value] // Guarda el valor en un array
         }
       }));
     } else {
@@ -84,56 +161,52 @@ export const AddEmployed = () => {
         ...prevState,
         [name]: value
       }));
-
-      if (value.trim()) {
-        const { [name]: removed, ...rest } = errorsForms;
-        setErrorsForms(rest);
-      } else {
-        setErrorsForms({ ...errorsForms, [name]: "Campo obligatorio" });
-      }
     }
-  }
+
+    // Manejo de errores
+    if (value.trim()) {
+      const { [name]: removed, ...rest } = errorsForms;
+      setErrorsForms(rest);
+    } else {
+      setErrorsForms({ ...errorsForms, [name]: "Campo obligatorio" });
+    }
+  };
 
   const handleErrors = (name, message) => {
-    setErrorsForms({
-      ...errorsForms, [name]: message
-    });
-
-  }
+    setErrorsForms(prevErrors => ({
+      ...prevErrors,
+      [name]: message
+    }));
+  };
 
   useEffect(() => {
-    if (formData.dateOfBirth) {
-      const selectedDate = new Date(formData.dateOfBirth);
+    if (formData.birthDate) {
+      const selectedDate = new Date(formData.birthDate);
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       if (selectedDate >= today) {
-        handleErrors("dateOfBirth", "La fecha de nacimiento no puede ser actual o una fecha futura")
+        handleErrors("birthDate", "La fecha de nacimiento no puede ser actual o una fecha futura");
       }
     }
 
     if (formData.confirmUsername && formData.username !== formData.confirmUsername) {
-      handleErrors("confirmUsername", "Los nombres de usuario no coinciden")
-    } else {
-      if (formData.username === formData.confirmUsername) {
-        setFormData(prevState => ({
-          ...prevState,
-          username: formData.username
-        }));
-      }
+      handleErrors("confirmUsername", "Los nombres de usuario no coinciden");
+    } else if (formData.username === formData.confirmUsername) {
+      setFormData(prevState => ({
+        ...prevState,
+        username: formData.username
+      }));
     }
 
     if (formData.confirmPassword && formData.password !== formData.confirmPassword) {
-      handleErrors("confirmPassword", "Las contraseñas no coinciden")
-    } else {
-      if (formData.password === formData.confirmPassword) {
-        setFormData(prevState => ({
-          ...prevState,
-          password: formData.password
-        }));
-      }
+      handleErrors("confirmPassword", "Las contraseñas no coinciden");
+    } else if (formData.password === formData.confirmPassword) {
+      setFormData(prevState => ({
+        ...prevState,
+        password: formData.password
+      }));
     }
-  }, [formData.username, formData.confirmUsername, formData.password, formData.confirmPassword, formData.dateOfBirth]);
-
+  }, [formData.username, formData.confirmUsername, formData.password, formData.confirmPassword, formData.birthDate]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -141,19 +214,14 @@ export const AddEmployed = () => {
     const newErrors = {};
 
     for (let [name, value] of Object.entries(formData)) {
-      if (name === 'roleRequest') {
-        if (!formData.roleRequest.roleListName || formData.roleRequest.roleListName.length === 0) {
-          newErrors['roleRequest'] = "Campo obligatorio";
-        }
-      } else if (value.trim()) {
-        const { [name]: removed, ...rest } = errorsForms;
-        setErrorsForms(rest);
-      } else {
+      if (name === 'roleRequest.roleListName' && (!formData.roleRequest.roleListName || formData.roleRequest.roleListName.length === 0)) {
+        newErrors['roleRequest'] = "Campo obligatorio";
+      } else if (typeof value === 'string' && !value.trim()) {
         newErrors[name] = "Campo obligatorio";
       }
     }
 
-    setErrorsForms({ ...errorsForms, ...newErrors });
+    setErrorsForms(newErrors);
 
     if (Object.keys(newErrors).length > 0) {
       alert('Por favor, complete todos los campos obligatorios correctamente.');
@@ -162,23 +230,23 @@ export const AddEmployed = () => {
 
     const { confirmUsername, confirmPassword, ...dataToSend } = formData;
 
-    const confirmationMessage = `¿Está seguro que quiere crear el usuario?\nUsuario: ${dataToSend.username}\nRol: ${dataToSend.roleRequest.roleListName[0]}`;
-    const userConfirmed = window.confirm(confirmationMessage);
+    const confirmationMessage = action === 'update'
+      ? `¿Está seguro que quiere actualizar el usuario?\nUsuario: ${dataToSend.username}\nRol: ${dataToSend.roleRequest.roleListName[0]}`
+      : `¿Está seguro que quiere crear el usuario?\nUsuario: ${dataToSend.username}\nRol: ${dataToSend.roleRequest.roleListName[0]}`;
 
-    if (userConfirmed) {
+    if (window.confirm(confirmationMessage)) {
       try {
-        let dataToSend = { ...formData };
-        delete dataToSend.confirmUsername;
-        delete dataToSend.confirmPassword;
-        delete dataToSend.codigoPais;
-
-        await User.sign_up(dataToSend);
-        alert('Usuario creado correctamente');
-
+        if (action === 'update') {
+          await ApiService.put(`/auth/update/${userId}`, dataToSend);
+          alert('Usuario actualizado correctamente');
+        } else {
+          await User.sign_up(dataToSend);
+          alert('Usuario creado correctamente');
+        }
         nav("../../adminSection/show-users");
       } catch (error) {
-        console.error('Error al crear el usuario:', error);
-        alert('Hubo un error al crear el usuario. Por favor, intente de nuevo.');
+        console.error('Error al procesar la solicitud:', error);
+        alert('Hubo un error al procesar la solicitud. Por favor, intente de nuevo.');
       }
     } else {
       alert('Operación cancelada');
@@ -189,7 +257,7 @@ export const AddEmployed = () => {
     <>
       <div className="d-flex-empleado justify-content-center align-items-center vh-100">
         <div className="container-empleado bg-light shadow rounded p-4">
-          <h2 className="text-center mb-2">CREAR EMPLEADO</h2>
+          <h2 className="text-center mb-2">{action === 'update' ? 'ACTUALIZAR EMPLEADO' : 'CREAR EMPLEADO'}</h2>
           <form onSubmit={handleSubmit}>
             <div className="text-center">
               <h3><b>INFORMACIÓN PERSONAL</b></h3>
@@ -204,7 +272,7 @@ export const AddEmployed = () => {
                 {errorsForms.lastName && <div className="text-danger">{errorsForms.lastName}</div>}
               </div>
               <div className="col-md-4">
-                <Select event={handleChange} text="Tipo de Documento" options={OptionsTypeDocument} name="typeDocument" />
+                <Select event={handleChange} value={formData.typeDocument} text="Tipo de Documento" options={OptionsTypeDocument} name="typeDocument" />
                 {errorsForms.typeDocument && <div className="text-danger">{errorsForms.typeDocument}</div>}
               </div>
               <div className="col-md-3">
@@ -216,11 +284,11 @@ export const AddEmployed = () => {
                 {errorsForms.birthDate && <div className="text-danger">{errorsForms.birthDate}</div>}
               </div>
               <div className="col-md-3">
-                <Select event={handleChange} text="Género" options={genero} name="sex" />
+                <Select event={handleChange} value={formData.sex} text="Género" options={genero} name="sex" />
                 {errorsForms.sex && <div className="text-danger">{errorsForms.sex}</div>}
               </div>
               <div className="col-md-3">
-                <Select event={handleChange} text="Estado civil" options={maritalStatus} name="maritalStatus" />
+                <Select event={handleChange} value={formData.maritalStatus} text="Estado civil" options={maritalStatus} name="maritalStatus" />
                 {errorsForms.maritalStatus && <div className="text-danger">{errorsForms.maritalStatus}</div>}
               </div>
             </div>
@@ -230,11 +298,11 @@ export const AddEmployed = () => {
             </div>
             <div className="row"> {/* Ciudad y Departamento */}
               <div className="col-md-4">
-                <Select event={handleChange} text="Departamento" options={deptos} name="departmentName" />
+                <Select event={handleChange} value={formData.departmentName} text="Departamento" options={deptos} name="departmentName" />
                 {errorsForms.departmentName && <div className="text-danger">{errorsForms.departmentName}</div>}
               </div>
               <div className="col-md-4">
-                <Select event={handleChange} text="Ciudad" options={cities} name="cityName" />
+                <Select event={handleChange} value={formData.cityName} text="Ciudad" options={cities} name="cityName" />
                 {errorsForms.cityName && <div className="text-danger">{errorsForms.cityName}</div>}
               </div>
               <div className="col-md-4">
@@ -278,20 +346,20 @@ export const AddEmployed = () => {
             </div>
             <div className="row mt-2">
               {/* <div className="row"> */}
-                {role === 'SUPERADMIN' && (
-                  <div className="col-md-4">
-                    <Select event={handleChange} text="Empresa" options={companies} name="companyName"/>
-                    {errorsForms.companyName && <div className="text-danger">{errorsForms.companyName}</div>}
-                  </div>
-                )}
+              {role === 'SUPERADMIN' && (
+                <div className="col-md-4">
+                  <Select event={handleChange} value={formData.companyName} text="Empresa" options={companies} name="companyName" />
+                  {errorsForms.companyName && <div className="text-danger">{errorsForms.companyName}</div>}
+                </div>
+              )}
               {/* </div> */}
 
               <div className="col-md-4">
-                <Select event={handleChange} text="Rol" options={roles} name="roleListName" multiple />
+                <Select event={handleChange} value={formData.roleRequest.roleListName[0]} text="Rol" options={roles} name="roleListName" />
                 {errorsForms.roleListName && <div className="text-danger">{errorsForms.roleListName}</div>}
               </div>
               <div className="col-md-4">
-                <Select event={handleChange} text="Estado" options={status} name="estado" />
+                <Select event={handleChange} value={formData.estado} text="Estado" options={status} name="estado" />
                 {errorsForms.estado && <div className="text-danger">{errorsForms.estado}</div>}
               </div>
             </div>

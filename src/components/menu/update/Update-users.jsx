@@ -209,7 +209,12 @@ export const UpdateUsers = () => {
 
                         <div className="row">  {/* Rol */}
                             <div className="col-md-4">
-                                <Select text="Empresa" options={OptionsCompanies} name="companyName" value={formData.companyName} event={handleChange} />
+                                {role === 'SUPERADMIN' && (
+                                    <div className="col-md-4">
+                                        <Select event={handleChange} text="Empresa" options={companies} name="companyName" />
+                                        {errorsForms.companyName && <div className="text-danger">{errorsForms.companyName}</div>}
+                                    </div>
+                                )}
                             </div>
                             <div className="col-md-4">
                                 <Select text="Rol" options={roles} name="roleListName" value={formData.roleRequest.roleListName[0]} event={handleChange} />

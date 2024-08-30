@@ -24,6 +24,7 @@ import { UpdateCustomer } from '../menu/update/Update-customer.jsx';
 import { AddCrew } from '../menu/agregar/AddCrew.jsx';
 
 
+
 /**
  * Componente ComponentRouter
  * 
@@ -59,7 +60,7 @@ export const ComponentRouter = () => {
                 <Route path="/adminSection" element={<DashBoard user={user} setUser={setUser} />}> {/* Ruta para el panel de administración */}
 
                     <Route path="add-company" element={< AddCompany />} />{/* Ruta para agregar empresas */}
-                    <Route path="add-employed" element={< AddEmployed />} />{/* Ruta para agregar empleados */}
+                    <Route path="add-employed/:id?" element={< AddEmployed />} />{/* Ruta para agregar empleados */}
                     <Route path="add-vehicle" element={< AddVehicle />} /> {/* Ruta para agregar vehículos */}
                     <Route path="add-customer" element={< AddCustomer />} />{/* Ruta para agregar clientes */}
                     <Route path="add-crew" element={< AddCrew />}>{/* Ruta para agregar clientes */}
@@ -74,7 +75,7 @@ export const ComponentRouter = () => {
                     <Route path="show-users" element={< ShowUsers />} /> {/* Ruta para ver usuarios */}
                     <Route path="show-crew" element={< ShowCrew />} /> {/* Ruta para ver usuarios */}
 
-                    <Route path="update-customer/ :id" element={< UpdateCustomer />} />{/* Ruta actualizar clientes */}
+                    <Route path="update-customer/:id" element={< UpdateCustomer />} />{/* Ruta actualizar clientes */}
                     <Route path="update-user/:id" element={< UpdateUsers />} /> {/* Ruta actualizar usuario */}
 
                     {/* Agregar las rutas protegias aqui */}

@@ -89,4 +89,8 @@ export class ApiService {
         }
     }
 
+    static async search () {    
+        
+    }
+
 }

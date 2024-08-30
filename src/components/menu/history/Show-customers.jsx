@@ -71,18 +71,11 @@ export const ShowCustomers = () => {
                 <td>{item.address}</td>
                 <td>{item.cityName}</td>
                 <td>
-                  <button
-                    onClick={() => deleteCustomers(item.id)}
-                    className='btn icon-link-hover ms-3 text-danger'>
-                    <i className="fa-solid fa-trash-can icon-option"></i>
-                  </button>
                   <Link to={`../update-customer/${item.id}`}>
-                  <button className='btn icon-link-hover ms-3 text-primary'>
-                  <Link to={UpdateCustomer}>
-                    <i className="fa-solid fa-pen-to-square icon-option"></i>
+                    <button className='btn icon-link-hover ms-3 text-primary'>
+                      <i className="fa-solid fa-pen-to-square icon-option"></i>
+                    </button>
                   </Link>
-                  </button>
-                    </Link>
                   <button className='btn icon-link-hover ms-3 text-warning'>
                     <i className="fa-solid fa-eye icon-option"></i>
                   </button>

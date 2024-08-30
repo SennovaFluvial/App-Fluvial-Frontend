@@ -66,7 +66,7 @@ export const ShowUsers = () => {
                                 <td>{item.phone}</td>
                                 <td>{item.status}</td>
                                 <td>
-                                    <Link to={`../update-user/${item.id}`}>
+                                    <Link to={`../add-employed/${item.id}?action=update`}>
                                         <button className='btn icon-link-hover ms-3 text-primary'>
                                             <i className="fa-solid fa-pen-to-square icon-option"></i>
                                         </button>

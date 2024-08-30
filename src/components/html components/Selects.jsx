@@ -1,5 +1,5 @@
 import React from 'react';
-import Flag from 'react-world-flags';
+// import Flag from 'react-world-flags';
 
 export const Select = ({ text, options = [], name, value, event, icon }) => {
     return (
@@ -15,10 +15,10 @@ export const Select = ({ text, options = [], name, value, event, icon }) => {
                     id={name}
                     name={name}
                     className="form-select"
-                    value={value}
-                    onChange={event}>
-                    <option value="">Seleccione.. </option>
-
+                    value={value || ''} // Asegúrate de que value sea un valor único (no un array)
+                    onChange={event}
+                >
+                    <option value="">Seleccione...</option>
                     {Array.isArray(options) && options.map((option, index) => (
                         <option key={index} value={option.value}>
                             {option.label}
@@ -27,5 +27,5 @@ export const Select = ({ text, options = [], name, value, event, icon }) => {
                 </select>
             </div>
         </div>
-    )
-}
+    );
+};

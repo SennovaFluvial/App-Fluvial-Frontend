@@ -88,7 +88,6 @@ export const AddCustomer = () => {
     };
 
 
-    console.log(formData)
     return (
         <>
             <div className="d-flex-empleado justify-content-center align-items-center vh-100">
