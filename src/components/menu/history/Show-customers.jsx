@@ -4,6 +4,7 @@ import { Spinner } from '../../animations/Spiner';
 import { Grid } from '../../animations/Grid';
 import { Link } from 'react-router-dom';
 import { UpdateCustomer } from '../update/Update-customer';
+import { ApiService } from '../../../class/ApiServices';
 
 export const ShowCustomers = () => {
   const [loading, setLoading] = useState(true);
@@ -58,7 +59,7 @@ export const ShowCustomers = () => {
               <th scope="col">Acciones</th>
             </tr>
           </thead>
-          <tbody class="table-group-divider">
+          <tbody className="table-group-divider">
             {customers.map((item, index) => (
               <tr key={item.id}>
                 <td><b>{index + 1}</b></td>
