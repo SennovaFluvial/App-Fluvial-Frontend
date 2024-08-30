@@ -3,21 +3,30 @@ import { Outlet } from "react-router"
 import { useNavigate } from "react-router";
 export const AddCrew = () => {
 
-    const [first, setfirst] = useState("");
-    const nav = useNavigate();
+    const [selectedOption, setSelectedOption] = useState("");
+    const navigate = useNavigate();
+
     const handleChange = (e) => {
+        const value = e.target.value;
+        setSelectedOption(value);
 
-        const url = e.target.value;
-
-        nav("/adminSection/`${e}`")
-
-    }
+        // Navegar a la ruta correspondiente
+        navigate(`/adminSection/add-crew/${value}`);
+    };
 
     return (
         <>
             <div className="container">
-                <select className="form-select my-5" aria-label="Default select example">
-                    <option defaultValue="">Seleccione...</option>
+                <h1 className="color-primary">
+                    Elija la categoria
+                </h1>
+                <select
+                    className="form-select mt-5"
+                    aria-label="Default select example"
+                    value={selectedOption}
+                    onChange={handleChange}
+                >
+                    <option value="">Seleccione...</option>
                     <option value="add-captain">Capitán</option>
                     <option value="add-sailor">Marinero</option>
                     <option value="add-boat-driver">Motorista</option>
