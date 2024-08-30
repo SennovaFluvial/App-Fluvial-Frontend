@@ -70,7 +70,7 @@ export const ComponentRouter = () => {
                     <Route path="show-users" element={< ShowUsers />} /> {/* Ruta para ver usuarios */}
                     <Route path="show-crew" element={< ShowCrew />} /> {/* Ruta para ver usuarios */}
 
-                    <Route path="update-customer/ :id" element={< UpdateCustomer />} />
+                    <Route path="update-customer/ :id" element={ < UpdateCustomer />} />
                     <Route path="update-user/:id" element={< UpdateUsers />} /> {/* Ruta actualizar usuario */}
 
                     {/* Agregar las rutas protegias aqui */}

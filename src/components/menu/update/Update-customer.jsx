@@ -23,26 +23,26 @@ export const UpdateCustomer = () => {
         userNames: [""]
     });
 
-    useEffect(() => {
-        const filterClientId = clients.find(client => client.id === clientId);
-        if (filterClientId) {
-            setFormData({
-                name: filterClientId.name,
-                lastName: filterClientId.lastName,
-                typeDocument: filterClientId.typeDocument,
-                numDocument: filterClientId.numDocument,
-                email: filterClientId.email,
-                dateOfBirth: filterClientId.dateOfBirth,
-                nationality: filterClientId.nationality,
-                maritalStatus: filterClientId.maritalStatus,
-                phone: filterClientId.phone,
-                address: filterClientId.address,
-                sex: filterClientId.sex,
-                cityName: filterClientId.cityName,
-                userNames: filterClientId.userNames || ['']
-            });
-        }
-    }, [clients, clientId]);
+    // useEffect(() => {
+    //     const filterClientId = clients.find(client => client.id === clientId);
+    //     if (filterClientId) {
+    //         setFormData({
+    //             name: filterClientId.name,
+    //             lastName: filterClientId.lastName,
+    //             typeDocument: filterClientId.typeDocument,
+    //             numDocument: filterClientId.numDocument,
+    //             email: filterClientId.email,
+    //             dateOfBirth: filterClientId.dateOfBirth,
+    //             nationality: filterClientId.nationality,
+    //             maritalStatus: filterClientId.maritalStatus,
+    //             phone: filterClientId.phone,
+    //             address: filterClientId.address,
+    //             sex: filterClientId.sex,
+    //             cityName: filterClientId.cityName,
+    //             userNames: filterClientId.userNames || ['']
+    //         });
+    //     }
+    // }, [clients, clientId]);
 
     if (!formData.name) {
         return <div>Cliente no encontrado</div>;
@@ -68,14 +68,18 @@ export const UpdateCustomer = () => {
 
     return (
         <>
-            <div className="d-flex justify-content-center align-items-center vh-100">
+        <h1>Hola</h1>
+            {/* <div className="col-md-4">
+                <Inputs text="Nombres" name="name" value={formData.name} />
+            </div> */}
+            {/* <div className="d-flex justify-content-center align-items-center vh-100">
                 <div className="container bg-light shadow rounded p-4">
                     <h2 className="text-center mb-4">ACTUALIZAR CLIENTE</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="text-center mt-5">
                             <h3><b>INFORMACIÓN PERSONAL</b></h3>
                         </div>
-                        <div className="row my-4"> {/* Nombres y apellidos */}
+                        <div className="row my-4">
                             <div className="col-md-4">
                                 <Inputs text="Nombres" name="name" value={formData.name} event={handleChange} />
                             </div>
@@ -107,7 +111,7 @@ export const UpdateCustomer = () => {
                         <div className="text-center mt-4">
                             <h3><b>CONTACTO</b></h3>
                         </div>
-                        <div className="row my-4">  {/* Contacto | telefono */}
+                        <div className="row my-4"> 
                             <div className="col-md-12">
                                 <Inputs text="Número de Teléfono" name="phone" icon="fa-solid fa-phone-volume" value={formData.phone} event={handleChange} />
                             </div>
@@ -133,7 +137,7 @@ export const UpdateCustomer = () => {
                         </div>
                     </form >
                 </div >
-            </div >
+            </div > */}
         </>
     )
 }

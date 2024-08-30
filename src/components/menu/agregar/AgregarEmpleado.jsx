@@ -6,6 +6,7 @@ import '../../../assets/css/AgregarEmpleado.css';
 import { ApiService } from '../../../class/ApiServices.jsx';
 import { User } from '../../../class/User.jsx';
 import { useNavigate } from 'react-router';
+
 export const AgregarEmpleado = () => {
 
   const cities = useOptionsCities();
@@ -276,16 +277,14 @@ export const AgregarEmpleado = () => {
               <h3><b>INFORMACIÓN LABORAL</b></h3>
             </div>
             <div className="row mt-2">
-              <div className="row">
+              {/* <div className="row"> */}
                 {role === 'SUPERADMIN' && (
-                  <div className="col-md-6">
-                    <Select
-                      event={handleChange} text="Empresa" options={companies} name="companyName"
-                    />
+                  <div className="col-md-4">
+                    <Select event={handleChange} text="Empresa" options={companies} name="companyName"/>
                     {errorsForms.companyName && <div className="text-danger">{errorsForms.companyName}</div>}
                   </div>
                 )}
-              </div>
+              {/* </div> */}
 
               <div className="col-md-4">
                 <Select event={handleChange} text="Rol" options={roles} name="roleListName" multiple />

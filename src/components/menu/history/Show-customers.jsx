@@ -4,7 +4,6 @@ import { Spinner } from '../../animations/Spiner';
 import { Grid } from '../../animations/Grid';
 import { Link } from 'react-router-dom';
 import { UpdateCustomer } from '../update/Update-customer';
-import { ApiService } from '../../../class/ApiServices';
 
 export const ShowCustomers = () => {
   const [loading, setLoading] = useState(true);
@@ -23,7 +22,7 @@ export const ShowCustomers = () => {
 
   useEffect(() => {
     getCustomers();
-  }, []); // Arreglo vacío significa que el efecto solo se ejecuta al montar el componente
+  }, []);
 
   if (loading) {
     return (
@@ -35,7 +34,6 @@ export const ShowCustomers = () => {
     );
   }
 
-
   return (
     <>
       <div className="container my-5">
@@ -46,7 +44,7 @@ export const ShowCustomers = () => {
             </h1>
           </div>
         </div>
-        <table className="table table-hover border table-striped my-5">
+        <table className="table table-hover my-5">
           <thead>
             <tr>
               <th scope="col">ID</th>
@@ -60,7 +58,7 @@ export const ShowCustomers = () => {
               <th scope="col">Acciones</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="table-group-divider">
             {customers.map((item, index) => (
               <tr key={item.id}>
                 <td><b>{index + 1}</b></td>
@@ -77,11 +75,13 @@ export const ShowCustomers = () => {
                     className='btn icon-link-hover ms-3 text-danger'>
                     <i className="fa-solid fa-trash-can icon-option"></i>
                   </button>
+                  <Link to={`../update-customer/${item.id}`}>
                   <button className='btn icon-link-hover ms-3 text-primary'>
-                    <Link to={UpdateCustomer}>
-                      <i className="fa-solid fa-pen-to-square icon-option"></i>
-                    </Link>
+                  <Link to={UpdateCustomer}>
+                    <i className="fa-solid fa-pen-to-square icon-option"></i>
+                  </Link>
                   </button>
+                    </Link>
                   <button className='btn icon-link-hover ms-3 text-warning'>
                     <i className="fa-solid fa-eye icon-option"></i>
                   </button>
@@ -94,4 +94,3 @@ export const ShowCustomers = () => {
     </>
   )
 }
-

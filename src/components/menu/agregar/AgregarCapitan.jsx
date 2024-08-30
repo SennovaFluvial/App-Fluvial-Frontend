@@ -51,7 +51,6 @@ export const AgregarCapitan = () => {
     };
 
     const handleSubmit = async (event) => {
-
         event.preventDefault();
 
         const newErrors = {};
@@ -81,15 +80,11 @@ export const AgregarCapitan = () => {
         const userConfirmed = window.confirm(confirmationMessage);
 
         if (userConfirmed) {
-            try {
-                await ApiService.post('/api/v1/employeefluvial/save', formData);
-                alert('Capitan creado correctamente');
-                console.log('Formulario enviado', formData);
-                navigate('../../adminSection/show-crew');
-            } catch (error) {
-                console.error('Error al crear el marinero:', error);
-                alert('Error al crear el marinero');
-            }
+            await createUser({ data: formData })
+            await createUser({ data: formData })
+            alert('Marinero creado correctamente');
+            console.log('Formulario enviado', formData);
+            window.location.reload();
         } else {
             alert('Operación cancelada');
         }
@@ -170,12 +165,11 @@ export const AgregarCapitan = () => {
                         </div>
                     </div>
 
-                    <div className="text-center mt-3">
-                        <button type="submit" className="btn btn-success">Crear Capitan <i className="fa-solid fa-id-card-clip"></i></button>
-                    </div>
-                </form>
+                        <div className="text-center mt-3">
+                            <button type="submit" className="btn btn-success">Crear Capitan <i className="fa-solid fa-id-card-clip"></i></button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
-    )
-}
-
+        )
+    }
