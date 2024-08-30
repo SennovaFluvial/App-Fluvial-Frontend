@@ -28,7 +28,7 @@ export const Agregar = () => {
                         {/* Mostrar los demás ítems solo si el rol no es SUPERADMIN */}
                         {role !== "SUPERADMIN" && (
                             <>
-                                <li className='dropdown-item text-black'><Link to={'add-captain'}>Agregar Capitan</Link></li>
+                                <li className='dropdown-item text-black'><Link to={'add-captain'}>Agregar Capitán</Link></li>
                                 <li className='dropdown-item text-black'><Link to={'add-sailor'}>Agregar Marinero</Link></li>
                                 <li className='dropdown-item text-black'><Link to={'add-boat-driver'}>Agregar Motorista</Link></li>
                                 <li className='dropdown-item text-black'><Link to={'add-vehicle'}>Agregar Vehículo</Link></li>

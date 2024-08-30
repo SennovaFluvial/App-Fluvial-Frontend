@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Select } from '../../html components/Selects';
-import { Inputs } from '../../html components/Inputs';
+import { Select } from '../../html components/Selects.jsx';
+import { Inputs } from '../../html components/Inputs.jsx';
 import { useOptionsDepto, useOptionsCompanies, useOptionsCities, OptionsTypeDocument, useRoles, genero, status, maritalStatus, codigoPaises } from '../update/options/arrays.jsx';
 import '../../../assets/css/AgregarEmpleado.css';
 import { ApiService } from '../../../class/ApiServices.jsx';
 import { User } from '../../../class/User.jsx';
 import { useNavigate } from 'react-router';
 
-export const AgregarEmpleado = () => {
+export const AddEmployed = () => {
 
   const cities = useOptionsCities();
   const deptos = useOptionsDepto();

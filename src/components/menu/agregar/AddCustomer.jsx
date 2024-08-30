@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Select } from '../../html components/Selects';
-import { Inputs } from '../../html components/Inputs';
+import { Select } from '../../html components/Selects.jsx';
+import { Inputs } from '../../html components/Inputs.jsx';
 import '../../../assets/css/AgregarEmpleado.css';
 import { OptionsTypeDocument, genero, maritalStatus, nationality, useOptionsCities, useOptionsDepto } from '../update/options/arrays.jsx';
 import { useNavigate } from 'react-router';
 import { ApiService } from '../../../class/ApiServices.jsx';
 
-export const AgregarCliente = () => {
+export const AddCustomer = () => {
     const nav = useNavigate();
     const user = JSON.parse(localStorage.getItem("user")); // Recuperar el JSON almacenado en el LocalStorage
     const userNameUser = user?.username || null; // Obtener el `userName` de usuario Logueado Si no es nulo

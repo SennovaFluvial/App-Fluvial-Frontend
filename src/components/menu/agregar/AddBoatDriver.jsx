@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import { Inputs } from '../../html components/Inputs';
-import { Select } from '../../html components/Selects';
-import { useOptionsCities, status, OptionsTypeDocument, genero, maritalStatus, nationality } from '../update/options/arrays.jsx';
-import '../../../assets/css/AgregarEmpleado.css';
+import { Inputs } from '../../html components/Inputs.jsx';
+import { Select } from '../../html components/Selects.jsx';
+import { status, OptionsTypeDocument, genero, maritalStatus, useOptionsCities, nationality } from '../update/options/arrays.jsx';
 import { useNavigate } from 'react-router';
 import { ApiService } from '../../../class/ApiServices.jsx';
+import '../../../assets/css/AgregarEmpleado.css';
 
-export const AgregarCapitan = () => {
+export const AddBoatDriver = () => {
     const navigate = useNavigate();
-
     const [formData, setFormData] = useState({
         name: '',
         lastName: '',
@@ -23,7 +22,7 @@ export const AgregarCapitan = () => {
         address: '',
         sex: '',
         status: '',
-        employeeType: { typeName: 'Capitan' },
+        employeeType: { typeName: 'Motorista' },
     });
 
     const [errorsForms, setErrorsForms] = useState({});
@@ -80,21 +79,25 @@ export const AgregarCapitan = () => {
         const userConfirmed = window.confirm(confirmationMessage);
 
         if (userConfirmed) {
-            await createUser({ data: formData })
-            await createUser({ data: formData })
-            alert('Marinero creado correctamente');
-            console.log('Formulario enviado', formData);
-            window.location.reload();
+            try {
+                await ApiService.post('/api/v1/employeefluvial/save', formData);
+                alert('Motorista creado correctamente');
+                console.log('Formulario enviado', formData);
+                navigate('../../adminSection/show-crew');
+            } catch (error) {
+                console.error('Error al crear el marinero:', error);
+                alert('Error al crear el marinero');
+            }
+
         } else {
             alert('Operación cancelada');
         }
-
     };
 
     return (
         <div className="d-flex-empleado justify-content-center align-items-center vh-100">
             <div className="container-empleado bg-light shadow rounded p-4">
-                <h2 className="text-center mb-2">CREAR CAPITAN</h2>
+                <h2 className="text-center mb-2">CREAR MOTORISTA</h2>
                 <form onSubmit={handleSubmit}>
                     {/* Información Personal */}
                     <div className="text-center">
@@ -134,6 +137,7 @@ export const AgregarCapitan = () => {
                             {errorsForms.sex && <div className="text-danger">{errorsForms.sex}</div>}
                         </div>
                     </div>
+
                     {/* Contacto y Dirección */}
                     <div className="text-center mt-3">
                         <h3><b>CONTACTO Y DIRECCIÓN</b></h3>
@@ -165,11 +169,11 @@ export const AgregarCapitan = () => {
                         </div>
                     </div>
 
-                        <div className="text-center mt-3">
-                            <button type="submit" className="btn btn-success">Crear Capitan <i className="fa-solid fa-id-card-clip"></i></button>
-                        </div>
-                    </form>
-                </div>
+                    <div className="text-center mt-3">
+                        <button type="submit" className="btn btn-success">Crear Motorista <i className="fa-solid fa-vest"></i></button>
+                    </div>
+                </form>
             </div>
-        )
-    }
+        </div>
+    );
+};

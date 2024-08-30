@@ -3,7 +3,7 @@ import { Inputs } from '../../html components/Inputs';
 import { Select } from '../../html components/Selects';
 import '../../../assets/css/AgregarEmpleado.css';
 
-export const AgregarVehiculo = () => {
+export const AddVehicle = () => {
     const [formData, setFormData] = useState({
         tipo: '',
         otro: '',

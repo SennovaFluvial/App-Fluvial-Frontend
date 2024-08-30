@@ -1,34 +1,30 @@
 import React, { useState } from 'react';
-import { Inputs } from '../../html components/Inputs';
-import { Select } from '../../html components/Selects';
-import { useOptionsDepto, useOptionsCities, status, OptionsTypeDocument, genero, maritalStatus, nationality } from '../update/options/arrays.jsx';
+import { Inputs } from '../../html components/Inputs.jsx';
+import { Select } from '../../html components/Selects.jsx';
+import { useOptionsCities, status, OptionsTypeDocument, genero, maritalStatus, nationality } from '../update/options/arrays.jsx';
 import '../../../assets/css/AgregarEmpleado.css';
-import { ApiService } from '../../../class/ApiServices.jsx';
 import { useNavigate } from 'react-router';
+import { ApiService } from '../../../class/ApiServices.jsx';
 
-export const AgregarMarinero = () => {
-
+export const AddCaptain = () => {
     const navigate = useNavigate();
-    const [formData, setFormData] = useState(
-        {
-            name: '',
-            lastName: '',
-            typeDocument: '',
-            numDocument: '',
-            licencia: '',
-            email: '',
-            dateOfBirth: '',
-            nationality: '',
-            maritalStatus: '',
-            phone: '',
-            address: '',
-            sex: '',
-            status: '',
-            employeeType: {
-                typeName: 'Marinero'
-            }
-        }
-    );
+
+    const [formData, setFormData] = useState({
+        name: '',
+        lastName: '',
+        typeDocument: '',
+        numDocument: '',
+        licencia: '',
+        email: '',
+        dateOfBirth: '',
+        nationality: '',
+        maritalStatus: '',
+        phone: '',
+        address: '',
+        sex: '',
+        status: '',
+        employeeType: { typeName: 'Capitan' },
+    });
 
     const [errorsForms, setErrorsForms] = useState({});
 
@@ -44,7 +40,7 @@ export const AgregarMarinero = () => {
                 const { dateOfBirth, ...rest } = errorsForms;
                 setErrorsForms(rest);
             }
-        } else if (typeof value === 'string' && value.trim()) {
+        } else if (value.trim()) {
             const { [name]: removed, ...rest } = errorsForms;
             setErrorsForms(rest);
         } else {
@@ -84,24 +80,21 @@ export const AgregarMarinero = () => {
         const userConfirmed = window.confirm(confirmationMessage);
 
         if (userConfirmed) {
-            try {
-                await ApiService.post('/api/v1/employeefluvial/save', formData);
-                alert('Marinero creado correctamente');
-                console.log('Formulario enviado', formData);
-                navigate('../../adminSection/show-crew');
-            } catch (error) {
-                console.error('Error al crear el marinero:', error);
-                alert('Error al crear el marinero');
-            }
+            await createUser({ data: formData })
+            await createUser({ data: formData })
+            alert('Marinero creado correctamente');
+            console.log('Formulario enviado', formData);
+            window.location.reload();
         } else {
             alert('Operación cancelada');
         }
+
     };
 
     return (
         <div className="d-flex-empleado justify-content-center align-items-center vh-100">
             <div className="container-empleado bg-light shadow rounded p-4">
-                <h2 className="text-center mb-2">CREAR MARINERO</h2>
+                <h2 className="text-center mb-2">CREAR CAPITAN</h2>
                 <form onSubmit={handleSubmit}>
                     {/* Información Personal */}
                     <div className="text-center">
@@ -113,7 +106,7 @@ export const AgregarMarinero = () => {
                             {errorsForms.name && <div className="text-danger">{errorsForms.name}</div>}
                         </div>
                         <div className="col-md-4">
-                            <Inputs text="Apellidos" name="lastName" event={handleChange} vvalue={formData.lastName} />
+                            <Inputs text="Apellidos" name="lastName" event={handleChange} value={formData.lastName} />
                             {errorsForms.lastName && <div className="text-danger">{errorsForms.lastName}</div>}
                         </div>
                         <div className="col-md-4">
@@ -141,7 +134,6 @@ export const AgregarMarinero = () => {
                             {errorsForms.sex && <div className="text-danger">{errorsForms.sex}</div>}
                         </div>
                     </div>
-
                     {/* Contacto y Dirección */}
                     <div className="text-center mt-3">
                         <h3><b>CONTACTO Y DIRECCIÓN</b></h3>
@@ -173,11 +165,11 @@ export const AgregarMarinero = () => {
                         </div>
                     </div>
 
-                    <div className="text-center mt-3">
-                        <button type="submit" className="btn btn-success">Crear Marinero <i className="fa-solid fa-ship"></i></button>
-                    </div>
-                </form>
+                        <div className="text-center mt-3">
+                            <button type="submit" className="btn btn-success">Crear Capitan <i className="fa-solid fa-id-card-clip"></i></button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
-    )
-}
+        )
+    }

@@ -6,13 +6,13 @@ import { Login } from '../../Login.jsx';
 import { DashBoard } from '../../dashBoard.jsx';
 import { NotFound } from './notFound.jsx';
 
-import { AgregarEmpresa } from '../menu/agregar/AgregarEmpresa.jsx';
-import { AgregarEmpleado } from '../menu/agregar/AgregarEmpleado.jsx';
-import { AgregarCapitan } from '../menu/agregar/AgregarCapitan.jsx';
-import { AgregarMarinero } from '../menu/agregar/AgregarMarinero.jsx';
-import { AgregarMotorista } from '../menu/agregar/AgregarMotorista.jsx';
-import { AgregarVehiculo } from '../menu/agregar/AgregarVehiculo.jsx';
-import { AgregarCliente } from '../menu/agregar/AgregarCliente.jsx';
+import { AddCompany} from '../menu/agregar/AddCompany.jsx';
+import { AddEmployed } from '../menu/agregar/AddEmployed.jsx';
+import { AddCaptain } from '../menu/agregar/AddCaptain.jsx';
+import { AddSailor } from '../menu/agregar/AddSailor.jsx';
+import { AddBoatDriver } from '../menu/agregar/AddBoatDriver.jsx';
+import { AddVehicle } from '../menu/agregar/AddVehicle.jsx';
+import { AddCustomer } from '../menu/agregar/AddCustomer.jsx';
 
 import { ShowCompany } from '../menu/history/Show-Company.jsx';
 import { ShowCustomers } from '../menu/history/Show-customers.jsx';
@@ -57,20 +57,20 @@ export const ComponentRouter = () => {
             <Route element={<ValidationPages user={user} setUser={setUser} />}> {/* Ruta protegida que requiere validación */}
                 <Route path="/adminSection" element={<DashBoard user={user} setUser={setUser} />}> {/* Ruta para el panel de administración */}
 
-                    <Route path="add-company" element={< AgregarEmpresa />} />
-                    <Route path="add-employed" element={< AgregarEmpleado />} />
-                    <Route path="add-captain" element={< AgregarCapitan />} />
-                    <Route path="add-sailor" element={< AgregarMarinero />} /> {/* Ruta para agregar marinero */}
-                    <Route path="add-boat-driver" element={< AgregarMotorista />} />
-                    <Route path="add-vehicle" element={< AgregarVehiculo />} /> {/* Ruta para agregar vehículos */}
-                    <Route path="add-customer" element={< AgregarCliente />} />
+                    <Route path="add-company" element={< AddCompany />} />{/* Ruta para agregar empresas */}
+                    <Route path="add-employed" element={< AddEmployed />} />{/* Ruta para agregar empleados */}
+                    <Route path="add-captain" element={< AddCaptain />} />{/* Ruta para agregar capitanes */}
+                    <Route path="add-sailor" element={< AddSailor />} /> {/* Ruta para agregar marinero */}
+                    <Route path="add-boat-driver" element={< AddBoatDriver />} /> {/* Ruta para agregar mototristas */}
+                    <Route path="add-vehicle" element={< AddVehicle />} /> {/* Ruta para agregar vehículos */}
+                    <Route path="add-customer" element={< AddCustomer />} />{/* Ruta para agregar clientes */}
 
                     <Route path="show-companies" element={< ShowCompany />} /> {/* Ruta para ver compañias */}
                     <Route path="show-customers" element={< ShowCustomers />} /> {/* Ruta para ver clientes */}
                     <Route path="show-users" element={< ShowUsers />} /> {/* Ruta para ver usuarios */}
                     <Route path="show-crew" element={< ShowCrew />} /> {/* Ruta para ver usuarios */}
 
-                    <Route path="update-customer/ :id" element={ < UpdateCustomer />} />
+                    <Route path="update-customer/ :id" element={< UpdateCustomer />} />{/* Ruta actualizar clientes */}
                     <Route path="update-user/:id" element={< UpdateUsers />} /> {/* Ruta actualizar usuario */}
 
                     {/* Agregar las rutas protegias aqui */}

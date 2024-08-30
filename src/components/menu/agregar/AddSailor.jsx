@@ -1,29 +1,34 @@
 import React, { useState } from 'react';
-import { Inputs } from '../../html components/Inputs';
-import { Select } from '../../html components/Selects';
-import { status, OptionsTypeDocument, genero, maritalStatus, useOptionsCities, nationality } from '../update/options/arrays.jsx';
-import { useNavigate } from 'react-router';
-import { ApiService } from '../../../class/ApiServices.jsx';
+import { Inputs } from '../../html components/Inputs.jsx';
+import { Select } from '../../html components/Selects.jsx';
+import { useOptionsDepto, useOptionsCities, status, OptionsTypeDocument, genero, maritalStatus, nationality } from '../update/options/arrays.jsx';
 import '../../../assets/css/AgregarEmpleado.css';
+import { ApiService } from '../../../class/ApiServices.jsx';
+import { useNavigate } from 'react-router';
 
-export const AgregarMotorista = () => {
+export const AddSailor = () => {
+
     const navigate = useNavigate();
-    const [formData, setFormData] = useState({
-        name: '',
-        lastName: '',
-        typeDocument: '',
-        numDocument: '',
-        licencia: '',
-        email: '',
-        dateOfBirth: '',
-        nationality: '',
-        maritalStatus: '',
-        phone: '',
-        address: '',
-        sex: '',
-        status: '',
-        employeeType: { typeName: 'Motorista' },
-    });
+    const [formData, setFormData] = useState(
+        {
+            name: '',
+            lastName: '',
+            typeDocument: '',
+            numDocument: '',
+            licencia: '',
+            email: '',
+            dateOfBirth: '',
+            nationality: '',
+            maritalStatus: '',
+            phone: '',
+            address: '',
+            sex: '',
+            status: '',
+            employeeType: {
+                typeName: 'Marinero'
+            }
+        }
+    );
 
     const [errorsForms, setErrorsForms] = useState({});
 
@@ -39,7 +44,7 @@ export const AgregarMotorista = () => {
                 const { dateOfBirth, ...rest } = errorsForms;
                 setErrorsForms(rest);
             }
-        } else if (value.trim()) {
+        } else if (typeof value === 'string' && value.trim()) {
             const { [name]: removed, ...rest } = errorsForms;
             setErrorsForms(rest);
         } else {
@@ -81,14 +86,13 @@ export const AgregarMotorista = () => {
         if (userConfirmed) {
             try {
                 await ApiService.post('/api/v1/employeefluvial/save', formData);
-                alert('Motorista creado correctamente');
+                alert('Marinero creado correctamente');
                 console.log('Formulario enviado', formData);
                 navigate('../../adminSection/show-crew');
             } catch (error) {
                 console.error('Error al crear el marinero:', error);
                 alert('Error al crear el marinero');
             }
-
         } else {
             alert('Operación cancelada');
         }
@@ -97,7 +101,7 @@ export const AgregarMotorista = () => {
     return (
         <div className="d-flex-empleado justify-content-center align-items-center vh-100">
             <div className="container-empleado bg-light shadow rounded p-4">
-                <h2 className="text-center mb-2">CREAR MOTORISTA</h2>
+                <h2 className="text-center mb-2">CREAR MARINERO</h2>
                 <form onSubmit={handleSubmit}>
                     {/* Información Personal */}
                     <div className="text-center">
@@ -109,7 +113,7 @@ export const AgregarMotorista = () => {
                             {errorsForms.name && <div className="text-danger">{errorsForms.name}</div>}
                         </div>
                         <div className="col-md-4">
-                            <Inputs text="Apellidos" name="lastName" event={handleChange} value={formData.lastName} />
+                            <Inputs text="Apellidos" name="lastName" event={handleChange} vvalue={formData.lastName} />
                             {errorsForms.lastName && <div className="text-danger">{errorsForms.lastName}</div>}
                         </div>
                         <div className="col-md-4">
@@ -170,10 +174,10 @@ export const AgregarMotorista = () => {
                     </div>
 
                     <div className="text-center mt-3">
-                        <button type="submit" className="btn btn-success">Crear Motorista <i className="fa-solid fa-vest"></i></button>
+                        <button type="submit" className="btn btn-success">Crear Marinero <i className="fa-solid fa-ship"></i></button>
                     </div>
                 </form>
             </div>
         </div>
-    );
-};
+    )
+}

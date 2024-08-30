@@ -5,9 +5,9 @@ import Icono from './assets/img/icono.png';
 import { useNavigate } from "react-router-dom" // Importa el hook para redirecciones
 /* Importaciones de componentes para el menu */
 import { Agregar } from './components/menu/Agregar';
-import { Actualizar } from './components/menu/Actualizar';
+import { Inventarios} from './components/menu/Inventarios';
 import { Configuraciones } from './components/menu/Configuraciones';
-import { Historiales } from './components/menu/Historiales';
+import { Actualizar } from './components/menu/Actualizar';
 import { Informes } from './components/menu/Informes';
 
 /**
@@ -67,10 +67,10 @@ export const Sidebar = ({ user, setUser }) => {
                     { /* Componentes que forman las acciones del menu */}
 
                     <Agregar />
-                    <Actualizar />
-                    <Configuraciones />
-                    <Historiales user={user} />
+                    <Actualizar user={user} />
                     <Informes />
+                    <Inventarios />
+                    <Configuraciones />
 
                 </nav>
                 <div className='logo-sena'>

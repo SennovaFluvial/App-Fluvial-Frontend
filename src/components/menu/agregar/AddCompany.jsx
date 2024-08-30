@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Inputs } from '../../html components/Inputs';
-import { Select } from '../../html components/Selects';
+import { Inputs } from '../../html components/Inputs.jsx';
+import { Select } from '../../html components/Selects.jsx';
 import { useOptionsDepto, useOptionsCities, status } from '../update/options/arrays.jsx';
 import '../../../assets/css/AgregarEmpleado.css';
 import { ApiService } from '../../../class/ApiServices.jsx';
 import { useNavigate } from 'react-router';
 
-export const AgregarEmpresa = () => {
+export const AddCompany = () => {
 
     const nav = useNavigate();
     const deptos = useOptionsDepto();
