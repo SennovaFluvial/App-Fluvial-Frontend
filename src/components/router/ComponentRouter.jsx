@@ -6,7 +6,7 @@ import { Login } from '../../Login.jsx';
 import { DashBoard } from '../../dashBoard.jsx';
 import { NotFound } from './notFound.jsx';
 
-import { AddCompany} from '../menu/agregar/AddCompany.jsx';
+import { AddCompany } from '../menu/agregar/AddCompany.jsx';
 import { AddEmployed } from '../menu/agregar/AddEmployed.jsx';
 import { AddCaptain } from '../menu/agregar/AddCaptain.jsx';
 import { AddSailor } from '../menu/agregar/AddSailor.jsx';
@@ -21,6 +21,7 @@ import { ShowCrew } from '../menu/history/show-sailors.jsx';
 
 import { UpdateUsers } from '../menu/update/Update-users.jsx';
 import { UpdateCustomer } from '../menu/update/Update-customer.jsx';
+import { AddCrew } from '../menu/agregar/AddCrew.jsx';
 
 
 /**
@@ -59,12 +60,15 @@ export const ComponentRouter = () => {
 
                     <Route path="add-company" element={< AddCompany />} />{/* Ruta para agregar empresas */}
                     <Route path="add-employed" element={< AddEmployed />} />{/* Ruta para agregar empleados */}
-                    <Route path="add-captain" element={< AddCaptain />} />{/* Ruta para agregar capitanes */}
-                    <Route path="add-sailor" element={< AddSailor />} /> {/* Ruta para agregar marinero */}
-                    <Route path="add-boat-driver" element={< AddBoatDriver />} /> {/* Ruta para agregar mototristas */}
                     <Route path="add-vehicle" element={< AddVehicle />} /> {/* Ruta para agregar vehículos */}
                     <Route path="add-customer" element={< AddCustomer />} />{/* Ruta para agregar clientes */}
+                    <Route path="add-crew" element={< AddCrew />}>{/* Ruta para agregar clientes */}
 
+                        <Route path="add-captain" element={< AddCaptain />} />{/* Ruta para agregar capitanes */}
+                        <Route path="add-sailor" element={< AddSailor />} /> {/* Ruta para agregar marinero */}
+                        <Route path="add-boat-driver" element={< AddBoatDriver />} /> {/* Ruta para agregar mototristas */}
+
+                    </Route>
                     <Route path="show-companies" element={< ShowCompany />} /> {/* Ruta para ver compañias */}
                     <Route path="show-customers" element={< ShowCustomers />} /> {/* Ruta para ver clientes */}
                     <Route path="show-users" element={< ShowUsers />} /> {/* Ruta para ver usuarios */}
