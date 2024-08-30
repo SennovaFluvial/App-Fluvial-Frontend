@@ -88,7 +88,7 @@ export const AddSailor = () => {
                 await ApiService.post('/api/v1/employeefluvial/save', formData);
                 alert('Marinero creado correctamente');
                 console.log('Formulario enviado', formData);
-                navigate('../../adminSection/show-crew');
+                navigate('../../../adminSection/show-crew');
             } catch (error) {
                 console.error('Error al crear el marinero:', error);
                 alert('Error al crear el marinero');

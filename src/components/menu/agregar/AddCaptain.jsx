@@ -76,15 +76,20 @@ export const AddCaptain = () => {
             return;
         }
 
-        const confirmationMessage = `¿Está seguro que quiere crear al marinero?\nNombre: ${formData.name} ${formData.lastName}`;
+        const confirmationMessage = `¿Está seguro que quiere crear al capitan?\nNombre: ${formData.name} ${formData.lastName}`;
         const userConfirmed = window.confirm(confirmationMessage);
 
         if (userConfirmed) {
-            await createUser({ data: formData })
-            await createUser({ data: formData })
-            alert('Marinero creado correctamente');
-            console.log('Formulario enviado', formData);
-            window.location.reload();
+            try {
+                await ApiService.post('/api/v1/employeefluvial/save', formData);
+                alert('Motorista creado correctamente');
+                console.log('Formulario enviado', formData);
+                navigate('../../../adminSection/show-crew');
+            } catch (error) {
+                console.error('Error al crear el capitan:', error);
+                alert('Error al crear el marinero');
+            }
+
         } else {
             alert('Operación cancelada');
         }
@@ -165,11 +170,11 @@ export const AddCaptain = () => {
                         </div>
                     </div>
 
-                        <div className="text-center mt-3">
-                            <button type="submit" className="btn btn-success">Crear Capitan <i className="fa-solid fa-id-card-clip"></i></button>
-                        </div>
-                    </form>
-                </div>
+                    <div className="text-center mt-3">
+                        <button type="submit" className="btn btn-success">Crear Capitan <i className="fa-solid fa-id-card-clip"></i></button>
+                    </div>
+                </form>
             </div>
-        )
-    }
+        </div>
+    )
+}
