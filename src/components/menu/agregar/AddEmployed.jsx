@@ -49,6 +49,27 @@ export const AddEmployed = () => {
     codigoPais: ''
   });
 
+  // 1. Efecto para obtener y establecer `nameCompany` si el rol es "ADMIN"
+  useEffect(() => {
+    if (role === "ADMIN" && !action && !userId) {
+      const getCompanyUser = async () => {
+        try {
+          const response = await ApiService.get("/api/v1/companie/users");
+          if (response && response.length > 0) {
+            setNameCompany(response[0].company.name); // Actualiza nameCompany
+          } else {
+            console.error("No se encontraron datos en la respuesta.");
+          }
+        } catch (error) {
+          console.error("Error al obtener el nombre de la compañía:", error);
+        }
+      };
+
+      getCompanyUser();
+    }
+  }, [role, action, userId]);
+
+  // 2. Efecto para inicializar `formData` cuando `action` y `userId` no están presentes
   useEffect(() => {
     if (!action && !userId) {
       setFormData({
@@ -60,7 +81,7 @@ export const AddEmployed = () => {
           roleListName: []
         },
         estado: '',
-        companyName: nameCompany,
+        companyName: nameCompany, // Se inicializa con el valor actualizado de nameCompany
         name: '',
         lastName: '',
         typeDocument: '',
@@ -76,25 +97,9 @@ export const AddEmployed = () => {
       });
       setErrorsForms({});
     }
-  }, [action, userId]);
+  }, [action, userId, nameCompany]); // Incluye nameCompany como dependencia
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const listUsers = await ApiService.get('/api/v1/companie/users');
-        if (Array.isArray(listUsers)) {
-          setUsers(listUsers);
-        } else {
-          console.warn('Data from API is not an array or is empty');
-        }
-      } catch (error) {
-        console.error('Error fetching users:', error);
-      }
-    };
-
-    fetchUsers();
-  }, []);
-
+  // 3. Efecto para manejar la actualización de `formData` basado en `userId` y `action`
   useEffect(() => {
     if (action === 'update' && userId) {
       const filterUserId = users.find(user => user.id === userId);
@@ -121,31 +126,35 @@ export const AddEmployed = () => {
           birthDate: filterUserId.birthDate || "",
           maritalStatus: filterUserId.maritalStatus || ""
         });
-      } else if (role === "ADMIN") {
-        const getCompanyUser = async () => {
-          try {
-            const response = await ApiService.get("/api/v1/companie/users");
-            if (response && response.length > 0) {
-              setNameCompany(response[0].company.name);
-            } else {
-              console.error("No se encontraron datos en la respuesta.");
-            }
-          } catch (error) {
-            console.error("Error al obtener el nombre de la compañía:", error);
-          }
-        };
-
-        getCompanyUser();
       }
     }
-  }, [action, userId, role, users]);
+  }, [action, userId, users]);
 
+  // 4. Efecto para actualizar `companyName` en `formData` cuando `nameCompany` cambie
   useEffect(() => {
     setFormData(prevFormData => ({
       ...prevFormData,
       companyName: nameCompany
     }));
   }, [nameCompany]);
+
+  // 5. Efecto para cargar la lista de usuarios al inicio
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const listUsers = await ApiService.get('/api/v1/companie/users');
+        if (Array.isArray(listUsers)) {
+          setUsers(listUsers);
+        } else {
+          console.warn('Data from API is not an array or is empty');
+        }
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      }
+    };
+
+    fetchUsers();
+  }, []);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -214,19 +223,22 @@ export const AddEmployed = () => {
     event.preventDefault();
 
     const newErrors = {};
+    let firstEmptyField = null;
 
     for (let [name, value] of Object.entries(formData)) {
       if (name === 'roleRequest.roleListName' && (!formData.roleRequest.roleListName || formData.roleRequest.roleListName.length === 0)) {
         newErrors['roleRequest'] = "Campo obligatorio";
+        if (!firstEmptyField) firstEmptyField = 'Role List Name';
       } else if (typeof value === 'string' && !value.trim()) {
         newErrors[name] = "Campo obligatorio";
+        if (!firstEmptyField) firstEmptyField = name;
       }
     }
 
     setErrorsForms(newErrors);
 
     if (Object.keys(newErrors).length > 0) {
-      alert('Por favor, complete todos los campos obligatorios correctamente.');
+      alert(`Por favor, complete el campo obligatorio: ${firstEmptyField}`);
       return;
     }
 
@@ -254,7 +266,7 @@ export const AddEmployed = () => {
       alert('Operación cancelada');
     }
   }
-
+  console.log(formData)
   return (
     <>
       <div className="d-flex-empleado justify-content-center align-items-center vh-100">
@@ -300,7 +312,7 @@ export const AddEmployed = () => {
             </div>
             <div className="row"> {/* Ciudad y Departamento */}
               <div className="col-md-4">
-                <Select event={handleChange} value={formData.departmentName} text="Departamento" options={deptos} name="departmentName" />
+                <Select event={handleChange} text="Departamento" options={deptos} name="departmentName" value={formData.departmentName} />
                 {errorsForms.departmentName && <div className="text-danger">{errorsForms.departmentName}</div>}
               </div>
               <div className="col-md-4">
