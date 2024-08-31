@@ -45,7 +45,8 @@ export const AddEmployed = () => {
     departmentName: '',
     sex: '',
     birthDate: '',
-    maritalStatus: ''
+    maritalStatus: '',
+    codigoPais: ''
   });
 
   useEffect(() => {
@@ -70,7 +71,8 @@ export const AddEmployed = () => {
         departmentName: '',
         sex: '',
         birthDate: '',
-        maritalStatus: ''
+        maritalStatus: '',
+        codigoPais: ''
       });
       setErrorsForms({});
     }
@@ -316,7 +318,7 @@ export const AddEmployed = () => {
             </div>
             <div className="row mt-2"> {/* Teléfono y Usuario */}
               <div className="col-md-2">
-                <Select event={handleChange} text="Código País" options={codigoPaises} name="codigoPais" icon="fa-solid fa-earth-americas" />
+                <Select event={handleChange} text="Código País" options={codigoPaises} value={formData.codigoPais} name="codigoPais" icon="fa-solid fa-earth-americas" />
                 {errorsForms.codigoPais && <div className="text-danger">{errorsForms.codigoPais}</div>}
               </div>
               <div className="col-md-4">
