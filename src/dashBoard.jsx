@@ -15,6 +15,7 @@ import { Sidebar } from './Sidebar'; // Importa el componente Sidebar
  * @returns {React.ReactNode} - Muestra el contenido del tablero si el usuario está autenticado. Si no hay usuario autenticado, no muestra nada.
  */
 export const DashBoard = ({ user, setUser }) => {
+
     return (
         <>
             {user ? ( // Si hay un usuario autenticado, muestra el contenido del tablero

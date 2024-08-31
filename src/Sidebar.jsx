@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './assets/css/sidebar.css'; // Importa los estilos CSS
 import Logo from './assets/img/LogoSena.png'; // Importa el logo
 import Icono from './assets/img/icono.png';
 import { useNavigate } from "react-router-dom" // Importa el hook para redirecciones
+import { ApiService } from './class/ApiServices';
+
 /* Importaciones de componentes para el menu */
 import { Agregar } from './components/menu/Agregar';
-import { Inventarios} from './components/menu/Inventarios';
+import { Inventarios } from './components/menu/Inventarios';
 import { Configuraciones } from './components/menu/Configuraciones';
 import { Actualizar } from './components/menu/Actualizar';
 import { Informes } from './components/menu/Informes';
@@ -19,6 +21,8 @@ import { Informes } from './components/menu/Informes';
  */
 export const Sidebar = ({ user, setUser }) => {
 
+    const [users, setUsers] = useState([]);
+    const [filteredUser, setFilteredUser] = useState(null);
     const nav = useNavigate(); // Prepara la función para redirigir
 
     // Función para cerrar sesión
@@ -29,6 +33,29 @@ export const Sidebar = ({ user, setUser }) => {
         console.log('Logout exitosamente'); // Mensaje en la consola
         nav('/Login'); // Redirige a la página de inicio de sesión
     };
+
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+
+                const response = await ApiService.get("/api/v1/companie/users");
+                setUsers(response);
+
+                const userToView = JSON.parse(localStorage.getItem("user"));
+                const username = userToView ? userToView.username : null;
+
+                if (username) {
+                    const matchedUser = response.find(user => user.username === username);
+                    setFilteredUser(matchedUser);
+                }
+
+            } catch (error) {
+                console.error('Error al obtener los usuarios:', error);
+            }
+        }
+
+        fetchUsers();
+    }, []);
 
     return (
         <>
@@ -45,7 +72,7 @@ export const Sidebar = ({ user, setUser }) => {
                             <ul className='navbar-nav me-auto mb-2 mb-lg-0'>
                                 <li className="nav-item dropdown section-account-part2">
                                     <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        {user.username}
+                                        {filteredUser ? filteredUser.name : user.username}
                                     </a>
                                     <ul className="dropdown-menu menu-account">
                                         <li><a className="dropdown-item text-black" href="#">Mi cuenta</a></li>
