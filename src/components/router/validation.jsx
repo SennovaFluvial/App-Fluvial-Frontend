@@ -23,11 +23,19 @@ export const ValidationPages = ({ user, setUser }) => {
     useEffect(() => {
         const token = localStorage.getItem('token');
         const storedUser = JSON.parse(localStorage.getItem('user'));
+        const tokenTimestamp = localStorage.getItem('tokenTimestamp');
+        const currentTime = new Date().getTime();
+        const halfHour = 30 * 60 * 1000; // 30 minutos en milisegundos
 
-        if (!token || !storedUser) {
+        if (!token || !storedUser || (currentTime - tokenTimestamp > halfHour)) {
             if (!isRedirecting) {
-                setIsRedirecting(true); // Marca como redireccionado
-                nav('/Login');
+                // Eliminar token y usuario de localStorage si han pasado los 30 minutos
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                localStorage.removeItem('tokenTimestamp');
+                setIsRedirecting(true);
+                setUser(null); // Limpia el estado del usuario
+                nav('/Login'); // Redirige al login
             }
             return;
         }

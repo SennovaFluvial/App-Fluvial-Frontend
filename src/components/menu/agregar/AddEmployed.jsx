@@ -4,6 +4,8 @@ import { Inputs } from '../../html components/Inputs.jsx';
 import { useOptionsDepto, useOptionsCompanies, useOptionsCities, OptionsTypeDocument, useRoles, genero, status, maritalStatus, codigoPaises } from '../update/options/arrays.jsx';
 import '../../../assets/css/AgregarEmpleado.css';
 import { ApiService } from '../../../class/ApiServices.jsx';
+import { Alert } from '../../../class/alerts.jsx';
+import Swal from 'sweetalert';
 import { User } from '../../../class/User.jsx';
 import { useLocation, useNavigate, useParams } from 'react-router';
 
@@ -238,7 +240,12 @@ export const AddEmployed = () => {
     setErrorsForms(newErrors);
 
     if (Object.keys(newErrors).length > 0) {
-      alert(`Por favor, complete el campo obligatorio: ${firstEmptyField}`);
+      Swal({
+        title: 'Error',
+        text: `Por favor, complete el campo obligatorio: ${firstEmptyField}`,
+        icon: 'error',
+        timer: 2000
+      });
       return;
     }
 
@@ -248,25 +255,35 @@ export const AddEmployed = () => {
       ? `¿Está seguro que quiere actualizar el usuario?\nUsuario: ${dataToSend.username}\nRol: ${dataToSend.roleRequest.roleListName[0]}`
       : `¿Está seguro que quiere crear el usuario?\nUsuario: ${dataToSend.username}\nRol: ${dataToSend.roleRequest.roleListName[0]}`;
 
-    if (window.confirm(confirmationMessage)) {
-      try {
+    try {
+      const result = await Alert.alertConfirm(
+        'Confirmación',
+        confirmationMessage,
+        action === 'update'
+          ? 'Usuario actualizado correctamente'
+          : 'Usuario creado correctamente',
+        nav,
+        "../../adminSection/show-users"
+      );
+
+      if (result) {
         if (action === 'update') {
           await ApiService.put(`/auth/update/${userId}`, dataToSend);
-          alert('Usuario actualizado correctamente');
         } else {
           await User.sign_up(dataToSend);
-          alert('Usuario creado correctamente');
         }
-        nav("../../adminSection/show-users");
-      } catch (error) {
-        console.error('Error al procesar la solicitud:', error);
-        alert('Hubo un error al procesar la solicitud. Por favor, intente de nuevo.');
       }
-    } else {
-      alert('Operación cancelada');
+    } catch (error) {
+      console.error('Error al procesar la solicitud:', error);
+      Swal({
+        title: 'Error',
+        text: 'Hubo un error al procesar la solicitud. Por favor, intente de nuevo.',
+        icon: 'error',
+        timer: 2000
+      });
     }
-  }
-  console.log(formData)
+  };
+
   return (
     <>
       <div className="d-flex-empleado justify-content-center align-items-center vh-100">

@@ -49,10 +49,14 @@ export const Login = ({ setUser }) => {
                 username: username, // Nombre de usuario proporcionado por el usuario
                 password: password  // Contraseña proporcionada por el usuario
             });
+            // Obtiene la hora actual del logueo
+            const currentTime = new Date().getTime();
 
             // Almacena el token en el localStorage si la solicitud es exitosa
             localStorage.setItem('token', response.data.jwt); // Almacena el token JSON si la solicitud es exitosa.
 
+            // Almacena la hora actual de logueo
+            localStorage.setItem('tokenTimestamp', currentTime);
             // Crea un objeto de usuario con la información recibida
             const user = {
                 username: response.data.username,
@@ -102,8 +106,8 @@ export const Login = ({ setUser }) => {
                 <div className="side-container">
                     <div className="top-side-container">
                         <h1 className="side-conainter__title">Sistemas de operaciones <br />
-                        Logísticas del transporte <br />
-                         Fluvial - Guaviare</h1>
+                            Logísticas del transporte <br />
+                            Fluvial - Guaviare</h1>
                     </div>
 
                     <div className="bottom-side-container">
@@ -120,11 +124,11 @@ export const Login = ({ setUser }) => {
                                     <label className="input-form__label">Contraseña</label>
                                     <input type="password" className="form-control" value={password} onChange={(param) => setPassword(param.target.value)} />
                                 </div>
-                            <section className="login-form-button-wrapper">
-                                <button className="button" > Iniciar sesión </button>
-                                <br /><br />
+                                <section className="login-form-button-wrapper">
+                                    <button className="button" > Iniciar sesión </button>
+                                    <br /><br />
                                     <button className="button" > <Link to={'/'}>Home page</Link> </button>
-                            </section>
+                                </section>
                             </section>
 
                             {error ? <p className="error-message alert alert-danger">{error}</p> : ''}
