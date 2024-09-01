@@ -13,15 +13,13 @@ import { AddSailor } from '../menu/agregar/AddSailor.jsx';
 import { AddBoatDriver } from '../menu/agregar/AddBoatDriver.jsx';
 import { AddVehicle } from '../menu/agregar/AddVehicle.jsx';
 import { AddCustomer } from '../menu/agregar/AddCustomer.jsx';
+import { AddCrew } from '../menu/agregar/AddCrew.jsx';
 
 import { ShowCompany } from '../menu/history/Show-Company.jsx';
 import { ShowCustomers } from '../menu/history/Show-customers.jsx';
 import { ShowUsers } from '../menu/history/Show-users.jsx';
 import { ShowCrew } from '../menu/history/show-sailors.jsx';
 
-import { UpdateUsers } from '../menu/update/Update-users.jsx';
-import { UpdateCustomer } from '../menu/update/Update-customer.jsx';
-import { AddCrew } from '../menu/agregar/AddCrew.jsx';
 
 
 
@@ -75,10 +73,7 @@ export const ComponentRouter = () => {
                     <Route path="show-users" element={< ShowUsers />} /> {/* Ruta para ver usuarios */}
                     <Route path="show-crew" element={< ShowCrew />} /> {/* Ruta para ver usuarios */}
 
-                    <Route path="update-customer/:id" element={< UpdateCustomer />} />{/* Ruta actualizar clientes */}
-                    <Route path="update-user/:id" element={< UpdateUsers />} /> {/* Ruta actualizar usuario */}
 
-                    {/* Agregar las rutas protegias aqui */}
                 </Route>
             </Route>
 

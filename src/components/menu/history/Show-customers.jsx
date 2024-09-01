@@ -3,7 +3,6 @@ import '../../../assets/css/show/styles-Show.css';
 import { Spinner } from '../../animations/Spiner';
 import { Grid } from '../../animations/Grid';
 import { Link } from 'react-router-dom';
-import { UpdateCustomer } from '../update/Update-customer';
 import { ApiService } from '../../../class/ApiServices';
 
 export const ShowCustomers = () => {
