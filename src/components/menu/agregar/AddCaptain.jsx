@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { Inputs } from '../../html components/Inputs.jsx';
 import { Select } from '../../html components/Selects.jsx';
 import { status, OptionsTypeDocument, genero, maritalStatus, nationality } from '../update/options/arrays.jsx';
@@ -10,8 +9,8 @@ import { useParams } from 'react-router';
 export const AddCaptain = () => {
 
     const { id, action } = useParams();
-
     const { handleSubmit, formData, errorsForms, handleChange } = ControllerCreateUpdateCaptain({ id, action });
+
     return (
         <div className="d-flex-empleado justify-content-center align-items-center vh-100">
             <div className="container-empleado bg-light shadow rounded p-4">
