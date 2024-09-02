@@ -7,12 +7,12 @@ import { ControllerCreateUpdateEmployed } from './controllers/ControllerCreateUp
 
 export const AddEmployed = () => {
 
-  // ------ Entre esto agregas el codigo ----- // 
   const queryParam = new URLSearchParams(location.search);
   const action = queryParam.get('action');
+
   const { handleSubmit, handleChange, formData, errorsForms, cities, deptos, roles, role, companies } = ControllerCreateUpdateEmployed();
 
-  // ------ Entre esto agregas el codigo ----- // 
+
 
   return (
     <>

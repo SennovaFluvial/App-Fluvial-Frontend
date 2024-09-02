@@ -3,6 +3,7 @@ import '../../../assets/css/show/styles-Show.css';
 import { Spinner } from '../../animations/Spiner';
 import { Grid } from '../../animations/Grid';
 import { ApiService } from '../../../class/ApiServices.jsx';
+import { Link } from 'react-router-dom';
 // Componente para ver el historial de Tripulacion de la empresa
 export const ShowCrew = () => {
 
@@ -34,6 +35,8 @@ export const ShowCrew = () => {
         )
     }
 
+
+
     return (
         <>
             <div className="container my-5">
@@ -56,29 +59,50 @@ export const ShowCrew = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {crew.map((item, index) => (
-                            <tr key={item.id}>
-                                <td>{index + 1}</td>
-                                <td>{item.name}</td>
-                                <td>{item.lastName}</td>
-                                <td>{item.numDocument}</td>
-                                <td>{item.phone}</td>
-                                <td>{item.employeeType.typeName}</td>
-                                <td>{item.status}</td>
-                                <td>
+                        {crew.map((item, index) => {
 
-                                    <button
-                                        className='btn icon-link-hover ms-3 text-primary'>
-                                        <i className="fa-solid fa-pen-to-square icon-option"></i>
-                                    </button>
+                            // Define un array de objetos que asocia tipos de empleado con URLs específicas.
+                            const url_typeEmployed = [
+                                { url: "../add-crew/add-boat-driver", typeEmployed: "Motorista" },
+                                { url: "../add-crew/add-sailor", typeEmployed: "Marinero" },
+                                { url: "../add-crew/add-captain", typeEmployed: "Capitan" },
+                            ];
 
-                                    <button
-                                        className='btn icon-link-hover ms-3 text-warning'>
-                                        <i className="fa-solid fa-eye icon-option"></i>
-                                    </button>
-                                </td>
-                            </tr>
-                        ))}
+                            // Obtiene el tipo de empleado del objeto `item`.
+                            const typeEmployed = item.employeeType.typeName;
+
+                            // Busca el objeto en `url_typeEmployed` que tenga un `typeEmployed` que coincida con el tipo de empleado actual.
+                            const urlFound = url_typeEmployed.find((item) => item.typeEmployed === typeEmployed)
+
+                            // Asigna la URL encontrada a `url`. Si no se encuentra ninguna URL, se asigna una cadena vacía.
+                            let url = urlFound ? urlFound.url : '';
+
+                            return (
+                                <tr key={item.id}>
+                                    <td>{index + 1}</td>
+                                    <td>{item.name}</td>
+                                    <td>{item.lastName}</td>
+                                    <td>{item.numDocument}</td>
+                                    <td>{item.phone}</td>
+                                    <td>{item.employeeType.typeName}</td>
+                                    <td>{item.status}</td>
+                                    <td>
+
+                                        <Link to={url + `/${item.id}/update`}>
+                                            <button
+                                                className='btn icon-link-hover ms-3 text-primary'>
+                                                <i className="fa-solid fa-pen-to-square icon-option"></i>
+                                            </button>
+                                        </Link>
+
+                                        <button
+                                            className='btn icon-link-hover ms-3 text-warning'>
+                                            <i className="fa-solid fa-eye icon-option"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            )
+                        })}
                     </tbody>
                 </table>
             </div>

@@ -63,9 +63,9 @@ export const ComponentRouter = () => {
                     <Route path="add-customer" element={< AddCustomer />} />{/* Ruta para agregar clientes */}
                     <Route path="add-crew" element={< AddCrew />}>{/* Ruta para agregar clientes */}
 
-                        <Route path="add-captain" element={< AddCaptain />} />{/* Ruta para agregar capitanes */}
-                        <Route path="add-sailor" element={< AddSailor />} /> {/* Ruta para agregar marinero */}
-                        <Route path="add-boat-driver" element={< AddBoatDriver />} /> {/* Ruta para agregar mototristas */}
+                        <Route path="add-captain/:id?/:action?" element={< AddCaptain />} />{/* Ruta para agregar capitanes */}
+                        <Route path="add-sailor/:id?/:action?" element={< AddSailor />} /> {/* Ruta para agregar marinero */}
+                        <Route path="add-boat-driver/:id?/:action?" element={< AddBoatDriver />} /> {/* Ruta para agregar mototristas */}
 
                     </Route>
                     <Route path="show-companies" element={< ShowCompany />} /> {/* Ruta para ver compañias */}

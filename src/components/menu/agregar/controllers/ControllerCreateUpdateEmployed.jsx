@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { ApiService } from '../../../../class/ApiServices.jsx';
 import { useOptionsDepto, useOptionsCompanies, useOptionsCities, useRoles } from '../../update/options/arrays.jsx';
 import { Alert } from '../../../../class/alerts.jsx';
