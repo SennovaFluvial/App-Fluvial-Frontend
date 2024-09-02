@@ -70,7 +70,7 @@ export const ShowCustomers = () => {
                 <td>{item.address}</td>
                 <td>{item.cityName}</td>
                 <td>
-                  <Link to={`../update-customer/${item.id}`}>
+                  <Link to={`../add-customer/${item.id}/update`}>
                     <button className='btn icon-link-hover ms-3 text-primary'>
                       <i className="fa-solid fa-pen-to-square icon-option"></i>
                     </button>

@@ -105,6 +105,7 @@ export const ControllerCreateUpdateCompany = ({ id, action }) => {
         const confirmationMessage = action === 'update' ?
             `¿Está seguro que quiere actualizar la empresa?\nNombre: ${formData.nit} ${formData.company}` :
             `¿Está seguro que quiere crear la empresa? \nNombre: ${formData.nit} ${formData.company}`;
+            
         try {
             const result = await Alert.alertConfirm(
                 'Confirmación',

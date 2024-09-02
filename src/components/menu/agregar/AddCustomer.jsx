@@ -3,96 +3,20 @@ import { Select } from '../../html components/Selects.jsx';
 import { Inputs } from '../../html components/Inputs.jsx';
 import '../../../assets/css/AgregarEmpleado.css';
 import { OptionsTypeDocument, genero, maritalStatus, nationality, useOptionsCities, useOptionsDepto } from '../update/options/arrays.jsx';
-import { useNavigate } from 'react-router';
-import { ApiService } from '../../../class/ApiServices.jsx';
+import { useParams } from 'react-router';
+import { ControllerCreateUpdateCustomer } from './controllers/ControllerCreateUpdateCustomer.jsx';
 
 export const AddCustomer = () => {
-    const nav = useNavigate();
-    const user = JSON.parse(localStorage.getItem("user")); // Recuperar el JSON almacenado en el LocalStorage
-    const userNameUser = user?.username || null; // Obtener el `userName` de usuario Logueado Si no es nulo
+    const { id, action } = useParams();
     const cities = useOptionsCities(); // Se debe de hacer esto para mostrar las ciudades.
-    const [formData, setFormData] = useState({
-        name: '',
-        lastName: '',
-        typeDocument: '',
-        numDocument: '',
-        email: '',
-        dateOfBirth: '',
-        nationality: '',
-        maritalStatus: '',
-        phone: '',
-        address: '',
-        sex: '',
-        cityName: '',
-        userNames: [userNameUser]
-    });
 
-    const [errorsForms, setErrorsForms] = useState({});
-
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-
-        if (name.startsWith("userName")) {
-            const index = parseInt(name.replace("userName", ""));
-            const updatedUserNames = [...formData.userNames];
-            updatedUserNames[index] = value;
-            setFormData({ ...formData, userNames: updatedUserNames });
-        } else {
-            // Solo aplicar trim() si el valor es una cadena
-            const updatedValue = typeof value === 'string' ? value.trim() : value;
-            setFormData({ ...formData, [name]: updatedValue });
-        }
-    };
-
-    const handleErrors = (name, message) => {
-        setErrorsForms({ ...errorsForms, [name]: message });
-    };
-
-    useEffect(() => {
-        if (formData.dateOfBirth) {
-            const selectedDate = new Date(formData.dateOfBirth);
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            if (selectedDate >= today) {
-                handleErrors("dateOfBirth", "La fecha de nacimiento no puede ser actual o una fecha futura");
-            }
-        }
-    }, [formData.dateOfBirth]);
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-
-        const newErrors = {};
-
-        for (let [name, value] of Object.entries(formData)) {
-            if (Array.isArray(value) && value.some((v) => typeof v === 'string' && !v.trim())) {
-                newErrors[name] = "Campo obligatorio";
-            } else if (typeof value === 'string' && !value.trim()) {
-                newErrors[name] = "Campo obligatorio";
-            } else {
-                const { [name]: removed, ...rest } = errorsForms;
-                setErrorsForms(rest);
-            }
-        }
-
-        setErrorsForms({ ...errorsForms, ...newErrors });
-
-        if (Object.keys(newErrors).length > 0) {
-            alert('Por favor, complete todos los campos obligatorios correctamente.');
-            return;
-        }
-        await ApiService.post('/api/v1/customers/save', formData);
-        alert('Cliente creado correctamente');
-        console.log('Formulario enviado');
-        nav("../../adminSection/show-customers");
-    };
-
+    const { formData, errorsForms, handleChange, handleSubmit } = ControllerCreateUpdateCustomer({ id, action });
 
     return (
         <>
             <div className="d-flex-empleado justify-content-center align-items-center vh-100">
                 <div className="container-empleado bg-light shadow rounded p-4">
-                    <h2 className="text-center mb-2">CREAR CLIENTE</h2>
+                    <h2 className="text-center mb-2">{action && action === "update" ? "ACTUALIZAR" : "CREAR"} CLIENTE</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="text-center">
                             <h3><b>INFORMACIÓN PERSONAL</b></h3>
@@ -107,7 +31,7 @@ export const AddCustomer = () => {
                                 {errorsForms.lastName && <div className="text-danger">{errorsForms.lastName}</div>}
                             </div>
                             <div className="col-md-4">
-                                <Select event={handleChange} text="Tipo de Documento" options={OptionsTypeDocument} name="typeDocument" />
+                                <Select event={handleChange} value={formData.typeDocument} text="Tipo de Documento" options={OptionsTypeDocument} name="typeDocument" />
                                 {errorsForms.typeDocument && <div className="text-danger">{errorsForms.typeDocument}</div>}
                             </div>
                             <div className="col-md-4">
@@ -123,15 +47,15 @@ export const AddCustomer = () => {
                                 {errorsForms.dateOfBirth && <div className="text-danger">{errorsForms.dateOfBirth}</div>}
                             </div>
                             <div className="col-md-4">
-                                <Select event={handleChange} text="Nacionalidad" options={nationality} name="nationality" />
+                                <Select event={handleChange} value={formData.nationality} text="Nacionalidad" options={nationality} name="nationality" />
                                 {errorsForms.nationality && <div className="text-danger">{errorsForms.nationality}</div>}
                             </div>
                             <div className="col-md-4">
-                                <Select event={handleChange} text="Género" options={genero} name="sex" />
+                                <Select event={handleChange} value={formData.sex} text="Género" options={genero} name="sex" />
                                 {errorsForms.sex && <div className="text-danger">{errorsForms.sex}</div>}
                             </div>
                             <div className="col-md-4">
-                                <Select event={handleChange} text="Estado Civil" options={maritalStatus} name="maritalStatus" />
+                                <Select event={handleChange} text="Estado Civil" value={formData.maritalStatus} options={maritalStatus} name="maritalStatus" />
                                 {errorsForms.maritalStatus && <div className="text-danger">{errorsForms.maritalStatus}</div>}
                             </div>
                         </div>
@@ -149,12 +73,12 @@ export const AddCustomer = () => {
                                 {errorsForms.address && <div className="text-danger">{errorsForms.address}</div>}
                             </div>
                             <div className="col-md-6">
-                                <Select event={handleChange} text="Ciudad" options={cities} name="cityName" />
+                                <Select event={handleChange} text="Ciudad" value={formData.cityName} options={cities} name="cityName" />
                                 {errorsForms.cityName && <div className="text-danger">{errorsForms.cityName}</div>}
                             </div>
                         </div>
                         <div className="text-center">
-                            <button type="submit" className="btn btn-success">Crear Cliente</button>
+                            <button type="submit" className="btn btn-success">{action && action === "update" ? "Actualizar" : "Guardar"} Cliente</button>
                         </div>
                     </form>
                 </div>
