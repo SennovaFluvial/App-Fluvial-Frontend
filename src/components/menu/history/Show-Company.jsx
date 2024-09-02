@@ -5,6 +5,7 @@ import '../../../assets/css/show/styles-Show.css';
 import { Spinner } from '../../animations/Spiner';
 import { Grid } from '../../animations/Grid';
 import { ApiService } from '../../../class/ApiServices';
+import { Link } from 'react-router-dom';
 
 export const ShowCompany = () => {
 
@@ -71,9 +72,11 @@ export const ShowCompany = () => {
                 <td>{item.phone}</td>
                 <td>{item.status}</td>
                 <td>
-                  <button className='btn icon-link-hover ms-3 text-primary'>
-                    <i className="fa-solid fa-pen-to-square icon-option"></i>
-                  </button>
+                  <Link to={`../add-company/${item.id}/update`}>
+                    <button className='btn icon-link-hover ms-3 text-primary'>
+                      <i className="fa-solid fa-pen-to-square icon-option"></i>
+                    </button>
+                  </Link>
                   <button className='btn icon-link-hover ms-3 text-warning'>
                     <i className="fa-solid fa-eye icon-option"></i>
                   </button>

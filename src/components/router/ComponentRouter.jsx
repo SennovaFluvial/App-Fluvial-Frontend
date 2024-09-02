@@ -57,10 +57,10 @@ export const ComponentRouter = () => {
             <Route element={<ValidationPages user={user} setUser={setUser} />}> {/* Ruta protegida que requiere validación */}
                 <Route path="/adminSection" element={<DashBoard user={user} setUser={setUser} />}> {/* Ruta para el panel de administración */}
 
-                    <Route path="add-company" element={< AddCompany />} />{/* Ruta para agregar empresas */}
+                    <Route path="add-company/:id?/:action?" element={< AddCompany />} />{/* Ruta para agregar empresas */}
                     <Route path="add-employed/:id?" element={< AddEmployed />} />{/* Ruta para agregar empleados */}
                     <Route path="add-vehicle" element={< AddVehicle />} /> {/* Ruta para agregar vehículos */}
-                    <Route path="add-customer" element={< AddCustomer />} />{/* Ruta para agregar clientes */}
+                    <Route path="add-customer/:id?/:action?" element={< AddCustomer />} />{/* Ruta para agregar clientes */}
                     <Route path="add-crew" element={< AddCrew />}>{/* Ruta para agregar clientes */}
 
                         <Route path="add-captain/:id?/:action?" element={< AddCaptain />} />{/* Ruta para agregar capitanes */}

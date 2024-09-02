@@ -9,7 +9,6 @@ export const ControllerCreateUpdateCaptain = ({ id, action }) => {
     const navigate = useNavigate();
     const [errorsForms, setErrorsForms] = useState({});
     const [listEmployedFluvial, setlistEmployedFluvial] = useState([])
-    const [userSelected, setUserSelected] = useState([])
     const [formData, setFormData] = useState({
         name: '', lastName: '', typeDocument: '', numDocument: '', licencia: '',
         email: '', dateOfBirth: '', nationality: '', maritalStatus: '', phone: '',
@@ -136,8 +135,6 @@ export const ControllerCreateUpdateCaptain = ({ id, action }) => {
         const confirmationMessage = action === 'update' ?
             `¿Está seguro que quiere actualizar al capitán?\nNombre: ${formData.name} ${formData.lastName}` :
             `¿Está seguro que quiere crear al capitán?\nNombre: ${formData.name} ${formData.lastName}`;
-
-        // const userConfirmed = window.confirm(confirmationMessage);
 
         try {
             const result = await Alert.alertConfirm(
