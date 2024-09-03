@@ -4,6 +4,7 @@ import { Spinner } from '../../animations/Spiner';
 import { Grid } from '../../animations/Grid';
 import { ApiService } from '../../../class/ApiServices.jsx';
 import { Link } from 'react-router-dom';
+import { useSearchFields } from './search/SearchFields.jsx';
 // Componente para ver el historial de Tripulacion de la empresa
 export const ShowCrew = () => {
 
@@ -24,7 +25,7 @@ export const ShowCrew = () => {
     useEffect(() => {
         getCrew();
     }, []);
-
+    const { searchTerm, handleSearchChange, filteredItems } = useSearchFields(crew, ["name", "lastName", "numDocument", "phone", "employeeType.typeName", "status"])
     if (loading) {
         return (
             <div className="container">
@@ -45,6 +46,20 @@ export const ShowCrew = () => {
                         <h1> <b>TABLA DE TRIPULACIÓN</b> <i className="fa-solid fa-anchor ms-5"></i></h1>
                     </div>
                 </div>
+
+
+                <div className="row">
+                    <div className="col-md-12 my-3">
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Buscar..."
+                            value={searchTerm}
+                            onChange={handleSearchChange}
+                        />
+                    </div>
+                </div>
+
                 <table className="table my-5">
                     <thead>
                         <tr>
@@ -59,7 +74,7 @@ export const ShowCrew = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {crew.map((item, index) => {
+                        {filteredItems.map((item, index) => {
 
                             // Define un array de objetos que asocia tipos de empleado con URLs específicas.
                             const url_typeEmployed = [
