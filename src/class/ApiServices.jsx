@@ -2,7 +2,15 @@ import instance from "../config/AxiosApi";
 
 /**
  * ApiService es una clase que proporciona métodos estáticos para interactuar con una API.
- * Actualmente, solo incluye el método `add`, que realiza una solicitud POST a una URL específica.
+ * 
+ * Incluye métodos para realizar solicitudes HTTP de diferentes tipos:
+ * 
+ * - `post(url_api, data, headers={})`: Envía una solicitud POST a la URL especificada con los datos y encabezados proporcionados.
+ * - `put(url_api, data, headers={})`: Envía una solicitud PUT a la URL especificada con los datos y encabezados proporcionados.
+ * - `get(url_api)`: Envía una solicitud GET a la URL especificada y devuelve los datos obtenidos.
+ * 
+ * Cada método maneja las solicitudes HTTP con encabezados predeterminados y personalizados según sea necesario,
+ * y proporciona manejo de errores básico para cada solicitud.
  */
 export class ApiService {
 
