@@ -1,0 +1,72 @@
+/* Estilos para el menú superior */
+.crew-menu-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /* Alinea el contenido a la izquierda */
+    /* justify-content: center; */
+    position:initial;
+    /* El contenedor no se superpone a otros elementos */
+    width: 30%;
+    /* Ancho del contenedor */
+    background-color: #f4f4f4;
+    padding: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* margin: 20px auto; */
+    margin-left: 5px;
+    /* Centra el contenedor horizontalmente */
+    /* top: 0; */
+    /* No se utiliza en position: static */
+}
+
+/* Título del menú */
+.crew-menu-title {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-family: 'Lucida Sans', 'Lucida Grande', sans-serif;
+}
+
+/* Selector estilizado */
+.crew-menu-select {
+    width: 300px;
+    /* Ancho del selector */
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 10px;
+    border: 2px solid #00AF00;
+    background-color: white;
+    color: #333;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Efecto hover */
+.crew-menu-select:hover {
+    border-color: #008800;
+}
+
+/* Cambiar el fondo del selector cuando esté en focus */
+.crew-menu-select:focus {
+    background-color: #e0f5e0;
+    /* border-color: #006600; */
+}
+
+/* Estilos adaptables */
+@media (max-width: 768px) {
+    .crew-menu-container {
+        width: 100%;
+        /* Ajusta el ancho en pantallas pequeñas */
+        margin: 0;
+        /* Elimina el margen horizontal en pantallas pequeñas */
+        padding: 0.5rem;
+        /* Ajusta el padding para pantallas pequeñas */
+    }
+
+    .crew-menu-select {
+        width: 100%;
+        /* Hace el selector más ancho en pantallas pequeñas */
+        font-size: 0.9rem;
+    }
+}

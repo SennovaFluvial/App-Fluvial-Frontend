@@ -1,8 +1,8 @@
 import { Outlet } from 'react-router-dom'; // Importa herramientas para navegación
 import React from 'react' // Importa React y useEffect
 import { Sidebar } from './Sidebar'; // Importa el componente Sidebar
-
-
+import { Info } from "../src/Info";
+import { useLocation } from 'react-router-dom';
 /**
  * Componente DashBoard
  * 
@@ -15,6 +15,7 @@ import { Sidebar } from './Sidebar'; // Importa el componente Sidebar
  * @returns {React.ReactNode} - Muestra el contenido del tablero si el usuario está autenticado. Si no hay usuario autenticado, no muestra nada.
  */
 export const DashBoard = ({ user, setUser }) => {
+    const location = useLocation();
 
     return (
         <>
@@ -26,11 +27,15 @@ export const DashBoard = ({ user, setUser }) => {
                                 <Sidebar user={user} setUser={setUser} /> {/* Muestra la barra lateral */}
                             </div>
                             <div className="col-md-10">
-                                <div className="row">
-                                    <div className="col-md-12">
-                                        <Outlet /> {/* Muestra el contenido de las rutas hijas */}
-                                    </div>
-                                </div>
+                                {/* <div className="row"> */}
+                                {/* Si la ruta es '/adminSection' o no tiene ruta hija específica, muestra Info */}
+                                {location.pathname === "/adminSection" ? (
+                                    <Info />  // Muestra el componente Info
+                                ) : (
+                                    <Outlet /> // Muestra el contenido de las rutas hijas
+                                )}
+                                {/* </div> */}
+                                
                             </div>
                         </div>
 

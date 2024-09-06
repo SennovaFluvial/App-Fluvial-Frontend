@@ -1,0 +1,31 @@
+:root {
+    --white: #fff;
+    --green: #00AF00;
+    --black: #0000001a;
+}
+
+.info-container {
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 10px;
+    box-shadow: 0 0 10px var(--black);
+}
+
+.info-container h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: var(--green);
+}
+
+.info-container p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px var(--green);
+}

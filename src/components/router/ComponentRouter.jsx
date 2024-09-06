@@ -23,7 +23,7 @@ import { UpdateUsers } from '../menu/update/Update-users.jsx';
 import { UpdateCustomer } from '../menu/update/Update-customer.jsx';
 import { AddCrew } from '../menu/agregar/AddCrew.jsx';
 
-
+import { Info } from '../../Info.jsx';
 
 /**
  * Componente ComponentRouter
@@ -58,6 +58,8 @@ export const ComponentRouter = () => {
 
             <Route element={<ValidationPages user={user} setUser={setUser} />}> {/* Ruta protegida que requiere validación */}
                 <Route path="/adminSection" element={<DashBoard user={user} setUser={setUser} />}> {/* Ruta para el panel de administración */}
+
+                    <Route path="info" element={< Info />} />{/* Ruta para informacion qeu se mostrara por defecto en el dashboard */}
 
                     <Route path="add-company" element={< AddCompany />} />{/* Ruta para agregar empresas */}
                     <Route path="add-employed/:id?" element={< AddEmployed />} />{/* Ruta para agregar empleados */}
