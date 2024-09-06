@@ -5,12 +5,13 @@ import '../../../assets/css/show/styles-Show.css';
 import { Spinner } from '../../animations/Spiner';
 import { Grid } from '../../animations/Grid';
 import { ApiService } from '../../../class/ApiServices';
+import { Link } from 'react-router-dom';
+import { useSearchFields } from './search/SearchFields';
 
 export const ShowCompany = () => {
 
   const [loading, setLoading] = useState(true);
   const [companies, setCompanies] = useState([]);
-
 
   const getCompanies = async () => {
     try {
@@ -27,6 +28,8 @@ export const ShowCompany = () => {
   useEffect(() => {
     getCompanies();
   }, []);
+
+  const { searchTerm, handleSearchChange, filteredItems } = useSearchFields(companies, ["nit", "company", "manager", "phone", "status"])
 
 
   if (loading) {
@@ -49,6 +52,19 @@ export const ShowCompany = () => {
             </h1>
           </div>
         </div>
+
+        <div className="row">
+          <div className="col-md-12 my-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Buscar..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+            />
+          </div>
+        </div>
+
         <table className="table my-5">
           <thead>
             <tr>
@@ -62,7 +78,7 @@ export const ShowCompany = () => {
             </tr>
           </thead>
           <tbody>
-            {companies.map((item, index) => (
+            {filteredItems.map((item, index) => (
               <tr key={item.id}>
                 <td>{index + 1}</td>
                 <td>{item.nit}</td>
@@ -71,9 +87,11 @@ export const ShowCompany = () => {
                 <td>{item.phone}</td>
                 <td>{item.status}</td>
                 <td>
-                  <button className='btn icon-link-hover ms-3 text-primary'>
-                    <i className="fa-solid fa-pen-to-square icon-option"></i>
-                  </button>
+                  <Link to={`../add-company/${item.id}/update`}>
+                    <button className='btn icon-link-hover ms-3 text-primary'>
+                      <i className="fa-solid fa-pen-to-square icon-option"></i>
+                    </button>
+                  </Link>
                   <button className='btn icon-link-hover ms-3 text-warning'>
                     <i className="fa-solid fa-eye icon-option"></i>
                   </button>

@@ -4,82 +4,24 @@ import { Select } from '../../html components/Selects.jsx';
 import { useOptionsDepto, useOptionsCities, status } from '../update/options/arrays.jsx';
 import '../../../assets/css/AgregarEmpleado.css';
 import { ApiService } from '../../../class/ApiServices.jsx';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
+import { ControllerCreateUpdateCompany } from './controllers/ControllerCreateUpdateCompany.jsx';
 
 export const AddCompany = () => {
 
+    const { id, action } = useParams();
+    const { handleSubmit, errorsForms, formData, handleChange } = ControllerCreateUpdateCompany({ id, action });
     const nav = useNavigate();
     const deptos = useOptionsDepto();
     const cities = useOptionsCities();
 
-    const [formData, setFormData] = useState({
-        nit: 0,
-        company: '',
-        status: '',
-        manager: '',
-        email: '',
-        phone: '',
-        address: '',
-        department: '',
-        municipality: ''
-    });
 
-    const [errorsForms, setErrorsForms] = useState({});
-
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-
-        if (value.trim()) {
-            const { [name]: removed, ...rest } = errorsForms;
-            setErrorsForms(rest);
-        } else {
-            setErrorsForms({ ...errorsForms, [name]: "Campo obligatorio" });
-        }
-
-        setFormData({ ...formData, [name]: value });
-    }
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-
-        const newErrors = {};
-
-        for (let [name, value] of Object.entries(formData)) {
-            if (!value.trim()) {
-                newErrors[name] = "Campo obligatorio";
-            }
-        }
-
-        setErrorsForms({ ...errorsForms, ...newErrors });
-
-        if (Object.keys(newErrors).length > 0) {
-            alert('Por favor, complete todos los campos obligatorios correctamente.');
-            return;
-        }
-
-        // Convertir el NIT a un número antes de enviar los datos
-        const formattedData = {
-            ...formData,
-            nit: Number(formData.nit), // Convertir a número
-        };
-
-        const confirmationMessage = `¿Está seguro que quiere crear la empresa?\nEmpresa: ${formData.company}`;
-        const userConfirmed = window.confirm(confirmationMessage);
-
-        if (userConfirmed) {
-            await ApiService.post("/api/v1/companie/save", formattedData)
-            alert('Empresa creada correctamente');
-            nav("../../adminSection/show-companies")
-        } else {
-            alert('Operación cancelada');
-        }
-    }
 
     return (
         <>
             <div className="d-flex-empleado justify-content-center align-items-center vh-100">
                 <div className="container bg-light shadow rounded p-4">
-                    <h2 className="text-center mb-2">CREAR EMPRESA</h2>
+                    <h2 className="text-center mb-2">{action && action === "update" ? "ACTUALIZAR" : "CREAR"} EMPRESA</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="text-center">
                             <h3><b>INFORMACIÓN DE LA EMPRESA</b></h3>
@@ -118,11 +60,11 @@ export const AddCompany = () => {
                         </div>
                         <div className="row"> {/* Ubicación */}
                             <div className="col-md-6">
-                                <Select text="Departamento" name="department" event={handleChange} options={deptos} />
+                                <Select text="Departamento" name="department" event={handleChange} value={formData.department} options={deptos} />
                                 {errorsForms.department && <div className="text-danger">{errorsForms.department}</div>}
                             </div>
                             <div className="col-md-6">
-                                <Select text="Municipio" name="municipality" event={handleChange} options={cities} />
+                                <Select text="Municipio" name="municipality" event={handleChange} value={formData.municipality} options={cities} />
                                 {errorsForms.municipality && <div className="text-danger">{errorsForms.municipality}</div>}
                             </div>
                             <div className="col-md-6">
@@ -136,13 +78,13 @@ export const AddCompany = () => {
                         </div>
                         <div className="row"> {/* Información laboral */}
                             <div className="col-md-6">
-                                <Select text="Estado" name="status" event={handleChange} options={status} />
+                                <Select text="Estado" name="status" value={formData.status} event={handleChange} options={status} />
                                 {errorsForms.status && <div className="text-danger">{errorsForms.status}</div>}
                             </div>
                         </div>
 
                         <div className="text-center mt-3">
-                            <button type="submit" className="btn btn-success">Crear Empresa <i className="fa-solid fa-building"></i></button>
+                            <button type="submit" className="btn btn-success">{action && action === "update" ? "Actualizar" : "Guardar"} Empresa <i className="fa-solid fa-building"></i></button>
                         </div>
                     </form>
                 </div>

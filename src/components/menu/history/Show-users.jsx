@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Spinner } from '../../animations/Spiner';
 import { Grid } from '../../animations/Grid';
 import { ApiService } from '../../../class/ApiServices';
+import { useSearchFields } from './search/SearchFields';
 
 export const ShowUsers = () => {
     const [loading, setLoading] = useState(true);
@@ -23,6 +24,8 @@ export const ShowUsers = () => {
     useEffect(() => {
         getEmployed();
     }, []);
+    const { searchTerm, handleSearchChange, filteredItems } = useSearchFields(employed, ["numDocument", "name", "lastName", "roles[0].roleEnum", "phone", "status"])
+
 
     if (loading) {
         return (
@@ -42,6 +45,19 @@ export const ShowUsers = () => {
                         <h1> <b>TABLA DE EMPLEADOS</b> <i className="fa-solid fa-address-card ms-5"></i></h1>
                     </div>
                 </div>
+
+                <div className="row">
+                    <div className="col-md-12 my-3">
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Buscar..."
+                            value={searchTerm}
+                            onChange={handleSearchChange}
+                        />
+                    </div>
+                </div>
+
                 <table className="table table-hover border table-striped my-5">
                     <thead>
                         <tr>
@@ -56,7 +72,7 @@ export const ShowUsers = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {employed.map((item, index) => (
+                        {filteredItems.map((item, index) => (
                             <tr key={item.id}>
                                 <td><b>{index + 1}</b></td>
                                 <td>{item.numDocument}</td>

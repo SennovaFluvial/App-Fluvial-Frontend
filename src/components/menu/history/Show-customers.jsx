@@ -3,8 +3,8 @@ import '../../../assets/css/show/styles-Show.css';
 import { Spinner } from '../../animations/Spiner';
 import { Grid } from '../../animations/Grid';
 import { Link } from 'react-router-dom';
-import { UpdateCustomer } from '../update/Update-customer';
 import { ApiService } from '../../../class/ApiServices';
+import { useSearchFields } from './search/SearchFields';
 
 export const ShowCustomers = () => {
   const [loading, setLoading] = useState(true);
@@ -24,6 +24,8 @@ export const ShowCustomers = () => {
   useEffect(() => {
     getCustomers();
   }, []);
+
+  const { searchTerm, handleSearchChange, filteredItems } = useSearchFields(customers, ["numDocument", "name", "lastName", "email", "phone", "address", "cityName"])
 
   if (loading) {
     return (
@@ -45,6 +47,19 @@ export const ShowCustomers = () => {
             </h1>
           </div>
         </div>
+
+        <div className="row">
+          <div className="col-md-12 my-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Buscar..."
+              value={searchTerm}
+              onChange={handleSearchChange}
+            />
+          </div>
+        </div>
+
         <table className="table table-hover my-5">
           <thead>
             <tr>
@@ -60,7 +75,7 @@ export const ShowCustomers = () => {
             </tr>
           </thead>
           <tbody className="table-group-divider">
-            {customers.map((item, index) => (
+            {filteredItems.map((item, index) => (
               <tr key={item.id}>
                 <td><b>{index + 1}</b></td>
                 <td>{item.numDocument}</td>
@@ -71,7 +86,7 @@ export const ShowCustomers = () => {
                 <td>{item.address}</td>
                 <td>{item.cityName}</td>
                 <td>
-                  <Link to={`../update-customer/${item.id}`}>
+                  <Link to={`../add-customer/${item.id}/update`}>
                     <button className='btn icon-link-hover ms-3 text-primary'>
                       <i className="fa-solid fa-pen-to-square icon-option"></i>
                     </button>

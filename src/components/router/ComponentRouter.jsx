@@ -13,15 +13,13 @@ import { AddSailor } from '../menu/agregar/AddSailor.jsx';
 import { AddBoatDriver } from '../menu/agregar/AddBoatDriver.jsx';
 import { AddVehicle } from '../menu/agregar/AddVehicle.jsx';
 import { AddCustomer } from '../menu/agregar/AddCustomer.jsx';
+import { AddCrew } from '../menu/agregar/AddCrew.jsx';
 
 import { ShowCompany } from '../menu/history/Show-Company.jsx';
 import { ShowCustomers } from '../menu/history/Show-customers.jsx';
 import { ShowUsers } from '../menu/history/Show-users.jsx';
 import { ShowCrew } from '../menu/history/show-sailors.jsx';
 
-import { UpdateUsers } from '../menu/update/Update-users.jsx';
-import { UpdateCustomer } from '../menu/update/Update-customer.jsx';
-import { AddCrew } from '../menu/agregar/AddCrew.jsx';
 
 import { Info } from '../../Info.jsx';
 
@@ -61,15 +59,15 @@ export const ComponentRouter = () => {
 
                     <Route path="info" element={< Info />} />{/* Ruta para informacion qeu se mostrara por defecto en el dashboard */}
 
-                    <Route path="add-company" element={< AddCompany />} />{/* Ruta para agregar empresas */}
+                    <Route path="add-company/:id?/:action?" element={< AddCompany />} />{/* Ruta para agregar empresas */}
                     <Route path="add-employed/:id?" element={< AddEmployed />} />{/* Ruta para agregar empleados */}
                     <Route path="add-vehicle" element={< AddVehicle />} /> {/* Ruta para agregar vehículos */}
-                    <Route path="add-customer" element={< AddCustomer />} />{/* Ruta para agregar clientes */}
+                    <Route path="add-customer/:id?/:action?" element={< AddCustomer />} />{/* Ruta para agregar clientes */}
                     <Route path="add-crew" element={< AddCrew />}>{/* Ruta para agregar clientes */}
 
-                        <Route path="add-captain" element={< AddCaptain />} />{/* Ruta para agregar capitanes */}
-                        <Route path="add-sailor" element={< AddSailor />} /> {/* Ruta para agregar marinero */}
-                        <Route path="add-boat-driver" element={< AddBoatDriver />} /> {/* Ruta para agregar mototristas */}
+                        <Route path="add-captain/:id?/:action?" element={< AddCaptain />} />{/* Ruta para agregar capitanes */}
+                        <Route path="add-sailor/:id?/:action?" element={< AddSailor />} /> {/* Ruta para agregar marinero */}
+                        <Route path="add-boat-driver/:id?/:action?" element={< AddBoatDriver />} /> {/* Ruta para agregar mototristas */}
 
                     </Route>
                     <Route path="show-companies" element={< ShowCompany />} /> {/* Ruta para ver compañias */}
@@ -77,10 +75,7 @@ export const ComponentRouter = () => {
                     <Route path="show-users" element={< ShowUsers />} /> {/* Ruta para ver usuarios */}
                     <Route path="show-crew" element={< ShowCrew />} /> {/* Ruta para ver usuarios */}
 
-                    <Route path="update-customer/:id" element={< UpdateCustomer />} />{/* Ruta actualizar clientes */}
-                    <Route path="update-user/:id" element={< UpdateUsers />} /> {/* Ruta actualizar usuario */}
 
-                    {/* Agregar las rutas protegias aqui */}
                 </Route>
             </Route>
 
