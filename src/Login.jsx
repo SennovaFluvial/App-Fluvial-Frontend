@@ -5,6 +5,7 @@ import axios from 'axios'; // Se importa la libreria de axios
 import './assets/css/login.css'
 import Logo from './assets/img/LogoSena.png'
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert';
 
 /**
  * Componente Login
@@ -39,7 +40,8 @@ export const Login = ({ setUser }) => {
 
         // Verifica que se hayan ingresado tanto el nombre de usuario como la contraseña
         if (!username || !password) {
-            setError('Ingrese datos validos'); // Muestra un mensaje de error si los datos no son válidos.
+            setError('Ingrese datos válidos'); // Muestra un mensaje de error si los datos no son válidos.
+            Swal('Error', 'Por favor, ingrese su nombre de usuario y contraseña.', 'error');
             return;
         }
 
@@ -70,35 +72,37 @@ export const Login = ({ setUser }) => {
             // Verifica el estado del usuario
             if (user.status !== 'activo') {
                 setError('El usuario se encuentra en un estado de Inactivo. Por favor, comuníquese con el gerente.');
-                setUser(null);// Restablece el usuario a nulo si el estado es inactivo
+                setUser(null);
+                Swal('Error', 'El usuario se encuentra inactivo.', 'error');
                 return;
             }
 
             // Verifica el estado de la empresa del usuario
             if (user.companyStatus !== 'activo') {
-                setError('La empresa a la que está asociado se encuentra inactiva');
-                setUser(null); // Restablece el usuario a nulo si la empresa está inactiva
+                setError('La empresa a la que está asociado se encuentra inactiva.');
+                setUser(null);
+                Swal('Error', 'La empresa está inactiva.', 'error');
                 return;
             }
 
             // Actualiza el estado del usuario si todo es correcto
             setUser(user);
+            Swal('Éxito', 'Inicio de sesión exitoso.', 'success');
 
             // Redirige a la sección del panel de administración
             nav('/adminSection');
 
         } catch (error) {
-            // Maneja errores en caso de fallo de la solicitud
-            setError('No fue posible el Login. Por favor, intenta nuevamente.'); // Muestra un mensaje de error
-            console.error('No fue posible el Login', error); // Muestra un mensaje de consola que algo salio mal.
-            setUser(null); // Restablece el usuario a nulo en caso de error
-
+            setError('No fue posible el Login. Por favor, intenta nuevamente.');
+            console.error('No fue posible el Login', error);
+            Swal('Error', 'No fue posible el inicio de sesión. Intente de nuevo.', 'error');
+            setUser(null);
         }
     };
 
     return (
         <>
-            <div id="Login" >
+            <div id="Login">
                 <div className="hero-image">
                     <img src={Logo} alt="" className="logo" />
                 </div>
@@ -110,28 +114,47 @@ export const Login = ({ setUser }) => {
                             Fluvial - Guaviare</h1>
                     </div>
 
+                    <div className='circulo'>
+                        <i className="fa-solid fa-circle-user"></i>
+                    </div>
+
                     <div className="bottom-side-container">
+
                         <form onSubmit={login} className="login-form">
-                            <section className="login-form-title-wrapper">
-                                <h2 className="login-form__title">Iniciar Sesión</h2>
-                            </section>
+
+                            <h2 className="login-form__title">Iniciar Sesión</h2>
+
                             <section className="login-form-inputs">
                                 <div className="input-form">
-                                    <label className="input-form__label">Usuario</label>
-                                    <input type="text" className="form-control" value={username} onChange={(param) => setUsername(param.target.value)} />
+                                    <label className="input-form__label"><i className="fa-solid fa-user"></i> Usuario</label>
+                                    <div className="input-with-icon">
+                                        <input type="text" className="form-control" value={username} onChange={(param) => setUsername(param.target.value)} />
+                                    </div>
                                 </div>
-                                <div className="input-form">
-                                    <label className="input-form__label">Contraseña</label>
-                                    <input type="password" className="form-control" value={password} onChange={(param) => setPassword(param.target.value)} />
-                                </div>
-                                <section className="login-form-button-wrapper">
-                                    <button className="button" > Iniciar sesión </button>
-                                    <br /><br />
-                                    <button className="button" > <Link to={'/'}>Home page</Link> </button>
-                                </section>
-                            </section>
 
-                            {error ? <p className="error-message alert alert-danger">{error}</p> : ''}
+                                <div className="input-form">
+                                    <label className="input-form__label"><i className="fa-solid fa-lock"></i> Contraseña</label>
+                                    <div className="input-with-icon">
+                                        <input type="password" className="form-control" value={password} onChange={(param) => setPassword(param.target.value)} />
+                                    </div>
+                                </div>
+
+                                <section className="login-form-button-wrapper">
+                                    <button className="button"> Iniciar sesión </button>
+                                    <br /><br />
+
+                                    <button className="button button-home">
+                                        <Link to={'/'} className="link-home">
+                                            <i className="fa-solid fa-house"></i> Home page
+                                        </Link>
+                                    </button>
+
+                                </section>
+
+                                <p className="forgot-password-text">
+                                    <Link to="">¿Olvidaste tu contraseña?</Link>
+                                </p>
+                            </section>
 
                         </form>
                     </div>

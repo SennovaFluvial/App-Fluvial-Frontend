@@ -21,7 +21,7 @@ import { ShowUsers } from '../menu/history/Show-users.jsx';
 import { ShowCrew } from '../menu/history/show-sailors.jsx';
 
 
-
+import { Info } from '../../Info.jsx';
 
 /**
  * Componente ComponentRouter
@@ -56,6 +56,8 @@ export const ComponentRouter = () => {
 
             <Route element={<ValidationPages user={user} setUser={setUser} />}> {/* Ruta protegida que requiere validación */}
                 <Route path="/adminSection" element={<DashBoard user={user} setUser={setUser} />}> {/* Ruta para el panel de administración */}
+
+                    <Route path="info" element={< Info />} />{/* Ruta para informacion qeu se mostrara por defecto en el dashboard */}
 
                     <Route path="add-company/:id?/:action?" element={< AddCompany />} />{/* Ruta para agregar empresas */}
                     <Route path="add-employed/:id?" element={< AddEmployed />} />{/* Ruta para agregar empleados */}
