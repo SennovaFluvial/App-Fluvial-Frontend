@@ -21,7 +21,7 @@ export const Inputs = ({ type, text, name, event, placeholder, icon, value }) =>
     };
 
     return (
-        <div className="form-group"> {/* Contenedor principal del input */}+
+        <div className="form-group"> {/* Contenedor principal del input */}
             <label htmlFor={name}>{text}</label> {/* Etiqueta asociada al input */}
             <div className="input-group">
                 {/* Si hay un icono, lo muestra en el lado izquierdo del input */}
@@ -29,7 +29,7 @@ export const Inputs = ({ type, text, name, event, placeholder, icon, value }) =>
                     <span className="input-group-text" id="basic-addon1">
                         <i className={icon}></i> {/* Muestra el icono pasado como parámetro */}
                     </span>
-                )}+
+                )}
                 {/* Input del formulario */}
                 <input
                     type={type === 'password' && showPassword ? 'text' : type} // Muestra la contraseña como texto si showPassword es true, de lo contrario mantiene el tipo original
