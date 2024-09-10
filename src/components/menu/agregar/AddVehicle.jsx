@@ -2,56 +2,11 @@ import React, { useState } from 'react';
 import { Inputs } from '../../html components/Inputs';
 import { Select } from '../../html components/Selects';
 import '../../../assets/css/AgregarEmpleado.css';
+import { ControllerCreateUpdateVehicle } from './controllers/ControllerCreateUpdateVehicle';
+import { typeVehicle, weightUnits, volumeUnits } from '../update/options/arrays';
 
 export const AddVehicle = () => {
-    const [formData, setFormData] = useState({
-        tipo: '',
-        otro: '',
-        modelo: '',
-        matricula: '',
-        peso: '',
-        volumen: '',
-        pasajeros: ''
-    });
-
-    const [errorsForms, setErrorsForms] = useState({});
-
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-
-        if (value.trim()) {
-            const { [name]: removed, ...rest } = errorsForms;
-            setErrorsForms(rest);
-        } else {
-            setErrorsForms({ ...errorsForms, [name]: "Campo obligatorio" });
-        }
-
-        setFormData({ ...formData, [name]: value });
-    };
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-
-        const newErrors = {};
-
-        for (let [name, value] of Object.entries(formData)) {
-            if (!value.trim()) {
-                newErrors[name] = "Campo obligatorio";
-            }
-        }
-
-        setErrorsForms({ ...errorsForms, ...newErrors });
-
-        if (Object.keys(newErrors).length > 0) {
-            alert('Por favor, complete todos los campos obligatorios correctamente.');
-            return;
-        }
-
-        alert('Vehículo agregado correctamente');
-        console.log('Formulario de vehículo enviado:', formData);
-        window.location.reload();
-    };
-
+    const { formData, errorsForms, handleChange, handleSubmit } = ControllerCreateUpdateVehicle();
     return (
         <>
             <div className="d-flex-empleado justify-content-center align-items-center vh-100">
@@ -60,46 +15,56 @@ export const AddVehicle = () => {
                     <form onSubmit={handleSubmit}>
                         <div className="row">
                             <div className="col-md-6">
-                                <Select event={handleChange} text="Tipo" name="tipo" options={[
-                                    { value: '', label: 'Seleccionar' },
-                                    { value: 'opcion1', label: 'Opción 1' },
-                                    { value: 'opcion2', label: 'Opción 2' }
-                                ]} />
-                                {errorsForms.tipo && <div className="text-danger">{errorsForms.tipo}</div>}
-                            </div>
-                            <div className="col-md-6">
-                                <Inputs event={handleChange} text="Otro" name="otro" />
-                                {errorsForms.otro && <div className="text-danger">{errorsForms.otro}</div>}
+                                <Select event={handleChange} text="Tipo" name="type" options={typeVehicle} value={formData.type} />
+                                {errorsForms.type && <div className="text-danger">{errorsForms.type}</div>}
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-md-6">
-                                <Inputs event={handleChange} text="Modelo" name="modelo" icon="fa-solid fa-car" />
-                                {errorsForms.modelo && <div className="text-danger">{errorsForms.modelo}</div>}
+                                <Inputs event={handleChange} text="Modelo" name="model" icon="fa-solid fa-car" value={formData.model} />
+                                {errorsForms.model && <div className="text-danger">{errorsForms.model}</div>}
                             </div>
                             <div className="col-md-6">
-                                <Inputs event={handleChange} text="Matrícula/Patente" name="matricula" icon="fa-solid fa-id-card" />
-                                {errorsForms.matricula && <div className="text-danger">{errorsForms.matricula}</div>}
+                                <Inputs event={handleChange} text="Matrícula" name="licensePlate" icon="fa-solid fa-id-card" value={formData.licensePlate} />
+                                {errorsForms.licensePlate && <div className="text-danger">{errorsForms.licensePlate}</div>}
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-md-6">
-                                <Inputs event={handleChange} text="Capacidad de Peso" name="peso" icon="fa-solid fa-weight-hanging" />
-                                {errorsForms.peso && <div className="text-danger">{errorsForms.peso}</div>}
+                                <Inputs event={handleChange} text="Registro" name="registration" icon="fa-solid fa-id-card" value={formData.registration} />
+                                {errorsForms.registration && <div className="text-danger">{errorsForms.registration}</div>}
+                            </div>
+                        </div>
+                        <div className="row">
+                            {/* Capacidad de Peso y Unidad de Medida */}
+                            <div className="col-md-6">
+                                <Inputs event={handleChange} text="Capacidad de Peso" name="weightCapacity" icon="fa-solid fa-weight-hanging" value={formData.weightCapacity} />
+                                {errorsForms.weightCapacity && <div className="text-danger">{errorsForms.weightCapacity}</div>}
                             </div>
                             <div className="col-md-6">
-                                <Inputs event={handleChange} text="Capacidad de Volumen" name="volumen" icon="fa-solid fa-box" />
-                                {errorsForms.volumen && <div className="text-danger">{errorsForms.volumen}</div>}
+                                <Select event={handleChange} text="Unidad de Peso" name="weightUnit" options={weightUnits} value={formData.weightUnit} />
+                                {errorsForms.weightUnit && <div className="text-danger">{errorsForms.weightUnit}</div>}
+                            </div>
+                        </div>
+                        <div className="row">
+                            {/* Capacidad de Volumen y Unidad de Medida */}
+                            <div className="col-md-6">
+                                <Inputs event={handleChange} text="Capacidad de Volumen" name="volumeCapacity" icon="fa-solid fa-box" value={formData.volumeCapacity} />
+                                {errorsForms.volumeCapacity && <div className="text-danger">{errorsForms.volumeCapacity}</div>}
+                            </div>
+                            <div className="col-md-6">
+                                <Select event={handleChange} text="Unidad de Volumen" name="volumeUnit" options={volumeUnits} value={formData.volumeUnit} />
+                                {errorsForms.volumeUnit && <div className="text-danger">{errorsForms.volumeUnit}</div>}
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-md-12">
-                                <Inputs event={handleChange} text="Espacio de Pasajeros" name="pasajeros" icon="fa-solid fa-users" />
-                                {errorsForms.pasajeros && <div className="text-danger">{errorsForms.pasajeros}</div>}
+                                <Inputs event={handleChange} text="Espacio de Pasajeros" name="passengerSpace" icon="fa-solid fa-users" value={formData.passengerSpace} />
+                                {errorsForms.passengerSpace && <div className="text-danger">{errorsForms.passengerSpace}</div>}
                             </div>
                         </div>
                         <div className="text-center">
-                            <button type="submit" className="btn btn-success">Crear Vehiculo <i className="fa-solid fa-floppy-disk"></i></button>
+                            <button type="submit" className="btn btn-success">Crear Vehículo <i className="fa-solid fa-floppy-disk"></i></button>
                         </div>
                     </form>
                 </div>
