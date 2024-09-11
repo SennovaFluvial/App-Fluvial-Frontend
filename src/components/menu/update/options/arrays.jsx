@@ -142,7 +142,7 @@ export const nationality = [
 ];
 
 export const typeVehicle = [
-    { label: 'Lancha', value: 'lancha' },
+    { label: 'Lancha', value: 'Lancha' },
 ];
 
 export const weightUnits = [

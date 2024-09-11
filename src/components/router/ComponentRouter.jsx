@@ -22,6 +22,7 @@ import { ShowCrew } from '../menu/history/show-sailors.jsx';
 
 
 import { Info } from '../../Info.jsx';
+import { ShowVehicles } from '../menu/history/Show-Vehicles.jsx';
 
 /**
  * Componente ComponentRouter
@@ -61,7 +62,7 @@ export const ComponentRouter = () => {
 
                     <Route path="add-company/:id?/:action?" element={< AddCompany />} />{/* Ruta para agregar empresas */}
                     <Route path="add-employed/:id?" element={< AddEmployed />} />{/* Ruta para agregar empleados */}
-                    <Route path="add-vehicle" element={< AddVehicle />} /> {/* Ruta para agregar vehículos */}
+                    <Route path="add-vehicle/:id?/:action?" element={< AddVehicle />} /> {/* Ruta para agregar vehículos */}
                     <Route path="add-customer/:id?/:action?" element={< AddCustomer />} />{/* Ruta para agregar clientes */}
                     <Route path="add-crew" element={< AddCrew />}>{/* Ruta para agregar clientes */}
 
@@ -74,6 +75,7 @@ export const ComponentRouter = () => {
                     <Route path="show-customers" element={< ShowCustomers />} /> {/* Ruta para ver clientes */}
                     <Route path="show-users" element={< ShowUsers />} /> {/* Ruta para ver usuarios */}
                     <Route path="show-crew" element={< ShowCrew />} /> {/* Ruta para ver usuarios */}
+                    <Route path="show-vehicles" element={< ShowVehicles />} /> {/* Ruta para ver usuarios */}
 
 
                 </Route>

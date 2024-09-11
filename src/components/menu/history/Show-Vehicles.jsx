@@ -8,28 +8,28 @@ import { ApiService } from '../../../class/ApiServices';
 import { Link } from 'react-router-dom';
 import { useSearchFields } from './search/SearchFields';
 
-export const ShowCompany = () => {
+export const ShowVehicles = () => {
 
   const [loading, setLoading] = useState(true);
-  const [companies, setCompanies] = useState([]);
+  const [vehicles, setvehicles] = useState([])
 
-  const getCompanies = async () => {
+  const getVehicles = async () => {
     try {
-      const response = await ApiService.get("/api/v1/companie/findAll");
-      setCompanies(response);
+      const response = await ApiService.get("/api/v1/vehicles/all");
+      setvehicles(response);
       setLoading(false);
     } catch (error) {
-      console.error("Error fetching companies:", error);
+      console.error("Error fetching vehicles:", error);
       setLoading(false);
     }
   };
 
 
   useEffect(() => {
-    getCompanies();
+    getVehicles();
   }, []);
 
-  const { searchTerm, handleSearchChange, filteredItems } = useSearchFields(companies, ["nit", "company", "manager", "phone", "status"])
+  const { searchTerm, handleSearchChange, filteredItems } = useSearchFields(vehicles, ["type", "model", "licensePlate", "volumeCapacity", "volumeUnit", "weightCapacity", "weightUnit"])
 
 
   if (loading) {
@@ -45,10 +45,10 @@ export const ShowCompany = () => {
   return (
     <>
       <div className="container my-5">
-        <div className="row text-center bg-info">
+        <div className="row text-center bg-secondary">
           <div className="col-md-12 py-3">
             <h1>
-              <b>TABLA DE EMPRESAS</b> <i className="fa-solid fa-building ms-5"></i>
+              <b>TABLA DE VEHICULOS</b> <i className="fa-solid fa-sailboat ms-5"></i>
             </h1>
           </div>
         </div>
@@ -69,25 +69,25 @@ export const ShowCompany = () => {
           <thead>
             <tr>
               <th scope="col">ID</th>
-              <th scope="col">Nit</th>
-              <th scope="col">Empresa</th>
-              <th scope="col">Gerente</th>
-              <th scope="col">Linea movil</th>
-              <th scope="col">Estado</th>
-              <th scope="col"> </th>
+              <th scope="col">Tipo</th>
+              <th scope="col">Modelo</th>
+              <th scope="col">Matricula</th>
+              <th scope="col">Capacidad de Volumen</th>
+              <th scope="col">Capacidad de Peso</th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
             {filteredItems.map((item, index) => (
               <tr key={item.id}>
                 <td>{index + 1}</td>
-                <td>{item.nit}</td>
-                <td>{item.company}</td>
-                <td>{item.manager}</td>
-                <td>{item.phone}</td>
-                <td>{item.status}</td>
+                <td>{item.type}</td>
+                <td>{item.model}</td>
+                <td>{item.licensePlate}</td>
+                <td>{item.volumeCapacity + ' ' + item.volumeUnit}</td>
+                <td>{item.weightCapacity + ' ' + item.weightUnit}</td>
                 <td>
-                  <Link to={`../add-company/${item.id}/update`}>
+                  <Link to={`../add-vehicle/${item.id}/update`}>
                     <button className='btn icon-link-hover ms-3 text-primary'>
                       <i className="fa-solid fa-pen-to-square icon-option"></i>
                     </button>

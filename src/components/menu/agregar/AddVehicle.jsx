@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
 import { Inputs } from '../../html components/Inputs';
 import { Select } from '../../html components/Selects';
 import '../../../assets/css/AgregarEmpleado.css';
 import { ControllerCreateUpdateVehicle } from './controllers/ControllerCreateUpdateVehicle';
 import { typeVehicle, weightUnits, volumeUnits } from '../update/options/arrays';
+import { useParams } from 'react-router';
 
 export const AddVehicle = () => {
-    const { formData, errorsForms, handleChange, handleSubmit } = ControllerCreateUpdateVehicle();
+    const { id, action } = useParams();
+    const { formData, errorsForms, handleChange, handleSubmit } = ControllerCreateUpdateVehicle({ id, action });
+
     return (
         <>
             <div className="d-flex-empleado justify-content-center align-items-center vh-100">
                 <div className="container bg-light shadow rounded p-4">
-                    <h2 className="text-center mb-2">AGREGAR VEHÍCULO</h2>
+                    <h2 className="text-center mb-2">{action === "update" ? "ACTUALIZAR" : "CREAR"} VEHÍCULO</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="row">
                             <div className="col-md-6">
@@ -64,7 +66,7 @@ export const AddVehicle = () => {
                             </div>
                         </div>
                         <div className="text-center">
-                            <button type="submit" className="btn btn-success">Crear Vehículo <i className="fa-solid fa-floppy-disk"></i></button>
+                            <button type="submit" className="btn btn-success">{action === "update" ? "Actualizar" : "Crear"} Vehículo <i className="fa-solid fa-floppy-disk"></i></button>
                         </div>
                     </form>
                 </div>
