@@ -5,11 +5,18 @@ import { Grid } from '../../animations/Grid';
 import { ApiService } from '../../../class/ApiServices.jsx';
 import { Link } from 'react-router-dom';
 import { useSearchFields } from './search/SearchFields.jsx';
+import { Pagination } from './Pagination.jsx';
 // Componente para ver el historial de Tripulacion de la empresa
 export const ShowCrew = () => {
+    const [crew, setCrew] = useState([])
+    const [elementForPage, setElementForPage] = useState(6)
+    const [currentPage, setCurrentPage] = useState(1)
+    const totalUsers = crew.length;
+
+    const lastIndex = currentPage * elementForPage;
+    const firstIndex = lastIndex - elementForPage;
 
     const [loading, setLoading] = useState(true);
-    const [crew, setCrew] = useState([])
 
     const getCrew = async () => {
         try {
@@ -26,6 +33,8 @@ export const ShowCrew = () => {
         getCrew();
     }, []);
     const { searchTerm, handleSearchChange, filteredItems } = useSearchFields(crew, ["name", "lastName", "numDocument", "phone", "employeeType.typeName", "status"])
+    const paginatedItems = filteredItems.slice(firstIndex, lastIndex);
+
     if (loading) {
         return (
             <div className="container">
@@ -43,7 +52,7 @@ export const ShowCrew = () => {
             <div className="container my-5">
                 <div className="row text-center bg-info">
                     <div className="col-md-12 py-3">
-                        <h1> <b>TABLA DE TRIPULACIÓN</b> <i className="fa-solid fa-anchor ms-5"></i></h1>
+                        <h1> <b>LISTADO DE TRIPULACIÓN</b> <i className="fa-solid fa-anchor ms-5"></i></h1>
                     </div>
                 </div>
 
@@ -63,44 +72,42 @@ export const ShowCrew = () => {
                 <table className="table table-hover border table-striped my-5">
                     <thead>
                         <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Apellido</th>
+                            <th scope="col">Número</th>
+                            <th scope="col">Nombre Completo</th>
                             <th scope="col">Número de documento</th>
                             <th scope="col">Teléfono</th>
+                            <th scope="col">Origen</th>
                             <th scope="col">Categoría</th>
                             <th scope="col">Estado</th>
-                            <th scope="col"> </th>
+                            <th scope="col">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredItems.map((item, index) => {
+                        {paginatedItems.map((item, index) => {
 
-                            // Define un array de objetos que asocia tipos de empleado con URLs específicas.
                             const url_typeEmployed = [
                                 { url: "../add-crew/add-boat-driver", typeEmployed: "Motorista" },
                                 { url: "../add-crew/add-sailor", typeEmployed: "Marinero" },
                                 { url: "../add-crew/add-captain", typeEmployed: "Capitan" },
                             ];
 
-                            // Obtiene el tipo de empleado del objeto `item`.
                             const typeEmployed = item.employeeType.typeName;
 
-                            // Busca el objeto en `url_typeEmployed` que tenga un `typeEmployed` que coincida con el tipo de empleado actual.
                             const urlFound = url_typeEmployed.find((item) => item.typeEmployed === typeEmployed)
 
-                            // Asigna la URL encontrada a `url`. Si no se encuentra ninguna URL, se asigna una cadena vacía.
                             let url = urlFound ? urlFound.url : '';
 
                             return (
                                 <tr key={item.id}>
                                     <td>{index + 1}</td>
-                                    <td>{item.name}</td>
-                                    <td>{item.lastName}</td>
+                                    <td>{item.name + ' ' + item.lastName}</td>
                                     <td>{item.numDocument}</td>
                                     <td>{item.phone}</td>
+                                    <td>{item.nationality}</td>
                                     <td>{item.employeeType.typeName}</td>
-                                    <td>{item.status}</td>
+                                    <td className={item.status === "activo" ? "text-success" : "text-danger"}>
+                                        <b>{item.status}</b>
+                                    </td>
                                     <td>
 
                                         <Link to={url + `/${item.id}/update`}>
@@ -120,6 +127,7 @@ export const ShowCrew = () => {
                         })}
                     </tbody>
                 </table>
+                <Pagination elementForPage={elementForPage} currentPage={currentPage} setCurrentPage={setCurrentPage} totalElements={totalUsers} />
             </div>
         </>
     )

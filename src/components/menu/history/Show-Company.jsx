@@ -7,11 +7,20 @@ import { Grid } from '../../animations/Grid';
 import { ApiService } from '../../../class/ApiServices';
 import { Link } from 'react-router-dom';
 import { useSearchFields } from './search/SearchFields';
+import { Pagination } from './Pagination';
 
 export const ShowCompany = () => {
 
-  const [loading, setLoading] = useState(true);
   const [companies, setCompanies] = useState([]);
+
+  const [elementForPage, setElementForPage] = useState(6)
+  const [currentPage, setCurrentPage] = useState(1)
+  const totalUsers = companies.length;
+
+  const lastIndex = currentPage * elementForPage;
+  const firstIndex = lastIndex - elementForPage;
+
+  const [loading, setLoading] = useState(true);
 
   const getCompanies = async () => {
     try {
@@ -30,7 +39,7 @@ export const ShowCompany = () => {
   }, []);
 
   const { searchTerm, handleSearchChange, filteredItems } = useSearchFields(companies, ["nit", "company", "manager", "phone", "status"])
-
+  const paginatedItems = filteredItems.slice(firstIndex, lastIndex);
 
   if (loading) {
     return (
@@ -48,7 +57,7 @@ export const ShowCompany = () => {
         <div className="row text-center bg-info">
           <div className="col-md-12 py-3">
             <h1>
-              <b>TABLA DE EMPRESAS</b> <i className="fa-solid fa-building ms-5"></i>
+              <b>LISTADO DE EMPRESAS</b> <i className="fa-solid fa-building ms-5"></i>
             </h1>
           </div>
         </div>
@@ -68,24 +77,26 @@ export const ShowCompany = () => {
         <table className="table table-hover border table-striped my-5">
           <thead>
             <tr>
-              <th scope="col">ID</th>
+              <th scope="col">Número</th>
               <th scope="col">Nit</th>
               <th scope="col">Empresa</th>
               <th scope="col">Gerente</th>
               <th scope="col">Linea movil</th>
               <th scope="col">Estado</th>
-              <th scope="col"> </th>
+              <th scope="col">Acciones</th>
             </tr>
           </thead>
           <tbody>
-            {filteredItems.map((item, index) => (
+            {paginatedItems.map((item, index) => (
               <tr key={item.id}>
                 <td>{index + 1}</td>
                 <td>{item.nit}</td>
                 <td>{item.company}</td>
                 <td>{item.manager}</td>
                 <td>{item.phone}</td>
-                <td>{item.status}</td>
+                <td className={item.status === "activo" ? "text-success" : "text-danger"}>
+                  <b>{item.status}</b>
+                </td>
                 <td>
                   <Link to={`../add-company/${item.id}/update`}>
                     <button className='btn icon-link-hover ms-3 text-primary'>
@@ -100,6 +111,7 @@ export const ShowCompany = () => {
             ))}
           </tbody>
         </table>
+        <Pagination elementForPage={elementForPage} currentPage={currentPage} setCurrentPage={setCurrentPage} totalElements={totalUsers} />
       </div>
     </>
   )

@@ -7,11 +7,20 @@ import { Grid } from '../../animations/Grid';
 import { ApiService } from '../../../class/ApiServices';
 import { Link } from 'react-router-dom';
 import { useSearchFields } from './search/SearchFields';
+import { Pagination } from './Pagination';
 
 export const ShowVehicles = () => {
 
-  const [loading, setLoading] = useState(true);
   const [vehicles, setvehicles] = useState([])
+
+  const [elementForPage, setElementForPage] = useState(6)
+  const [currentPage, setCurrentPage] = useState(1)
+  const totalUsers = vehicles.length;
+
+  const lastIndex = currentPage * elementForPage;
+  const firstIndex = lastIndex - elementForPage;
+
+  const [loading, setLoading] = useState(true);
 
   const getVehicles = async () => {
     try {
@@ -30,6 +39,7 @@ export const ShowVehicles = () => {
   }, []);
 
   const { searchTerm, handleSearchChange, filteredItems } = useSearchFields(vehicles, ["type", "model", "licensePlate", "volumeCapacity", "volumeUnit", "weightCapacity", "weightUnit"])
+  const paginatedItems = filteredItems.slice(firstIndex, lastIndex);
 
 
   if (loading) {
@@ -48,7 +58,7 @@ export const ShowVehicles = () => {
         <div className="row text-center bg-secondary">
           <div className="col-md-12 py-3">
             <h1>
-              <b>TABLA DE VEHICULOS</b> <i className="fa-solid fa-sailboat ms-5"></i>
+              <b>LISTADO DE VEHICULOS</b> <i className="fa-solid fa-sailboat ms-5"></i>
             </h1>
           </div>
         </div>
@@ -68,24 +78,26 @@ export const ShowVehicles = () => {
         <table className="table table-hover border table-striped my-5">
           <thead>
             <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Tipo</th>
-              <th scope="col">Modelo</th>
+              <th scope="col">Número</th>
               <th scope="col">Matricula</th>
+              <th scope="col">Nombre de la Embarcación</th>
+              <th scope="col">Tipo de Embarcación</th>
               <th scope="col">Capacidad de Volumen</th>
               <th scope="col">Capacidad de Peso</th>
-              <th scope="col"></th>
+              <th scope="col">Modelo</th>
+              <th scope="col">Acciones</th>
             </tr>
           </thead>
           <tbody>
-            {filteredItems.map((item, index) => (
+            {paginatedItems.map((item, index) => (
               <tr key={item.id}>
                 <td>{index + 1}</td>
-                <td>{item.type}</td>
-                <td>{item.model}</td>
                 <td>{item.licensePlate}</td>
+                <td>faltante ?</td>
+                <td>{item.type}</td>
                 <td>{item.volumeCapacity + ' ' + item.volumeUnit}</td>
                 <td>{item.weightCapacity + ' ' + item.weightUnit}</td>
+                <td>{item.model}</td>
                 <td>
                   <Link to={`../add-vehicle/${item.id}/update`}>
                     <button className='btn icon-link-hover ms-3 text-primary'>
@@ -100,6 +112,7 @@ export const ShowVehicles = () => {
             ))}
           </tbody>
         </table>
+        <Pagination elementForPage={elementForPage} currentPage={currentPage} setCurrentPage={setCurrentPage} totalElements={totalUsers} />
       </div>
     </>
   )

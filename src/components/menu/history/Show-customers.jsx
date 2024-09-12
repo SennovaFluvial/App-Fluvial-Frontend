@@ -5,10 +5,18 @@ import { Grid } from '../../animations/Grid';
 import { Link } from 'react-router-dom';
 import { ApiService } from '../../../class/ApiServices';
 import { useSearchFields } from './search/SearchFields';
+import { Pagination } from './Pagination';
 
 export const ShowCustomers = () => {
   const [loading, setLoading] = useState(true);
   const [customers, setCustomers] = useState([]);
+
+  const [elementForPage, setElementForPage] = useState(6)
+  const [currentPage, setCurrentPage] = useState(1)
+  const totalUsers = customers.length;
+
+  const lastIndex = currentPage * elementForPage;
+  const firstIndex = lastIndex - elementForPage;
 
   const getCustomers = async () => {
     try {
@@ -26,6 +34,7 @@ export const ShowCustomers = () => {
   }, []);
 
   const { searchTerm, handleSearchChange, filteredItems } = useSearchFields(customers, ["numDocument", "name", "lastName", "email", "phone", "address", "cityName"])
+  const paginatedItems = filteredItems.slice(firstIndex, lastIndex);
 
   if (loading) {
     return (
@@ -43,7 +52,7 @@ export const ShowCustomers = () => {
         <div className="row text-center bg-warning">
           <div className="col-md-12 py-3">
             <h1>
-              <b>TABLA DE CLIENTES</b> <i className="fa-solid fa-people-robbery ms-5"></i>
+              <b>LISTADO DE CLIENTES</b> <i className="fa-solid fa-people-robbery ms-5"></i>
             </h1>
           </div>
         </div>
@@ -63,11 +72,10 @@ export const ShowCustomers = () => {
         <table className="table table-hover border table-striped my-5">
           <thead>
             <tr>
-              <th scope="col">ID</th>
-              <th scope="col">Documento</th>
-              <th scope="col">Nombres</th>
-              <th scope="col">Apellidos</th>
-              <th scope="col">Mail</th>
+              <th scope="col">Número</th>
+              <th scope="col">Número de Documento</th>
+              <th scope="col">Nombre Completo</th>
+              <th scope="col">Correo Electronico</th>
               <th scope="col">Telefono</th>
               <th scope="col">Direccion</th>
               <th scope="col">Ciudad</th>
@@ -75,12 +83,11 @@ export const ShowCustomers = () => {
             </tr>
           </thead>
           <tbody className="table-group-divider">
-            {filteredItems.map((item, index) => (
+            {paginatedItems.map((item, index) => (
               <tr key={item.id}>
                 <td><b>{index + 1}</b></td>
                 <td>{item.numDocument}</td>
-                <td>{item.name}</td>
-                <td>{item.lastName}</td>
+                <td>{item.name + ' ' + item.lastName}</td>
                 <td>{item.email}</td>
                 <td>{item.phone}</td>
                 <td>{item.address}</td>
@@ -99,6 +106,7 @@ export const ShowCustomers = () => {
             ))}
           </tbody>
         </table>
+        <Pagination elementForPage={elementForPage} currentPage={currentPage} setCurrentPage={setCurrentPage} totalElements={totalUsers} />
       </div>
     </>
   )
