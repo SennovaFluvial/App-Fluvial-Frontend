@@ -114,7 +114,7 @@ export const AddEmployed = () => {
                 </div>
               )}
               {/* </div> */}
-
+              
               <div className="col-md-4">
                 <Select event={handleChange} value={formData.roleRequest.roleListName[0]} text="Rol" options={roles} name="roleListName" />
                 {errorsForms.roleListName && <div className="text-danger">{errorsForms.roleListName}</div>}
@@ -125,7 +125,7 @@ export const AddEmployed = () => {
               </div>
             </div>
             <div className="text-center">
-              <button type="submit" className="btn btn-success">{action === 'update' ? 'Guardar' : 'Crear'} Empleado <i className="fa-solid fa-building-user"></i></button>
+              <button type="submit" className="btn btn-success">{action === 'update' ? 'Actualizar' : 'Crear'} Empleado <i className="fa-solid fa-building-user"></i></button>
             </div>
           </form>
         </div>

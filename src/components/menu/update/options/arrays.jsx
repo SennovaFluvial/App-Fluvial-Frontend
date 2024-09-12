@@ -140,3 +140,25 @@ export const nationality = [
     { label: 'Argentino', value: 'argentino' },
     { label: 'Chileno', value: 'chileno' },
 ];
+
+export const typeVehicle = [
+    { label: 'Lancha', value: 'Lancha' },
+];
+
+export const weightUnits = [
+    { label: 'Kilogramos', value: 'kg' },
+    { label: 'Gramos', value: 'g' },
+    { label: 'Toneladas', value: 'ton' },
+    { label: 'Libras', value: 'lb' },
+    { label: 'Onzas', value: 'oz' },
+    { label: 'Miligramos', value: 'mg' },
+];
+
+export const volumeUnits = [
+    { label: 'Metros cúbicos', value: 'm3' },
+    { label: 'Litros', value: 'L' },
+    { label: 'Mililitros', value: 'mL' },
+    { label: 'Galones', value: 'gal' },
+    { label: 'Pies cúbicos', value: 'ft3' },
+    { label: 'Pulgadas cúbicas', value: 'in3' },
+];

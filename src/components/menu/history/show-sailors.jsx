@@ -60,7 +60,7 @@ export const ShowCrew = () => {
                     </div>
                 </div>
 
-                <table className="table my-5">
+                <table className="table table-hover border table-striped my-5">
                     <thead>
                         <tr>
                             <th scope="col">ID</th>

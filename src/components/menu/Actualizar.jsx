@@ -30,8 +30,14 @@ export const Actualizar = ({ user }) => {
                                 </li>
                                 <li className='dropdown-item text-black'>
                                     <Link to={'show-crew'}>
-                                        <i className="fa-solid fa-users me-2"></i>
+                                        <i className="fa-solid fa-person-military-pointing me-2"></i>
                                         Actualizar tripulación
+                                    </Link>
+                                </li>
+                                <li className='dropdown-item text-black'>
+                                    <Link to={'show-vehicles'}>
+                                        <i className="fa-solid fa-sailboat me-2"></i>
+                                        Actualizar Vehiculos
                                     </Link>
                                 </li>
                             </>
