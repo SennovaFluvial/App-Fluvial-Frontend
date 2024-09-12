@@ -64,7 +64,7 @@ export const ComponentRouter = () => {
                     <Route path="add-employed/:id?" element={< AddEmployed />} />{/* Ruta para agregar empleados */}
                     <Route path="add-vehicle/:id?/:action?" element={< AddVehicle />} /> {/* Ruta para agregar vehículos */}
                     <Route path="add-customer/:id?/:action?" element={< AddCustomer />} />{/* Ruta para agregar clientes */}
-                    <Route path="add-crew" element={< AddCrew />}>{/* Ruta para agregar clientes */}
+                    <Route path="add-crew" element={< AddCrew />}>{/* Ruta para agregar tripulantes */}
 
                         <Route path="add-captain/:id?/:action?" element={< AddCaptain />} />{/* Ruta para agregar capitanes */}
                         <Route path="add-sailor/:id?/:action?" element={< AddSailor />} /> {/* Ruta para agregar marinero */}
@@ -74,8 +74,8 @@ export const ComponentRouter = () => {
                     <Route path="show-companies" element={< ShowCompany />} /> {/* Ruta para ver compañias */}
                     <Route path="show-customers" element={< ShowCustomers />} /> {/* Ruta para ver clientes */}
                     <Route path="show-users" element={< ShowUsers />} /> {/* Ruta para ver usuarios */}
-                    <Route path="show-crew" element={< ShowCrew />} /> {/* Ruta para ver usuarios */}
-                    <Route path="show-vehicles" element={< ShowVehicles />} /> {/* Ruta para ver usuarios */}
+                    <Route path="show-crew" element={< ShowCrew />} /> {/* Ruta para ver tripualntes */}
+                    <Route path="show-vehicles" element={< ShowVehicles />} /> {/* Ruta para ver vehículos */}
 
 
                 </Route>

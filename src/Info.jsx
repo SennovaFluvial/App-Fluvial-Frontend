@@ -9,7 +9,7 @@ import Motorista from "./assets/img/canoa.jpg"
 const employeeTypes = [
     {
         title: 'Capitán',
-        description: 'Responsable de la operación de la empbarcaión y de su tripulación.',
+        description: 'Responsable de la operación de la embarcación y de su tripulación.',
         image: capitan,
     },
     {

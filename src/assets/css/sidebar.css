@@ -38,14 +38,15 @@
 }
 
 .menu ul {
+    justify-content: space-between;
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.menu ul li {
+/* .menu ul li {
     margin-bottom: 10px;
-}
+} */
 
 .menu ul li a {
     color: #000;
