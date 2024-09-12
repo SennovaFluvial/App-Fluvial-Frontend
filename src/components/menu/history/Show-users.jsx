@@ -1,39 +1,23 @@
-import { useEffect, useState } from 'react'
 import '../../../assets/css/show/styles-Show.css'
 import { Link } from 'react-router-dom';
 import { Spinner } from '../../animations/Spiner';
 import { Grid } from '../../animations/Grid';
-import { ApiService } from '../../../class/ApiServices';
-import { useSearchFields } from './search/SearchFields';
 import { Pagination } from './Pagination';
+import { useControllerShowUsers } from './controllers/ControllerShowUsers';
 
 export const ShowUsers = () => {
 
-    const [employed, setEmployed] = useState([]);
-    const [elementForPage, setElementForPage] = useState(6)
-    const [currentPage, setCurrentPage] = useState(1)
-    const totalUsers = employed.length;
-    const [loading, setLoading] = useState(true);
-
-    const lastIndex = currentPage * elementForPage;
-    const firstIndex = lastIndex - elementForPage;
-
-    const getEmployed = async () => {
-        try {
-            const response = await ApiService.get("/api/v1/companie/users");
-            setEmployed(response);
-        } catch (error) {
-            console.error("Error fetching employed data:", error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        getEmployed();
-    }, []);
-    const { searchTerm, handleSearchChange, filteredItems } = useSearchFields(employed, ["numDocument", "name", "lastName", "roles[0].roleEnum", "birthDate", "status", "sex", "username", "address"])
-    const paginatedItems = filteredItems.slice(firstIndex, lastIndex);
+    const {
+        searchTerm,
+        handleSearchChange,
+        paginatedItems,
+        elementForPage,
+        currentPage,
+        setCurrentPage,
+        totalFilteredItems,
+        loading,
+        firstIndex
+    } = useControllerShowUsers();
 
     if (loading) {
         return (
@@ -83,46 +67,46 @@ export const ShowUsers = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {paginatedItems.map((item, index) => (
-                            <tr key={item.id}>
-                                <td><b>{index + 1}</b></td>
-                                <td>{item.numDocument}</td>
-                                <td>{item.name + ' ' + item.lastName}</td>
-                                <td>{item.roles[0].roleEnum}</td>
-                                <td>{item.birthDate}</td>
-                                <td>{item.sex}</td>
-                                <td>{item.username}</td>
-                                <td>{item.address}</td>
-                                <td className={item.status === "activo" ? "text-success" : "text-danger"}>
-                                    <b>{item.status}</b>
-                                </td>
-                                <td>{item.company.name}</td>
-                                <td>
-                                    <Link to={`../add-employed/${item.id}?action=update`}>
-                                        <button className='btn icon-link-hover text-primary'>
-                                            <i className="fa-solid fa-pen-to-square icon-option"></i>
+                        {paginatedItems.length > 0 ? (
+                            paginatedItems.map((item, index) => (
+                                <tr key={item.id}>
+                                    <td><b>{firstIndex + index + 1}</b></td>
+                                    <td>{item.numDocument}</td>
+                                    <td>{item.name + ' ' + item.lastName}</td>
+                                    <td>{item.roles[0]?.roleEnum}</td>
+                                    <td>{item.birthDate}</td>
+                                    <td>{item.sex}</td>
+                                    <td>{item.username}</td>
+                                    <td>{item.address}</td>
+                                    <td className={item.status === "activo" ? "text-success" : "text-danger"}>
+                                        <b>{item.status}</b>
+                                    </td>
+                                    <td>{item.company?.name}</td>
+                                    <td>
+                                        <Link to={`../add-employed/${item.id}?action=update`}>
+                                            <button className='btn icon-link-hover text-primary'>
+                                                <i className="fa-solid fa-pen-to-square icon-option"></i>
+                                            </button>
+                                        </Link>
+                                        <button className='btn icon-link-hover text-warning'>
+                                            <i className="fa-solid fa-eye icon-option"></i>
                                         </button>
-                                    </Link>
-                                    <button className='btn icon-link-hover text-warning'>
-                                        <i className="fa-solid fa-eye icon-option"></i>
-                                    </button>
-                                    {/*<button className='btn icon-link-hover'>
-                                        {item.status === "activo" ? (
-                                            <>
-                                                <i className="fa-solid fa-toggle-on"></i>
-                                            </>
-                                        ) : (
-                                            <>
-                                                <i class="fa-solid fa-toggle-off"></i>
-                                            </>
-                                        ) }
-                                    </button>*/}
-                                </td>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="11" className="text-center">No hay resultados que mostrar</td>
                             </tr>
-                        ))}
+                        )}
                     </tbody>
                 </table>
-                <Pagination elementForPage={elementForPage} currentPage={currentPage} setCurrentPage={setCurrentPage} totalElements={totalUsers} />
+                <Pagination
+                    elementForPage={elementForPage}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    totalElements={totalFilteredItems}
+                />
             </div>
         </>
     )

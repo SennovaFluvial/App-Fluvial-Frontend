@@ -1,46 +1,23 @@
-// import axios from 'axios'
-import React from 'react'
-import { useEffect, useState } from 'react'
 import '../../../assets/css/show/styles-Show.css';
 import { Spinner } from '../../animations/Spiner';
 import { Grid } from '../../animations/Grid';
-import { ApiService } from '../../../class/ApiServices';
 import { Link } from 'react-router-dom';
-import { useSearchFields } from './search/SearchFields';
 import { Pagination } from './Pagination';
+import { useControllerShowVehicles } from './controllers/ControllerShowVehicles';
 
 export const ShowVehicles = () => {
 
-  const [vehicles, setvehicles] = useState([])
-
-  const [elementForPage, setElementForPage] = useState(6)
-  const [currentPage, setCurrentPage] = useState(1)
-  const totalUsers = vehicles.length;
-
-  const lastIndex = currentPage * elementForPage;
-  const firstIndex = lastIndex - elementForPage;
-
-  const [loading, setLoading] = useState(true);
-
-  const getVehicles = async () => {
-    try {
-      const response = await ApiService.get("/api/v1/vehicles/all");
-      setvehicles(response);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching vehicles:", error);
-      setLoading(false);
-    }
-  };
-
-
-  useEffect(() => {
-    getVehicles();
-  }, []);
-
-  const { searchTerm, handleSearchChange, filteredItems } = useSearchFields(vehicles, ["type", "model", "licensePlate", "volumeCapacity", "volumeUnit", "weightCapacity", "weightUnit"])
-  const paginatedItems = filteredItems.slice(firstIndex, lastIndex);
-
+  const {
+    searchTerm,
+    handleSearchChange,
+    paginatedItems,
+    elementForPage,
+    currentPage,
+    setCurrentPage,
+    totalFilteredItems,
+    loading,
+    firstIndex
+  } = useControllerShowVehicles();
 
   if (loading) {
     return (
@@ -89,30 +66,41 @@ export const ShowVehicles = () => {
             </tr>
           </thead>
           <tbody>
-            {paginatedItems.map((item, index) => (
-              <tr key={item.id}>
-                <td>{index + 1}</td>
-                <td>{item.licensePlate}</td>
-                <td>faltante ?</td>
-                <td>{item.type}</td>
-                <td>{item.volumeCapacity + ' ' + item.volumeUnit}</td>
-                <td>{item.weightCapacity + ' ' + item.weightUnit}</td>
-                <td>{item.model}</td>
-                <td>
-                  <Link to={`../add-vehicle/${item.id}/update`}>
-                    <button className='btn icon-link-hover ms-3 text-primary'>
-                      <i className="fa-solid fa-pen-to-square icon-option"></i>
+            {paginatedItems.length > 0 ? (
+              paginatedItems.map((item, index) => (
+                <tr key={item.id}>
+                  <td>{firstIndex + index + 1}</td>
+                  <td>{item.licensePlate}</td>
+                  <td>Campo faltante ?</td>
+                  <td>{item.type}</td>
+                  <td>{item.volumeCapacity + ' ' + item.volumeUnit}</td>
+                  <td>{item.weightCapacity + ' ' + item.weightUnit}</td>
+                  <td>{item.model}</td>
+                  <td>
+                    <Link to={`../add-vehicle/${item.id}/update`}>
+                      <button className='btn icon-link-hover ms-3 text-primary'>
+                        <i className="fa-solid fa-pen-to-square icon-option"></i>
+                      </button>
+                    </Link>
+                    <button className='btn icon-link-hover ms-3 text-warning'>
+                      <i className="fa-solid fa-eye icon-option"></i>
                     </button>
-                  </Link>
-                  <button className='btn icon-link-hover ms-3 text-warning'>
-                    <i className="fa-solid fa-eye icon-option"></i>
-                  </button>
-                </td>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="8" className="text-center">No hay resultados que mostrar</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
-        <Pagination elementForPage={elementForPage} currentPage={currentPage} setCurrentPage={setCurrentPage} totalElements={totalUsers} />
+        <Pagination
+          elementForPage={elementForPage}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalElements={totalFilteredItems}
+        />
       </div>
     </>
   )

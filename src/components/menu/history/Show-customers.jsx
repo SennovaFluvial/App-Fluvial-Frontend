@@ -1,40 +1,22 @@
-import React, { useEffect, useState } from 'react';
 import '../../../assets/css/show/styles-Show.css';
 import { Spinner } from '../../animations/Spiner';
 import { Grid } from '../../animations/Grid';
 import { Link } from 'react-router-dom';
-import { ApiService } from '../../../class/ApiServices';
-import { useSearchFields } from './search/SearchFields';
 import { Pagination } from './Pagination';
+import { useControllerShowCustomers } from './controllers/ControllerShowCustomers';
 
 export const ShowCustomers = () => {
-  const [loading, setLoading] = useState(true);
-  const [customers, setCustomers] = useState([]);
-
-  const [elementForPage, setElementForPage] = useState(6)
-  const [currentPage, setCurrentPage] = useState(1)
-  const totalUsers = customers.length;
-
-  const lastIndex = currentPage * elementForPage;
-  const firstIndex = lastIndex - elementForPage;
-
-  const getCustomers = async () => {
-    try {
-      const response = await ApiService.get('/api/v1/customers/all');
-      setCustomers(response);
-    } catch (error) {
-      console.log('Error en obtener clientes', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    getCustomers();
-  }, []);
-
-  const { searchTerm, handleSearchChange, filteredItems } = useSearchFields(customers, ["numDocument", "name", "lastName", "email", "phone", "address", "cityName"])
-  const paginatedItems = filteredItems.slice(firstIndex, lastIndex);
+  const {
+    searchTerm,
+    handleSearchChange,
+    paginatedItems,
+    elementForPage,
+    currentPage,
+    setCurrentPage,
+    totalFilteredItems,
+    loading,
+    firstIndex
+  } = useControllerShowCustomers();
 
   if (loading) {
     return (
@@ -83,30 +65,41 @@ export const ShowCustomers = () => {
             </tr>
           </thead>
           <tbody className="table-group-divider">
-            {paginatedItems.map((item, index) => (
-              <tr key={item.id}>
-                <td><b>{index + 1}</b></td>
-                <td>{item.numDocument}</td>
-                <td>{item.name + ' ' + item.lastName}</td>
-                <td>{item.email}</td>
-                <td>{item.phone}</td>
-                <td>{item.address}</td>
-                <td>{item.cityName}</td>
-                <td>
-                  <Link to={`../add-customer/${item.id}/update`}>
-                    <button className='btn icon-link-hover ms-3 text-primary'>
-                      <i className="fa-solid fa-pen-to-square icon-option"></i>
+            {paginatedItems.length > 0 ? (
+              paginatedItems.map((item, index) => (
+                <tr key={item.id}>
+                  <td><b>{firstIndex + index + 1}</b></td>
+                  <td>{item.numDocument}</td>
+                  <td>{item.name + ' ' + item.lastName}</td>
+                  <td>{item.email}</td>
+                  <td>{item.phone}</td>
+                  <td>{item.address}</td>
+                  <td>{item.cityName}</td>
+                  <td>
+                    <Link to={`../add-customer/${item.id}/update`}>
+                      <button className='btn icon-link-hover ms-3 text-primary'>
+                        <i className="fa-solid fa-pen-to-square icon-option"></i>
+                      </button>
+                    </Link>
+                    <button className='btn icon-link-hover ms-3 text-warning'>
+                      <i className="fa-solid fa-eye icon-option"></i>
                     </button>
-                  </Link>
-                  <button className='btn icon-link-hover ms-3 text-warning'>
-                    <i className="fa-solid fa-eye icon-option"></i>
-                  </button>
-                </td>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="8" className="text-center">No hay resultados que mostrar</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
-        <Pagination elementForPage={elementForPage} currentPage={currentPage} setCurrentPage={setCurrentPage} totalElements={totalUsers} />
+        <Pagination
+          elementForPage={elementForPage}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalElements={totalFilteredItems}
+        />
       </div>
     </>
   )

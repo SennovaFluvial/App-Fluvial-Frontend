@@ -1,45 +1,23 @@
-// import axios from 'axios'
-import React from 'react'
-import { useEffect, useState } from 'react'
 import '../../../assets/css/show/styles-Show.css';
 import { Spinner } from '../../animations/Spiner';
 import { Grid } from '../../animations/Grid';
-import { ApiService } from '../../../class/ApiServices';
 import { Link } from 'react-router-dom';
-import { useSearchFields } from './search/SearchFields';
 import { Pagination } from './Pagination';
+import { controllerShowCompany } from './controllers/ControllerShowCompany';
 
 export const ShowCompany = () => {
 
-  const [companies, setCompanies] = useState([]);
-
-  const [elementForPage, setElementForPage] = useState(6)
-  const [currentPage, setCurrentPage] = useState(1)
-  const totalUsers = companies.length;
-
-  const lastIndex = currentPage * elementForPage;
-  const firstIndex = lastIndex - elementForPage;
-
-  const [loading, setLoading] = useState(true);
-
-  const getCompanies = async () => {
-    try {
-      const response = await ApiService.get("/api/v1/companie/findAll");
-      setCompanies(response);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching companies:", error);
-      setLoading(false);
-    }
-  };
-
-
-  useEffect(() => {
-    getCompanies();
-  }, []);
-
-  const { searchTerm, handleSearchChange, filteredItems } = useSearchFields(companies, ["nit", "company", "manager", "phone", "status"])
-  const paginatedItems = filteredItems.slice(firstIndex, lastIndex);
+  const {
+    searchTerm,
+    handleSearchChange,
+    paginatedItems,
+    elementForPage,
+    currentPage,
+    setCurrentPage,
+    totalFilteredItems,
+    loading,
+    firstIndex
+  } = controllerShowCompany();
 
   if (loading) {
     return (
@@ -87,31 +65,42 @@ export const ShowCompany = () => {
             </tr>
           </thead>
           <tbody>
-            {paginatedItems.map((item, index) => (
-              <tr key={item.id}>
-                <td>{index + 1}</td>
-                <td>{item.nit}</td>
-                <td>{item.company}</td>
-                <td>{item.manager}</td>
-                <td>{item.phone}</td>
-                <td className={item.status === "activo" ? "text-success" : "text-danger"}>
-                  <b>{item.status}</b>
-                </td>
-                <td>
-                  <Link to={`../add-company/${item.id}/update`}>
-                    <button className='btn icon-link-hover ms-3 text-primary'>
-                      <i className="fa-solid fa-pen-to-square icon-option"></i>
+            {paginatedItems.length > 0 ? (
+              paginatedItems.map((item, index) => (
+                <tr key={item.id}>
+                  <td>{firstIndex + index + 1}</td>
+                  <td>{item.nit}</td>
+                  <td>{item.company}</td>
+                  <td>{item.manager}</td>
+                  <td>{item.phone}</td>
+                  <td className={item.status === "activo" ? "text-success" : "text-danger"}>
+                    <b>{item.status}</b>
+                  </td>
+                  <td>
+                    <Link to={`../add-company/${item.id}/update`}>
+                      <button className='btn icon-link-hover ms-3 text-primary'>
+                        <i className="fa-solid fa-pen-to-square icon-option"></i>
+                      </button>
+                    </Link>
+                    <button className='btn icon-link-hover ms-3 text-warning'>
+                      <i className="fa-solid fa-eye icon-option"></i>
                     </button>
-                  </Link>
-                  <button className='btn icon-link-hover ms-3 text-warning'>
-                    <i className="fa-solid fa-eye icon-option"></i>
-                  </button>
-                </td>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="7" className="text-center">No hay resultados que mostrar</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
-        <Pagination elementForPage={elementForPage} currentPage={currentPage} setCurrentPage={setCurrentPage} totalElements={totalUsers} />
+        <Pagination
+          elementForPage={elementForPage}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+          totalElements={totalFilteredItems}
+        />
       </div>
     </>
   )

@@ -1,39 +1,22 @@
-import React, { useEffect, useState } from 'react';
 import '../../../assets/css/show/styles-Show.css';
 import { Spinner } from '../../animations/Spiner';
 import { Grid } from '../../animations/Grid';
-import { ApiService } from '../../../class/ApiServices.jsx';
 import { Link } from 'react-router-dom';
-import { useSearchFields } from './search/SearchFields.jsx';
 import { Pagination } from './Pagination.jsx';
-// Componente para ver el historial de Tripulacion de la empresa
+import { useControllerShowSailors } from './controllers/ControllerShowSailors.jsx';
+
 export const ShowCrew = () => {
-    const [crew, setCrew] = useState([])
-    const [elementForPage, setElementForPage] = useState(6)
-    const [currentPage, setCurrentPage] = useState(1)
-    const totalUsers = crew.length;
-
-    const lastIndex = currentPage * elementForPage;
-    const firstIndex = lastIndex - elementForPage;
-
-    const [loading, setLoading] = useState(true);
-
-    const getCrew = async () => {
-        try {
-            const response = await ApiService.get("/api/v1/employeefluvial/all");
-            setCrew(response);
-        } catch (error) {
-            console.error("Error fetching employed data:", error);
-        } finally {
-            setLoading(false);
-        }
-    }
-
-    useEffect(() => {
-        getCrew();
-    }, []);
-    const { searchTerm, handleSearchChange, filteredItems } = useSearchFields(crew, ["name", "lastName", "numDocument", "phone", "employeeType.typeName", "status"])
-    const paginatedItems = filteredItems.slice(firstIndex, lastIndex);
+    const {
+        searchTerm,
+        handleSearchChange,
+        paginatedItems,
+        elementForPage,
+        currentPage,
+        setCurrentPage,
+        totalFilteredItems,
+        loading,
+        firstIndex
+    } = useControllerShowSailors();
 
     if (loading) {
         return (
@@ -44,8 +27,6 @@ export const ShowCrew = () => {
             </div>
         )
     }
-
-
 
     return (
         <>
@@ -83,51 +64,55 @@ export const ShowCrew = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {paginatedItems.map((item, index) => {
+                        {paginatedItems.length > 0 ? (
+                            paginatedItems.map((item, index) => {
+                                const url_typeEmployed = [
+                                    { url: "../add-crew/add-boat-driver", typeEmployed: "Motorista" },
+                                    { url: "../add-crew/add-sailor", typeEmployed: "Marinero" },
+                                    { url: "../add-crew/add-captain", typeEmployed: "Capitan" },
+                                ];
 
-                            const url_typeEmployed = [
-                                { url: "../add-crew/add-boat-driver", typeEmployed: "Motorista" },
-                                { url: "../add-crew/add-sailor", typeEmployed: "Marinero" },
-                                { url: "../add-crew/add-captain", typeEmployed: "Capitan" },
-                            ];
+                                const typeEmployed = item.employeeType.typeName;
+                                const urlFound = url_typeEmployed.find((type) => type.typeEmployed === typeEmployed);
+                                const url = urlFound ? urlFound.url : '';
 
-                            const typeEmployed = item.employeeType.typeName;
-
-                            const urlFound = url_typeEmployed.find((item) => item.typeEmployed === typeEmployed)
-
-                            let url = urlFound ? urlFound.url : '';
-
-                            return (
-                                <tr key={item.id}>
-                                    <td>{index + 1}</td>
-                                    <td>{item.name + ' ' + item.lastName}</td>
-                                    <td>{item.numDocument}</td>
-                                    <td>{item.phone}</td>
-                                    <td>{item.nationality}</td>
-                                    <td>{item.employeeType.typeName}</td>
-                                    <td className={item.status === "activo" ? "text-success" : "text-danger"}>
-                                        <b>{item.status}</b>
-                                    </td>
-                                    <td>
-
-                                        <Link to={url + `/${item.id}/update`}>
-                                            <button
-                                                className='btn icon-link-hover ms-3 text-primary'>
-                                                <i className="fa-solid fa-pen-to-square icon-option"></i>
+                                return (
+                                    <tr key={item.id}>
+                                        <td>{firstIndex + index + 1}</td>
+                                        <td>{item.name + ' ' + item.lastName}</td>
+                                        <td>{item.numDocument}</td>
+                                        <td>{item.phone}</td>
+                                        <td>{item.nationality}</td>
+                                        <td>{item.employeeType.typeName}</td>
+                                        <td className={item.status === "activo" ? "text-success" : "text-danger"}>
+                                            <b>{item.status}</b>
+                                        </td>
+                                        <td>
+                                            <Link to={url + `/${item.id}/update`}>
+                                                <button className='btn icon-link-hover ms-3 text-primary'>
+                                                    <i className="fa-solid fa-pen-to-square icon-option"></i>
+                                                </button>
+                                            </Link>
+                                            <button className='btn icon-link-hover ms-3 text-warning'>
+                                                <i className="fa-solid fa-eye icon-option"></i>
                                             </button>
-                                        </Link>
-
-                                        <button
-                                            className='btn icon-link-hover ms-3 text-warning'>
-                                            <i className="fa-solid fa-eye icon-option"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            )
-                        })}
+                                        </td>
+                                    </tr>
+                                );
+                            })
+                        ) : (
+                            <tr>
+                                <td colSpan="8" className="text-center">No hay resultados que mostrar</td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
-                <Pagination elementForPage={elementForPage} currentPage={currentPage} setCurrentPage={setCurrentPage} totalElements={totalUsers} />
+                <Pagination
+                    elementForPage={elementForPage}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    totalElements={totalFilteredItems}
+                />
             </div>
         </>
     )

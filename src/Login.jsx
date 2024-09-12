@@ -145,7 +145,7 @@ export const Login = ({ setUser }) => {
 
                                     <button className="button button-home">
                                         <Link to={'/'} className="link-home">
-                                            <i className="fa-solid fa-house"></i> Home page
+                                            <i className="fa-solid fa-house"></i> Volver
                                         </Link>
                                     </button>
 

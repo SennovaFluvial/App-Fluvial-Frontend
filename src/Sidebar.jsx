@@ -73,7 +73,7 @@ export const Sidebar = ({ user, setUser }) => {
                 <div className="icono">
                     <div className="row section-account">
                         <div className="col-md-2 section-account-part1 text-center">
-                            <img src={Icono} alt="Icono Sidebar" />
+                            <i className="fa-solid fa-user-gear"></i> {/*Icono*/}
                         </div>
                         <div className="col-md-10 text-center">
                             <ul className='navbar-nav me-auto mb-2 mb-lg-0'>
