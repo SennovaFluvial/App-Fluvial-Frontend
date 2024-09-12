@@ -9,7 +9,7 @@ export const Agregar = () => {
 
     return (
         <>
-            <ul className='navbar-nav me-auto mb-2 mb-lg-0 my-5'>
+            <ul className='navbar-nav me-auto mb-2 mb-lg-0'>
                 <li className="nav-item dropdown section-account-part2">
                     <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Agregar

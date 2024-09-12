@@ -1,3 +1,9 @@
+:root {
+    --white: #fff;
+    --green: #00AF00;
+    --black: #0000001a;
+}
+
 /* Estilos para el menú superior */
 .crew-menu-container {
     display: flex;
@@ -7,16 +13,14 @@
     /* justify-content: center; */
     position:initial;
     /* El contenedor no se superpone a otros elementos */
-    width: 30%;
+    width: 100%;
     /* Ancho del contenedor */
     background-color: #f4f4f4;
     padding: 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px var(--black);
     /* margin: 20px auto; */
     margin-left: 5px;
-    /* Centra el contenedor horizontalmente */
-    /* top: 0; */
-    /* No se utiliza en position: static */
+
 }
 
 /* Título del menú */
@@ -34,8 +38,8 @@
     padding: 0.5rem;
     font-size: 1rem;
     border-radius: 10px;
-    border: 2px solid #00AF00;
-    background-color: white;
+    border: 2px solid var(--green);
+    background-color: var(--white);
     color: #333;
     outline: none;
     cursor: pointer;
@@ -47,11 +51,6 @@
     border-color: #008800;
 }
 
-/* Cambiar el fondo del selector cuando esté en focus */
-.crew-menu-select:focus {
-    background-color: #e0f5e0;
-    /* border-color: #006600; */
-}
 
 /* Estilos adaptables */
 @media (max-width: 768px) {
