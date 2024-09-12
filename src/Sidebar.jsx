@@ -12,6 +12,13 @@ import { Configuraciones } from './components/menu/Configuraciones';
 import { Actualizar } from './components/menu/Actualizar';
 import { Informes } from './components/menu/Informes';
 
+/* Importaciones nuevas de componentes para el menu */
+import { EmployeeSection } from './components/menu/EmployeeSection';
+import { CustomerSection } from './components/menu/CustomerSection';
+import { CompanySection } from './components/menu/CompanySection';
+import { SailorSection } from './components/menu/SailorSection';
+import { VehicleSection } from './components/menu/VehicleSection';
+
 /**
  * Componente Sidebar
  * 
@@ -93,7 +100,20 @@ export const Sidebar = ({ user, setUser }) => {
 
                     { /* Componentes que forman las acciones del menu */}
 
-                    <Agregar />
+                    {user?.rol?.includes('SUPERADMIN') && (
+                        <CompanySection />
+                    )}
+
+                    <EmployeeSection />
+
+                    {!user?.rol?.includes('SUPERADMIN') && (
+                        <>
+                            <SailorSection />
+                            <VehicleSection />
+                            <CustomerSection />
+                        </>
+                    )}
+                    {/* <Agregar /> */}
                     <Actualizar user={user} />
                     <Informes />
                     <Inventarios />
