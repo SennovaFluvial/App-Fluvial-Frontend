@@ -72,18 +72,18 @@ export const Sidebar = ({ user, setUser }) => {
                 </div>
                 <div className="icono">
                     <div className="row section-account">
-                        <div className="col-md-2 section-account-part1 text-center">
-                            <i className="fa-solid fa-user-gear"></i> {/*Icono*/}
+                        <div className="col-md-12 section-account-part1 text-center">
+                            <i className="fa-solid fa-user-gear icono-user mt-2"></i>
                         </div>
-                        <div className="col-md-10 text-center">
+                        <div className="col-md-12 text-center">
                             <ul className='navbar-nav me-auto mb-2 mb-lg-0'>
                                 <li className="nav-item dropdown section-account-part2">
                                     <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        {filteredUser ? filteredUser.name : user.username}
+                                        <b> {filteredUser ? filteredUser.name : user.username}</b>
                                     </a>
                                     <ul className="dropdown-menu menu-account">
-                                        <li><a className="dropdown-item text-black" href="#">Mi cuenta</a></li>
-                                        <li><a className="dropdown-item text-black" href="#">Administracion</a></li>
+                                        <li><a className="dropdown-item text-black option-menu" href="#">Mi Cuenta</a></li>
+                                        <li><a className="dropdown-item text-black option-menu" href="#">Administracion</a></li>
                                         <li><hr className="dropdown-divider" /></li>
                                         <li>
                                             <button onClick={logout} className='btn btn-danger boton-logout ms-2'>

@@ -77,7 +77,6 @@ export const ComponentRouter = () => {
                     <Route path="show-crew" element={< ShowCrew />} /> {/* Ruta para ver tripualntes */}
                     <Route path="show-vehicles" element={< ShowVehicles />} /> {/* Ruta para ver vehículos */}
 
-
                 </Route>
             </Route>
 

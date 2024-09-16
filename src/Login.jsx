@@ -6,6 +6,7 @@ import './assets/css/login.css'
 import Logo from './assets/img/LogoSena.png'
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert';
+import { useControllerLogin } from './controllers/ControllerLogin';
 
 /**
  * Componente Login
@@ -19,86 +20,7 @@ import Swal from 'sweetalert';
  */
 export const Login = ({ setUser }) => {
 
-    // Estado para manejar la contraseña del usuario
-    const [password, setPassword] = useState('')
-    // Estado para manejar el nombre de usuario del usuario
-    const [username, setUsername] = useState('')
-    // Estado para manejar mensajes de error
-    const [error, setError] = useState('')
-    // Hook para redirigir a otras páginas
-    const nav = useNavigate()
-
-    /**
-     * Función para manejar el inicio de sesión del usuario.
-     * 
-     * @param {React.FormEvent} event - Evento del formulario de inicio de sesión.
-     */
-
-    const login = async (event) => { // funcion asincrona
-
-        event.preventDefault(); // Evita que la pagina se recarge cuando se envia el formulario.
-
-        // Verifica que se hayan ingresado tanto el nombre de usuario como la contraseña
-        if (!username || !password) {
-            setError('Ingrese datos válidos'); // Muestra un mensaje de error si los datos no son válidos.
-            Swal('Error', 'Por favor, ingrese su nombre de usuario y contraseña.', 'error');
-            return;
-        }
-
-        try {
-            // Realiza una solicitud POST para autenticar al usuario
-            const response = await axios.post('https://fluvial.up.railway.app/auth/log-in', { // Esta es la url a la que se le pedira la respuesta.
-                username: username, // Nombre de usuario proporcionado por el usuario
-                password: password  // Contraseña proporcionada por el usuario
-            });
-            // Obtiene la hora actual del logueo
-            const currentTime = new Date().getTime();
-
-            // Almacena el token en el localStorage si la solicitud es exitosa
-            localStorage.setItem('token', response.data.jwt); // Almacena el token JSON si la solicitud es exitosa.
-
-            // Almacena la hora actual de logueo
-            localStorage.setItem('tokenTimestamp', currentTime);
-            // Crea un objeto de usuario con la información recibida
-            const user = {
-                username: response.data.username,
-                status: response.data.estado,
-                companyStatus: response.data.companyStatus,
-                rol: response.data.roles[0]
-            };
-            // Almacena la información del usuario en el localStorage
-            localStorage.setItem('user', JSON.stringify(user));
-
-            // Verifica el estado del usuario
-            if (user.status !== 'activo') {
-                setError('El usuario se encuentra en un estado de Inactivo. Por favor, comuníquese con el gerente.');
-                setUser(null);
-                Swal('Error', 'El usuario se encuentra inactivo.', 'error');
-                return;
-            }
-
-            // Verifica el estado de la empresa del usuario
-            if (user.companyStatus !== 'activo') {
-                setError('La empresa a la que está asociado se encuentra inactiva.');
-                setUser(null);
-                Swal('Error', 'La empresa está inactiva.', 'error');
-                return;
-            }
-
-            // Actualiza el estado del usuario si todo es correcto
-            setUser(user);
-            Swal('Éxito', 'Inicio de sesión exitoso.', 'success');
-
-            // Redirige a la sección del panel de administración
-            nav('/adminSection');
-
-        } catch (error) {
-            setError('No fue posible el Login. Por favor, intenta nuevamente.');
-            console.error('No fue posible el Login', error);
-            Swal('Error', 'No fue posible el inicio de sesión. Intente de nuevo.', 'error');
-            setUser(null);
-        }
-    };
+    const { login, password, username, setUsername, setPassword } = useControllerLogin({ setUser });
 
     return (
         <>

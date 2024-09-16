@@ -4,15 +4,15 @@ import { OptionsTypeDocument, genero, status, maritalStatus, codigoPaises } from
 import '../../../assets/css/AgregarEmpleado.css';
 
 import { ControllerCreateUpdateEmployed } from './controllers/ControllerCreateUpdateEmployed.jsx';
+import { useState } from 'react';
 
 export const AddEmployed = () => {
 
+  const [updatePassword, setUpdatePassword] = useState(false);
   const queryParam = new URLSearchParams(location.search);
   const action = queryParam.get('action');
 
-  const { handleSubmit, handleChange, formData, errorsForms, cities, deptos, roles, role, companies } = ControllerCreateUpdateEmployed();
-
-
+  const { handleSubmit, handleChange, formData, errorsForms, cities, deptos, roles, role, companies } = ControllerCreateUpdateEmployed({ updatePassword });
 
   return (
     <>
@@ -84,6 +84,7 @@ export const AddEmployed = () => {
                 <Inputs event={handleChange} text="Número de Teléfono" name="phone" icon="fa-solid fa-phone-volume" value={formData.phone} />
                 {errorsForms.phone && <div className="text-danger">{errorsForms.phone}</div>}
               </div>
+
               <div className="col-md-3">
                 <Inputs event={handleChange} text="Usuario" name="username" icon="fa-solid fa-user" value={formData.username} />
                 {errorsForms.username && <div className="text-danger">{errorsForms.username}</div>}
@@ -92,14 +93,51 @@ export const AddEmployed = () => {
                 <Inputs event={handleChange} text="Confirmar Usuario" name="confirmUsername" icon="fa-regular fa-envelope" value={formData.confirmUsername} />
                 {errorsForms.confirmUsername && <div className="text-danger">{errorsForms.confirmUsername}</div>}
               </div>
-              <div className="col-md-6">
-                <Inputs event={handleChange} type="password" text="Crear Contraseña" name="password" icon="fa-solid fa-lock" value={formData.password} />
-                {errorsForms.password && <div className="text-danger">{errorsForms.password}</div>}
-              </div>
-              <div className="col-md-6">
-                <Inputs event={handleChange} type="password" text="Confirmar Contraseña" name="confirmPassword" icon="fa-solid fa-lock" value={formData.confirmPassword} />
-                {errorsForms.confirmPassword && <div className="text-danger">{errorsForms.confirmPassword}</div>}
-              </div>
+              {
+
+                !action ? (<>
+                  <div className="row">
+                    <div className="col-md-6">
+                      <Inputs event={handleChange} type="password" text="Crear Contraseña" name="password" icon="fa-solid fa-lock" value={formData.password} />
+                      {errorsForms.password && <div className="text-danger">{errorsForms.password}</div>}
+                    </div>
+                    <div className="col-md-6">
+                      <Inputs event={handleChange} type="password" text="Confirmar Contraseña" name="confirmPassword" icon="fa-solid fa-lock" value={formData.confirmPassword} />
+                      {errorsForms.confirmPassword && <div className="text-danger">{errorsForms.confirmPassword}</div>}
+                    </div>
+                  </div>
+                </>) : action && action === "update" ? (
+                  <>
+                    <div className="row">
+                      <div className="col-md-4">
+
+                        <div className="form-check my-4">
+                          <input className="form-check-input" type="checkbox" onClick={() => setUpdatePassword(!updatePassword)} />
+                          <label className="form-check-label">
+                            ¿Cambiar contraseña?
+                          </label>
+                        </div>
+                      </div>
+
+                      {/* Solo mostrar el formulario de cambiar contraseña si updatePassword es true */}
+                      {updatePassword && (
+                        <>
+                          <div className="row">
+                            <div className="col-md-6">
+                              <Inputs event={handleChange} type="password" text="Crear Contraseña" name="password" icon="fa-solid fa-lock" value={formData.password} />
+                              {errorsForms.password && <div className="text-danger">{errorsForms.password}</div>}
+                            </div>
+                            <div className="col-md-6">
+                              <Inputs event={handleChange} type="password" text="Confirmar Contraseña" name="confirmPassword" icon="fa-solid fa-lock" value={formData.confirmPassword} />
+                              {errorsForms.confirmPassword && <div className="text-danger">{errorsForms.confirmPassword}</div>}
+                            </div>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </>
+                ) : null
+              }
             </div>
 
             <div className="text-center">
@@ -114,7 +152,7 @@ export const AddEmployed = () => {
                 </div>
               )}
               {/* </div> */}
-              
+
               <div className="col-md-4">
                 <Select event={handleChange} value={formData.roleRequest.roleListName[0]} text="Rol" options={roles} name="roleListName" />
                 {errorsForms.roleListName && <div className="text-danger">{errorsForms.roleListName}</div>}
