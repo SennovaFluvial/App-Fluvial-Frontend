@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Outlet } from "react-router"
 import { useNavigate } from "react-router";
-import "../../../assets/css/AddCrew.css"
+import styles from '../../../assets/css/addCrew.module.css'
 export const AddCrew = () => {
 
     const [selectedOption, setSelectedOption] = useState("");
@@ -17,10 +17,10 @@ export const AddCrew = () => {
 
     return (
         <>
-            <div className="crew-menu-container">
-                <h1 className="crew-menu-title">Elija la categoría</h1>
+            <div className={styles.container}>
+                <h1 className={styles.title}>Elija la categoría</h1>
                 <select
-                    className="crew-menu-select"
+                    className={styles.select}
                     aria-label="Seleccione una categoría"
                     value={selectedOption}
                     onChange={handleChange}

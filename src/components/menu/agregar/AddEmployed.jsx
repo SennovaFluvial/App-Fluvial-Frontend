@@ -1,8 +1,8 @@
 import { Select } from '../../html components/Selects.jsx';
 import { Inputs } from '../../html components/Inputs.jsx';
 import { OptionsTypeDocument, genero, status, maritalStatus, codigoPaises } from '../update/options/arrays.jsx';
-import '../../../assets/css/AgregarEmpleado.css';
-
+import styles from '../../../assets/css/Forms.module.css'
+import '../../../assets/css/success.css'
 import { ControllerCreateUpdateEmployed } from './controllers/ControllerCreateUpdateEmployed.jsx';
 import { useState } from 'react';
 import { VerifyUserChangePassword } from './controllers/VerifyUserChangePassword.jsx';
@@ -37,11 +37,11 @@ export const AddEmployed = () => {
 
   return (
     <>
-      <div className="d-flex-empleado justify-content-center align-items-center vh-100">
-        <div className="container-empleado bg-light shadow rounded p-4">
-          <h2 className="text-center mb-2">{action === 'update' ? 'ACTUALIZAR EMPLEADO' : 'CREAR EMPLEADO'}</h2>
+      <div className={styles.card}>
+        <div className={styles.container}>
+          <h2 className={styles.title}>{action === 'update' ? 'ACTUALIZAR EMPLEADO' : 'CREAR EMPLEADO'}</h2>
           <form onSubmit={handleSubmit}>
-            <div className="text-center">
+            <div className={styles.h3}>
               <h3><b>INFORMACIÓN PERSONAL</b></h3>
             </div>
             <div className="row"> {/* Nombres y apellidos */}
@@ -183,7 +183,7 @@ export const AddEmployed = () => {
               </div>
             </div>
             <div className="text-center">
-              <button type="submit" className="btn btn-success">{action === 'update' ? 'Actualizar' : 'Crear'} Empleado <i className="fa-solid fa-building-user"></i></button>
+              <button type="submit" className={"btn btn-success"}>{action === 'update' ? 'Actualizar' : 'Crear'} Empleado <i className="fa-solid fa-building-user"></i></button>
             </div>
           </form>
         </div>

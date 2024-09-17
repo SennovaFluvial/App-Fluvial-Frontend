@@ -1,0 +1,70 @@
+:root {
+    --white: #fff;
+    --green: #00AF00;
+    --black: #0000001a;
+    --red: #DC3545;
+}
+
+.btn {
+    display: inline-block;
+    font-weight: 400;
+    color: #212529;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.btn-success {
+    margin-top: #fff;
+    color: var(--white);
+    background-color: #00AF00;
+    border-color: #00AF00;
+}
+
+
+
+button {
+    display: inline-block;
+    font-weight: 500;
+    text-align: center;
+    cursor: pointer;
+    padding: 0.5rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    /* transition: background-color 0.3s ease, box-shadow 0.3s ease; */
+}
+
+/* Botón "Cancelar envío" */
+button.cancelar {
+    background-color: #DC3545;
+    color: var(--white);
+    border-color: #DC3545;
+}
+
+button.cancelar:hover {
+    background-color: #8b0000;
+    color: var(--white);
+    border-color: darkred;
+    /* box-shadow: 0 4px 8px rgba(255, 0, 0, 0.2); */
+}
+
+
+button.siguiente {
+    background-color: #6c757d;
+    color: var(--white);
+    border: 2px solid #6c757d;
+}
+
+button.siguiente:hover {
+    background-color: #5a6268;
+    border-color: #5a6268;
+    box-shadow: 0 4px 8px rgba(108, 117, 125, 0.2);
+}

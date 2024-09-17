@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import './assets/css/sidebar.css'; // Importa los estilos CSS
 import Logo from './assets/img/LogoSena.png'; // Importa el logo
 import Icono from './assets/img/icono.png';
-import { useNavigate } from "react-router-dom" // Importa el hook para redirecciones
+import { Link, useNavigate } from "react-router-dom" // Importa el hook para redirecciones
 import { ApiService } from './class/ApiServices';
 
 /* Importaciones de componentes para el menu */
-import { Agregar } from './components/menu/Agregar';
+// import { Agregar } from './components/menu/Agregar';
 import { Inventarios } from './components/menu/Inventarios';
 import { Configuraciones } from './components/menu/Configuraciones';
-import { Actualizar } from './components/menu/Actualizar';
+// import { Actualizar } from './components/menu/Actualizar';
 import { Informes } from './components/menu/Informes';
 
 /* Importaciones nuevas de componentes para el menu */
@@ -18,6 +18,7 @@ import { CustomerSection } from './components/menu/CustomerSection';
 import { CompanySection } from './components/menu/CompanySection';
 import { SailorSection } from './components/menu/SailorSection';
 import { VehicleSection } from './components/menu/VehicleSection';
+import { ShipmentSection } from './components/menu/ShipmentSection';
 
 /**
  * Componente Sidebar
@@ -97,6 +98,14 @@ export const Sidebar = ({ user, setUser }) => {
                     </div>
                 </div>
                 <nav className="menu">
+                    
+                    <ul>
+                        <li>
+                            <Link to="/adminSection" className="nav-link show">
+                             Dashboard
+                        </Link>
+                        </li>
+                    </ul>
 
                     { /* Componentes que forman las acciones del menu */}
 
@@ -113,10 +122,13 @@ export const Sidebar = ({ user, setUser }) => {
                             <CustomerSection />
                         </>
                     )}
-                    {/* <Agregar /> */}
-                    <Actualizar user={user} />
-                    <Informes />
+                    {/* <Agregar /> */} 
+                    {/* <Actualizar user={user} /> */}
+
+                    <ShipmentSection />
+
                     <Inventarios />
+                    <Informes />
                     <Configuraciones />
 
                 </nav>

@@ -19,10 +19,12 @@ import { ShowCompany } from '../menu/history/Show-Company.jsx';
 import { ShowCustomers } from '../menu/history/Show-customers.jsx';
 import { ShowUsers } from '../menu/history/Show-users.jsx';
 import { ShowCrew } from '../menu/history/show-sailors.jsx';
-
+import { ShowVehicles } from '../menu/history/Show-Vehicles.jsx';
 
 import { Info } from '../../Info.jsx';
-import { ShowVehicles } from '../menu/history/Show-Vehicles.jsx';
+
+import { RegisterShipment } from '../menu/ShipmentModules/RegisterShipment.jsx';
+import { ModuleSender } from '../menu/ShipmentModules/ModuleSender.jsx';
 
 /**
  * Componente ComponentRouter
@@ -76,6 +78,11 @@ export const ComponentRouter = () => {
                     <Route path="show-users" element={< ShowUsers />} /> {/* Ruta para ver usuarios */}
                     <Route path="show-crew" element={< ShowCrew />} /> {/* Ruta para ver tripualntes */}
                     <Route path="show-vehicles" element={< ShowVehicles />} /> {/* Ruta para ver vehículos */}
+
+                    <Route path="module-Sender" element={< ModuleSender />} /> {/* Ruta para ver modulo de remitente */}
+                    <Route path="register-shipment" element={< RegisterShipment />} > {/* Ruta padre para los moudulos de envío */}
+
+                    </Route>
 
                 </Route>
             </Route>
