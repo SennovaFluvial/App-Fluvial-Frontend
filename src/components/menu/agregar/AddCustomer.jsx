@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Select } from '../../html components/Selects.jsx';
 import { Inputs } from '../../html components/Inputs.jsx';
-import '../../../assets/css/AgregarEmpleado.css';
+import styles from '../../../assets/css/Forms.module.css'
 import { OptionsTypeDocument, genero, maritalStatus, nationality, useOptionsCities, useOptionsDepto } from '../update/options/arrays.jsx';
 import { useParams } from 'react-router';
 import { ControllerCreateUpdateCustomer } from './controllers/ControllerCreateUpdateCustomer.jsx';
@@ -14,11 +14,11 @@ export const AddCustomer = () => {
 
     return (
         <>
-            <div className="d-flex-empleado justify-content-center align-items-center vh-100">
-                <div className="container-empleado bg-light shadow rounded p-4">
-                    <h2 className="text-center mb-2">{action && action === "update" ? "ACTUALIZAR" : "CREAR"} CLIENTE</h2>
+            <div className={styles.card}>
+                <div className={styles.container}>
+                    <h2 className={styles.title}>{action && action === "update" ? "ACTUALIZAR" : "CREAR"} CLIENTE</h2>
                     <form onSubmit={handleSubmit}>
-                        <div className="text-center">
+                        <div className={styles.h3}>
                             <h3><b>INFORMACIÓN PERSONAL</b></h3>
                         </div>
                         <div className="row"> {/* Nombres y apellidos */}

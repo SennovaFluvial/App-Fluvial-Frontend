@@ -1,7 +1,7 @@
 import { Inputs } from '../../html components/Inputs.jsx';
 import { Select } from '../../html components/Selects.jsx';
 import { status, OptionsTypeDocument, genero, maritalStatus, nationality } from '../update/options/arrays.jsx';
-import '../../../assets/css/AgregarEmpleado.css';
+import styles from '../../../assets/css/Forms.module.css'
 import { ControllerCreateUpdateCaptain } from './controllers/ControllerCreateUpdateCaptain.jsx';
 import { useParams } from 'react-router';
 
@@ -12,12 +12,12 @@ export const AddCaptain = () => {
     const { handleSubmit, formData, errorsForms, handleChange } = ControllerCreateUpdateCaptain({ id, action });
 
     return (
-        <div className="d-flex-empleado justify-content-center align-items-center vh-100">
-            <div className="container-empleado bg-light shadow rounded p-4">
-                <h2 className="text-center mb-2">{action === "update" ? "ACTUALIZAR" : "CREAR"} CAPITAN</h2>
+        <div className={styles.card}>
+            <div className={styles.container}>
+                <h2 className={styles.title}>{action === "update" ? "ACTUALIZAR" : "CREAR"} CAPITAN</h2>
                 <form onSubmit={handleSubmit}>
                     {/* Información Personal */}
-                    <div className="text-center">
+                    <div className={styles.h3}>
                         <h3><b>INFORMACIÓN PERSONAL</b></h3>
                     </div>
                     <div className="row">
@@ -85,7 +85,7 @@ export const AddCaptain = () => {
                         </div>
                     </div>
 
-                    <div className="text-center mt-3">
+                    <div className="text-center">
                         <button type="submit" className="btn btn-success">{action === "update" ? "Actualizar" : "Crear"} Capitan <i className="fa-solid fa-id-card-clip"></i></button>
                     </div>
                 </form>

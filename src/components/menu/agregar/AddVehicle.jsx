@@ -1,6 +1,6 @@
 import { Inputs } from '../../html components/Inputs';
 import { Select } from '../../html components/Selects';
-import '../../../assets/css/AgregarEmpleado.css';
+import styles from '../../../assets/css/Forms.module.css'
 import { ControllerCreateUpdateVehicle } from './controllers/ControllerCreateUpdateVehicle';
 import { typeVehicle, weightUnits, volumeUnits } from '../update/options/arrays';
 import { useParams } from 'react-router';
@@ -11,9 +11,9 @@ export const AddVehicle = () => {
 
     return (
         <>
-            <div className="d-flex-empleado justify-content-center align-items-center vh-100">
-                <div className="container bg-light shadow rounded p-4">
-                    <h2 className="text-center mb-2">{action === "update" ? "ACTUALIZAR" : "CREAR"} VEHÍCULO</h2>
+            <div className={styles.card}>
+                <div className={styles.container}>
+                    <h2 className={styles.title}>{action === "update" ? "ACTUALIZAR" : "CREAR"} VEHÍCULO</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="row">
                             <div className="col-md-6">
