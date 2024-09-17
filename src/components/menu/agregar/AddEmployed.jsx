@@ -5,14 +5,35 @@ import '../../../assets/css/AgregarEmpleado.css';
 
 import { ControllerCreateUpdateEmployed } from './controllers/ControllerCreateUpdateEmployed.jsx';
 import { useState } from 'react';
+import { VerifyUserChangePassword } from './controllers/VerifyUserChangePassword.jsx';
 
 export const AddEmployed = () => {
 
-  const [updatePassword, setUpdatePassword] = useState(false);
   const queryParam = new URLSearchParams(location.search);
   const action = queryParam.get('action');
+  const userData = JSON.parse(localStorage.getItem('user'));
+  const userNameUser = userData?.username;
+  // Define updatePassword antes de usarlo
+  const {
+    updatePassword,
+    handleChangeVerify,
+    errorsFormsVerify,
+    handleSubmitVerify,
+    userName,
+    formLogin
+  } = VerifyUserChangePassword();
 
-  const { handleSubmit, handleChange, formData, errorsForms, cities, deptos, roles, role, companies } = ControllerCreateUpdateEmployed({ updatePassword });
+  const {
+    handleSubmit,
+    handleChange,
+    formData,
+    errorsForms,
+    cities,
+    deptos,
+    roles,
+    role,
+    companies
+  } = ControllerCreateUpdateEmployed({ updatePassword });
 
   return (
     <>
@@ -94,7 +115,6 @@ export const AddEmployed = () => {
                 {errorsForms.confirmUsername && <div className="text-danger">{errorsForms.confirmUsername}</div>}
               </div>
               {
-
                 !action ? (<>
                   <div className="row">
                     <div className="col-md-6">
@@ -112,7 +132,7 @@ export const AddEmployed = () => {
                       <div className="col-md-4">
 
                         <div className="form-check my-4">
-                          <input className="form-check-input" type="checkbox" onClick={() => setUpdatePassword(!updatePassword)} />
+                          <input className="form-check-input" type="checkbox" data-bs-toggle="modal" data-bs-target="#updateWitdhPassword" />
                           <label className="form-check-label">
                             ¿Cambiar contraseña?
                           </label>
@@ -166,6 +186,43 @@ export const AddEmployed = () => {
               <button type="submit" className="btn btn-success">{action === 'update' ? 'Actualizar' : 'Crear'} Empleado <i className="fa-solid fa-building-user"></i></button>
             </div>
           </form>
+        </div>
+      </div>
+
+      {/* Modal */}
+
+      <div className="modal fade" id="updateWitdhPassword" aria-labelledby="updateWitdhPassword" aria-hidden="true">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5">Verificación de Usuario</h1>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form>
+              <div className="modal-body">
+                <h1 className="modal-title fs-5">{`Ingresa la contraseña del usuario ${userName}`}</h1>
+                <Inputs
+                  placeholder="Contraseña..."
+                  event={handleChangeVerify}
+                  type="password"
+                  name="password"
+                  icon="fa-solid fa-lock"
+                  value={formLogin.password}
+                />
+                {errorsFormsVerify.password && (
+                  <div className="text-danger">{errorsFormsVerify.password}</div>
+                )}
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-danger" data-bs-dismiss="modal">
+                  Cerrar
+                </button>
+                <button type="button" className="btn btn-success" onClick={handleSubmitVerify}>
+                  Validar
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </>

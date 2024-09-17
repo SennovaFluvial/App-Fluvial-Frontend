@@ -179,6 +179,19 @@ export const ControllerCreateUpdateEmployed = ({ updatePassword }) => {
         } else {
             setErrorsForms({ ...errorsForms, [name]: "Campo obligatorio" });
         }
+
+        // Validación de campos numéricos
+        if (name === 'numDocument' || name === 'phone') {
+            if (isNaN(value)) {
+                setErrorsForms(prevErrors => ({
+                    ...prevErrors,
+                    [name]: "Debe ser un número válido"
+                }));
+            } else {
+                const { [name]: removed, ...rest } = errorsForms;
+                setErrorsForms(rest); // Elimina el error si es un número válido
+            }
+        }
     };
 
     const handleErrors = (name, message) => {

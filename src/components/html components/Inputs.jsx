@@ -11,7 +11,7 @@ import '../../assets/css/input.css'  // Importa el archivo de estilos CSS para e
  * @param {string} icon - Clase del icono que se muestra dentro del input.
  * @param {string} value - Valor actual del input.
  */
-export const Inputs = ({ type, text, name, event, placeholder, icon, value }) => {
+export const    Inputs = ({ type, text, name, event, placeholder, icon, value }) => {
     // Define el estado 'showPassword' que determina si se debe mostrar o no la contraseña
     const [showPassword, setShowPassword] = useState(false);
 
