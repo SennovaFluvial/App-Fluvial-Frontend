@@ -49,9 +49,9 @@ export const ShowCrew = () => {
                         />
                     </div>
                     <div className="col-md-2 my-3 d-flex justify-content-end ms-auto">
-                        <Link to={"/adminSection/add-employed"}>
+                        <Link to={"/adminSection/add-crew"}>
                             <button className='btn btn-primary rounded-pill p-2 ps-2'>
-                                <i className="fa-regular fa-square-plus me-3"></i>Nuevo Empleado
+                                <i className="fa-regular fa-square-plus me-3"></i>Nuevo Tripulante
                             </button>
                         </Link>
                     </div>

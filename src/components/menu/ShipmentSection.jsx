@@ -13,7 +13,7 @@ export const ShipmentSection = () => {
                         <>
                             <li className='dropdown-item text-black'>
                                 <Link to={'#'}>
-                                    <i class="fa-solid fa-box"></i> Listado de Envíos
+                                    <i className="fa-solid fa-box"></i> Listado de Envíos
                                 </Link>
                             </li>
 

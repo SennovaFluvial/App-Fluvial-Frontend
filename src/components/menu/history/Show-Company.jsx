@@ -51,9 +51,9 @@ export const ShowCompany = () => {
             />
           </div>
           <div className="col-md-2 my-3 d-flex justify-content-end ms-auto">
-            <Link to={"/adminSection/add-employed"}>
+            <Link to={"/adminSection/add-company"}>
               <button className='btn btn-primary rounded-pill p-2 ps-2'>
-                <i className="fa-regular fa-square-plus me-3"></i>Nuevo Empleado
+                <i className="fa-regular fa-square-plus me-3"></i>Nuevo Empresa
               </button>
             </Link>
           </div>
@@ -63,7 +63,7 @@ export const ShowCompany = () => {
             </button>
           </div>
         </div>
-        
+
         <table className="table table-hover border table-striped my-5">
           <thead>
             <tr>

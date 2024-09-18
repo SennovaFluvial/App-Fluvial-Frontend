@@ -27,7 +27,7 @@ export const useControllerShowCustomers = () => {
 
     const { searchTerm, handleSearchChange, filteredItems } = useSearchFields(
         customers,
-        ["numDocument", "name", "lastName", "email", "phone", "address", "cityName"]
+        ["numDocument", "name", "lastName", "email", "phone", "address", "cityName", "personType", "companyName"]
     );
 
     const totalFilteredItems = filteredItems.length;

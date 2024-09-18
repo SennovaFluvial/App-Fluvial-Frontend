@@ -7,47 +7,46 @@ import { Alert } from "../../../../class/alerts";
 export const ControllerCreateUpdateCustomer = ({ id, action }) => {
 
     const navigate = useNavigate();
-    const [listCustomers, setListCustomers] = useState([])
-    const user = JSON.parse(localStorage.getItem("user")); // Recuperar el JSON almacenado en el LocalStorage
-    const userNameUser = user?.username || null; // Obtener el `userName` de usuario Logueado Si no es nulo
+    const [listCustomers, setListCustomers] = useState([]);
+    const user = JSON.parse(localStorage.getItem("user"));
+    const userNameUser = user?.username || null;
+
     const [formData, setFormData] = useState({
         name: '', lastName: '', typeDocument: '', numDocument: '', email: '', dateOfBirth: '', nationality: '',
-        maritalStatus: '', phone: '', address: '', sex: '', cityName: '', userNames: [userNameUser]
+        maritalStatus: '', phone: '', address: '', sex: '', personType: '', companyName: '', nitCompany: '', cityName: '', userNames: [userNameUser]
     });
 
     const [errorsForms, setErrorsForms] = useState({});
 
-    // 1. Efecto para reinicar el Formulario si No existen las variables destinadas a Actualizar
+    // Reiniciar formulario si no hay acción ni ID
     useEffect(() => {
         if (!action && !id) {
             setFormData({
                 name: '', lastName: '', typeDocument: '', numDocument: '', email: '', dateOfBirth: '', nationality: '',
-                maritalStatus: '', phone: '', address: '', sex: '', cityName: '', userNames: [userNameUser]
-            })
+                maritalStatus: '', phone: '', address: '', sex: '', personType: '', companyName: '', nitCompany: '', cityName: '', userNames: [userNameUser]
+            });
         }
         setErrorsForms({});
-    }, [action, id])
+    }, [action, id]);
 
-    // 2. Efecto para realizar el llamado a la lista de clientes
-
+    // Cargar la lista de clientes
     useEffect(() => {
-        const fecthCustomers = async () => {
+        const fetchCustomers = async () => {
             try {
                 const response = await ApiService.get("/api/v1/customers/all");
                 setListCustomers(response);
             } catch (error) {
-                console.log(error)
+                console.log(error);
             }
-        }
+        };
 
-        fecthCustomers();
-    }, [])
+        fetchCustomers();
+    }, []);
 
-    // 3. Efecto para Actualizar el formulario con informacion segun el id
-
+    // Actualizar formulario cuando se seleccione un cliente para actualización
     useEffect(() => {
-        if (action && action === "update" && id && listCustomers.length > 0) {
-            const customerFilterById = listCustomers.find((customer) => customer.id === parseInt(id, 10))
+        if (action === "update" && id && listCustomers.length > 0) {
+            const customerFilterById = listCustomers.find((customer) => customer.id === parseInt(id, 10));
             if (customerFilterById) {
                 setFormData({
                     name: customerFilterById.name, lastName: customerFilterById.lastName,
@@ -55,24 +54,42 @@ export const ControllerCreateUpdateCustomer = ({ id, action }) => {
                     email: customerFilterById.email, dateOfBirth: customerFilterById.dateOfBirth, nationality: customerFilterById.nationality,
                     maritalStatus: customerFilterById.maritalStatus, phone: customerFilterById.phone, address: customerFilterById.address,
                     sex: customerFilterById.sex, cityName: customerFilterById.cityName, userNames: [userNameUser]
-                })
+                });
             }
         }
-    }, [action, id, listCustomers])
-
+    }, [action, id, listCustomers]);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
 
+        // Actualizar campos dinámicamente, permitiendo espacios
         if (name.startsWith("userName")) {
             const index = parseInt(name.replace("userName", ""));
             const updatedUserNames = [...formData.userNames];
             updatedUserNames[index] = value;
             setFormData({ ...formData, userNames: updatedUserNames });
         } else {
+            setFormData((prevFormData) => ({
+                ...prevFormData,
+                [name]: value
+            }));
+        }
 
-            const updatedValue = typeof value === 'string' ? value.trim() : value;
-            setFormData({ ...formData, [name]: updatedValue });
+        // Verificar el tipo de persona
+        if (name === "personType") {
+            if (value === "Natural") {
+                // Si es "Natural", limpiar campos de empresa
+                setFormData((prevFormData) => ({
+                    ...prevFormData,
+                    companyName: null,
+                    nitCompany: null,
+                }));
+            } else if (value === "Jurídica") {
+                // Si es "Jurídica", mantener los valores ingresados para empresa
+                setFormData((prevFormData) => ({
+                    ...prevFormData
+                }));
+            }
         }
     };
 
@@ -80,6 +97,7 @@ export const ControllerCreateUpdateCustomer = ({ id, action }) => {
         setErrorsForms({ ...errorsForms, [name]: message });
     };
 
+    // Validación de fecha de nacimiento
     useEffect(() => {
         if (formData.dateOfBirth) {
             const selectedDate = new Date(formData.dateOfBirth);
@@ -91,6 +109,7 @@ export const ControllerCreateUpdateCustomer = ({ id, action }) => {
         }
     }, [formData.dateOfBirth]);
 
+    // Manejar el envío del formulario
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -119,10 +138,8 @@ export const ControllerCreateUpdateCustomer = ({ id, action }) => {
                 icon: 'error',
                 timer: 3000
             });
-
             return;
         }
-
 
         const confirmationMessage = action === 'update' ?
             `¿Está seguro que quiere actualizar el cliente?\nNombre: ${formData.name} ${formData.lastName}` :
@@ -159,5 +176,5 @@ export const ControllerCreateUpdateCustomer = ({ id, action }) => {
 
     return {
         formData, errorsForms, handleChange, handleSubmit
-    }
+    };
 }

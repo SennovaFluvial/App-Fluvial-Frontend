@@ -51,9 +51,9 @@ export const ShowVehicles = () => {
             />
           </div>
           <div className="col-md-2 my-3 d-flex justify-content-end ms-auto">
-            <Link to={"/adminSection/add-employed"}>
+            <Link to={"/adminSection/add-vehicle"}>
               <button className='btn btn-primary rounded-pill p-2 ps-2'>
-                <i className="fa-regular fa-square-plus me-3"></i>Nuevo Empleado
+                <i className="fa-regular fa-square-plus me-3"></i>Nuevo Vehiculo
               </button>
             </Link>
           </div>
@@ -83,7 +83,7 @@ export const ShowVehicles = () => {
                 <tr key={item.id}>
                   <td>{firstIndex + index + 1}</td>
                   <td>{item.licensePlate}</td>
-                  <td>Campo faltante ?</td>
+                  <td>{item.nombre}</td>
                   <td>{item.type}</td>
                   <td>{item.volumeCapacity + ' ' + item.volumeUnit}</td>
                   <td>{item.weightCapacity + ' ' + item.weightUnit}</td>

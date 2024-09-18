@@ -18,7 +18,7 @@ export const AddCrew = () => {
     return (
         <>
             <div className={styles.container}>
-                <h1 className={styles.title}>Elija la categoría</h1>
+                <h1 className={styles.title}>¿Qué categoría desea registrar para el nuevo miembro de la tripulación? </h1>
                 <select
                     className={styles.select}
                     aria-label="Seleccione una categoría"

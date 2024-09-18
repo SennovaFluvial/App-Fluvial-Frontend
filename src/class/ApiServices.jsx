@@ -31,7 +31,7 @@ export class ApiService {
 
             // Convierte los datos a formato JSON
             const jsonData = JSON.stringify(data);
-
+            console.log(jsonData)
             // Realiza una solicitud POST a la API con los datos y encabezados proporcionados
             const response = await instance.post(url_api, jsonData, {
                 headers: {
@@ -58,7 +58,7 @@ export class ApiService {
 
             // Convierte los datos a formato JSON
             const jsonData = JSON.stringify(data);
-
+            console.log(jsonData)
             // Realiza una solicitud POST a la API con los datos y encabezados proporcionados
             const response = await instance.put(url_api, jsonData, {
                 headers: {
@@ -69,10 +69,14 @@ export class ApiService {
 
             // Muestra un mensaje en la consola si la solicitud es exitosa
             console.log("Respuesta del servidor:", response);
+            return response
+
         } catch (error) {
 
             // Muestra un mensaje de error en la consola si ocurre un problema con la solicitud
             console.error('Error al Actualizar el usuario:', error.response ? error.response.data : error.message);
+
+            throw error;
         }
     }
 
@@ -99,11 +103,8 @@ export class ApiService {
 
             // Muestra un mensaje de error en la consola, incluyendo información del error si está disponible
             console.error("Error al obtener los datos:", error.response ? error.response.data : error.message);
+            throw error;
         }
-    }
-
-    static async search() {
-
     }
 
 }
