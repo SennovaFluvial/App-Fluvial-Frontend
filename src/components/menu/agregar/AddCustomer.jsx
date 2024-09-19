@@ -68,14 +68,16 @@ export const AddCustomer = () => {
                             {
                                 formData.personType === "Juridica" && (
                                     <>
-                                        <div className="col-md-6">
-                                            <Inputs event={handleChange} text="Nombre de la Empresa" name="companyName" icon="fa-regular fa-building" value={formData.companyName} />
-                                            {errorsForms.companyName && <div className="text-danger">{errorsForms.companyName}</div>}
-                                        </div>
+                                        <div className="row">
+                                            <div className="col-md-6">
+                                                <Inputs event={handleChange} text="Nombre de la Empresa" name="companyName" icon="fa-regular fa-building" value={formData.companyName} />
+                                                {errorsForms.companyName && <div className="text-danger">{errorsForms.companyName}</div>}
+                                            </div>
 
-                                        <div className="col-md-6">
-                                            <Inputs event={handleChange} text="Nit de la empresa" name="nitCompany" icon="fa-regular fa-building" value={formData.nitCompany} />
-                                            {errorsForms.nitCompany && <div className="text-danger">{errorsForms.nitCompany}</div>}
+                                            <div className="col-md-6">
+                                                <Inputs event={handleChange} text="Nit de la empresa" name="nitCompany" icon="fa-regular fa-building" value={formData.nitCompany} />
+                                                {errorsForms.nitCompany && <div className="text-danger">{errorsForms.nitCompany}</div>}
+                                            </div>
                                         </div>
                                     </>
                                 )

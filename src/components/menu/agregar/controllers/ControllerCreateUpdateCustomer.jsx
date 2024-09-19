@@ -53,7 +53,7 @@ export const ControllerCreateUpdateCustomer = ({ id, action }) => {
                     typeDocument: customerFilterById.typeDocument, numDocument: customerFilterById.numDocument,
                     email: customerFilterById.email, dateOfBirth: customerFilterById.dateOfBirth, nationality: customerFilterById.nationality,
                     maritalStatus: customerFilterById.maritalStatus, phone: customerFilterById.phone, address: customerFilterById.address,
-                    sex: customerFilterById.sex, cityName: customerFilterById.cityName, userNames: [userNameUser]
+                    sex: customerFilterById.sex, personType: customerFilterById.personType, companyName: customerFilterById.companyName, nitCompany: customerFilterById.nitCompany, cityName: customerFilterById.cityName, userNames: [userNameUser]
                 });
             }
         }
@@ -62,18 +62,10 @@ export const ControllerCreateUpdateCustomer = ({ id, action }) => {
     const handleChange = (event) => {
         const { name, value } = event.target;
 
-        // Actualizar campos dinámicamente, permitiendo espacios
-        if (name.startsWith("userName")) {
-            const index = parseInt(name.replace("userName", ""));
-            const updatedUserNames = [...formData.userNames];
-            updatedUserNames[index] = value;
-            setFormData({ ...formData, userNames: updatedUserNames });
-        } else {
-            setFormData((prevFormData) => ({
-                ...prevFormData,
-                [name]: value
-            }));
-        }
+        setFormData((prevFormData) => ({
+            ...prevFormData,
+            [name]: value
+        }));
 
         // Verificar el tipo de persona
         if (name === "personType") {
@@ -91,6 +83,39 @@ export const ControllerCreateUpdateCustomer = ({ id, action }) => {
                 }));
             }
         }
+
+        // Validar el campo en tiempo real
+        if (!value.trim()) {
+            // Si el campo está vacío o tiene solo espacios, agregar un error de "Campo obligatorio"
+            setErrorsForms((prevErrors) => ({
+                ...prevErrors,
+                [name]: "Campo obligatorio"
+            }));
+        } else if (name === "numDocument" || name === "phone") {
+            const numericValue = Number(value);
+
+            if (isNaN(numericValue)) {
+                // Si no es un número válido, agregar el error de "Debe ser un número válido"
+                setErrorsForms((prevErrors) => ({
+                    ...prevErrors,
+                    [name]: "Debe ser un número válido"
+                }));
+            } else {
+                // Si es un número válido, eliminamos el error del campo correspondiente
+                setErrorsForms((prevErrors) => {
+                    const { [name]: removed, ...rest } = prevErrors;
+                    return rest;
+                });
+            }
+        } else {
+            // Si el campo es válido y no es numérico, eliminar cualquier error
+            setErrorsForms((prevErrors) => {
+                const { [name]: removed, ...rest } = prevErrors;
+                return rest;
+            });
+        }
+
+
     };
 
     const handleErrors = (name, message) => {
@@ -115,14 +140,25 @@ export const ControllerCreateUpdateCustomer = ({ id, action }) => {
 
         const newErrors = {};
         let firstEmptyField = null;
+        let firstNumericErrorField = null;
 
+        // Obtener las etiquetas de los campos del formulario
+        const getLabelForField = (fieldName) => {
+            const labelElement = document.querySelector(`label[for="${fieldName}"]`);
+            return labelElement ? labelElement.textContent : fieldName;
+        };
+
+        // Validar los campos
         for (let [name, value] of Object.entries(formData)) {
             if (Array.isArray(value) && value.some((v) => typeof v === 'string' && !v.trim())) {
-                newErrors[name] = "Campo obligatorio";
+                newErrors[name] = `${getLabelForField(name)} es obligatorio`;
                 if (!firstEmptyField) firstEmptyField = name;
             } else if (typeof value === 'string' && !value.trim()) {
-                newErrors[name] = "Campo obligatorio";
+                newErrors[name] = `${getLabelForField(name)} es obligatorio`;
                 if (!firstEmptyField) firstEmptyField = name;
+            } else if ((name === "numDocument" || name === "phone") && isNaN(Number(value))) {
+                newErrors[name] = `${getLabelForField(name)} debe ser un número válido`;
+                if (!firstNumericErrorField) firstNumericErrorField = name;
             } else {
                 const { [name]: removed, ...rest } = errorsForms;
                 setErrorsForms(rest);
@@ -131,10 +167,19 @@ export const ControllerCreateUpdateCustomer = ({ id, action }) => {
 
         setErrorsForms({ ...errorsForms, ...newErrors });
 
+        // Mostrar alerta específica
         if (Object.keys(newErrors).length > 0) {
+            let alertMessage = '';
+
+            if (firstEmptyField) {
+                alertMessage = `Por favor, complete el campo obligatorio: ${getLabelForField(firstEmptyField)}`;
+            } else if (firstNumericErrorField) {
+                alertMessage = `El campo ${getLabelForField(firstNumericErrorField)} debe ser un valor numérico`;
+            }
+
             swal({
                 title: 'Error',
-                text: `Por favor, complete el campo obligatorio: ${firstEmptyField}`,
+                text: alertMessage,
                 icon: 'error',
                 timer: 3000
             });
