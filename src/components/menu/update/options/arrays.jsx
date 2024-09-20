@@ -162,3 +162,12 @@ export const volumeUnits = [
     { label: 'Pies cúbicos', value: 'ft3' },
     { label: 'Pulgadas cúbicas', value: 'in3' },
 ];
+
+export const typeCargo = [
+    { label: 'Hidrocarburos' , value: 'hidrocarburos'}
+]
+
+export const Booleano = [
+    { label: 'Si', value: 'true'},
+    { label: 'No', value: 'false' }
+];

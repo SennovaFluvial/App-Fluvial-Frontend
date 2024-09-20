@@ -1,0 +1,92 @@
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+
+.nav {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+}
+
+/* Estilos para la lista de pasos */
+.steps {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 10px;
+}
+
+/* Estilos para cada paso (botón) */
+.step {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    border: 1px solid #000;
+    border-radius: 8px;
+    background-color: white;
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+    text-decoration: none;
+}
+
+.step a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+}
+
+.step i {
+    margin-left: 8px;
+}
+
+/* Estilos para el paso activo (verde y letras blancas) */
+.activeStep {
+    background-color: #00cc00;
+    color: white;
+    border-color: #00cc00;
+}
+
+.activeStep a {
+    color: white;
+}
+
+.activeStep i {
+    color: white;
+}
+
+
+/* Estilos para los iconos */
+.iconUser::before {
+    content: "\f007";
+    font-family: "FontAwesome";
+    margin-left: 5px;
+}
+
+.iconShipment::before {
+    content: "\f0d1";
+    font-family: "FontAwesome";
+    margin-left: 5px;
+}
+
+.iconShip::before {
+    content: "\f21a";
+    font-family: "FontAwesome";
+    margin-left: 5px;
+}
+
+.iconCheck::before {
+    content: "\f00c";
+    font-family: "FontAwesome";
+    margin-left: 5px;
+}
