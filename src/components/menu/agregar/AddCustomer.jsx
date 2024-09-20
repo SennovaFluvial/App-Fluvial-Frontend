@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
 import { Select } from '../../html components/Selects.jsx';
 import { Inputs } from '../../html components/Inputs.jsx';
 import styles from '../../../assets/css/Forms.module.css'
-import { OptionsTypeDocument, genero, maritalStatus, nationality, useOptionsCities, useOptionsDepto } from '../update/options/arrays.jsx';
+import { OptionsTypeDocument, genero, maritalStatus, nationality, useOptionsCities, useOptionsDepto, personType } from '../update/options/arrays.jsx';
 import { useParams } from 'react-router';
 import { ControllerCreateUpdateCustomer } from './controllers/ControllerCreateUpdateCustomer.jsx';
 
@@ -58,6 +57,32 @@ export const AddCustomer = () => {
                                 <Select event={handleChange} text="Estado Civil" value={formData.maritalStatus} options={maritalStatus} name="maritalStatus" />
                                 {errorsForms.maritalStatus && <div className="text-danger">{errorsForms.maritalStatus}</div>}
                             </div>
+
+                            {/* TIPO DE PERSONA */}
+
+                            <div className="col-md-4">
+                                <Select event={handleChange} text="Tipo de Cliente" value={formData.personType} options={personType} name="personType" />
+                                {errorsForms.personType && <div className="text-danger">{errorsForms.personType}</div>}
+                            </div>
+
+                            {
+                                formData.personType === "Juridica" && (
+                                    <>
+                                        <div className="row">
+                                            <div className="col-md-6">
+                                                <Inputs event={handleChange} text="Nombre de la Empresa" name="companyName" icon="fa-regular fa-building" value={formData.companyName} />
+                                                {errorsForms.companyName && <div className="text-danger">{errorsForms.companyName}</div>}
+                                            </div>
+
+                                            <div className="col-md-6">
+                                                <Inputs event={handleChange} text="Nit de la empresa" name="nitCompany" icon="fa-regular fa-building" value={formData.nitCompany} />
+                                                {errorsForms.nitCompany && <div className="text-danger">{errorsForms.nitCompany}</div>}
+                                            </div>
+                                        </div>
+                                    </>
+                                )
+                            }
+
                         </div>
 
                         <div className="text-center">

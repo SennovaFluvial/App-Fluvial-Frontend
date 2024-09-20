@@ -85,7 +85,6 @@ export const ComponentRouter = () => {
                     <Route path="show-vehicles" element={< ShowVehicles />} /> {/* Ruta para ver vehículos */}
 
                     <Route path="register-shipment" element={< RegisterShipment />} > {/* Ruta padre para los moudulos de envío */}
-
                         <Route index element={<Navigate to="module-Sender" />} />
 
                         <Route path="module-Sender" element={< ModuleSender />} /> {/* Ruta para ver modulo de remitente */}
@@ -96,7 +95,7 @@ export const ComponentRouter = () => {
 
                     </Route>
 
-                    <Route path="Reports" element={< Informes />} /> 
+                    <Route path="Reports" element={< Informes />} />
 
                 </Route>
             </Route>

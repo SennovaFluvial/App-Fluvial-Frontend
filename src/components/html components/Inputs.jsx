@@ -32,6 +32,7 @@ export const Inputs = ({ type, text, name, event, placeholder, icon, value }) =>
                 )}
                 {/* Input del formulario */}
                 <input
+                    id={name} // Asigna el id igual al name
                     type={type === 'password' && showPassword ? 'text' : type} // Muestra la contraseña como texto si showPassword es true, de lo contrario mantiene el tipo original
                     className="form-control" // Clase CSS del input
                     name={name} // Nombre del input

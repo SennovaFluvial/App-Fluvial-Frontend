@@ -20,6 +20,10 @@ export const AddVehicle = () => {
                                 <Select event={handleChange} text="Tipo" name="type" options={typeVehicle} value={formData.type} />
                                 {errorsForms.type && <div className="text-danger">{errorsForms.type}</div>}
                             </div>
+                            <div className="col-md-6">
+                                <Inputs event={handleChange} text="Nombres de la embarcación" name="nombre" icon="fa-solid fa-car" value={formData.nombre} />
+                                {errorsForms.nombre && <div className="text-danger">{errorsForms.nombre}</div>}
+                            </div>
                         </div>
                         <div className="row">
                             <div className="col-md-6">

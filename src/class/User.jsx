@@ -26,7 +26,7 @@ export class User {
     static async sign_up(data) {
         try {
             const jsonData = JSON.stringify(data);
-
+    
             const config = {
                 headers: {
                     'Content-Type': 'application/json',

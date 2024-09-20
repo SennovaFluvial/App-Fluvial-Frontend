@@ -10,7 +10,7 @@ export const ControllerCreateUpdateVehicle = ({ id, action }) => {
     const userName = userCreater?.username;
     const [errorsForms, setErrorsForms] = useState({});
     const [formData, setFormData] = useState({
-        type: '', model: '', licensePlate: '', registration: '', weightCapacity: '',
+        nombre: '', type: '', model: '', licensePlate: '', registration: '', weightCapacity: '',
         weightUnit: '', volumeCapacity: '', volumeUnit: '', passengerSpace: '', createdBy: ''
     });
 
@@ -29,7 +29,7 @@ export const ControllerCreateUpdateVehicle = ({ id, action }) => {
         const fetchData = async () => {
             if (!id && !action) {
                 setFormData({
-                    type: '', model: '', licensePlate: '', registration: '', weightCapacity: '',
+                    nombre: '', type: '', model: '', licensePlate: '', registration: '', weightCapacity: '',
                     weightUnit: '', volumeCapacity: '', volumeUnit: '', passengerSpace: '', createdBy: userName
                 });
             } else {
@@ -41,6 +41,7 @@ export const ControllerCreateUpdateVehicle = ({ id, action }) => {
 
                         if (vehicleFiltered) {
                             setFormData({
+                                nombre: vehicleFiltered.nombre,
                                 type: vehicleFiltered.type,
                                 model: vehicleFiltered.model,
                                 licensePlate: vehicleFiltered.licensePlate,

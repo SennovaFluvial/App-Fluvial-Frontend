@@ -41,7 +41,7 @@ export const ShowCompany = () => {
         </div>
 
         <div className="row">
-          <div className="col-md-12 my-3">
+          <div className="col-md-4 my-3">
             <input
               type="text"
               className="form-control"
@@ -49,6 +49,18 @@ export const ShowCompany = () => {
               value={searchTerm}
               onChange={handleSearchChange}
             />
+          </div>
+          <div className="col-md-2 my-3 d-flex justify-content-end ms-auto">
+            <Link to={"/adminSection/add-company"}>
+              <button className='btn btn-primary rounded-pill p-2 ps-2'>
+                <i className="fa-regular fa-square-plus me-3"></i>Nuevo Empresa
+              </button>
+            </Link>
+          </div>
+          <div className="col-md-2 my-3 d-flex justify-content-end ms-2">
+            <button className='btn btn-warning rounded-pill p-2 ps-2'>
+              <i className="fa-solid fa-print me-3"></i> Imprimir Informe
+            </button>
           </div>
         </div>
 

@@ -101,10 +101,22 @@
     border-radius: 0.75rem;
 }
 
+
+.icono-user {    
+    font-size: 30px;
+    background: linear-gradient(to right, #00A1FF, #0044FF); /* Degradado azul */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 .is-disabled {
     pointer-events: none;
     color: #ccc;
     cursor: not-allowed;
+}
+
+.option-menu {  
+    padding: 10px;
 }
 
 nav.pagination {

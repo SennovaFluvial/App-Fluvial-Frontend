@@ -40,7 +40,7 @@ export const ShowCustomers = () => {
         </div>
 
         <div className="row">
-          <div className="col-md-12 my-3">
+          <div className="col-md-4 my-3">
             <input
               type="text"
               className="form-control"
@@ -48,6 +48,18 @@ export const ShowCustomers = () => {
               value={searchTerm}
               onChange={handleSearchChange}
             />
+          </div>
+          <div className="col-md-2 my-3 d-flex justify-content-end ms-auto">
+            <Link to={"/adminSection/add-customer"}>
+              <button className='btn btn-primary rounded-pill p-2 ps-2'>
+                <i className="fa-regular fa-square-plus me-3"></i>Nuevo Cliente
+              </button>
+            </Link>
+          </div>
+          <div className="col-md-2 my-3 d-flex justify-content-end ms-2">
+            <button className='btn btn-warning rounded-pill p-2 ps-2'>
+              <i className="fa-solid fa-print me-3"></i> Imprimir Informe
+            </button>
           </div>
         </div>
 
@@ -61,6 +73,8 @@ export const ShowCustomers = () => {
               <th scope="col">Telefono</th>
               <th scope="col">Direccion</th>
               <th scope="col">Ciudad</th>
+              <th scope="col">Tipo de Persona</th>
+              <th scope="col">Nombre de empresa</th>
               <th scope="col">Acciones</th>
             </tr>
           </thead>
@@ -71,10 +85,12 @@ export const ShowCustomers = () => {
                   <td><b>{firstIndex + index + 1}</b></td>
                   <td>{item.numDocument}</td>
                   <td>{item.name + ' ' + item.lastName}</td>
-                  <td>{item.email}</td>
+                  <td>{item.email}</td> 
                   <td>{item.phone}</td>
                   <td>{item.address}</td>
                   <td>{item.cityName}</td>
+                  <td>{item.personType}</td>
+                  <td>{item.personType === "Juridica" ? item.companyName : "➖"}</td>
                   <td>
                     <Link to={`../add-customer/${item.id}/update`}>
                       <button className='btn icon-link-hover ms-3 text-primary'>

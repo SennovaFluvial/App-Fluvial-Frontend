@@ -4,15 +4,36 @@ import { OptionsTypeDocument, genero, status, maritalStatus, codigoPaises } from
 import styles from '../../../assets/css/Forms.module.css'
 import '../../../assets/css/success.css'
 import { ControllerCreateUpdateEmployed } from './controllers/ControllerCreateUpdateEmployed.jsx';
+import { useState } from 'react';
+import { VerifyUserChangePassword } from './controllers/VerifyUserChangePassword.jsx';
 
 export const AddEmployed = () => {
 
   const queryParam = new URLSearchParams(location.search);
   const action = queryParam.get('action');
+  const userData = JSON.parse(localStorage.getItem('user'));
+  const userNameUser = userData?.username;
+  // Define updatePassword antes de usarlo
+  const {
+    updatePassword,
+    handleChangeVerify,
+    errorsFormsVerify,
+    handleSubmitVerify,
+    userName,
+    formLogin
+  } = VerifyUserChangePassword();
 
-  const { handleSubmit, handleChange, formData, errorsForms, cities, deptos, roles, role, companies } = ControllerCreateUpdateEmployed();
-
-
+  const {
+    handleSubmit,
+    handleChange,
+    formData,
+    errorsForms,
+    cities,
+    deptos,
+    roles,
+    role,
+    companies
+  } = ControllerCreateUpdateEmployed({ updatePassword });
 
   return (
     <>
@@ -84,6 +105,7 @@ export const AddEmployed = () => {
                 <Inputs event={handleChange} text="Número de Teléfono" name="phone" icon="fa-solid fa-phone-volume" value={formData.phone} />
                 {errorsForms.phone && <div className="text-danger">{errorsForms.phone}</div>}
               </div>
+
               <div className="col-md-3">
                 <Inputs event={handleChange} text="Usuario" name="username" icon="fa-solid fa-user" value={formData.username} />
                 {errorsForms.username && <div className="text-danger">{errorsForms.username}</div>}
@@ -92,14 +114,50 @@ export const AddEmployed = () => {
                 <Inputs event={handleChange} text="Confirmar Usuario" name="confirmUsername" icon="fa-regular fa-envelope" value={formData.confirmUsername} />
                 {errorsForms.confirmUsername && <div className="text-danger">{errorsForms.confirmUsername}</div>}
               </div>
-              <div className="col-md-6">
-                <Inputs event={handleChange} type="password" text="Crear Contraseña" name="password" icon="fa-solid fa-lock" value={formData.password} />
-                {errorsForms.password && <div className="text-danger">{errorsForms.password}</div>}
-              </div>
-              <div className="col-md-6">
-                <Inputs event={handleChange} type="password" text="Confirmar Contraseña" name="confirmPassword" icon="fa-solid fa-lock" value={formData.confirmPassword} />
-                {errorsForms.confirmPassword && <div className="text-danger">{errorsForms.confirmPassword}</div>}
-              </div>
+              {
+                !action ? (<>
+                  <div className="row">
+                    <div className="col-md-6">
+                      <Inputs event={handleChange} type="password" text="Crear Contraseña" name="password" icon="fa-solid fa-lock" value={formData.password} />
+                      {errorsForms.password && <div className="text-danger">{errorsForms.password}</div>}
+                    </div>
+                    <div className="col-md-6">
+                      <Inputs event={handleChange} type="password" text="Confirmar Contraseña" name="confirmPassword" icon="fa-solid fa-lock" value={formData.confirmPassword} />
+                      {errorsForms.confirmPassword && <div className="text-danger">{errorsForms.confirmPassword}</div>}
+                    </div>
+                  </div>
+                </>) : action && action === "update" ? (
+                  <>
+                    <div className="row">
+                      <div className="col-md-4">
+
+                        <div className="form-check my-4">
+                          <input className="form-check-input" type="checkbox" data-bs-toggle="modal" data-bs-target="#updateWitdhPassword" />
+                          <label className="form-check-label">
+                            ¿Cambiar contraseña?
+                          </label>
+                        </div>
+                      </div>
+
+                      {/* Solo mostrar el formulario de cambiar contraseña si updatePassword es true */}
+                      {updatePassword && (
+                        <>
+                          <div className="row">
+                            <div className="col-md-6">
+                              <Inputs event={handleChange} type="password" text="Crear Contraseña" name="password" icon="fa-solid fa-lock" value={formData.password} />
+                              {errorsForms.password && <div className="text-danger">{errorsForms.password}</div>}
+                            </div>
+                            <div className="col-md-6">
+                              <Inputs event={handleChange} type="password" text="Confirmar Contraseña" name="confirmPassword" icon="fa-solid fa-lock" value={formData.confirmPassword} />
+                              {errorsForms.confirmPassword && <div className="text-danger">{errorsForms.confirmPassword}</div>}
+                            </div>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  </>
+                ) : null
+              }
             </div>
 
             <div className="text-center">
@@ -114,7 +172,7 @@ export const AddEmployed = () => {
                 </div>
               )}
               {/* </div> */}
-              
+
               <div className="col-md-4">
                 <Select event={handleChange} value={formData.roleRequest.roleListName[0]} text="Rol" options={roles} name="roleListName" />
                 {errorsForms.roleListName && <div className="text-danger">{errorsForms.roleListName}</div>}
@@ -128,6 +186,43 @@ export const AddEmployed = () => {
               <button type="submit" className={"btn btn-success"}>{action === 'update' ? 'Actualizar' : 'Crear'} Empleado <i className="fa-solid fa-building-user"></i></button>
             </div>
           </form>
+        </div>
+      </div>
+
+      {/* Modal */}
+
+      <div className="modal fade" id="updateWitdhPassword" aria-labelledby="updateWitdhPassword" aria-hidden="true">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5">Verificación de Usuario</h1>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form>
+              <div className="modal-body">
+                <h1 className="modal-title fs-5">{`Ingresa la contraseña del usuario ${userName}`}</h1>
+                <Inputs
+                  placeholder="Contraseña..."
+                  event={handleChangeVerify}
+                  type="password"
+                  name="password"
+                  icon="fa-solid fa-lock"
+                  value={formLogin.password}
+                />
+                {errorsFormsVerify.password && (
+                  <div className="text-danger">{errorsFormsVerify.password}</div>
+                )}
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-danger" data-bs-dismiss="modal">
+                  Cerrar
+                </button>
+                <button type="button" className="btn btn-success" onClick={handleSubmitVerify}>
+                  Validar
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </>

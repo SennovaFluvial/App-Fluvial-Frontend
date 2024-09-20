@@ -41,7 +41,7 @@ export const ShowVehicles = () => {
         </div>
 
         <div className="row">
-          <div className="col-md-12 my-3">
+          <div className="col-md-4 my-3">
             <input
               type="text"
               className="form-control"
@@ -49,6 +49,18 @@ export const ShowVehicles = () => {
               value={searchTerm}
               onChange={handleSearchChange}
             />
+          </div>
+          <div className="col-md-2 my-3 d-flex justify-content-end ms-auto">
+            <Link to={"/adminSection/add-vehicle"}>
+              <button className='btn btn-primary rounded-pill p-2 ps-2'>
+                <i className="fa-regular fa-square-plus me-3"></i>Nuevo Vehiculo
+              </button>
+            </Link>
+          </div>
+          <div className="col-md-2 my-3 d-flex justify-content-end ms-2">
+            <button className='btn btn-warning rounded-pill p-2 ps-2'>
+              <i className="fa-solid fa-print me-3"></i> Imprimir Informe
+            </button>
           </div>
         </div>
 
@@ -71,7 +83,7 @@ export const ShowVehicles = () => {
                 <tr key={item.id}>
                   <td>{firstIndex + index + 1}</td>
                   <td>{item.licensePlate}</td>
-                  <td>Campo faltante ?</td>
+                  <td>{item.nombre}</td>
                   <td>{item.type}</td>
                   <td>{item.volumeCapacity + ' ' + item.volumeUnit}</td>
                   <td>{item.weightCapacity + ' ' + item.weightUnit}</td>

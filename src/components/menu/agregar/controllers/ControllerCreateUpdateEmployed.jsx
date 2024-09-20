@@ -6,7 +6,7 @@ import Swal from 'sweetalert';
 import { User } from '../../../../class/User.jsx';
 import { useLocation, useNavigate, useParams } from 'react-router';
 
-export const ControllerCreateUpdateEmployed = () => {
+export const ControllerCreateUpdateEmployed = ({ updatePassword }) => {
     const cities = useOptionsCities();
     const deptos = useOptionsDepto();
     const roles = useRoles();
@@ -179,6 +179,19 @@ export const ControllerCreateUpdateEmployed = () => {
         } else {
             setErrorsForms({ ...errorsForms, [name]: "Campo obligatorio" });
         }
+
+        // Validación de campos numéricos
+        if (name === 'numDocument' || name === 'phone') {
+            if (isNaN(value)) {
+                setErrorsForms(prevErrors => ({
+                    ...prevErrors,
+                    [name]: "Debe ser un número válido"
+                }));
+            } else {
+                const { [name]: removed, ...rest } = errorsForms;
+                setErrorsForms(rest); // Elimina el error si es un número válido
+            }
+        }
     };
 
     const handleErrors = (name, message) => {
@@ -189,6 +202,7 @@ export const ControllerCreateUpdateEmployed = () => {
     };
 
     useEffect(() => {
+        // Validar fecha de nacimiento
         if (formData.birthDate) {
             const selectedDate = new Date(formData.birthDate);
             const today = new Date();
@@ -198,24 +212,17 @@ export const ControllerCreateUpdateEmployed = () => {
             }
         }
 
+        // Validar nombres de usuario
         if (formData.confirmUsername && formData.username !== formData.confirmUsername) {
             handleErrors("confirmUsername", "Los nombres de usuario no coinciden");
-        } else if (formData.username === formData.confirmUsername) {
-            setFormData(prevState => ({
-                ...prevState,
-                username: formData.username
-            }));
         }
 
-        if (formData.confirmPassword && formData.password !== formData.confirmPassword) {
+        // Validar contraseñas solo si updatePassword es true
+        if (updatePassword && formData.confirmPassword && formData.password !== formData.confirmPassword) {
             handleErrors("confirmPassword", "Las contraseñas no coinciden");
-        } else if (formData.password === formData.confirmPassword) {
-            setFormData(prevState => ({
-                ...prevState,
-                password: formData.password
-            }));
         }
-    }, [formData.username, formData.confirmUsername, formData.password, formData.confirmPassword, formData.birthDate]);
+
+    }, [formData.username, formData.confirmUsername, formData.password, formData.confirmPassword, formData.birthDate, updatePassword]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -223,18 +230,33 @@ export const ControllerCreateUpdateEmployed = () => {
         const newErrors = {};
         let firstEmptyField = null;
 
-        for (let [name, value] of Object.entries(formData)) {
-            if (name === 'roleRequest.roleListName' && (!formData.roleRequest.roleListName || formData.roleRequest.roleListName.length === 0)) {
-                newErrors['roleRequest'] = "Campo obligatorio";
-                if (!firstEmptyField) firstEmptyField = 'Role List Name';
-            } else if (typeof value === 'string' && !value.trim()) {
-                newErrors[name] = "Campo obligatorio";
-                if (!firstEmptyField) firstEmptyField = name;
+        // Validación de campos vacíos (aplica a todos los campos)
+        if (updatePassword) {
+            for (let [name, value] of Object.entries(formData)) {
+                if (name === 'roleRequest.roleListName' && (!formData.roleRequest.roleListName || formData.roleRequest.roleListName.length === 0)) {
+                    newErrors['roleRequest'] = "Campo obligatorio";
+                    if (!firstEmptyField) firstEmptyField = 'Role List Name';
+                } else if (typeof value === 'string' && !value.trim()) {
+                    newErrors[name] = "Campo obligatorio";
+                    if (!firstEmptyField) firstEmptyField = name;
+                }
+            }
+        } else {
+            for (let [name, value] of Object.entries(formData)) {
+                // Validar todos los campos excepto 'password' y 'confirmPassword'
+                if (name !== 'password' && name !== 'confirmPassword') {
+                    if (typeof value === 'string' && !value.trim()) {
+                        newErrors[name] = "Campo obligatorio";
+                        if (!firstEmptyField) firstEmptyField = name;
+                    }
+                }
             }
         }
 
+        // Actualización de los errores en el estado
         setErrorsForms(newErrors);
 
+        // Si hay errores, se detiene la ejecución
         if (Object.keys(newErrors).length > 0) {
             Swal({
                 title: 'Error',
@@ -245,7 +267,11 @@ export const ControllerCreateUpdateEmployed = () => {
             return;
         }
 
-        const { confirmUsername, confirmPassword, ...dataToSend } = formData;
+        // Preparar los datos a enviar, eliminando confirmaciones innecesarias
+        let dataToSend = { ...formData };
+        delete dataToSend.confirmUsername;
+        delete dataToSend.confirmPassword;
+
 
         const confirmationMessage = action === 'update'
             ? `¿Está seguro que quiere actualizar el usuario?\nUsuario: ${dataToSend.username}\nRol: ${dataToSend.roleRequest.roleListName[0]}`
@@ -264,7 +290,14 @@ export const ControllerCreateUpdateEmployed = () => {
 
             if (result) {
                 if (action === 'update') {
-                    await ApiService.put(`/auth/update/${userId}`, dataToSend);
+                    // Enviar datos dependiendo de si se actualiza la contraseña o no
+                    if (updatePassword) {
+                        await ApiService.put(`/auth/update/${userId}`, dataToSend);
+                    } else {
+                        delete dataToSend.password;
+                        delete dataToSend.confirmPassword;
+                        await ApiService.put(`/auth/update-nopass/${userId}`, dataToSend);
+                    }
                 } else {
                     await User.sign_up(dataToSend);
                 }

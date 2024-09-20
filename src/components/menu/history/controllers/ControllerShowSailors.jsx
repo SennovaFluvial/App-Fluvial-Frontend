@@ -26,7 +26,7 @@ export const useControllerShowSailors = () => {
 
     const { searchTerm, handleSearchChange, filteredItems } = useSearchFields(
         crew,
-        ["name", "lastName", "numDocument", "phone", "employeeType.typeName", "status"]
+        ["name", "lastName", "numDocument", "phone", "employeeType.typeName", "status", "nationality"]
     );
 
     const totalFilteredItems = filteredItems.length;

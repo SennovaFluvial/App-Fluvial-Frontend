@@ -38,7 +38,7 @@ export const useControllerShowUsers = () => {
         } else if (currentPage > totalPages) {
             setCurrentPage(totalPages);
         }
-    }, [filteredItems, totalPages, currentPage, totalFilteredItems]);
+    }, [filteredItems, totalPages, currentPage, totalFilteredItems, employed]);
 
     const lastIndex = currentPage * elementForPage;
     const firstIndex = lastIndex - elementForPage;

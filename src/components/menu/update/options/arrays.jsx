@@ -117,10 +117,6 @@ export const status = [
     { label: 'Inactivo', value: 'inactivo' }
 ];
 
-// export const codigoPaises= [
-//     { label: <><Flag code="COL" />+57 Colombia </> , value: 'colombia' },
-//     { label: <><Flag code="MEX" />+52 México</>, value: 'mexico' }
-// ];
 export const codigoPaises = [
     { label: "+57", value: 'colombia' },
     { label: "+52", value: 'mexico' }
@@ -162,12 +158,16 @@ export const volumeUnits = [
     { label: 'Pies cúbicos', value: 'ft3' },
     { label: 'Pulgadas cúbicas', value: 'in3' },
 ];
+export const personType = [
+    { label: "Persona Natural", value: "Natural" },
+    { label: "Persona Juridica", value: "Juridica" }
+]
 
 export const typeCargo = [
-    { label: 'Hidrocarburos' , value: 'hidrocarburos'}
+    { label: 'Hidrocarburos', value: 'hidrocarburos' }
 ]
 
 export const Booleano = [
-    { label: 'Si', value: 'true'},
+    { label: 'Si', value: 'true' },
     { label: 'No', value: 'false' }
 ];
