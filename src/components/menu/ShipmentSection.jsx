@@ -18,7 +18,7 @@ export const ShipmentSection = () => {
                             </li>
 
                             <li className='dropdown-item text-black'>
-                                <Link to={'module-Sender'}>
+                                <Link to={'register-shipment'}>
                                     Creación de Enviós
                                 </Link>
                             </li>

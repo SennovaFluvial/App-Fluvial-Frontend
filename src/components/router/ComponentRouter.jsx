@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { ValidationPages } from './validation.jsx';
 import { VistaHomePageOff } from '../../vistaHome.jsx';
 import { Login } from '../../Login.jsx';
@@ -25,7 +25,12 @@ import { Info } from '../../Info.jsx';
 
 import { RegisterShipment } from '../menu/ShipmentModules/RegisterShipment.jsx';
 import { ModuleSender } from '../menu/ShipmentModules/ModuleSender.jsx';
+import { ModuleRecipient } from '../menu/ShipmentModules/ModuleRecipient.jsx'
+import { ModuleShipment } from '../menu/ShipmentModules/ModuleShipment.jsx';
+import { ModuleVehicle } from '../menu/ShipmentModules/ModuleVehicle.jsx';
+import { ModuleFinish } from '../menu/ShipmentModules/ModuleFinish.jsx';
 
+import { Informes } from '../menu/Informes.jsx';
 /**
  * Componente ComponentRouter
  * 
@@ -79,10 +84,18 @@ export const ComponentRouter = () => {
                     <Route path="show-crew" element={< ShowCrew />} /> {/* Ruta para ver tripualntes */}
                     <Route path="show-vehicles" element={< ShowVehicles />} /> {/* Ruta para ver vehículos */}
 
-                    <Route path="module-Sender" element={< ModuleSender />} /> {/* Ruta para ver modulo de remitente */}
                     <Route path="register-shipment" element={< RegisterShipment />} > {/* Ruta padre para los moudulos de envío */}
+                        <Route index element={<Navigate to="module-Sender" />} />
+
+                        <Route path="module-Sender" element={< ModuleSender />} /> {/* Ruta para ver modulo de remitente */}
+                        <Route path="module-recipient" element={< ModuleRecipient />} /> {/* Ruta para ver modulo de receptor */}
+                        <Route path="module-shipment" element={< ModuleShipment />} /> {/* Ruta para ver modulo de envío */}
+                        <Route path="module-vehicle" element={< ModuleVehicle />} /> {/* Ruta para ver modulo de vehiculo */}
+                        <Route path="module-finish" element={< ModuleFinish />} /> {/* Ruta para ver modulo de envio finalizado */}
 
                     </Route>
+
+                    <Route path="Reports" element={< Informes />} />
 
                 </Route>
             </Route>
