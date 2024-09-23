@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import './assets/css/sidebar.css'; // Importa los estilos CSS
 import Logo from './assets/img/LogoSena.png'; // Importa el logo
-import Icono from './assets/img/icono.png';
 import { Link, useNavigate } from "react-router-dom" // Importa el hook para redirecciones
 import { ApiService } from './class/ApiServices';
 
 /* Importaciones de componentes para el menu */
-// import { Agregar } from './components/menu/Agregar';
-import { Inventarios } from './components/menu/Inventarios';
-import { Configuraciones } from './components/menu/Configuraciones';
-// import { Actualizar } from './components/menu/Actualizar';
-import { Informes } from './components/menu/Informes';
+// import { Configuraciones } from './components/menu/Configuraciones';
 
 /* Importaciones nuevas de componentes para el menu */
 import { EmployeeSection } from './components/menu/EmployeeSection';
@@ -122,14 +117,26 @@ export const Sidebar = ({ user, setUser }) => {
                             <CustomerSection />
                         </>
                     )}
-                    {/* <Agregar /> */} 
-                    {/* <Actualizar user={user} /> */}
 
                     <ShipmentSection />
 
-                    <Inventarios />
-                    <Informes />
-                    <Configuraciones />
+                    <ul>
+                        <li>
+                            <Link to="/adminSection/inventories" className="nav-link show">
+                                Inventarios
+                            </Link>
+                        </li>
+                    </ul>
+
+                    <ul>
+                        <li>
+                            <Link to="/adminSection/reports" className="nav-link show">
+                                Informes
+                            </Link>
+                        </li>
+                    </ul>
+
+                    {/* <Configuraciones /> */}
 
                 </nav>
                 <div className='logo-sena'>
