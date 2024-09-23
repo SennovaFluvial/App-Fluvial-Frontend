@@ -7,13 +7,12 @@ export const useSearchFields = (items, searchFields) => {
         setSearchTerm(e.target.value);
     };
 
-    const filteredItems = items.filter((item) =>
+    const filteredItems = Array.isArray(items) ? items.filter((item) =>
         searchFields.some(field => {
             const fieldValue = field.split('.').reduce((obj, key) => obj && obj[key], item);
-            return fieldValue !== undefined && fieldValue !== null &&
-                fieldValue.toString().toLowerCase().includes(searchTerm.toLowerCase());
+            return fieldValue && fieldValue.toString().toLowerCase().includes(searchTerm.toLowerCase());
         })
-    );
+    ) : [];
 
     return { searchTerm, handleSearchChange, filteredItems };
 }
