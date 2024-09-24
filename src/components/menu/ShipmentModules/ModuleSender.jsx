@@ -38,7 +38,7 @@ export const ModuleSender = () => {
                             <div className="col-md-4">
                                 <Select text="Tipo de Documento" options={OptionsTypeDocument} name="typeDocument" />
                             </div>
-                        
+
 
                             <div className="col-md-4">
                                 <Inputs text="Número de Documento" name="numDocument" icon="fa-solid fa-address-card" />
@@ -52,7 +52,7 @@ export const ModuleSender = () => {
                                 <Inputs text="Número de Teléfono" name="phone" icon="fa-solid fa-phone-volume" />
                             </div>
 
-                        
+
                             <div className="col-md-4">
                                 <Inputs text="Correo Electrónico" name="email" icon="fa-solid fa-at" />
                             </div>
@@ -73,11 +73,11 @@ export const ModuleSender = () => {
                             <div className="col-md-4">
                                 <Select text="Departamento" options={deptos} name="departmentName" />
                             </div>
-                        
+
                             <div className="col-md-4">
                                 <Select text="Ciudad" options={cities} name="cityName" />
                             </div>
-                            
+
                         </div>
 
                     </form>

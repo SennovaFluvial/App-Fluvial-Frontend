@@ -119,7 +119,7 @@ export const ControllerCreateUpdateEmployed = ({ updatePassword }) => {
                     phone: filterUserId.phone,
                     address: filterUserId.address,
                     cityName: filterUserId.city?.ciudad || "",
-                    departmentName: filterUserId.departmentName || "",
+                    departmentName: filterUserId.city?.departamento.departamento || "",
                     sex: filterUserId.sex,
                     birthDate: filterUserId.birthDate || "",
                     maritalStatus: filterUserId.maritalStatus || ""
