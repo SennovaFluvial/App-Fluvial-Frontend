@@ -192,6 +192,27 @@ export const ControllerCreateUpdateEmployed = ({ updatePassword }) => {
                 setErrorsForms(rest); // Elimina el error si es un número válido
             }
         }
+
+        if (name === "password" || name === "confirmPassword") {
+            const { password, confirmPassword } = {
+                ...formData,
+                [name]: value
+            };
+
+            // Valida si las contraseñas coinciden
+            if (password !== confirmPassword) {
+                setErrorsForms(prevState => ({
+                    ...prevState,
+                    confirmPassword: "Las contraseñas no coinciden"
+                }));
+            } else {
+                setErrorsForms(prevState => ({
+                    ...prevState,
+                    confirmPassword: "" // Limpia el error si coinciden
+                }));
+            }
+        }
+
     };
 
     const handleErrors = (name, message) => {
