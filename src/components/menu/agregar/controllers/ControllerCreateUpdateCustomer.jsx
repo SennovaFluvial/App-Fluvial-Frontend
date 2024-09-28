@@ -3,7 +3,7 @@ import { ApiService } from "../../../../class/ApiServices";
 import swal from "sweetalert";
 import { useNavigate } from "react-router";
 import { Alert } from "../../../../class/alerts";
-import { getLabelForField } from "../../../../functions/functions";
+
 
 export const ControllerCreateUpdateCustomer = ({ id, action }) => {
 
@@ -85,104 +85,13 @@ export const ControllerCreateUpdateCustomer = ({ id, action }) => {
             }
         }
 
-        // Validar el campo en tiempo real
-        if (!value.trim()) {
-            // Si el campo está vacío o tiene solo espacios, agregar un error de "Campo obligatorio"
-            setErrorsForms((prevErrors) => ({
-                ...prevErrors,
-                [name]: "Campo obligatorio"
-            }));
-        } else if (name === "numDocument" || name === "phone") {
-            const numericValue = Number(value);
-
-            if (isNaN(numericValue)) {
-                // Si no es un número válido, agregar el error de "Debe ser un número válido"
-                setErrorsForms((prevErrors) => ({
-                    ...prevErrors,
-                    [name]: "Debe ser un número válido"
-                }));
-            } else {
-                // Si es un número válido, eliminamos el error del campo correspondiente
-                setErrorsForms((prevErrors) => {
-                    const { [name]: removed, ...rest } = prevErrors;
-                    return rest;
-                });
-            }
-        } else {
-            // Si el campo es válido y no es numérico, eliminar cualquier error
-            setErrorsForms((prevErrors) => {
-                const { [name]: removed, ...rest } = prevErrors;
-                return rest;
-            });
-        }
-
 
     };
-
-    const handleErrors = (name, message) => {
-        setErrorsForms({ ...errorsForms, [name]: message });
-    };
-
-    // Validación de fecha de nacimiento
-    useEffect(() => {
-        if (formData.dateOfBirth) {
-            const selectedDate = new Date(formData.dateOfBirth);
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            if (selectedDate >= today) {
-                handleErrors("dateOfBirth", "La fecha de nacimiento no puede ser actual o una fecha futura");
-            }
-        }
-    }, [formData.dateOfBirth]);
 
     // Manejar el envío del formulario
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const newErrors = {};
-        let firstEmptyField = null;
-        let firstNumericErrorField = null;
-
-
-        // Validar los campos
-        for (let [name, value] of Object.entries(formData)) {
-            if (Array.isArray(value) && value.some((v) => typeof v === 'string' && !v.trim())) {
-                newErrors[name] = `Campo obligatorio`;
-                if (!firstEmptyField) firstEmptyField = name;
-            } else if (typeof value === 'string' && !value.trim()) {
-                newErrors[name] = `Campo obligatorio`;
-                if (!firstEmptyField) firstEmptyField = name;
-            } else if ((name === "numDocument" || name === "phone") && isNaN(Number(value))) {
-                newErrors[name] = `Ingrese un número válido`;
-                if (!firstNumericErrorField) firstNumericErrorField = name;
-            } else {
-                const { [name]: removed, ...rest } = errorsForms;
-                setErrorsForms(rest);
-            }
-        }
-
-
-
-        setErrorsForms({ ...errorsForms, ...newErrors });
-
-        // Mostrar alerta específica
-        if (Object.keys(newErrors).length > 0) {
-            let alertMessage = '';
-
-            if (firstEmptyField) {
-                alertMessage = `Por favor, complete el campo obligatorio: ${getLabelForField(firstEmptyField)}`;
-            } else if (firstNumericErrorField) {
-                alertMessage = `El campo ${getLabelForField(firstNumericErrorField)} debe ser un valor numérico`;
-            }
-
-            swal({
-                title: 'Error',
-                text: alertMessage,
-                icon: 'error',
-                timer: 3000
-            });
-            return;
-        }
 
         const confirmationMessage = action === 'update' ?
             `¿Está seguro que quiere actualizar el cliente?\nNombre: ${formData.name} ${formData.lastName}` :

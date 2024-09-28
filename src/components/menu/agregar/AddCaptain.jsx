@@ -9,7 +9,7 @@ import { useParams } from 'react-router';
 export const AddCaptain = () => {
 
     const { id, action } = useParams();
-    const { handleSubmit, formData, errorsForms, handleChange } = ControllerCreateUpdateCaptain({ id, action });
+    const { handleSubmit, formData, errorsForms, handleChange, isDisabled } = ControllerCreateUpdateCaptain({ id, action });
 
     return (
         <div className={styles.card}>
@@ -86,7 +86,11 @@ export const AddCaptain = () => {
                     </div>
 
                     <div className="text-center">
-                        <button type="submit" className="btn btn-success">{action === "update" ? "Actualizar" : "Crear"} Capitan <i className="fa-solid fa-id-card-clip"></i></button>
+                        <button
+                            type="submit"
+                            className={`btn btn-success ${isDisabled ? "is-disabled-button" : ""}`}
+                        >
+                            {action === "update" ? "Actualizar" : "Crear"} Capitan <i className="fa-solid fa-id-card-clip"></i></button>
                     </div>
                 </form>
             </div>

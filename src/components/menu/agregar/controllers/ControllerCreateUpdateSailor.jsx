@@ -3,6 +3,7 @@ import { useNavigate } from "react-router";
 import { ApiService } from "../../../../class/ApiServices";
 import Swal from 'sweetalert';
 import { Alert } from "../../../../class/alerts";
+import { handleStatusError } from "../../../../functions/functions";
 
 export const ControllerCreateUpdateSailor = ({ id, action }) => {
     const navigate = useNavigate();
@@ -42,9 +43,8 @@ export const ControllerCreateUpdateSailor = ({ id, action }) => {
             }
         };
 
-        fetchUsers(); // Ejecutar la funcion
+        fetchUsers();
     }, [])
-
 
     useEffect(() => {
         if (action && action === "update" && id && listEmployedFluvial.length > 0) {
@@ -64,14 +64,6 @@ export const ControllerCreateUpdateSailor = ({ id, action }) => {
         }
     }, [action, id, listEmployedFluvial])
 
-    const handleStatusError = (nameE, messegue) => {
-        setErrorsForms(
-            prev => ({
-                ...prev, [nameE]: messegue
-            })
-        )
-    }
-
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -85,16 +77,16 @@ export const ControllerCreateUpdateSailor = ({ id, action }) => {
         const currentYear = new Date().getFullYear();
 
         if (!value.trim()) {
-            handleStatusError(name, "Campo obligatorio");
+            handleStatusError(setErrorsForms, name, "Campo obligatorio");
         } else if ((name === "numDocument" || name === "phone") && isNaN(value)) {
-            handleStatusError(name, "Debe ser un número válido");
+            handleStatusError(setErrorsForms, name, "Debe ser un número válido");
         } else if ((name === "numDocument" && (value.length < 5 || value.length > 11)) ||
             (name === "phone" && (value.length < 5 || value.length > 11))) {
-            handleStatusError(name, "Debe tener entre 5 y 11 dígitos");
+            handleStatusError(setErrorsForms, name, "Debe tener entre 5 y 11 dígitos");
         } else if (name === "email" && !expresionEmail.test(value)) {
-            handleStatusError(name, "No es un correo válido, recuerda usar el formato: ejemplo@gmail.com");
+            handleStatusError(setErrorsForms, name, "No es un correo válido, recuerda usar el formato: ejemplo@gmail.com");
         } else if (name === "dateOfBirth" && (birthYear < 1700 || birthYear > 2000 || birthYear >= currentYear)) {
-            handleStatusError("dateOfBirth", "Fecha no válida. Debe estar entre 1700 y 2000.");
+            handleStatusError(setErrorsForms, "dateOfBirth", "Fecha no válida. Debe estar entre 1700 y 2000.");
         } else {
             // Elimina el error si todas las validaciones son correctas
             setErrorsForms(prevErrors => {
