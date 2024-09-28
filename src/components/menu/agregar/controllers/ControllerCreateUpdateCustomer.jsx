@@ -3,6 +3,7 @@ import { ApiService } from "../../../../class/ApiServices";
 import swal from "sweetalert";
 import { useNavigate } from "react-router";
 import { Alert } from "../../../../class/alerts";
+import { getLabelForField } from "../../../../functions/functions";
 
 export const ControllerCreateUpdateCustomer = ({ id, action }) => {
 
@@ -142,28 +143,25 @@ export const ControllerCreateUpdateCustomer = ({ id, action }) => {
         let firstEmptyField = null;
         let firstNumericErrorField = null;
 
-        // Obtener las etiquetas de los campos del formulario
-        const getLabelForField = (fieldName) => {
-            const labelElement = document.querySelector(`label[for="${fieldName}"]`);
-            return labelElement ? labelElement.textContent : fieldName;
-        };
 
         // Validar los campos
         for (let [name, value] of Object.entries(formData)) {
             if (Array.isArray(value) && value.some((v) => typeof v === 'string' && !v.trim())) {
-                newErrors[name] = `${getLabelForField(name)} es obligatorio`;
+                newErrors[name] = `Campo obligatorio`;
                 if (!firstEmptyField) firstEmptyField = name;
             } else if (typeof value === 'string' && !value.trim()) {
-                newErrors[name] = `${getLabelForField(name)} es obligatorio`;
+                newErrors[name] = `Campo obligatorio`;
                 if (!firstEmptyField) firstEmptyField = name;
             } else if ((name === "numDocument" || name === "phone") && isNaN(Number(value))) {
-                newErrors[name] = `${getLabelForField(name)} debe ser un número válido`;
+                newErrors[name] = `Ingrese un número válido`;
                 if (!firstNumericErrorField) firstNumericErrorField = name;
             } else {
                 const { [name]: removed, ...rest } = errorsForms;
                 setErrorsForms(rest);
             }
         }
+
+
 
         setErrorsForms({ ...errorsForms, ...newErrors });
 

@@ -8,7 +8,7 @@ import { ControllerCreateUpdateSailor } from './controllers/ControllerCreateUpda
 export const AddSailor = () => {
 
     const { id, action } = useParams();
-    const { handleSubmit, formData, errorsForms, handleChange } = ControllerCreateUpdateSailor({ id, action });
+    const { handleSubmit, formData, errorsForms, handleChange, isDisabled } = ControllerCreateUpdateSailor({ id, action });
 
     return (
         <div className={styles.card}>
@@ -86,7 +86,12 @@ export const AddSailor = () => {
                     </div>
 
                     <div className="text-center">
-                        <button type="submit" className="btn btn-success">{action && action === "update" ? "Actualizar" : "Guardar"} Marinero <i className="fa-solid fa-ship"></i></button>
+                        <button
+                            type="submit"
+                            className={`btn btn-success ${isDisabled ? "is-disabled" : ""}`}
+                        >
+                            {action && action === "update" ? "Actualizar" : "Guardar"} Marinero <i className="fa-solid fa-ship"></i>
+                        </button>
                     </div>
                 </form>
             </div>

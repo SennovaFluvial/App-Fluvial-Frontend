@@ -4,7 +4,7 @@ import { useOptionsDepto, useOptionsCompanies, useOptionsCities, useRoles } from
 import { Alert } from '../../../../class/alerts.jsx';
 import Swal from 'sweetalert';
 import { User } from '../../../../class/User.jsx';
-import { useLocation, useNavigate, useParams } from 'react-router';
+import { createRoutesFromChildren, useLocation, useNavigate, useParams } from 'react-router';
 
 export const ControllerCreateUpdateEmployed = ({ updatePassword }) => {
     const cities = useOptionsCities();
@@ -154,67 +154,6 @@ export const ControllerCreateUpdateEmployed = ({ updatePassword }) => {
         fetchUsers();
     }, []);
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-
-        if (name === 'roleListName') {
-            setFormData(prevState => ({
-                ...prevState,
-                roleRequest: {
-                    ...prevState.roleRequest,
-                    roleListName: [value] // Guarda el valor en un array
-                }
-            }));
-        } else {
-            setFormData(prevState => ({
-                ...prevState,
-                [name]: value
-            }));
-        }
-
-        // Manejo de errores
-        if (value.trim()) {
-            const { [name]: removed, ...rest } = errorsForms;
-            setErrorsForms(rest);
-        } else {
-            setErrorsForms({ ...errorsForms, [name]: "Campo obligatorio" });
-        }
-
-        // Validación de campos numéricos
-        if (name === 'numDocument' || name === 'phone') {
-            if (isNaN(value)) {
-                setErrorsForms(prevErrors => ({
-                    ...prevErrors,
-                    [name]: "Debe ser un número válido"
-                }));
-            } else {
-                const { [name]: removed, ...rest } = errorsForms;
-                setErrorsForms(rest); // Elimina el error si es un número válido
-            }
-        }
-
-        if (name === "password" || name === "confirmPassword") {
-            const { password, confirmPassword } = {
-                ...formData,
-                [name]: value
-            };
-
-            // Valida si las contraseñas coinciden
-            if (password !== confirmPassword) {
-                setErrorsForms(prevState => ({
-                    ...prevState,
-                    confirmPassword: "Las contraseñas no coinciden"
-                }));
-            } else {
-                setErrorsForms(prevState => ({
-                    ...prevState,
-                    confirmPassword: "" // Limpia el error si coinciden
-                }));
-            }
-        }
-
-    };
-
     const handleErrors = (name, message) => {
         setErrorsForms(prevErrors => ({
             ...prevErrors,
@@ -222,28 +161,65 @@ export const ControllerCreateUpdateEmployed = ({ updatePassword }) => {
         }));
     };
 
-    useEffect(() => {
-        // Validar fecha de nacimiento
-        if (formData.birthDate) {
-            const selectedDate = new Date(formData.birthDate);
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            if (selectedDate >= today) {
-                handleErrors("birthDate", "La fecha de nacimiento no puede ser actual o una fecha futura");
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+
+        if (name === "roleListName") {
+            setFormData(prevState => ({
+                ...prevState,
+                roleRequest: {
+                    ...prevState.roleRequest,
+                    roleListName: [value]
+                }
+            }));
+        } else {
+            // Maneja todos los otros campos
+            setFormData(prevState => ({
+                ...prevState,
+                [name]: value
+            }));
+        }
+
+        // Validaciones de campos
+        if (!value.trim()) {
+            handleErrors(name, "Campo obligatorio");
+        }
+        // Validación específica para numDocument y phone (deben ser números y cumplir con los límites de longitud)
+        else if ((name === "numDocument" || name === "phone") && isNaN(value)) {
+            handleErrors(name, "Debe ser un número válido");
+        }
+        else if ((name === "numDocument" && (value.length < 5 || value.length > 11)) ||
+            (name === "phone" && (value.length < 5 || value.length > 11))) {
+            handleErrors(name, "Debe tener entre 5 y 11 dígitos");
+        }
+        // Validación de confirmación de username
+        else if (name === "confirmUsername" && value !== formData.username) {
+            handleErrors("confirmUsername", "El nombre de usuario no coincide");
+        }
+        // Validación de confirmación de contraseña
+        else if (name === "confirmPassword" && value !== formData.password) {
+            handleErrors("confirmPassword", "La contraseña no coincide");
+        }
+        else if (name === "birthDate") {
+            const birthYear = new Date(value).getFullYear();
+            const currentYear = new Date().getFullYear();
+            if (birthYear < 1700 || birthYear > 2000 || birthYear >= currentYear) {
+                handleErrors("birthDate", "Fecha no válida. Debe estar entre 1700 y 2000.");
+            } else {
+                setErrorsForms(prevErrors => {
+                    const { [name]: removed, ...rest } = prevErrors;
+                    return rest;
+                });
             }
         }
-
-        // Validar nombres de usuario
-        if (formData.confirmUsername && formData.username !== formData.confirmUsername) {
-            handleErrors("confirmUsername", "Los nombres de usuario no coinciden");
+        else {
+            // Si el campo es válido, se elimina el error correspondiente
+            setErrorsForms(prevErrors => {
+                const { [name]: removed, ...rest } = prevErrors;
+                return rest;
+            });
         }
-
-        // Validar contraseñas solo si updatePassword es true
-        if (updatePassword && formData.confirmPassword && formData.password !== formData.confirmPassword) {
-            handleErrors("confirmPassword", "Las contraseñas no coinciden");
-        }
-
-    }, [formData.username, formData.confirmUsername, formData.password, formData.confirmPassword, formData.birthDate, updatePassword]);
+    };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -251,14 +227,20 @@ export const ControllerCreateUpdateEmployed = ({ updatePassword }) => {
         const newErrors = {};
         let firstEmptyField = null;
 
+        const getLabelForField = (fieldName) => {
+            const labelElement = document.querySelector(`label[for="${fieldName}"]`);
+            return labelElement ? labelElement.textContent : fieldName;
+        };
+
+
         // Validación de campos vacíos (aplica a todos los campos)
         if (updatePassword) {
             for (let [name, value] of Object.entries(formData)) {
                 if (name === 'roleRequest.roleListName' && (!formData.roleRequest.roleListName || formData.roleRequest.roleListName.length === 0)) {
-                    newErrors['roleRequest'] = "Campo obligatorio";
+                    newErrors['roleRequest'] = `Campo obligatorio`
                     if (!firstEmptyField) firstEmptyField = 'Role List Name';
                 } else if (typeof value === 'string' && !value.trim()) {
-                    newErrors[name] = "Campo obligatorio";
+                    newErrors[name] = `Campo obligatorio`;
                     if (!firstEmptyField) firstEmptyField = name;
                 }
             }
@@ -267,7 +249,7 @@ export const ControllerCreateUpdateEmployed = ({ updatePassword }) => {
                 // Validar todos los campos excepto 'password' y 'confirmPassword'
                 if (name !== 'password' && name !== 'confirmPassword') {
                     if (typeof value === 'string' && !value.trim()) {
-                        newErrors[name] = "Campo obligatorio";
+                        newErrors[name] = `Campo obligatorio`;
                         if (!firstEmptyField) firstEmptyField = name;
                     }
                 }
@@ -281,7 +263,7 @@ export const ControllerCreateUpdateEmployed = ({ updatePassword }) => {
         if (Object.keys(newErrors).length > 0) {
             Swal({
                 title: 'Error',
-                text: `Por favor, complete el campo obligatorio: ${firstEmptyField}`,
+                text: `Por favor, complete el campo obligatorio: ${getLabelForField(firstEmptyField)}`,
                 icon: 'error',
                 timer: 3000
             });
