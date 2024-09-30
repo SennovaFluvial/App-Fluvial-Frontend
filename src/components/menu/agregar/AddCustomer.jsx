@@ -9,7 +9,7 @@ export const AddCustomer = () => {
     const { id, action } = useParams();
     const cities = useOptionsCities(); // Se debe de hacer esto para mostrar las ciudades.
 
-    const { formData, errorsForms, handleChange, handleSubmit } = ControllerCreateUpdateCustomer({ id, action });
+    const { formData, errorsForms, handleChange, handleSubmit, isDisabled } = ControllerCreateUpdateCustomer({ id, action });
 
     return (
         <>
@@ -103,7 +103,11 @@ export const AddCustomer = () => {
                             </div>
                         </div>
                         <div className="text-center">
-                            <button type="submit" className="btn btn-success">{action && action === "update" ? "Actualizar" : "Guardar"} Cliente</button>
+                            <button
+                                type="submit"
+                                className={`btn btn-success ${isDisabled ? "is-disabled-button" : ""}`}
+                            >
+                                {action && action === "update" ? "Actualizar" : "Guardar"} Cliente</button>
                         </div>
                     </form>
                 </div>

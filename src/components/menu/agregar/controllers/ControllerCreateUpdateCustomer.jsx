@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useImperativeHandle, useState } from "react";
 import { ApiService } from "../../../../class/ApiServices";
 import swal from "sweetalert";
 import { useNavigate } from "react-router";
 import { Alert } from "../../../../class/alerts";
+import { handleStatusError } from "../../../../functions/functions";
 
 
 export const ControllerCreateUpdateCustomer = ({ id, action }) => {
@@ -10,14 +11,15 @@ export const ControllerCreateUpdateCustomer = ({ id, action }) => {
     const navigate = useNavigate();
     const [listCustomers, setListCustomers] = useState([]);
     const user = JSON.parse(localStorage.getItem("user"));
+    const [isDisabled, setIsDisabled] = useState(false)
     const userNameUser = user?.username || null;
+    const [errorsForms, setErrorsForms] = useState({});
 
     const [formData, setFormData] = useState({
         name: '', lastName: '', typeDocument: '', numDocument: '', email: '', dateOfBirth: '', nationality: '',
         maritalStatus: '', phone: '', address: '', sex: '', personType: '', companyName: '', nitCompany: '', cityName: '', userNames: [userNameUser]
     });
 
-    const [errorsForms, setErrorsForms] = useState({});
 
     // Reiniciar formulario si no hay acción ni ID
     useEffect(() => {
@@ -60,6 +62,7 @@ export const ControllerCreateUpdateCustomer = ({ id, action }) => {
         }
     }, [action, id, listCustomers]);
 
+
     const handleChange = (event) => {
         const { name, value } = event.target;
 
@@ -85,13 +88,52 @@ export const ControllerCreateUpdateCustomer = ({ id, action }) => {
             }
         }
 
+        const expresionEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const birthYear = name === "dateOfBirth" ? new Date(value).getFullYear() : null;
+        const currentYear = new Date().getFullYear();
 
+        if (!value.trim()) {
+            handleStatusError(setErrorsForms, name, "Campo obligatorio");
+        } else if ((name === "numDocument" || name === "phone") && isNaN(value)) {
+            handleStatusError(setErrorsForms, name, "Debe ser un número válido");
+        } else if ((name === "numDocument" && (value.length < 5 || value.length > 11)) ||
+            (name === "phone" && (value.length < 5 || value.length > 11))) {
+            handleStatusError(setErrorsForms, name, "Debe tener entre 5 y 11 dígitos");
+        } else if (name === "email" && !expresionEmail.test(value)) {
+            handleStatusError(setErrorsForms, name, "No es un correo válido, recuerda usar el formato: ejemplo@gmail.com");
+        } else if (name === "dateOfBirth" && (birthYear < 1700 || birthYear > 2000 || birthYear >= currentYear)) {
+            handleStatusError(setErrorsForms, "dateOfBirth", "Fecha no válida. Debe estar entre 1700 y 2000.");
+        } else {
+            setErrorsForms(prevErrors => {
+                const { [name]: removed, ...rest } = prevErrors;
+                return rest;
+            });
+        }
     };
+
+
+    useEffect(() => {
+        if (Object.keys(errorsForms).length > 0) {
+            setIsDisabled(true);
+        } else {
+            setIsDisabled(false);
+        }
+    }, [errorsForms])
 
     // Manejar el envío del formulario
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        if (Object.keys(errorsForms).length > 0) {
+            Swal({
+                title: 'Error',
+                text: 'Hubo un error al procesar la solicitud. Por favor, intente de nuevo.',
+                icon: 'error',
+                timer: 4000
+            });
+
+            return;
+        }
 
         const confirmationMessage = action === 'update' ?
             `¿Está seguro que quiere actualizar el cliente?\nNombre: ${formData.name} ${formData.lastName}` :
@@ -127,6 +169,10 @@ export const ControllerCreateUpdateCustomer = ({ id, action }) => {
     };
 
     return {
-        formData, errorsForms, handleChange, handleSubmit
+        formData,
+        errorsForms,
+        handleChange,
+        handleSubmit,
+        isDisabled
     };
 }

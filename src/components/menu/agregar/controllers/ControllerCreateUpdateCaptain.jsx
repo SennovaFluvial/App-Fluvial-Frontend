@@ -72,7 +72,8 @@ export const ControllerCreateUpdateCaptain = ({ id, action }) => {
         setFormData(prevState => ({
             ...prevState,
             [name]: value
-        }))
+        }));
+        
         const expresionEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const birthYear = name === "dateOfBirth" ? new Date(value).getFullYear() : null;
         const currentYear = new Date().getFullYear();
