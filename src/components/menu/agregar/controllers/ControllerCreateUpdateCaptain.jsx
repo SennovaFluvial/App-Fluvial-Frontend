@@ -73,7 +73,7 @@ export const ControllerCreateUpdateCaptain = ({ id, action }) => {
             ...prevState,
             [name]: value
         }));
-        
+
         const expresionEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const birthYear = name === "dateOfBirth" ? new Date(value).getFullYear() : null;
         const currentYear = new Date().getFullYear();
@@ -109,14 +109,23 @@ export const ControllerCreateUpdateCaptain = ({ id, action }) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        if (Object.keys(errorsForms).length > 0) {
-            Swal({
+        const formElements = event.target.elements;
+        let hasErrors = false;
+
+        for (let element of formElements) {
+            if (element.name && !formData[element.name].trim()) {
+                handleStatusError(setErrorsForms, element.name, "Campo obligatorio");
+                hasErrors = true;
+            }
+        }
+
+        if (hasErrors) {
+            swal({
                 title: 'Error',
                 text: 'Hubo un error al procesar la solicitud. Por favor, intente de nuevo.',
                 icon: 'error',
                 timer: 4000
             });
-
             return;
         }
 

@@ -107,14 +107,23 @@ export const ControllerCreateUpdateBoatDriver = ({ id, action }) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        if (Object.keys(errorsForms).length > 0) {
-            Swal({
+        const formElements = event.target.elements;
+        let hasErrors = false;
+
+        for (let element of formElements) {
+            if (element.name && !formData[element.name].trim()) {
+                handleStatusError(setErrorsForms, element.name, "Campo obligatorio");
+                hasErrors = true;
+            }
+        }
+
+        if (hasErrors) {
+            swal({
                 title: 'Error',
                 text: 'Hubo un error al procesar la solicitud. Por favor, intente de nuevo.',
                 icon: 'error',
                 timer: 4000
             });
-
             return;
         }
 

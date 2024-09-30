@@ -77,9 +77,15 @@ export const ControllerCreateUpdateCustomer = ({ id, action }) => {
                 // Si es "Natural", limpiar campos de empresa
                 setFormData((prevFormData) => ({
                     ...prevFormData,
-                    companyName: null,
-                    nitCompany: null,
+                    companyName: "",
+                    nitCompany: "",
                 }));
+
+                setErrorsForms((prevErrors) => {
+                    const { companyName, nitCompany, ...rest } = prevErrors;
+                    return rest;
+                });
+
             } else if (value === "Jurídica") {
                 // Si es "Jurídica", mantener los valores ingresados para empresa
                 setFormData((prevFormData) => ({
@@ -124,14 +130,23 @@ export const ControllerCreateUpdateCustomer = ({ id, action }) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        if (Object.keys(errorsForms).length > 0) {
-            Swal({
+        const formElements = event.target.elements;
+        let hasErrors = false;
+
+        for (let element of formElements) {
+            if (element.name && !formData[element.name].trim()) {
+                handleStatusError(setErrorsForms, element.name, "Campo obligatorio");
+                hasErrors = true;
+            }
+        }
+
+        if (hasErrors) {
+            swal({
                 title: 'Error',
                 text: 'Hubo un error al procesar la solicitud. Por favor, intente de nuevo.',
                 icon: 'error',
                 timer: 4000
             });
-
             return;
         }
 
