@@ -30,7 +30,8 @@ import { ModuleShipment } from '../menu/ShipmentModules/ModuleShipment.jsx';
 import { ModuleVehicle } from '../menu/ShipmentModules/ModuleVehicle.jsx';
 import { ModuleFinish } from '../menu/ShipmentModules/ModuleFinish.jsx';
 
-import { Informes } from '../menu/Informes.jsx';
+import { Inventories } from '../menu/Inventories.jsx';
+import { Reports } from '../menu/Reports.jsx';
 /**
  * Componente ComponentRouter
  * 
@@ -95,7 +96,8 @@ export const ComponentRouter = () => {
 
                     </Route>
 
-                    <Route path="Reports" element={< Informes />} />
+                    <Route path="inventories" element={< Inventories />} /> {/* Ruta para ver los inventarios */}
+                    <Route path="reports" element={< Reports />} />
 
                 </Route>
             </Route>
