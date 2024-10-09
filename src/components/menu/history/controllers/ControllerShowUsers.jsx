@@ -31,7 +31,7 @@ export const useControllerShowUsers = () => {
 
     const { searchTerm, handleSearchChange, filteredItems } = useSearchFields(
         employed,
-        ["numDocument", "name", "lastName", "roles", "birthDate", "status", "sex", "username", "address"],
+        ["numDocument", "name", "lastName", "roles", "birthDate", "status", "sex", "username", "address", "company.name"],
         roleMapping
     );
 
