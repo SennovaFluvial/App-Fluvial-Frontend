@@ -14,6 +14,31 @@ export const useControllerShowUsers = () => {
         "superadministrador": "SUPERADMIN"
     };
 
+
+    const [formData, setFormData] = useState({
+        username: '',
+        confirmUsername: '',
+        password: '',
+        confirmPassword: '',
+        roleRequest: {
+            roleListName: []
+        },
+        estado: '',
+        companyName: '',
+        name: '',
+        lastName: '',
+        typeDocument: '',
+        numDocument: '',
+        phone: '',
+        address: '',
+        cityName: '',
+        departmentName: '',
+        sex: '',
+        birthDate: '',
+        maritalStatus: '',
+        codigoPais: ''
+    });
+
     const getEmployed = async () => {
         try {
             const response = await ApiService.get("/api/v1/companie/users");
@@ -60,6 +85,9 @@ export const useControllerShowUsers = () => {
         setCurrentPage,
         totalFilteredItems,
         loading,
-        firstIndex
+        firstIndex,
+        formData,
+        setFormData,
+        setEmployed
     }
 }
