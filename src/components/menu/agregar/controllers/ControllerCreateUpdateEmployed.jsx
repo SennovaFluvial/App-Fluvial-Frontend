@@ -229,7 +229,7 @@ export const ControllerCreateUpdateEmployed = ({ updatePassword }) => {
 
         const formElements = event.target.elements;
         let hasErrors = false;
-        
+
         for (let element of formElements) {
             if (element.name && typeof formData[element.name] === 'string' && !formData[element.name].trim()) {
                 handleStatusError(setErrorsForms, element.name, "Campo obligatorio");

@@ -32,7 +32,7 @@ import { ModuleFinish } from '../menu/ShipmentModules/ModuleFinish.jsx';
 
 import { Inventories } from '../menu/Inventories.jsx';
 import { Reports } from '../menu/Reports.jsx';
-import { MoreDetails } from '../menu/history/moreDetails/MoreDetails.jsx';
+import { MoreDetails } from '../menu/history/moreDetails/MoreDetailsCustomers.jsx';
 /**
  * Componente ComponentRouter
  * 
@@ -82,16 +82,20 @@ export const ComponentRouter = () => {
                     </Route>
                     <Route path="show-companies" element={< ShowCompany />} /> {/* Ruta para ver compañias */}
                     <Route path="show-customers" element={< ShowCustomers />} /> {/* Ruta para ver clientes */}
-                    <Route path='show-customers/more-details/:id?' element={< MoreDetails />} />
-
+                    <Route path='show-customers/more-details/:id?/:category?' element={< MoreDetails />} />
 
                     <Route path="show-users" element={< ShowUsers />} /> {/* Ruta para ver usuarios */}
+                    <Route path='show-users/more-details/:id?/:category?' element={< MoreDetails />} />
+
                     <Route path="show-crew" element={< ShowCrew />} /> {/* Ruta para ver tripualntes */}
+                    <Route path='show-crew/more-details/:id?/:category?' element={< MoreDetails />} />
+
                     <Route path="show-vehicles" element={< ShowVehicles />} /> {/* Ruta para ver vehículos */}
+                    <Route path='show-vehicles/more-details/:id?/:category?' element={< MoreDetails />} />
 
                     <Route path="register-shipment" element={< RegisterShipment />} > {/* Ruta padre para los moudulos de envío */}
-                        <Route index element={<Navigate to="module-Sender" />} />
 
+                        <Route index element={<Navigate to="module-Sender" />} />
                         <Route path="module-Sender" element={< ModuleSender />} /> {/* Ruta para ver modulo de remitente */}
                         <Route path="module-recipient" element={< ModuleRecipient />} /> {/* Ruta para ver modulo de receptor */}
                         <Route path="module-shipment" element={< ModuleShipment />} /> {/* Ruta para ver modulo de envío */}

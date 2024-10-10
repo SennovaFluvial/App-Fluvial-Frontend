@@ -151,9 +151,12 @@ export const ShowUsers = () => {
                                                 <i className="fa-solid fa-pen-to-square icon-option"></i>
                                             </button>
                                         </Link>
-                                        <button className='btn icon-link-hover text-warning'>
-                                            <i className="fa-solid fa-eye icon-option"></i>
-                                        </button>
+
+                                        <Link to={`more-details/${item.id}/employee`}>
+                                            <button className='btn icon-link-hover text-warning'>
+                                                <i className="fa-solid fa-eye icon-option"></i>
+                                            </button>
+                                        </Link>
 
                                         <button className='btn' onClick={() => onStatusChange(item.id)}>
                                             {item.status === "activo"

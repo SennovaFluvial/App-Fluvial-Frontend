@@ -10,6 +10,7 @@
     color: #333;
     font-weight: 600;
     margin-bottom: 2rem;
+    border-bottom: 2px solid #333;
 }
 
 .more-details-col {
@@ -50,23 +51,41 @@
     margin-bottom: 0.5rem;
 }
 
-/* Button */
+/* Button Styles */
 .more-details-btn {
     display: block;
     width: 100%;
     max-width: 200px;
     margin: 2rem auto;
     text-align: center;
-    background-color: #007bff;
-    color: #fff;
     border: none;
     padding: 10px 20px;
     font-size: 1rem;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
+    background: linear-gradient(90deg, #007bff, #0056b3);
+    color: #fff;
+    transition: background 0.3s ease, transform 0.2s ease-in-out;
 }
 
 .more-details-btn:hover {
-    background-color: #0056b3;
+    transform: scale(1.05);
+    background: linear-gradient(90deg, #0056b3, #003d80);
+}
+
+.more-details-btn-back {
+    background: linear-gradient(90deg, #ff4d4d, #ff1a1a);
+}
+
+.more-details-btn-back:hover {
+    background: linear-gradient(90deg, #ff1a1a, #b30000);
+}
+
+/* Edit button */
+.more-details-btn-edit {
+    background: linear-gradient(90deg, #ffcc00, #ff9900);
+}
+
+.more-details-btn-edit:hover {
+    background: linear-gradient(90deg, #ff9900, #cc7a00);
 }

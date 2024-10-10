@@ -137,9 +137,12 @@ export const ShowCrew = () => {
                                                     <i className="fa-solid fa-pen-to-square icon-option"></i>
                                                 </button>
                                             </Link>
-                                            <button className='btn icon-link-hover ms-3 text-warning'>
-                                                <i className="fa-solid fa-eye icon-option"></i>
-                                            </button>
+
+                                            <Link to={`more-details/${item.id}/crew`}>
+                                                <button className='btn icon-link-hover text-warning'>
+                                                    <i className="fa-solid fa-eye icon-option"></i>
+                                                </button>
+                                            </Link>
 
                                             <button className='btn' onClick={() => onStatusChange(item.id)}>
                                                 {item.status === "activo"

@@ -1,24 +1,40 @@
 import { useEffect, useState } from "react";
 import { showCustomers } from "../../../../functions/functions";
 
-export const ControllerMoreDetails = ({ id }) => {
-    const [customerInfo, setCustomerInfo] = useState([]);
+export const ControllerMoreDetails = ({ id, category }) => {
+    const [peopleInfo, setPeopleInfo] = useState([]);
     const [filterData, setFilterData] = useState([]);
+    
+    const urlUpdateData = category === "employee"
+        ? `../add-employed/${id}?action=update`
+        : (category === "customer")
+            ? `../add-customer/${id}/update`
+            : (category === "vehicle" ? `../add-vehicle/${id}/update` : "");
 
     useEffect(() => {
         const fetchCustomers = async () => {
-            await showCustomers(setCustomerInfo);
+
+            const urlApi = category === "customer"
+                ? "/api/v1/customers/all"
+                : (category === "employee"
+                    ? "/api/v1/companie/users"
+                    : (category === "crew"
+                        ? "/api/v1/employeefluvial/all"
+                        : (category === "vehicle"
+                            ? "/api/v1/vehicles/all"
+                            : "")));
+
+            await showCustomers(setPeopleInfo, urlApi);
         };
         fetchCustomers();
     }, []);
 
     useEffect(() => {
         const parsedId = parseInt(id, 10);
-        const data = customerInfo.find((item) => item.id === parsedId);
-        console.log("Elemento filtrado:", data);
+        const data = peopleInfo.find((item) => item.id === parsedId);
 
         setFilterData(data ? [data] : []);
-    }, [customerInfo, id]);
+    }, [peopleInfo, id]);
 
-    return { filterData };
+    return { filterData, urlUpdateData };
 };
