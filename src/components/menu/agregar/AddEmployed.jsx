@@ -31,7 +31,8 @@ export const AddEmployed = () => {
     deptos,
     roles,
     role,
-    companies
+    companies,
+    isDisabled
   } = ControllerCreateUpdateEmployed({ updatePassword });
 
   return (
@@ -182,7 +183,7 @@ export const AddEmployed = () => {
               </div>
             </div>
             <div className="text-center">
-              <button type="submit" className={`${styles.btn} ${styles.btnSuccess}`}>{action === 'update' ? 'Actualizar' : 'Crear'} Empleado <i className="fa-solid fa-building-user"></i></button>
+              <button type="submit" className={`${styles.btn} ${styles.btnSuccess} ${isDisabled ? "is-disabled-button" : ""}`}>{action === 'update' ? 'Actualizar' : 'Crear'} Empleado <i className="fa-solid fa-building-user"></i></button>
             </div>
           </form>
         </div>

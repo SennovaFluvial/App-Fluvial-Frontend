@@ -8,6 +8,36 @@ export const useControllerShowUsers = () => {
     const [elementForPage, setElementForPage] = useState(6);
     const [currentPage, setCurrentPage] = useState(1);
     const [loading, setLoading] = useState(true);
+    const roleMapping = {
+        "administrador": "ADMIN",
+        "empleado": "EMPLOYEE",
+        "superadministrador": "SUPERADMIN"
+    };
+
+
+    const [formData, setFormData] = useState({
+        username: '',
+        confirmUsername: '',
+        password: '',
+        confirmPassword: '',
+        roleRequest: {
+            roleListName: []
+        },
+        estado: '',
+        companyName: '',
+        name: '',
+        lastName: '',
+        typeDocument: '',
+        numDocument: '',
+        phone: '',
+        address: '',
+        cityName: '',
+        departmentName: '',
+        sex: '',
+        birthDate: '',
+        maritalStatus: '',
+        codigoPais: ''
+    });
 
     const getEmployed = async () => {
         try {
@@ -26,8 +56,10 @@ export const useControllerShowUsers = () => {
 
     const { searchTerm, handleSearchChange, filteredItems } = useSearchFields(
         employed,
-        ["numDocument", "name", "lastName", "roles[0].roleEnum", "birthDate", "status", "sex", "username", "address"]
+        ["numDocument", "name", "lastName", "roles", "birthDate", "status", "sex", "username", "address", "company.name"],
+        roleMapping
     );
+
 
     const totalFilteredItems = filteredItems.length;
     const totalPages = Math.ceil(totalFilteredItems / elementForPage);
@@ -53,6 +85,9 @@ export const useControllerShowUsers = () => {
         setCurrentPage,
         totalFilteredItems,
         loading,
-        firstIndex
+        firstIndex,
+        formData,
+        setFormData,
+        setEmployed
     }
 }

@@ -8,7 +8,7 @@ import { ControllerCreateUpdateBoatDriver } from './controllers/ControllerCreate
 export const AddBoatDriver = () => {
 
     const { id, action } = useParams();
-    const { handleSubmit, formData, errorsForms, handleChange } = ControllerCreateUpdateBoatDriver({ id, action });
+    const { handleSubmit, formData, errorsForms, handleChange, isDisabled } = ControllerCreateUpdateBoatDriver({ id, action });
 
     return (
         <div className={styles.card}>
@@ -86,7 +86,7 @@ export const AddBoatDriver = () => {
                     </div>
 
                     <div className="text-center">
-                        <button type="submit" className={`${styles.btn} ${styles.btnSuccess}`}>{action && action === "update" ? "Actualizar" : "Guardar"} Motorista <i className="fa-solid fa-vest"></i></button>
+                        <button type="submit" className={`${styles.btn} ${styles.btnSuccess} ${isDisabled ? "is-disabled-button" : ""}`} >{action && action === "update" ? "Actualizar" : "Guardar"} Motorista <i className="fa-solid fa-vest"></i></button>
                     </div>
                 </form>
             </div>

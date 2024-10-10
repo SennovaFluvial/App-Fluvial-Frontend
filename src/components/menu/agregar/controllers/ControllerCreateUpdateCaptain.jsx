@@ -3,11 +3,13 @@ import { useNavigate } from "react-router";
 import { ApiService } from "../../../../class/ApiServices";
 import Swal from 'sweetalert';
 import { Alert } from "../../../../class/alerts";
+import { handleStatusError } from "../../../../functions/functions";
 
 export const ControllerCreateUpdateCaptain = ({ id, action }) => {
 
     const navigate = useNavigate();
     const [errorsForms, setErrorsForms] = useState({});
+    const [isDisabled, setIsDisabled] = useState(false)
     const [listEmployedFluvial, setlistEmployedFluvial] = useState([])
     const [formData, setFormData] = useState({
         name: '', lastName: '', typeDocument: '', numDocument: '', licencia: '',
@@ -64,70 +66,66 @@ export const ControllerCreateUpdateCaptain = ({ id, action }) => {
         }
     }, [action, id, listEmployedFluvial])
 
-
-
     const handleChange = (event) => {
         const { name, value } = event.target;
 
-        if (name === 'dateOfBirth') {
-            const today = new Date();
-            const selectedDate = new Date(value);
-            if (selectedDate > today) {
-                setErrorsForms({ ...errorsForms, dateOfBirth: "La fecha de nacimiento no puede ser una fecha futura" });
-            } else {
-                const { dateOfBirth, ...rest } = errorsForms;
-                setErrorsForms(rest);
-            }
-        } else if (value.trim()) {
-            const { [name]: removed, ...rest } = errorsForms;
-            setErrorsForms(rest);
-        } else {
-            setErrorsForms({ ...errorsForms, [name]: "Campo obligatorio" });
-        }
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
 
-        setFormData({ ...formData, [name]: value });
+        const expresionEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const birthYear = name === "dateOfBirth" ? new Date(value).getFullYear() : null;
+        const currentYear = new Date().getFullYear();
+
+        if (!value.trim()) {
+            handleStatusError(setErrorsForms, name, "Campo obligatorio");
+        } else if ((name === "numDocument" || name === "phone") && isNaN(value)) {
+            handleStatusError(setErrorsForms, name, "Debe ser un número válido");
+        } else if ((name === "numDocument" && (value.length < 5 || value.length > 11)) ||
+            (name === "phone" && (value.length < 5 || value.length > 11))) {
+            handleStatusError(setErrorsForms, name, "Debe tener entre 5 y 11 dígitos");
+        } else if (name === "email" && !expresionEmail.test(value)) {
+            handleStatusError(setErrorsForms, name, "No es un correo válido, recuerda usar el formato: ejemplo@gmail.com");
+        } else if (name === "dateOfBirth" && (birthYear < 1700 || birthYear > 2000 || birthYear >= currentYear)) {
+            handleStatusError(setErrorsForms, "dateOfBirth", "Fecha no válida. Debe estar entre 1700 y 2000.");
+        } else {
+            // Elimina el error si todas las validaciones son correctas
+            setErrorsForms(prevErrors => {
+                const { [name]: removed, ...rest } = prevErrors;
+                return rest;
+            });
+        }
     };
+
+    useEffect(() => {
+        if (Object.keys(errorsForms).length > 0) {
+            setIsDisabled(true);
+        } else {
+            setIsDisabled(false);
+        }
+    }, [errorsForms])
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const newErrors = {};
-        let firstEmptyField = null;
+        const formElements = event.target.elements;
+        let hasErrors = false;
 
-        // Validar campos vacíos
-        for (let [name, value] of Object.entries(formData)) {
-            if (typeof value === 'string' && !value.trim()) {
-                newErrors[name] = "Campo obligatorio";
-                if (!firstEmptyField) {
-                    firstEmptyField = name;
-                }
+        for (let element of formElements) {
+            if (element.name && !formData[element.name].trim()) {
+                handleStatusError(setErrorsForms, element.name, "Campo obligatorio");
+                hasErrors = true;
             }
         }
 
-        // Validar fecha de nacimiento
-        if (formData.dateOfBirth) {
-            const today = new Date();
-            const selectedDate = new Date(formData.dateOfBirth);
-            if (selectedDate > today) {
-                newErrors.dateOfBirth = "La fecha de nacimiento no puede ser una fecha futura";
-                if (!firstEmptyField) {
-                    firstEmptyField = "dateOfBirth";
-                }
-            }
-        }
-
-        // Establecer los errores en el estado
-        setErrorsForms({ ...errorsForms, ...newErrors });
-
-        // Verificar si hay errores y mostrar alerta
-        if (Object.keys(newErrors).length > 0) {
-            Swal({
+        if (hasErrors) {
+            swal({
                 title: 'Error',
-                text: `Por favor, complete el campo obligatorio: ${firstEmptyField}`,
+                text: 'Hubo un error al procesar la solicitud. Por favor, intente de nuevo.',
                 icon: 'error',
-                timer: 3000
+                timer: 4000
             });
-
             return;
         }
 
@@ -171,5 +169,6 @@ export const ControllerCreateUpdateCaptain = ({ id, action }) => {
         handleSubmit,
         errorsForms,
         handleChange,
+        isDisabled
     }
 }

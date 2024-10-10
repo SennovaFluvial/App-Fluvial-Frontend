@@ -1,22 +1,25 @@
-import { useEffect, useState } from "react";
+import { useEffect, useImperativeHandle, useState } from "react";
 import { ApiService } from "../../../../class/ApiServices";
 import swal from "sweetalert";
 import { useNavigate } from "react-router";
 import { Alert } from "../../../../class/alerts";
+import { handleStatusError } from "../../../../functions/functions";
+
 
 export const ControllerCreateUpdateCustomer = ({ id, action }) => {
 
     const navigate = useNavigate();
     const [listCustomers, setListCustomers] = useState([]);
     const user = JSON.parse(localStorage.getItem("user"));
+    const [isDisabled, setIsDisabled] = useState(false)
     const userNameUser = user?.username || null;
+    const [errorsForms, setErrorsForms] = useState({});
 
     const [formData, setFormData] = useState({
         name: '', lastName: '', typeDocument: '', numDocument: '', email: '', dateOfBirth: '', nationality: '',
         maritalStatus: '', phone: '', address: '', sex: '', personType: '', companyName: '', nitCompany: '', cityName: '', userNames: [userNameUser]
     });
 
-    const [errorsForms, setErrorsForms] = useState({});
 
     // Reiniciar formulario si no hay acción ni ID
     useEffect(() => {
@@ -59,6 +62,7 @@ export const ControllerCreateUpdateCustomer = ({ id, action }) => {
         }
     }, [action, id, listCustomers]);
 
+
     const handleChange = (event) => {
         const { name, value } = event.target;
 
@@ -73,9 +77,15 @@ export const ControllerCreateUpdateCustomer = ({ id, action }) => {
                 // Si es "Natural", limpiar campos de empresa
                 setFormData((prevFormData) => ({
                     ...prevFormData,
-                    companyName: null,
-                    nitCompany: null,
+                    companyName: "",
+                    nitCompany: "",
                 }));
+
+                setErrorsForms((prevErrors) => {
+                    const { companyName, nitCompany, ...rest } = prevErrors;
+                    return rest;
+                });
+
             } else if (value === "Jurídica") {
                 // Si es "Jurídica", mantener los valores ingresados para empresa
                 setFormData((prevFormData) => ({
@@ -84,104 +94,58 @@ export const ControllerCreateUpdateCustomer = ({ id, action }) => {
             }
         }
 
-        // Validar el campo en tiempo real
-        if (!value.trim()) {
-            // Si el campo está vacío o tiene solo espacios, agregar un error de "Campo obligatorio"
-            setErrorsForms((prevErrors) => ({
-                ...prevErrors,
-                [name]: "Campo obligatorio"
-            }));
-        } else if (name === "numDocument" || name === "phone") {
-            const numericValue = Number(value);
+        const expresionEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const birthYear = name === "dateOfBirth" ? new Date(value).getFullYear() : null;
+        const currentYear = new Date().getFullYear();
 
-            if (isNaN(numericValue)) {
-                // Si no es un número válido, agregar el error de "Debe ser un número válido"
-                setErrorsForms((prevErrors) => ({
-                    ...prevErrors,
-                    [name]: "Debe ser un número válido"
-                }));
-            } else {
-                // Si es un número válido, eliminamos el error del campo correspondiente
-                setErrorsForms((prevErrors) => {
-                    const { [name]: removed, ...rest } = prevErrors;
-                    return rest;
-                });
-            }
+        if (!value.trim()) {
+            handleStatusError(setErrorsForms, name, "Campo obligatorio");
+        } else if ((name === "numDocument" || name === "phone") && isNaN(value)) {
+            handleStatusError(setErrorsForms, name, "Debe ser un número válido");
+        } else if ((name === "numDocument" && (value.length < 5 || value.length > 11)) ||
+            (name === "phone" && (value.length < 5 || value.length > 11))) {
+            handleStatusError(setErrorsForms, name, "Debe tener entre 5 y 11 dígitos");
+        } else if (name === "email" && !expresionEmail.test(value)) {
+            handleStatusError(setErrorsForms, name, "No es un correo válido, recuerda usar el formato: ejemplo@gmail.com");
+        } else if (name === "dateOfBirth" && (birthYear < 1700 || birthYear > 2000 || birthYear >= currentYear)) {
+            handleStatusError(setErrorsForms, "dateOfBirth", "Fecha no válida. Debe estar entre 1700 y 2000.");
         } else {
-            // Si el campo es válido y no es numérico, eliminar cualquier error
-            setErrorsForms((prevErrors) => {
+            setErrorsForms(prevErrors => {
                 const { [name]: removed, ...rest } = prevErrors;
                 return rest;
             });
         }
-
-
     };
 
-    const handleErrors = (name, message) => {
-        setErrorsForms({ ...errorsForms, [name]: message });
-    };
 
-    // Validación de fecha de nacimiento
     useEffect(() => {
-        if (formData.dateOfBirth) {
-            const selectedDate = new Date(formData.dateOfBirth);
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            if (selectedDate >= today) {
-                handleErrors("dateOfBirth", "La fecha de nacimiento no puede ser actual o una fecha futura");
-            }
+        if (Object.keys(errorsForms).length > 0) {
+            setIsDisabled(true);
+        } else {
+            setIsDisabled(false);
         }
-    }, [formData.dateOfBirth]);
+    }, [errorsForms])
 
     // Manejar el envío del formulario
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const newErrors = {};
-        let firstEmptyField = null;
-        let firstNumericErrorField = null;
+        const formElements = event.target.elements;
+        let hasErrors = false;
 
-        // Obtener las etiquetas de los campos del formulario
-        const getLabelForField = (fieldName) => {
-            const labelElement = document.querySelector(`label[for="${fieldName}"]`);
-            return labelElement ? labelElement.textContent : fieldName;
-        };
-
-        // Validar los campos
-        for (let [name, value] of Object.entries(formData)) {
-            if (Array.isArray(value) && value.some((v) => typeof v === 'string' && !v.trim())) {
-                newErrors[name] = `${getLabelForField(name)} es obligatorio`;
-                if (!firstEmptyField) firstEmptyField = name;
-            } else if (typeof value === 'string' && !value.trim()) {
-                newErrors[name] = `${getLabelForField(name)} es obligatorio`;
-                if (!firstEmptyField) firstEmptyField = name;
-            } else if ((name === "numDocument" || name === "phone") && isNaN(Number(value))) {
-                newErrors[name] = `${getLabelForField(name)} debe ser un número válido`;
-                if (!firstNumericErrorField) firstNumericErrorField = name;
-            } else {
-                const { [name]: removed, ...rest } = errorsForms;
-                setErrorsForms(rest);
+        for (let element of formElements) {
+            if (element.name && !formData[element.name].trim()) {
+                handleStatusError(setErrorsForms, element.name, "Campo obligatorio");
+                hasErrors = true;
             }
         }
 
-        setErrorsForms({ ...errorsForms, ...newErrors });
-
-        // Mostrar alerta específica
-        if (Object.keys(newErrors).length > 0) {
-            let alertMessage = '';
-
-            if (firstEmptyField) {
-                alertMessage = `Por favor, complete el campo obligatorio: ${getLabelForField(firstEmptyField)}`;
-            } else if (firstNumericErrorField) {
-                alertMessage = `El campo ${getLabelForField(firstNumericErrorField)} debe ser un valor numérico`;
-            }
-
+        if (hasErrors) {
             swal({
                 title: 'Error',
-                text: alertMessage,
+                text: 'Hubo un error al procesar la solicitud. Por favor, intente de nuevo.',
                 icon: 'error',
-                timer: 3000
+                timer: 4000
             });
             return;
         }
@@ -220,6 +184,10 @@ export const ControllerCreateUpdateCustomer = ({ id, action }) => {
     };
 
     return {
-        formData, errorsForms, handleChange, handleSubmit
+        formData,
+        errorsForms,
+        handleChange,
+        handleSubmit,
+        isDisabled
     };
 }

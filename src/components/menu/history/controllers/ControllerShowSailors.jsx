@@ -8,6 +8,11 @@ export const useControllerShowSailors = () => {
     const [elementForPage, setElementForPage] = useState(6);
     const [currentPage, setCurrentPage] = useState(1);
     const [loading, setLoading] = useState(true);
+    const [formData, setFormData] = useState({
+        name: '', lastName: '', typeDocument: '', numDocument: '', licencia: '',
+        email: '', dateOfBirth: '', nationality: '', maritalStatus: '', phone: '',
+        address: '', sex: '', status: '', employeeType: { typeName: 'Marinero' },
+    });
 
     const getCrew = async () => {
         try {
@@ -53,6 +58,9 @@ export const useControllerShowSailors = () => {
         setCurrentPage,
         totalFilteredItems,
         loading,
-        firstIndex
+        firstIndex,
+        formData,
+        setFormData,
+        setCrew
     }
 }

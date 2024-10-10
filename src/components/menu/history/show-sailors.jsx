@@ -4,8 +4,11 @@ import { Grid } from '../../animations/Grid';
 import { Link } from 'react-router-dom';
 import { Pagination } from './Pagination.jsx';
 import { useControllerShowSailors } from './controllers/ControllerShowSailors.jsx';
+import { useChangeStatusFields } from './search/ChangeStatusFields.jsx';
+import { useState } from 'react';
 
 export const ShowCrew = () => {
+    const [itemId, setItemId] = useState("");
     const {
         searchTerm,
         handleSearchChange,
@@ -15,8 +18,37 @@ export const ShowCrew = () => {
         setCurrentPage,
         totalFilteredItems,
         loading,
-        firstIndex
+        firstIndex,
+        formData,
+        setFormData,
+        setCrew
     } = useControllerShowSailors();
+
+    const { handleStatusChange } = useChangeStatusFields({
+        id_item: itemId,
+        urlApiGet: `/api/v1/employeefluvial/all`,
+        urlApiPut: `/api/v1/employeefluvial/update/`,
+        formData: formData,
+        setFormData,
+        statusField: "status"
+    });
+
+    const onStatusChange = (id) => {
+        setItemId(id);
+        handleStatusChange(id).then(() => {
+            // Actualiza el estado local de employed inmediatamente
+            const updatedItems = paginatedItems.map(item => {
+                if (item.id === id) {
+                    return {
+                        ...item,
+                        status: item.status === "activo" ? "inactivo" : "activo"
+                    };
+                }
+                return item;
+            });
+            setCrew(updatedItems); // Actualiza el estado de employed
+        });
+    };
 
     if (loading) {
         return (
@@ -107,6 +139,12 @@ export const ShowCrew = () => {
                                             </Link>
                                             <button className='btn icon-link-hover ms-3 text-warning'>
                                                 <i className="fa-solid fa-eye icon-option"></i>
+                                            </button>
+
+                                            <button className='btn' onClick={() => onStatusChange(item.id)}>
+                                                {item.status === "activo"
+                                                    ? <i className="fa-solid fa-toggle-on text-success"></i>
+                                                    : <i className="fa-solid fa-toggle-off text-danger"></i>}
                                             </button>
                                         </td>
                                     </tr>

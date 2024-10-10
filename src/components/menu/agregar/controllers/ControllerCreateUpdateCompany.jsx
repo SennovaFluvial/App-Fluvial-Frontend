@@ -3,12 +3,14 @@ import { ApiService } from "../../../../class/ApiServices";
 import { Alert } from "../../../../class/alerts";
 import swal from "sweetalert";
 import { useNavigate } from "react-router";
+import { handleStatusError } from "../../../../functions/functions";
 export const ControllerCreateUpdateCompany = ({ id, action }) => {
     const navigate = useNavigate();
     const [errorsForms, setErrorsForms] = useState({});
     const [listCompanies, setListCompanies] = useState([])
+    const [isDisabled, setIsDisabled] = useState(false)
     const [formData, setFormData] = useState({
-        nit: 0, company: '', status: '', manager: '',
+        nit: '', company: '', status: '', manager: '',
         email: '', phone: '', address: '', department: '',
         municipality: ''
     });
@@ -16,7 +18,7 @@ export const ControllerCreateUpdateCompany = ({ id, action }) => {
     useEffect(() => {
         if (!action && !id) {
             setFormData({
-                nit: 0, company: '', status: '', manager: '',
+                nit: '', company: '', status: '', manager: '',
                 email: '', phone: '', address: '', department: '',
                 municipality: ''
             })
@@ -59,39 +61,59 @@ export const ControllerCreateUpdateCompany = ({ id, action }) => {
     const handleChange = (event) => {
         const { name, value } = event.target;
 
-        if (value.trim()) {
-            const { [name]: removed, ...rest } = errorsForms;
-            setErrorsForms(rest);
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+
+        const expresionEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (!value.trim()) {
+            handleStatusError(setErrorsForms, name, "Campo obligatorio");
+        } else if ((name === "phone") && isNaN(value)) {
+            handleStatusError(setErrorsForms, name, "Debe ser un número válido");
+        } else if ((name === "nit" && (value.length < 5 || value.length > 11)) ||
+            (name === "phone" && (value.length < 5 || value.length > 11))) {
+            handleStatusError(setErrorsForms, name, "Debe tener entre 5 y 11 dígitos");
+        } else if (name === "email" && !expresionEmail.test(value)) {
+            handleStatusError(setErrorsForms, name, "No es un correo válido, recuerda usar el formato: ejemplo@gmail.com");
         } else {
-            setErrorsForms({ ...errorsForms, [name]: "Campo obligatorio" });
+            setErrorsForms(prevErrors => {
+                const { [name]: removed, ...rest } = prevErrors;
+                return rest;
+            });
         }
 
-        setFormData({ ...formData, [name]: value });
     }
+
+    useEffect(() => {
+        if (Object.keys(errorsForms).length > 0) {
+            setIsDisabled(true);
+        } else {
+            setIsDisabled(false);
+        }
+    }, [errorsForms])
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const newErrors = {};
-        let firstEmptyField = null;
+        const formElements = event.target.elements;
+        let hasErrors = false;
 
-        for (let [name, value] of Object.entries(formData)) {
-            if (!value.trim()) {
-                newErrors[name] = "Campo obligatorio";
+        for (let element of formElements) {
+            if (element.name && !formData[element.name].trim()) {
+                handleStatusError(setErrorsForms, element.name, "Campo obligatorio");
+                hasErrors = true;
             }
         }
 
-        setErrorsForms({ ...errorsForms, ...newErrors });
-
-        // Verificar si hay errores y mostrar alerta
-        if (Object.keys(newErrors).length > 0) {
+        if (hasErrors) {
             swal({
                 title: 'Error',
-                text: `Por favor, complete el campo obligatorio: ${firstEmptyField}`,
+                text: 'Hubo un error al procesar la solicitud. Por favor, intente de nuevo.',
                 icon: 'error',
-                timer: 3000
+                timer: 4000
             });
-
             return;
         }
 
@@ -105,7 +127,7 @@ export const ControllerCreateUpdateCompany = ({ id, action }) => {
         const confirmationMessage = action === 'update' ?
             `¿Está seguro que quiere actualizar la empresa?\nNombre: ${formData.nit} ${formData.company}` :
             `¿Está seguro que quiere crear la empresa? \nNombre: ${formData.nit} ${formData.company}`;
-            
+
         try {
             const result = await Alert.alertConfirm(
                 'Confirmación',
@@ -139,6 +161,7 @@ export const ControllerCreateUpdateCompany = ({ id, action }) => {
         errorsForms,
         formData,
         handleChange,
-        handleSubmit
+        handleSubmit,
+        isDisabled
     }
 }

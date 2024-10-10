@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router';
 import swal from 'sweetalert';
 import { ApiService } from '../../../../class/ApiServices';
 import { Alert } from '../../../../class/alerts';
+import { handleStatusError } from '../../../../functions/functions';
 export const ControllerCreateUpdateVehicle = ({ id, action }) => {
 
     const nav = useNavigate();
+    const [isDisabled, setIsDisabled] = useState(false);
     const userCreater = JSON.parse(localStorage.getItem("user"));
     const userName = userCreater?.username;
     const [errorsForms, setErrorsForms] = useState({});
@@ -82,37 +84,54 @@ export const ControllerCreateUpdateVehicle = ({ id, action }) => {
     const handleChange = (event) => {
         const { name, value } = event.target;
 
-        const error = validateField(name, value);
-        setErrorsForms((prevErrors) => ({
-            ...prevErrors,
-            [name]: error || undefined
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
         }));
 
-        setFormData((prevData) => ({ ...prevData, [name]: value }));
+        if (!value.trim()) {
+            handleStatusError(setErrorsForms, name, "Campo obligatorio");
+        } else if ((name === "weightCapacity" || name === "volumeCapacity" || name === "passengerSpace") && isNaN(value)) {
+            handleStatusError(setErrorsForms, name, "No es un numero valido");
+        }
+        else {
+            setErrorsForms(prevErrors => {
+                const { [name]: removed, ...rest } = prevErrors;
+                return rest;
+            });
+        }
     };
+
+    useEffect(() => {
+        if (Object.keys(errorsForms).length > 0) {
+            setIsDisabled(true);
+        } else {
+            setIsDisabled(false);
+        }
+    }, [errorsForms]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const newErrors = {};
-        for (let [name, value] of Object.entries(formData)) {
-            const error = validateField(name, value);
-            if (error) {
-                newErrors[name] = error;
+        const formElements = event.target.elements;
+        let hasErrors = false;
+
+        for (let element of formElements) {
+            if (element.name && typeof formData[element.name] === 'string' && !formData[element.name].trim()) {
+                handleStatusError(setErrorsForms, element.name, "Campo obligatorio");
+                hasErrors = true;
             }
         }
 
-        setErrorsForms((prevErrors) => ({ ...prevErrors, ...newErrors }));
-
-        if (Object.keys(newErrors).length > 0) {
+        if (hasErrors) {
             swal({
                 title: 'Error',
-                text: 'Por favor, complete todos los campos obligatorios.',
+                text: 'Hubo un error al procesar la solicitud. Por favor, intente de nuevo.',
                 icon: 'error',
-                timer: 3000
+                timer: 4000
             });
             return;
-        }
+        };
 
         const messegueConfirmation = action && action === "update" ?
             `¿Estás seguro de actualizar el vehículo ${formData.type} - ${formData.licensePlate}?` :
@@ -153,5 +172,6 @@ export const ControllerCreateUpdateVehicle = ({ id, action }) => {
         handleChange,
         handleSubmit,
         userName,
+        isDisabled
     };
 }

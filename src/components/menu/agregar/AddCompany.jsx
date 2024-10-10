@@ -10,7 +10,7 @@ import { ControllerCreateUpdateCompany } from './controllers/ControllerCreateUpd
 export const AddCompany = () => {
 
     const { id, action } = useParams();
-    const { handleSubmit, errorsForms, formData, handleChange } = ControllerCreateUpdateCompany({ id, action });
+    const { handleSubmit, errorsForms, formData, handleChange, isDisabled } = ControllerCreateUpdateCompany({ id, action });
     const nav = useNavigate();
     const deptos = useOptionsDepto();
     const cities = useOptionsCities();
@@ -28,7 +28,7 @@ export const AddCompany = () => {
                         </div>
                         <div className="row" > {/* Información de la Empresa */}
                             <div className="col-md-4">
-                                <Inputs type="number" text="NIT" name="nit" event={handleChange} value={formData.nit} />
+                                <Inputs type="text" text="NIT" name="nit" event={handleChange} value={formData.nit} />
                                 {errorsForms.nit && <div className="text-danger">{errorsForms.nit}</div>}
                             </div>
                             <div className="col-md-4">
@@ -84,7 +84,7 @@ export const AddCompany = () => {
                         </div>
 
                         <div className="text-center">
-                            <button type="submit" className={`${styles.btn} ${styles.btnSuccess}`}>{action && action === "update" ? "Actualizar" : "Guardar"} Empresa <i className="fa-solid fa-building"></i></button>
+                            <button type="submit" className={`${styles.btn} ${styles.btnSuccess} ${isDisabled ? "is-disabled-button" : ""}`}>{action && action === "update" ? "Actualizar" : "Guardar"} Empresa <i className="fa-solid fa-building"></i></button>
                         </div>
                     </form>
                 </div>

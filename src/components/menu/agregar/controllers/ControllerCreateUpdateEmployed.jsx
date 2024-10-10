@@ -4,13 +4,15 @@ import { useOptionsDepto, useOptionsCompanies, useOptionsCities, useRoles } from
 import { Alert } from '../../../../class/alerts.jsx';
 import Swal from 'sweetalert';
 import { User } from '../../../../class/User.jsx';
-import { useLocation, useNavigate, useParams } from 'react-router';
+import { createRoutesFromChildren, useLocation, useNavigate, useParams } from 'react-router';
+import { handleStatusError } from '../../../../functions/functions.jsx';
 
 export const ControllerCreateUpdateEmployed = ({ updatePassword }) => {
     const cities = useOptionsCities();
     const deptos = useOptionsDepto();
     const roles = useRoles();
     const [users, setUsers] = useState([]);
+    const [isDisabled, setIsDisabled] = useState(false)
     const [nameCompany, setNameCompany] = useState("");
     const [errorsForms, setErrorsForms] = useState({});
     const user = JSON.parse(localStorage.getItem("user"));
@@ -119,7 +121,7 @@ export const ControllerCreateUpdateEmployed = ({ updatePassword }) => {
                     phone: filterUserId.phone,
                     address: filterUserId.address,
                     cityName: filterUserId.city?.ciudad || "",
-                    departmentName: filterUserId.departmentName || "",
+                    departmentName: filterUserId.city?.departamento.departamento || "",
                     sex: filterUserId.sex,
                     birthDate: filterUserId.birthDate || "",
                     maritalStatus: filterUserId.maritalStatus || ""
@@ -157,112 +159,90 @@ export const ControllerCreateUpdateEmployed = ({ updatePassword }) => {
     const handleChange = (event) => {
         const { name, value } = event.target;
 
-        if (name === 'roleListName') {
+        if (name === "roleListName") {
             setFormData(prevState => ({
                 ...prevState,
                 roleRequest: {
                     ...prevState.roleRequest,
-                    roleListName: [value] // Guarda el valor en un array
+                    roleListName: [value]
                 }
             }));
         } else {
+            // Maneja todos los otros campos
             setFormData(prevState => ({
                 ...prevState,
                 [name]: value
             }));
         }
 
-        // Manejo de errores
-        if (value.trim()) {
-            const { [name]: removed, ...rest } = errorsForms;
-            setErrorsForms(rest);
+        const expresionEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const expresionPassword = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        const birthYear = name === "birthDate" ? new Date(value).getFullYear() : null;
+        const currentYear = new Date().getFullYear();
+
+        // Validaciones de campos
+        if (!value.trim()) {
+            handleStatusError(setErrorsForms, name, "Campo obligatorio");
+        } else if (name === "username" && !expresionEmail.test(value)) {
+            handleStatusError(setErrorsForms, name, "No es un correo válido, recuerda usar el formato: ejemplo@gmail.com");
+        }
+        // Validación específica para numDocument y phone (deben ser números y cumplir con los límites de longitud)
+        else if ((name === "numDocument" || name === "phone") && isNaN(value)) {
+            handleStatusError(setErrorsForms, name, "Debe ser un número válido");
+        }
+        else if ((name === "numDocument" && (value.length < 5 || value.length > 11)) ||
+            (name === "phone" && (value.length < 5 || value.length > 11))) {
+            handleStatusError(setErrorsForms, name, "Debe tener entre 5 y 11 dígitos");
+        }
+        // Validación de confirmación de username
+        else if (name === "confirmUsername" && value !== formData.username) {
+            handleStatusError(setErrorsForms, "confirmUsername", "El nombre de usuario no coincide");
+        }
+        // Validación de confirmación de contraseña
+        else if (name === "confirmPassword" && value !== formData.password) {
+            handleStatusError(setErrorsForms, "confirmPassword", "La contraseña no coincide");
+        }
+        else if (name === "password" && (!expresionPassword.test(value) || value.length < 5)) {
+            handleStatusError(setErrorsForms, name, "Contraseña insegura: usa al menos 5 caracteres, con una mayúscula, un número y un símbolo especial (@, #, $, %, &, *)")
+        }
+        else if (name === "birthDate" && (birthYear < 1700 || birthYear > 2000 || birthYear >= currentYear)) {
+            handleStatusError(setErrorsForms, "birthDate", "Fecha no válida. Debe estar entre 1700 y 2000.");
         } else {
-            setErrorsForms({ ...errorsForms, [name]: "Campo obligatorio" });
+            // Elimina el error si todas las validaciones son correctas
+            setErrorsForms(prevErrors => {
+                const { [name]: removed, ...rest } = prevErrors;
+                return rest;
+            });
         }
-
-        // Validación de campos numéricos
-        if (name === 'numDocument' || name === 'phone') {
-            if (isNaN(value)) {
-                setErrorsForms(prevErrors => ({
-                    ...prevErrors,
-                    [name]: "Debe ser un número válido"
-                }));
-            } else {
-                const { [name]: removed, ...rest } = errorsForms;
-                setErrorsForms(rest); // Elimina el error si es un número válido
-            }
-        }
-    };
-
-    const handleErrors = (name, message) => {
-        setErrorsForms(prevErrors => ({
-            ...prevErrors,
-            [name]: message
-        }));
     };
 
     useEffect(() => {
-        // Validar fecha de nacimiento
-        if (formData.birthDate) {
-            const selectedDate = new Date(formData.birthDate);
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
-            if (selectedDate >= today) {
-                handleErrors("birthDate", "La fecha de nacimiento no puede ser actual o una fecha futura");
-            }
+        if (Object.keys(errorsForms).length > 0) {
+            setIsDisabled(true);
+        } else {
+            setIsDisabled(false);
         }
-
-        // Validar nombres de usuario
-        if (formData.confirmUsername && formData.username !== formData.confirmUsername) {
-            handleErrors("confirmUsername", "Los nombres de usuario no coinciden");
-        }
-
-        // Validar contraseñas solo si updatePassword es true
-        if (updatePassword && formData.confirmPassword && formData.password !== formData.confirmPassword) {
-            handleErrors("confirmPassword", "Las contraseñas no coinciden");
-        }
-
-    }, [formData.username, formData.confirmUsername, formData.password, formData.confirmPassword, formData.birthDate, updatePassword]);
+    }, [errorsForms])
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const newErrors = {};
-        let firstEmptyField = null;
-
-        // Validación de campos vacíos (aplica a todos los campos)
-        if (updatePassword) {
-            for (let [name, value] of Object.entries(formData)) {
-                if (name === 'roleRequest.roleListName' && (!formData.roleRequest.roleListName || formData.roleRequest.roleListName.length === 0)) {
-                    newErrors['roleRequest'] = "Campo obligatorio";
-                    if (!firstEmptyField) firstEmptyField = 'Role List Name';
-                } else if (typeof value === 'string' && !value.trim()) {
-                    newErrors[name] = "Campo obligatorio";
-                    if (!firstEmptyField) firstEmptyField = name;
-                }
-            }
-        } else {
-            for (let [name, value] of Object.entries(formData)) {
-                // Validar todos los campos excepto 'password' y 'confirmPassword'
-                if (name !== 'password' && name !== 'confirmPassword') {
-                    if (typeof value === 'string' && !value.trim()) {
-                        newErrors[name] = "Campo obligatorio";
-                        if (!firstEmptyField) firstEmptyField = name;
-                    }
-                }
+        const formElements = event.target.elements;
+        let hasErrors = false;
+        
+        for (let element of formElements) {
+            if (element.name && typeof formData[element.name] === 'string' && !formData[element.name].trim()) {
+                handleStatusError(setErrorsForms, element.name, "Campo obligatorio");
+                hasErrors = true;
             }
         }
 
-        // Actualización de los errores en el estado
-        setErrorsForms(newErrors);
-
-        // Si hay errores, se detiene la ejecución
-        if (Object.keys(newErrors).length > 0) {
-            Swal({
+        if (hasErrors) {
+            swal({
                 title: 'Error',
-                text: `Por favor, complete el campo obligatorio: ${firstEmptyField}`,
+                text: 'Hubo un error al procesar la solicitud. Por favor, intente de nuevo.',
                 icon: 'error',
-                timer: 3000
+                timer: 4000
             });
             return;
         }
@@ -317,13 +297,13 @@ export const ControllerCreateUpdateEmployed = ({ updatePassword }) => {
     return {
         handleSubmit,
         handleChange,
-        handleErrors,
         formData,
         errorsForms,
         cities,
         deptos,
         roles,
         role,
-        companies
+        companies,
+        isDisabled
     }
 }
