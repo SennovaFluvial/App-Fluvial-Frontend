@@ -105,9 +105,10 @@ export const AddCustomer = () => {
                         <div className="text-center">
                             <button
                                 type="submit"
-                                className={`btn btn-success ${isDisabled ? "is-disabled-button" : ""}`}
+                                className={`${styles.btn} ${styles.btnSuccess} ${isDisabled ? "is-disabled-button" : ""}`}
                             >
-                                {action && action === "update" ? "Actualizar" : "Guardar"} Cliente</button>
+                                {action && action === "update" ? "Actualizar" : "Guardar"} Cliente
+                            </button>
                         </div>
                     </form>
                 </div>

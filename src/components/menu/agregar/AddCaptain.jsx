@@ -86,11 +86,7 @@ export const AddCaptain = () => {
                     </div>
 
                     <div className="text-center">
-                        <button
-                            type="submit"
-                            className={`btn btn-success ${isDisabled ? "is-disabled-button" : ""}`}
-                        >
-                            {action === "update" ? "Actualizar" : "Crear"} Capitan <i className="fa-solid fa-id-card-clip"></i></button>
+                        <button type="submit" className={`${styles.btn} ${styles.btnSuccess} ${isDisabled ? "is-disabled-button" : ""}`}>{action === "update" ? "Actualizar" : "Crear"} Capitan <i className="fa-solid fa-id-card-clip"></i></button>
                     </div>
                 </form>
             </div>

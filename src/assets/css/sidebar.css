@@ -105,7 +105,6 @@
 .icono-user {
     font-size: 30px;
     background: linear-gradient(to right, #00A1FF, #0044FF);
-    /* Degradado azul */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }

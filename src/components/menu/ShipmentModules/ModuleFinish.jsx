@@ -2,7 +2,6 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 
 import styles from '../../../assets/css/shipment/shipment.module.css'
-import '../../../assets/css/success.css'
 
 export const ModuleFinish = () => {
 
@@ -79,15 +78,15 @@ export const ModuleFinish = () => {
                     </div>
                 </div>
 
-                <div className="row d-flex justify-content-center">
+                <div className={styles.fila}>
                     <div className="col-md-auto">
-                        <button className="cancelar" onClick={handleBack}>
+                        <button className={styles.cancelar} onClick={handleBack}>
                             Atrás
                         </button>
                     </div>
 
                     <div className="col-md-auto">
-                        <button className="guardar" onClick={handleNext}>
+                        <button className={styles.guardar} onClick={handleNext}>
                             Guardar
                         </button>
                     </div>

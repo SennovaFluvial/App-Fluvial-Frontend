@@ -5,7 +5,6 @@ import { Inputs } from '../../html components/Inputs.jsx'
 import { useOptionsCities, useOptionsDepto, maritalStatus, typeCargo, weightUnits, Booleano } from '../update/options/arrays.jsx';
 
 import styles from '../../../assets/css/shipment/shipment.module.css'
-import '../../../assets/css/success.css'
 
 export const ModuleShipment = () => {
 
@@ -140,15 +139,15 @@ export const ModuleShipment = () => {
 
                     </form>
 
-                    <div className="row d-flex justify-content-center">
+                    <div className={styles.fila}>
                         <div className="col-md-auto">
-                            <button className="cancelar" onClick={handleBack}>
+                            <button className={styles.cancelar} onClick={handleBack}>
                                 Atrás
                             </button>
                         </div>
 
                         <div className="col-md-auto">
-                            <button className="siguiente" onClick={handleNext}>
+                            <button className={styles.siguiente} onClick={handleNext}>
                                 Siguiente
                             </button>
                         </div>
