@@ -1,0 +1,85 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --green: #00AF00;
+    --button-orange: #FF8C4f;
+    --whitesmoke: whitesmoke;
+}
+
+/* Contenedor pricipal */
+.Login {
+    position: absolute;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+
+.hero-image {
+    display: flex;
+    background-image: url("../img/puerto.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    height: 100vh;
+    width: 65%;
+}
+
+.flex {
+    display: flex;
+}
+
+
+/* @media (max-width: 1024px) {
+
+    .bottom-side-container {
+        padding: 0rem 3rem 0 3rem;
+        height: 35rem;
+    }
+
+    .side-conainter__title {
+        font-size: 1.60rem;
+    }
+
+    .login-form {
+        padding: 0 5rem
+    }
+}
+
+@media (max-width: 877.71px) {
+    
+    .bottom-side-container {
+        padding: 0rem 1.5rem 0 1.5rem;
+        height: 35rem;
+    }
+
+    .side-conainter__title {
+        font-size: 1.60rem;
+    }
+
+    .login-form {
+        padding: 0 4rem
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-image {
+        display: none;
+    }
+
+    .side-container {
+        width: 100%;
+        max-width: 100%;
+        min-width: 80%;
+    }
+
+    .login-form {
+        min-width: 80%;
+        max-width: 100%;
+    }
+} */

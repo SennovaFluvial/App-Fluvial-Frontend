@@ -103,7 +103,7 @@ export const AddCustomer = () => {
                             </div>
                         </div>
                         <div className="text-center">
-                            <button type="submit" className="btn btn-success">{action && action === "update" ? "Actualizar" : "Guardar"} Cliente</button>
+                            <button type="submit" className={`${styles.btn} ${styles.btnSuccess}`}>{action && action === "update" ? "Actualizar" : "Guardar"} Cliente</button>
                         </div>
                     </form>
                 </div>

@@ -6,7 +6,6 @@ import { typeVehicle, weightUnits } from '../update/options/arrays.jsx';
 
 typeVehicle
 import styles from '../../../assets/css/shipment/shipment.module.css'
-import '../../../assets/css/success.css'
 
 export const ModuleVehicle = () => {
 
@@ -86,15 +85,15 @@ export const ModuleVehicle = () => {
 
                     </form>
 
-                    <div className="row d-flex justify-content-center">
+                    <div className={styles.fila}>
                         <div className="col-md-auto">
-                            <button className="cancelar" onClick={handleBack}>
+                            <button className={styles.cancelar} onClick={handleBack}>
                                 Atrás
                             </button>
                         </div>
 
                         <div className="col-md-auto" onClick={handleNext}>
-                            <button className="siguiente">
+                            <button className={styles.siguiente}>
                                 Siguiente
                             </button>
                         </div>

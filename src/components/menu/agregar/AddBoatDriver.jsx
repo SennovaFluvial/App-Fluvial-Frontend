@@ -86,7 +86,7 @@ export const AddBoatDriver = () => {
                     </div>
 
                     <div className="text-center">
-                        <button type="submit" className="btn btn-success">{action && action === "update" ? "Actualizar" : "Guardar"} Motorista <i className="fa-solid fa-vest"></i></button>
+                        <button type="submit" className={`${styles.btn} ${styles.btnSuccess}`}>{action && action === "update" ? "Actualizar" : "Guardar"} Motorista <i className="fa-solid fa-vest"></i></button>
                     </div>
                 </form>
             </div>

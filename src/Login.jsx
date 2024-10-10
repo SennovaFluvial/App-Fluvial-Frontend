@@ -7,6 +7,7 @@ import Logo from './assets/img/LogoSena.png'
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert';
 import { useControllerLogin } from './controllers/ControllerLogin';
+import  styles  from './assets/css/login.module.css'
 
 /**
  * Componente Login
@@ -24,7 +25,7 @@ export const Login = ({ setUser }) => {
 
     return (
         <>
-            <div id="Login">
+            <div id="Login" className={styles.Login}>
                 <div className="hero-image">
                     <img src={Logo} alt="" className="logo" />
                 </div>

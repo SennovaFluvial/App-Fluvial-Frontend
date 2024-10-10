@@ -2,7 +2,6 @@ import { Select } from '../../html components/Selects.jsx';
 import { Inputs } from '../../html components/Inputs.jsx';
 import { OptionsTypeDocument, genero, status, maritalStatus, codigoPaises } from '../update/options/arrays.jsx';
 import styles from '../../../assets/css/Forms.module.css'
-import '../../../assets/css/success.css'
 import { ControllerCreateUpdateEmployed } from './controllers/ControllerCreateUpdateEmployed.jsx';
 import { useState } from 'react';
 import { VerifyUserChangePassword } from './controllers/VerifyUserChangePassword.jsx';
@@ -183,7 +182,7 @@ export const AddEmployed = () => {
               </div>
             </div>
             <div className="text-center">
-              <button type="submit" className={"btn btn-success"}>{action === 'update' ? 'Actualizar' : 'Crear'} Empleado <i className="fa-solid fa-building-user"></i></button>
+              <button type="submit" className={`${styles.btn} ${styles.btnSuccess}`}>{action === 'update' ? 'Actualizar' : 'Crear'} Empleado <i className="fa-solid fa-building-user"></i></button>
             </div>
           </form>
         </div>
@@ -217,7 +216,7 @@ export const AddEmployed = () => {
                 <button type="button" className="btn btn-danger" data-bs-dismiss="modal">
                   Cerrar
                 </button>
-                <button type="button" className="btn btn-success" onClick={handleSubmitVerify}>
+                <button type="button" className="btn-success" onClick={handleSubmitVerify}>
                   Validar
                 </button>
               </div>

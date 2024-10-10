@@ -10,7 +10,6 @@ export const SailorSection = () => {
                         Tripulantes
                     </a>
                     <ul className="dropdown-menu menu-account">
-                        <>
                             <li className='dropdown-item text-black'>
                                 <Link to={'show-crew'}>
                                     <i className="fa-solid fa-person-military-pointing me-2"></i>Listado de Tripulantes
@@ -20,7 +19,6 @@ export const SailorSection = () => {
                             <li className='dropdown-item text-black'>
                                 <Link to={'add-crew'}>Creación de Tripulantes</Link>
                             </li>
-                        </>
                     </ul>
                 </li>
             </ul>
