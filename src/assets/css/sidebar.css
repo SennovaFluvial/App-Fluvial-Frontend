@@ -3,6 +3,7 @@
     flex-direction: column;
     background-color: #ffffff;
     width: 250px;
+    /* Ancho del sidebar expandido */
     height: 100vh;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -10,7 +11,13 @@
     top: 0;
     left: 0;
     overflow-y: auto;
+    transition: width 0.3s ease;
+    /* Transición suave al colapsar */
+}
 
+.sidebar.collapsed {
+    width: 60px;
+    /* Ancho del sidebar colapsado */
 }
 
 .titulo-section {
@@ -44,7 +51,6 @@
     margin: 0;
 }
 
-
 .menu ul li a {
     color: #000;
     text-decoration: none;
@@ -55,7 +61,6 @@
 
 .menu ul li a:hover {
     background-color: #dcdcdc;
-
 }
 
 .logo-sena {
@@ -81,10 +86,6 @@
     background-color: #dcdcdc;
 }
 
-.icono {
-    margin-bottom: 20px;
-}
-
 .section-account-part1 img {
     width: 40px;
     height: 40px;
@@ -101,10 +102,10 @@
     border-radius: 0.75rem;
 }
 
-
-.icono-user {    
+.icono-user {
     font-size: 30px;
-    background: linear-gradient(to right, #00A1FF, #0044FF); /* Degradado azul */
+    background: linear-gradient(to right, #00A1FF, #0044FF);
+    /* Degradado azul */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -115,7 +116,7 @@
     cursor: not-allowed;
 }
 
-.option-menu {  
+.option-menu {
     padding: 10px;
 }
 
@@ -186,4 +187,17 @@ nav.pagination {
 
 button {
     outline: none;
+}
+
+/* Ajustar el contenido principal al colapsar el sidebar */
+.main-content {
+    margin-left: 250px;
+    /* Espacio para el sidebar expandido */
+    transition: margin-left 0.3s ease;
+    /* Transición suave al colapsar */
+}
+
+.sidebar.collapsed+.main-content {
+    margin-left: 60px;
+    /* Ajuste del margen para el sidebar colapsado */
 }

@@ -32,6 +32,7 @@ import { ModuleFinish } from '../menu/ShipmentModules/ModuleFinish.jsx';
 
 import { Inventories } from '../menu/Inventories.jsx';
 import { Reports } from '../menu/Reports.jsx';
+import { MoreDetails } from '../menu/history/moreDetails/MoreDetails.jsx';
 /**
  * Componente ComponentRouter
  * 
@@ -81,6 +82,9 @@ export const ComponentRouter = () => {
                     </Route>
                     <Route path="show-companies" element={< ShowCompany />} /> {/* Ruta para ver compañias */}
                     <Route path="show-customers" element={< ShowCustomers />} /> {/* Ruta para ver clientes */}
+                    <Route path='show-customers/more-details/:id?' element={< MoreDetails />} />
+
+
                     <Route path="show-users" element={< ShowUsers />} /> {/* Ruta para ver usuarios */}
                     <Route path="show-crew" element={< ShowCrew />} /> {/* Ruta para ver tripualntes */}
                     <Route path="show-vehicles" element={< ShowVehicles />} /> {/* Ruta para ver vehículos */}
