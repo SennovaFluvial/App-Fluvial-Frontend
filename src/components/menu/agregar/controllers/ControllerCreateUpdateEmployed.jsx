@@ -4,7 +4,7 @@ import { useOptionsDepto, useOptionsCompanies, useOptionsCities, useRoles } from
 import { Alert } from '../../../../class/alerts.jsx';
 import Swal from 'sweetalert';
 import { User } from '../../../../class/User.jsx';
-import { createRoutesFromChildren, useLocation, useNavigate, useParams } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
 import { handleStatusError } from '../../../../functions/functions.jsx';
 
 export const ControllerCreateUpdateEmployed = ({ updatePassword }) => {
@@ -258,19 +258,19 @@ export const ControllerCreateUpdateEmployed = ({ updatePassword }) => {
             : `¿Está seguro que quiere crear el usuario?\nUsuario: ${dataToSend.username}\nRol: ${dataToSend.roleRequest.roleListName[0]}`;
 
         try {
-            const result = await Alert.alertConfirm(
-                'Confirmación',
-                confirmationMessage,
-                action === 'update'
-                    ? 'Usuario actualizado correctamente'
-                    : 'Usuario creado correctamente',
-                nav,
-                "../../adminSection/show-users"
-            );
+            const result = await Swal({
+                title: 'Confirmación',
+                text: confirmationMessage,
+                icon: 'warning',
+                buttons: {
+                    cancel: 'Cancelar',
+                    confirm: 'Confirmar'
+                },
+                dangerMode: true,
+            });
 
             if (result) {
                 if (action === 'update') {
-                    // Enviar datos dependiendo de si se actualiza la contraseña o no
                     if (updatePassword) {
                         await ApiService.put(`/auth/update/${userId}`, dataToSend);
                     } else {
@@ -281,15 +281,49 @@ export const ControllerCreateUpdateEmployed = ({ updatePassword }) => {
                 } else {
                     await User.sign_up(dataToSend);
                 }
+
+                Swal({
+                    title: 'Éxito',
+                    text: action === 'update'
+                        ? 'Usuario actualizado correctamente'
+                        : 'Usuario creado correctamente',
+                    icon: 'success',
+                    timer: 3000,
+                    buttons: false
+                });
+
+                nav("../../adminSection/show-users");
             }
+
         } catch (error) {
             console.error('Error al procesar la solicitud:', error);
-            Swal({
-                title: 'Error',
-                text: 'Hubo un error al procesar la solicitud. Por favor, intente de nuevo.',
-                icon: 'error',
-                timer: 2000
-            });
+
+            if (error.response) {
+                const { Code, Message } = error.response.data;
+
+                if (Code === 400 && Message === "Admin cannot create more than 3 users with ADMIN role.") {
+                    Swal({
+                        title: 'Error',
+                        text: 'No pueden existir más de 3 administradores',
+                        icon: 'error',
+                        timer: 3000
+                    });
+                } else {
+                    Swal({
+                        title: 'Error',
+                        text: 'No pueden existir más de 3 administradores',
+                        icon: 'error',
+                        timer: 3000
+                    });
+                }
+            } else {
+                Swal({
+                    title: 'Error',
+                    text: 'Hubo un error al procesar la solicitud. Por favor, intente de nuevo.',
+                    icon: 'error',
+                    timer: 2000
+                });
+            }
         }
     };
 
