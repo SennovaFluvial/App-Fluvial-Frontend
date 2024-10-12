@@ -131,7 +131,9 @@ export const ShowCrew = () => {
                             <th scope="col">Origen</th>
                             <th scope="col">Categoría</th>
                             <th scope="col">Estado</th>
-                            <th scope="col">Acciones</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -160,17 +162,19 @@ export const ShowCrew = () => {
                                         </td>
                                         <td>
                                             <Link to={url + `/${item.id}/update`}>
-                                                <button className='btn icon-link-hover ms-3 text-primary'>
+                                                <button className='btn btn-edit icon-link-hover text-primary'>
                                                     <i className="fa-solid fa-pen-to-square icon-option"></i>
                                                 </button>
                                             </Link>
-
+                                        </td>
+                                        <td>
                                             <Link to={`more-details/${item.id}/crew`}>
-                                                <button className='btn icon-link-hover text-warning'>
+                                                <button className='btn btn-view icon-link-hover text-warning'>
                                                     <i className="fa-solid fa-eye icon-option"></i>
                                                 </button>
                                             </Link>
-
+                                        </td>
+                                        <td>
                                             <button className='btn' onClick={() => onStatusChange(item.id)}>
                                                 {item.status === "activo"
                                                     ? <i className="fa-solid fa-toggle-on text-success"></i>

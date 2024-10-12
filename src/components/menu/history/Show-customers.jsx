@@ -76,7 +76,8 @@ export const ShowCustomers = () => {
               <th scope="col">Ciudad</th>
               <th scope="col">Tipo de Persona</th>
               <th scope="col">Nombre de empresa</th>
-              <th scope="col">Acciones</th>
+              <th scope="col"></th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody className="table-group-divider">
@@ -94,12 +95,14 @@ export const ShowCustomers = () => {
                   <td>{item.personType === "Juridica" ? item.companyName : "➖"}</td>
                   <td>
                     <Link to={`../add-customer/${item.id}/update`}>
-                      <button className='btn icon-link-hover ms-3 text-primary'>
+                      <button className='btn btn-edit icon-link-hover text-primary'>
                         <i className="fa-solid fa-pen-to-square icon-option"></i>
                       </button>
                     </Link>
+                  </td>
+                  <td>
                     <Link to={`more-details/${item.id}/customer`}>
-                      <button className='btn icon-link-hover ms-3 text-warning'>
+                      <button className='btn btn-view icon-link-hover text-warning'>
                         <i className="fa-solid fa-eye icon-option"></i>
                       </button>
                     </Link>

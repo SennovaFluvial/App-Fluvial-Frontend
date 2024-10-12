@@ -143,7 +143,9 @@ export const ShowUsers = () => {
                             <th scope="col">Dirección</th>
                             <th scope="col">Estado</th>
                             <th scope="col">Empresa</th>
-                            <th scope="col">Acciones</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -172,20 +174,18 @@ export const ShowUsers = () => {
                                         <b>{item.status}</b>
                                     </td>
                                     <td>{item.company?.name}</td>
+                                    <td>  <Link to={`../add-employed/${item.id}?action=update`}>
+                                        <button className='btn btn-edit icon-link-hover text-primary'>
+                                            <i className="fa-solid fa-pen-to-square icon-option"></i>
+                                        </button>
+                                    </Link></td>
+                                    <td>  <Link to={`more-details/${item.id}/employee`}>
+                                        <button className='btn btn-view icon-link-hover text-warning'>
+                                            <i className="fa-solid fa-eye icon-option"></i>
+                                        </button>
+                                    </Link></td>
                                     <td>
-                                        <Link to={`../add-employed/${item.id}?action=update`}>
-                                            <button className='btn icon-link-hover text-primary'>
-                                                <i className="fa-solid fa-pen-to-square icon-option"></i>
-                                            </button>
-                                        </Link>
-
-                                        <Link to={`more-details/${item.id}/employee`}>
-                                            <button className='btn icon-link-hover text-warning'>
-                                                <i className="fa-solid fa-eye icon-option"></i>
-                                            </button>
-                                        </Link>
-
-                                        <button className='btn' onClick={() => onStatusChange(item.id)}>
+                                        <button className='btn btn-toggle' onClick={() => onStatusChange(item.id)}>
                                             {item.status === "activo"
                                                 ? <i className="fa-solid fa-toggle-on text-success"></i>
                                                 : <i className="fa-solid fa-toggle-off text-danger"></i>}
