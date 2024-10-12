@@ -5,11 +5,14 @@ import { Grid } from '../../animations/Grid';
 import { Pagination } from './Pagination';
 import { useControllerShowUsers } from './controllers/ControllerShowUsers';
 import { useChangeStatusFields } from './search/ChangeStatusFields';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { VerifyUserChangePassword } from '../agregar/controllers/VerifyUserChangePassword';
+import { ModalRequestPassword } from '../agregar/ModalRequestPassword';
 
 
 export const ShowUsers = () => {
 
+    const [showModal, setShowModal] = useState(false);
     const [itemId, setItemId] = useState("")
     const {
         searchTerm,
@@ -43,22 +46,46 @@ export const ShowUsers = () => {
         statusField: "estado"
     });
 
+    const { updatePassword,
+        handleChangeVerify,
+        errorsFormsVerify,
+        handleSubmitVerify,
+        formLogin,
+        userName,
+        setUpdatePassword } = VerifyUserChangePassword();
+
+    const handleChangeShowModal = () => {
+        setShowModal(!showModal);
+    }
+    const handleCloseModal = () => {
+        setShowModal(false);
+    }
+
     const onStatusChange = (id) => {
         setItemId(id);
-        handleStatusChange(id).then(() => {
-            // Actualiza el estado local de employed inmediatamente
-            const updatedItems = paginatedItems.map(item => {
-                if (item.id === id) {
-                    return {
-                        ...item,
-                        status: item.status === "activo" ? "inactivo" : "activo"
-                    };
-                }
-                return item;
-            });
-            setEmployed(updatedItems); // Actualiza el estado de employed
-        });
+        handleChangeShowModal()
+        return;
     };
+
+    useEffect(() => {
+        if (updatePassword && itemId) {
+            handleStatusChange(itemId).then(() => {
+
+                const updatedItems = paginatedItems.map(item => {
+                    if (item.id === itemId) {
+                        return {
+                            ...item,
+                            status: item.status === "activo" ? "inactivo" : "activo"
+                        };
+                    }
+                    return item;
+                });
+                setEmployed(updatedItems);
+                setUpdatePassword(false);
+            });
+        }
+    }, [updatePassword, itemId]);
+
 
     if (loading) {
         return (
@@ -180,6 +207,18 @@ export const ShowUsers = () => {
                     totalElements={totalFilteredItems}
                 />
             </div>
+
+            {showModal && (
+                <ModalRequestPassword
+                    userNameUser={userName}
+                    showModal={showModal}
+                    handleClose={handleCloseModal}
+                    handleChangeVerify={handleChangeVerify}
+                    errorsFormsVerify={errorsFormsVerify}
+                    handleSubmitVerify={handleSubmitVerify}
+                    formLogin={formLogin}
+                />)}
+
         </>
     )
 }

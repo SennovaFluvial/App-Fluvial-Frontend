@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { ApiService } from '../../../../class/ApiServices.jsx';
 import { useOptionsDepto, useOptionsCompanies, useOptionsCities, useRoles } from '../../update/options/arrays.jsx';
-import { Alert } from '../../../../class/alerts.jsx';
 import Swal from 'sweetalert';
 import { User } from '../../../../class/User.jsx';
 import { useLocation, useNavigate, useParams } from 'react-router';

@@ -6,6 +6,7 @@ import { Pagination } from './Pagination';
 import { useControllerShowCustomers } from './controllers/ControllerShowCustomers';
 
 export const ShowCustomers = () => {
+
   const {
     searchTerm,
     handleSearchChange,

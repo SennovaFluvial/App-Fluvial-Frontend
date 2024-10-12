@@ -3,37 +3,29 @@ import { Inputs } from '../../html components/Inputs.jsx';
 import { OptionsTypeDocument, genero, status, maritalStatus, codigoPaises } from '../update/options/arrays.jsx';
 import styles from '../../../assets/css/Forms.module.css'
 import { ControllerCreateUpdateEmployed } from './controllers/ControllerCreateUpdateEmployed.jsx';
-import { useState } from 'react';
 import { VerifyUserChangePassword } from './controllers/VerifyUserChangePassword.jsx';
+import { ModalRequestPassword } from './ModalRequestPassword.jsx';
+import { useState } from 'react';
 
 export const AddEmployed = () => {
+
+  const [showModal, setShowModal] = useState(false);
 
   const queryParam = new URLSearchParams(location.search);
   const action = queryParam.get('action');
   const userData = JSON.parse(localStorage.getItem('user'));
   const userNameUser = userData?.username;
-  // Define updatePassword antes de usarlo
-  const {
-    updatePassword,
-    handleChangeVerify,
-    errorsFormsVerify,
-    handleSubmitVerify,
-    userName,
-    formLogin
-  } = VerifyUserChangePassword();
 
-  const {
-    handleSubmit,
-    handleChange,
-    formData,
-    errorsForms,
-    cities,
-    deptos,
-    roles,
-    role,
-    companies,
-    isDisabled
-  } = ControllerCreateUpdateEmployed({ updatePassword });
+  const { updatePassword, handleChangeVerify, errorsFormsVerify, handleSubmitVerify, formLogin } = VerifyUserChangePassword();
+
+  const handleChangeShowModal = () => {
+    setShowModal(!showModal);
+  }
+  const handleCloseModal = () => {
+    setShowModal(false);
+  }
+
+  const { handleSubmit, handleChange, formData, errorsForms, cities, deptos, roles, role, companies, isDisabled } = ControllerCreateUpdateEmployed({ updatePassword });
 
   return (
     <>
@@ -130,16 +122,19 @@ export const AddEmployed = () => {
                   <>
                     <div className="row">
                       <div className="col-md-4">
-
                         <div className="form-check my-4">
-                          <input className="form-check-input" type="checkbox" data-bs-toggle="modal" data-bs-target="#updateWitdhPassword" />
+                          <input
+                            className="form-check-input"
+                            type="checkbox"
+                            checked={showModal}
+                            onChange={handleChangeShowModal}
+                          />
                           <label className="form-check-label">
                             ¿Cambiar contraseña?
                           </label>
                         </div>
                       </div>
 
-                      {/* Solo mostrar el formulario de cambiar contraseña si updatePassword es true */}
                       {updatePassword && (
                         <>
                           <div className="row">
@@ -189,42 +184,16 @@ export const AddEmployed = () => {
         </div>
       </div>
 
-      {/* Modal */}
-
-      <div className="modal fade" id="updateWitdhPassword" aria-labelledby="updateWitdhPassword" aria-hidden="true">
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h1 className="modal-title fs-5">Verificación de Usuario</h1>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form>
-              <div className="modal-body">
-                <h1 className="modal-title fs-5">{`Ingresa la contraseña del usuario ${userName}`}</h1>
-                <Inputs
-                  placeholder="Contraseña..."
-                  event={handleChangeVerify}
-                  type="password"
-                  name="password"
-                  icon="fa-solid fa-lock"
-                  value={formLogin.password}
-                />
-                {errorsFormsVerify.password && (
-                  <div className="text-danger">{errorsFormsVerify.password}</div>
-                )}
-              </div>
-              <div className="modal-footer">
-                <button type="button" className="btn btn-danger" data-bs-dismiss="modal">
-                  Cerrar
-                </button>
-                <button type="button" className="btn-success" onClick={handleSubmitVerify}>
-                  Validar
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
+      {showModal && (
+        <ModalRequestPassword
+          userNameUser={userNameUser}
+          showModal={showModal}
+          handleClose={handleCloseModal}
+          handleChangeVerify={handleChangeVerify}
+          errorsFormsVerify={errorsFormsVerify}
+          handleSubmitVerify={handleSubmitVerify}
+          formLogin={formLogin}
+        />)}
     </>
   )
 }
