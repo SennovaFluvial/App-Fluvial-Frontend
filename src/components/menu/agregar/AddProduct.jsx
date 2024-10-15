@@ -1,10 +1,14 @@
 import React, { useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Select } from '../../html components/Selects.jsx';
 import { Inputs } from '../../html components/Inputs.jsx';
 import styles from '../../../assets/css/Forms.module.css'
 import { weightUnits, Booleano } from '../update/options/arrays.jsx';
 
 export const AddProduct = () => {
+
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         productName: '',
@@ -38,6 +42,17 @@ export const AddProduct = () => {
         });
     };
 
+    const from = location.state?.from || 'menu';
+
+    const handleCancel = () => {
+        if (from === 'menu') {
+            navigate('/adminSection');
+        }
+
+        if (from === 'producto') {
+            navigate('../show-products');
+        }
+    };
 
     return (
         <>
@@ -119,7 +134,7 @@ export const AddProduct = () => {
                         <div className="text-center">
                             <h3><b>INFORMACIÓN ADICIONAL</b></h3>
                         </div>
-                        <div className="row mt-2">
+                        <div className="row">
                             <div className="col-md-3">
                                 <Inputs text="Nombre de la Empresa" name="companyName" value={formData.companyName} onChange={handleChange} />
                             </div>
@@ -135,6 +150,7 @@ export const AddProduct = () => {
                         </div>
 
                         <div className="text-center">
+                            <button type="button" className={styles.cancelar} onClick={handleCancel}>Cancelar</button>
                             <button type="submit" className={`${styles.guardar + " ms-2"}`}>Crear Producto <i className="fa-solid fa-box"></i></button>
                         </div>
                     </form>

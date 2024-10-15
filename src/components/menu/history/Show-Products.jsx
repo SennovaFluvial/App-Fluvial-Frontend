@@ -17,7 +17,7 @@ export const ShowProducts = () => {
                 <div className="row">
 
                     <div className="col-md-2 my-3 d-flex justify-content-end ms-auto">
-                        <Link to={"/adminSection/add-product"}>
+                        <Link to={"/adminSection/add-product"} state={{ from: 'producto' }}>
                             <button className='btn btn-primary rounded-pill p-2 ps-2'>
                                 <i className="fa-regular fa-square-plus me-3"></i>Nuevo Producto
                             </button>

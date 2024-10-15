@@ -18,7 +18,7 @@ export const Inventories = () => {
                             </li>
 
                             <li className='dropdown-item text-black'>
-                                <Link to={'add-product'}>Creación de Productos
+                                <Link to={'add-product'} state={{ from: 'menu' }}>Creación de Productos
                                 </Link>
                             </li>
 
@@ -29,7 +29,7 @@ export const Inventories = () => {
                             </li>
 
                             <li className='dropdown-item text-black'>
-                                <Link to={'add-warehouse'}>Creación de Bodegas
+                                <Link to={'add-warehouse'} state={{ from: 'menu' }}>Creación de Bodegas
                                 </Link>
                             </li>
                         </>

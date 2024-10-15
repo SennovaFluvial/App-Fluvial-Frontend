@@ -117,13 +117,7 @@ export const Sidebar = ({ user, setUser }) => {
 
                     <ShipmentSection isCollapsed={isCollapsed} />
 
-                    <ul>
-                        <li>
-                            <Link to="/adminSection/inventories" className="nav-link show">
-                                <span>{isCollapsed ? <i className="fa-solid fa-boxes"></i> : 'Inventarios'}</span>
-                            </Link>
-                        </li>
-                    </ul>
+                    <Inventories isCollapsed={isCollapsed} />
 
                     <ul>
                         <li>

@@ -1,16 +1,22 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import styles from '../../assets/css/Forms.module.css'
 
-export const CancelButton = ({ redirectPath }) => {
-    const history = useHistory();
+export const CancelButton = ({ redirectPath, defaultPath = '/adminSection' }) => {
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const handleCancel = () => {
-        history.push(redirectPath);
+        if (redirectPath && location.pathname === redirectPath) {
+            navigate(redirectPath);
+        } else {
+            navigate(defaultPath);
+        }
     };
 
     return (
-        <button type="button" className="btn btn-secondary" onClick={handleCancel}>
+        <button type="button" className={styles.cancelar} onClick={handleCancel}>
             Cancelar
         </button>
-    )
-}
+    );
+};

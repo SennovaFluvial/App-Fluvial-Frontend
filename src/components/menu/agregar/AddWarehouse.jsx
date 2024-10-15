@@ -30,14 +30,27 @@ export const AddWarehouse = () => {
 
     const from = location.state?.from || 'menu';
 
+    // const handleCancel = () => {
+    //     if (from === 'listado') {
+    //         navigate('/adminSection/show-warehouse');
+    //     } else {
+    //         navigate('/adminSection');
+    //     }
+    // };
+
+    // const handleCancel = () => {
+    //     window.history.back();
+    // };
+
     const handleCancel = () => {
-        if (from === 'listado') {
-            navigate('/adminSection/show-warehouse');
-        } else {
+        if (from === 'menu') {
             navigate('/adminSection');
         }
+
+        if (from === 'listado' ) {
+            navigate('../show-warehouse');
+        }
     };
-    console.log(location.state);
 
     return (
         <div className={styles.card}>
@@ -70,7 +83,7 @@ export const AddWarehouse = () => {
                             <Inputs text="Nombre de la Empresa" name="companyName" value={formData.companyName} onChange={handleChange} />
                         </div>
                     </div>
-                    <div className="text-center d-flex justify-content-center">
+                    <div className="text-center">
                         <button type="button" className={styles.cancelar} onClick={handleCancel}>Cancelar</button>
                         <button type="submit" className={styles.guardar + " ms-2"}>Crear Bodega <i className="fa-solid fa-warehouse"></i></button>
                     </div>

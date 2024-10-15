@@ -19,7 +19,7 @@ export const ShowShipment = () => {
                   <div className="col-md-2 my-3 d-flex justify-content-end ms-auto">
                       <Link to={"/adminSection/register-shipment"}>
                           <button className='btn btn-primary rounded-pill p-2 ps-2'>
-                              <i className="fa-regular fa-square-plus me-3"></i>Nuevo Producto
+                              <i className="fa-regular fa-square-plus me-3"></i>Nuevo Envio
                           </button>
                       </Link>
 

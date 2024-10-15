@@ -41,7 +41,6 @@ export const ShowWarehouse = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {/* Aquí puedes mapear la lista de bodegas desde tu estado o props */}
                         <tr>
                             <td>Bodega Central</td>
                             <td>Calle Principal 123</td>
