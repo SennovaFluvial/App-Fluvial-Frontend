@@ -32,7 +32,7 @@ export const ShowCompany = () => {
   return (
     <>
       <div className="container my-5">
-        <div className="row text-center bg-info">
+        <div className="row text-center bg-success">
           <div className="col-md-12 py-3">
             <h1>
               <b>LISTADO DE EMPRESAS</b> <i className="fa-solid fa-building ms-5"></i>

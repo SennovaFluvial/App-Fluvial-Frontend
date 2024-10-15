@@ -14,6 +14,7 @@ import { CompanySection } from './components/menu/CompanySection';
 import { SailorSection } from './components/menu/SailorSection';
 import { VehicleSection } from './components/menu/VehicleSection';
 import { ShipmentSection } from './components/menu/ShipmentSection';
+import { Inventories } from './components/menu/Inventories';
 
 /**
  * Componente Sidebar
@@ -120,13 +121,7 @@ export const Sidebar = ({ user, setUser }) => {
 
                     <ShipmentSection />
 
-                    <ul>
-                        <li>
-                            <Link to="/adminSection/inventories" className="nav-link show">
-                                Inventarios
-                            </Link>
-                        </li>
-                    </ul>
+                    <Inventories />
 
                     <ul>
                         <li>

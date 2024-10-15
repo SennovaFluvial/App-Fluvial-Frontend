@@ -2,6 +2,7 @@
     --white: #fff;
     --green: #00AF00;
     --black: #0000001a;
+    --red: red;
 }
 
 
@@ -44,7 +45,8 @@
     margin-bottom: 5px;
     color: #dc3545;
 }
-.btn {
+
+/* .btn {
     display: inline-block;
     font-weight: 400;
     text-align: center;
@@ -70,4 +72,28 @@
     background-color: #008C00;
     border-color: #008C00;
     color: var(--white);
+} */
+
+button.guardar {
+    background-color: var(--green);
+    color: var(--white);
+    border: 2px solid var(--green);
+}
+
+button.guardar:hover {
+    background-color: #008800;
+    border-color: #008800;
+    box-shadow: 0 4px 8px rgba(0, 175, 0, 0.2);
+}
+
+button.cancelar {
+    background-color: #DC3545;
+    color: var(--white);
+    border-color: #DC3545;
+}
+
+button.cancelar:hover {
+    background-color: #8b0000;
+    color: var(--white);
+    border-color: darkred;
 }

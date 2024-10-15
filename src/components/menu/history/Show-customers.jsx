@@ -31,7 +31,7 @@ export const ShowCustomers = () => {
   return (
     <>
       <div className="container my-5">
-        <div className="row text-center bg-warning">
+        <div className="row text-center bg-success">
           <div className="col-md-12 py-3">
             <h1>
               <b>LISTADO DE CLIENTES</b> <i className="fa-solid fa-people-robbery ms-5"></i>

@@ -171,3 +171,4 @@ export const Booleano = [
     { label: 'Si', value: 'true' },
     { label: 'No', value: 'false' }
 ];
+

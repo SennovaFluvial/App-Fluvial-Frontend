@@ -14,12 +14,17 @@ import { AddBoatDriver } from '../menu/agregar/AddBoatDriver.jsx';
 import { AddVehicle } from '../menu/agregar/AddVehicle.jsx';
 import { AddCustomer } from '../menu/agregar/AddCustomer.jsx';
 import { AddCrew } from '../menu/agregar/AddCrew.jsx';
+import { AddProduct } from '../menu/agregar/AddProduct.jsx';
+import { AddWarehouse } from '../menu/agregar/AddWarehouse.jsx';
 
 import { ShowCompany } from '../menu/history/Show-Company.jsx';
 import { ShowCustomers } from '../menu/history/Show-customers.jsx';
 import { ShowUsers } from '../menu/history/Show-users.jsx';
 import { ShowCrew } from '../menu/history/show-sailors.jsx';
 import { ShowVehicles } from '../menu/history/Show-Vehicles.jsx';
+import { ShowShipment } from '../menu/history/Show-Shipment.jsx';
+import { ShowProducts } from '../menu/history/Show-Products.jsx';
+import { ShowWarehouse } from '../menu/history/Show-Warehouse.jsx';
 
 import { Info } from '../../Info.jsx';
 
@@ -72,6 +77,9 @@ export const ComponentRouter = () => {
                     <Route path="add-employed/:id?" element={< AddEmployed />} />{/* Ruta para agregar empleados */}
                     <Route path="add-vehicle/:id?/:action?" element={< AddVehicle />} /> {/* Ruta para agregar vehículos */}
                     <Route path="add-customer/:id?/:action?" element={< AddCustomer />} />{/* Ruta para agregar clientes */}
+                    <Route path="add-product/:id?/:action?" element={< AddProduct />} />{/* Ruta para agregar productos */}
+                    <Route path="add-warehouse/:id?/:action?" element={< AddWarehouse/>} />{/* Ruta para agregar bodegas */}
+
                     <Route path="add-crew" element={< AddCrew />}>{/* Ruta para agregar tripulantes */}
 
                         <Route path="add-captain/:id?/:action?" element={< AddCaptain />} />{/* Ruta para agregar capitanes */}
@@ -79,11 +87,15 @@ export const ComponentRouter = () => {
                         <Route path="add-boat-driver/:id?/:action?" element={< AddBoatDriver />} /> {/* Ruta para agregar mototristas */}
 
                     </Route>
+
                     <Route path="show-companies" element={< ShowCompany />} /> {/* Ruta para ver compañias */}
                     <Route path="show-customers" element={< ShowCustomers />} /> {/* Ruta para ver clientes */}
                     <Route path="show-users" element={< ShowUsers />} /> {/* Ruta para ver usuarios */}
                     <Route path="show-crew" element={< ShowCrew />} /> {/* Ruta para ver tripualntes */}
                     <Route path="show-vehicles" element={< ShowVehicles />} /> {/* Ruta para ver vehículos */}
+                    <Route path="show-shipment" element={< ShowShipment />} /> {/* Ruta para ver vehículos */}
+                    <Route path="show-products" element={< ShowProducts />} /> {/* Ruta para ver productos */}
+                    <Route path="show-warehouse" element={< ShowWarehouse />} /> {/* Ruta para ver bodegas */}
 
                     <Route path="register-shipment" element={< RegisterShipment />} > {/* Ruta padre para los moudulos de envío */}
                         <Route index element={<Navigate to="module-Sender" />} />
