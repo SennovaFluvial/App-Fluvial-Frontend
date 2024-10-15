@@ -86,7 +86,7 @@ export const AddSailor = () => {
                     </div>
 
                     <div className="text-center">
-                        <button type="submit" className={`${styles.btn} ${styles.btnSuccess} ${isDisabled ? "is-disabled-button" : ""}`}>{action && action === "update" ? "Actualizar" : "Guardar"} Marinero <i className="fa-solid fa-ship"></i></button>
+                        <button type="submit" className={`${styles.guardar + " ms-2"} ${isDisabled ? "is-disabled-button" : ""}`}>{action && action === "update" ? "Actualizar" : "Guardar"} Marinero <i className="fa-solid fa-ship"></i></button>
                     </div>
                 </form>
             </div>

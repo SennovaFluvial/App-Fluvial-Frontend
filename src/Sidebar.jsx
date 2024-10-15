@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './assets/css/sidebar.css';
 import Logo from './assets/img/LogoSena.png';
 import { Link, useNavigate } from "react-router-dom";
@@ -11,6 +11,7 @@ import { CompanySection } from './components/menu/CompanySection';
 import { SailorSection } from './components/menu/SailorSection';
 import { VehicleSection } from './components/menu/VehicleSection';
 import { ShipmentSection } from './components/menu/ShipmentSection';
+import { Inventories } from './components/menu/Inventories';
 
 export const Sidebar = ({ user, setUser }) => {
     const [isCollapsed, setIsCollapsed] = useState(false); // Estado para controlar colapso del sidebar

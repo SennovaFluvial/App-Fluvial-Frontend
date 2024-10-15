@@ -70,7 +70,7 @@ export const AddVehicle = () => {
                             </div>
                         </div>
                         <div className="text-center">
-                            <button type="submit" className={`${styles.btn} ${styles.btnSuccess} ${isDisabled ? "is-disabled-button" : ""}`}>{action === "update" ? "Actualizar" : "Crear"} Vehículo <i className="fa-solid fa-floppy-disk"></i></button>
+                            <button type="submit" className={`${styles.guardar + " ms-2"} ${isDisabled ? "is-disabled-button" : ""}`}>{action === "update" ? "Actualizar" : "Crear"} Vehículo <i className="fa-solid fa-floppy-disk"></i></button>
                         </div>
                     </form>
                 </div>

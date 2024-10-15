@@ -90,7 +90,7 @@ export const ShowCrew = () => {
     return (
         <>
             <div className="container my-5">
-                <div className="row text-center bg-info">
+                <div className="row text-center bg-success">
                     <div className="col-md-12 py-3">
                         <h1> <b>LISTADO DE TRIPULACIÓN</b> <i className="fa-solid fa-anchor ms-5"></i></h1>
                     </div>
