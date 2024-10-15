@@ -39,6 +39,9 @@ export const Inputs = ({ type, text, name, event, placeholder, icon, value }) =>
                     placeholder={placeholder} // Texto de ejemplo dentro del input
                     onChange={event} // Evento que se dispara al cambiar el valor del input
                     value={value} // Valor actual del input
+                    onCopy={name === 'confirmPassword' || name === 'confirmUsername' ? (event) => event.preventDefault() : undefined}
+                    onPaste={name === 'confirmPassword' || name === 'confirmUsername' ? (event) => event.preventDefault() : undefined}
+                    onCut={name === 'confirmPassword' || name === 'confirmUsername' ? (event) => event.preventDefault() : undefined}
                 />
                 {/* Si el input es de tipo 'password', muestra el icono para alternar visibilidad */}
                 {type === 'password' && (

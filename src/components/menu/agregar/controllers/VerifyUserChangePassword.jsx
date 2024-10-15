@@ -17,11 +17,11 @@ export const VerifyUserChangePassword = () => {
 
     const handleChangeVerify = (event) => {
         const { name, value } = event.target;
+
         setFormLogin((prevFormLogin) => ({
             ...prevFormLogin,
             [name]: value,
         }));
-
 
         if (value.trim()) {
             setErrorsFormsVerify((prevErrors) => {
@@ -36,17 +36,14 @@ export const VerifyUserChangePassword = () => {
         }
     };
 
-
     const handleSubmitVerify = async () => {
         const newErrors = {};
         setFirstEmptyField("");
-
 
         if (!formLogin.password.trim()) {
             newErrors.password = "Campo obligatorio";
             if (!firstEmptyField) setFirstEmptyField("Contraseña");
         }
-
 
         if (Object.keys(newErrors).length > 0) {
             setErrorsFormsVerify(newErrors);
@@ -56,47 +53,43 @@ export const VerifyUserChangePassword = () => {
                 icon: "error",
                 timer: 3000,
             });
-            return;
+            return false;
         }
 
         try {
-
             const response = await ApiService.post("/auth/log-in", formLogin);
-            console.log("API Response:", response);
-
 
             if (response.status === 200 && response.data.status === true) {
                 setUpdatePassword(true);
+
+                setFormLogin((prevFormLogin) => ({
+                    ...prevFormLogin,
+                    password: "",
+                }));
+
                 swal({
                     title: "Éxito",
                     text: "Contraseña validada correctamente.",
                     icon: "success",
                     timer: 3000,
                 });
+                return true;
             } else {
 
+                setFormLogin((prevFormLogin) => ({
+                    ...prevFormLogin,
+                    password: "",
+                }));
+                
                 throw new Error(response.data.message || "Error inesperado");
             }
         } catch (error) {
-            console.error("Error caught:", error);
 
-            if (error.response?.status === 401 || error.message.includes("Invalid password")) {
-                setUpdatePassword(false);
-                swal({
-                    title: "Error",
-                    text: error.response?.data?.message || "Credenciales incorrectas. Inténtelo nuevamente.",
-                    icon: "error",
-                    timer: 3000,
-                });
-            } else {
-
-                swal({
-                    title: "Error",
-                    text: error.message || "Ocurrió un error inesperado. Inténtelo nuevamente.",
-                    icon: "error",
-                    timer: 3000,
-                });
-            }
+            setFormLogin((prevFormLogin) => ({
+                ...prevFormLogin,
+                password: "",
+            }));
+            return false;
         }
     };
 
@@ -105,7 +98,8 @@ export const VerifyUserChangePassword = () => {
         handleChangeVerify,
         errorsFormsVerify,
         handleSubmitVerify,
+        formLogin,
         userName,
-        formLogin
+        setUpdatePassword
     };
 };

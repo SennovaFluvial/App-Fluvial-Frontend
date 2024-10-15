@@ -74,7 +74,8 @@ export const ShowVehicles = () => {
               <th scope="col">Capacidad de Volumen</th>
               <th scope="col">Capacidad de Peso</th>
               <th scope="col">Modelo</th>
-              <th scope="col">Acciones</th>
+              <th scope="col"></th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
@@ -90,13 +91,17 @@ export const ShowVehicles = () => {
                   <td>{item.model}</td>
                   <td>
                     <Link to={`../add-vehicle/${item.id}/update`}>
-                      <button className='btn icon-link-hover ms-3 text-primary'>
+                      <button className='btn btn-edit icon-link-hover text-primary'>
                         <i className="fa-solid fa-pen-to-square icon-option"></i>
                       </button>
                     </Link>
-                    <button className='btn icon-link-hover ms-3 text-warning'>
-                      <i className="fa-solid fa-eye icon-option"></i>
-                    </button>
+                  </td>
+                  <td>
+                    <Link to={`more-details/${item.id}/vehicle`}>
+                      <button className='btn btn-view icon-link-hover text-warning'>
+                        <i className="fa-solid fa-eye icon-option"></i>
+                      </button>
+                    </Link>
                   </td>
                 </tr>
               ))

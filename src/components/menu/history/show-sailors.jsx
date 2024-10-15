@@ -5,10 +5,14 @@ import { Link } from 'react-router-dom';
 import { Pagination } from './Pagination.jsx';
 import { useControllerShowSailors } from './controllers/ControllerShowSailors.jsx';
 import { useChangeStatusFields } from './search/ChangeStatusFields.jsx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { VerifyUserChangePassword } from '../agregar/controllers/VerifyUserChangePassword.jsx';
+import { ModalRequestPassword } from '../agregar/ModalRequestPassword.jsx';
 
 export const ShowCrew = () => {
+    const [showModal, setShowModal] = useState(false);
     const [itemId, setItemId] = useState("");
+
     const {
         searchTerm,
         handleSearchChange,
@@ -33,22 +37,45 @@ export const ShowCrew = () => {
         statusField: "status"
     });
 
+    const { updatePassword,
+        handleChangeVerify,
+        errorsFormsVerify,
+        handleSubmitVerify,
+        formLogin,
+        userName,
+        setUpdatePassword } = VerifyUserChangePassword();
+
+    const handleChangeShowModal = () => {
+        setShowModal(!showModal);
+    }
+    const handleCloseModal = () => {
+        setShowModal(false);
+    }
+
     const onStatusChange = (id) => {
         setItemId(id);
-        handleStatusChange(id).then(() => {
-            // Actualiza el estado local de employed inmediatamente
-            const updatedItems = paginatedItems.map(item => {
-                if (item.id === id) {
-                    return {
-                        ...item,
-                        status: item.status === "activo" ? "inactivo" : "activo"
-                    };
-                }
-                return item;
-            });
-            setCrew(updatedItems); // Actualiza el estado de employed
-        });
+        handleChangeShowModal()
+        return;
     };
+
+    useEffect(() => {
+        if (updatePassword && itemId) {
+            handleStatusChange(itemId).then(() => {
+
+                const updatedItems = paginatedItems.map(item => {
+                    if (item.id === itemId) {
+                        return {
+                            ...item,
+                            status: item.status === "activo" ? "inactivo" : "activo"
+                        };
+                    }
+                    return item;
+                });
+                setCrew(updatedItems);
+                setUpdatePassword(false);
+            });
+        }
+    }, [updatePassword, itemId]);
 
     if (loading) {
         return (
@@ -104,7 +131,9 @@ export const ShowCrew = () => {
                             <th scope="col">Origen</th>
                             <th scope="col">Categoría</th>
                             <th scope="col">Estado</th>
-                            <th scope="col">Acciones</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -133,14 +162,19 @@ export const ShowCrew = () => {
                                         </td>
                                         <td>
                                             <Link to={url + `/${item.id}/update`}>
-                                                <button className='btn icon-link-hover ms-3 text-primary'>
+                                                <button className='btn btn-edit icon-link-hover text-primary'>
                                                     <i className="fa-solid fa-pen-to-square icon-option"></i>
                                                 </button>
                                             </Link>
-                                            <button className='btn icon-link-hover ms-3 text-warning'>
-                                                <i className="fa-solid fa-eye icon-option"></i>
-                                            </button>
-
+                                        </td>
+                                        <td>
+                                            <Link to={`more-details/${item.id}/crew`}>
+                                                <button className='btn btn-view icon-link-hover text-warning'>
+                                                    <i className="fa-solid fa-eye icon-option"></i>
+                                                </button>
+                                            </Link>
+                                        </td>
+                                        <td>
                                             <button className='btn' onClick={() => onStatusChange(item.id)}>
                                                 {item.status === "activo"
                                                     ? <i className="fa-solid fa-toggle-on text-success"></i>
@@ -164,6 +198,18 @@ export const ShowCrew = () => {
                     totalElements={totalFilteredItems}
                 />
             </div>
+
+            {showModal && (
+                <ModalRequestPassword
+                    userNameUser={userName}
+                    showModal={showModal}
+                    handleClose={handleCloseModal}
+                    handleChangeVerify={handleChangeVerify}
+                    errorsFormsVerify={errorsFormsVerify}
+                    handleSubmitVerify={handleSubmitVerify}
+                    formLogin={formLogin}
+                />)}
+
         </>
     )
 }

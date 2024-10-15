@@ -1,9 +1,37 @@
-.icon-option {
-    font-size: 25px;
-    transition: ease 0.3s;
+.btn {
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+    cursor: pointer;
+    font-size: 16px;
 }
 
-.icon-option:hover {
-    font-size: 20px;
-    transition: ease 0.3s;
+.btn-edit {
+    background: linear-gradient(to right, #cceeff, #99ccff);
+}
+
+.btn-view {
+    background: linear-gradient(to right, #fff3cd, #ffeeba);
+}
+
+.btn-toggle {
+    background: linear-gradient(to right, #ffffff, #f0f0f0);
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
+
+.icon-option {
+    margin-right: 5px;
+    font-size: 20px; /* Tamaño aumentado de los iconos */
+}
+
+@media (max-width: 768px) {
+    .btn {
+        width: 100%;
+        margin: 5px 0;
+    }
 }
