@@ -30,18 +30,6 @@ export const AddWarehouse = () => {
 
     const from = location.state?.from || 'menu';
 
-    // const handleCancel = () => {
-    //     if (from === 'listado') {
-    //         navigate('/adminSection/show-warehouse');
-    //     } else {
-    //         navigate('/adminSection');
-    //     }
-    // };
-
-    // const handleCancel = () => {
-    //     window.history.back();
-    // };
-
     const handleCancel = () => {
         if (from === 'menu') {
             navigate('/adminSection');
@@ -53,6 +41,7 @@ export const AddWarehouse = () => {
     };
 
     return (
+        <>
         <div className={styles.card}>
             <div className={styles.container}>
                 <h2 className={styles.title}>CREAR BODEGA</h2>
@@ -90,5 +79,6 @@ export const AddWarehouse = () => {
                 </form>
             </div>
         </div>
+        </>
     );
 };

@@ -6,6 +6,7 @@ import styles from '../../../assets/css/Forms.module.css'
 import { ApiService } from '../../../class/ApiServices.jsx';
 import { useNavigate, useParams } from 'react-router';
 import { ControllerCreateUpdateCompany } from './controllers/ControllerCreateUpdateCompany.jsx';
+import { useLocation } from 'react-router-dom';
 
 export const AddCompany = () => {
 
@@ -15,7 +16,18 @@ export const AddCompany = () => {
     const deptos = useOptionsDepto();
     const cities = useOptionsCities();
 
+    const location = useLocation();
+    const navigate = useNavigate();
 
+    const from = location.state?.from || 'menu';
+
+    const handleCancel = () => {
+        if (from === 'menu') {
+            navigate('/adminSection');
+        } else {
+            navigate('../show-companies');
+        }
+    };
 
     return (
         <>
@@ -84,6 +96,9 @@ export const AddCompany = () => {
                         </div>
 
                         <div className="text-center">
+                            <button type="button" className={styles.cancelar} onClick={handleCancel}>
+                                Cancelar
+                            </button>
                             <button type="submit" className={`${styles.guardar + " ms-2"} ${isDisabled ? "is-disabled-button" : ""}`}>{action && action === "update" ? "Actualizar" : "Guardar"} Empresa <i className="fa-solid fa-building"></i></button>
                         </div>
                     </form>

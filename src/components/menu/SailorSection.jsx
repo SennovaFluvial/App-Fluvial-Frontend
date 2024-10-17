@@ -17,7 +17,7 @@ export const SailorSection = () => {
                             </li>
 
                             <li className='dropdown-item text-black'>
-                                <Link to={'add-crew'}>Creación de Tripulantes</Link>
+                            <Link to={'add-crew'} state={{ from: 'menu' }}>Creación de Tripulantes</Link>
                             </li>
                     </ul>
                 </li>

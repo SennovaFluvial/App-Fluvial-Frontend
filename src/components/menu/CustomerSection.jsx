@@ -18,7 +18,7 @@ export const CustomerSection = () => {
               </li>
 
               <li className='dropdown-item text-black'>
-                <Link to={'add-customer'}>Creación de Clientes</Link>
+                <Link to={'add-customer'} state={{ from: 'menu' }}>Creación de Clientes</Link>
               </li>
             </>
           </ul>

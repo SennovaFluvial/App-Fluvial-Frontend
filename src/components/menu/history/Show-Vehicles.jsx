@@ -32,7 +32,7 @@ export const ShowVehicles = () => {
   return (
     <>
       <div className="container my-5">
-        <div className="row text-center bg-success">
+        <div className="row text-center bg-info">
           <div className="col-md-12 py-3">
             <h1>
               <b>LISTADO DE VEHICULOS</b> <i className="fa-solid fa-sailboat ms-5"></i>
@@ -51,7 +51,7 @@ export const ShowVehicles = () => {
             />
           </div>
           <div className="col-md-2 my-3 d-flex justify-content-end ms-auto">
-            <Link to={"/adminSection/add-vehicle"}>
+            <Link to={"/adminSection/add-vehicle"} state={{ from: 'listado' }}>
               <button className='btn btn-primary rounded-pill p-2 ps-2'>
                 <i className="fa-regular fa-square-plus me-3"></i>Nuevo Vehiculo
               </button>

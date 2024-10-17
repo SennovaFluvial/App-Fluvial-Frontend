@@ -6,7 +6,7 @@ export const ShowWarehouse = () => {
     return (
         <>
             <div className="container my-5">
-                <div className="row text-center bg-success">
+                <div className="row text-center bg-info">
                     <div className="col-md-12 py-3">
                         <h1>
                             <b>LISTADO DE BODEGAS</b> <i className="fa-solid fa-warehouse ms-5"></i>
@@ -16,7 +16,7 @@ export const ShowWarehouse = () => {
 
                 <div className="row">
                     <div className="col-md-2 my-3 d-flex justify-content-end ms-auto">
-                        <Link to="/adminSection/add-warehouse" state={{ from: 'listado' }}>
+                        <Link to={"/adminSection/add-warehouse"} state={{ from: 'listado' }}>
                             <button className='btn btn-primary rounded-pill p-2 ps-2'>
                                 <i className="fa-regular fa-square-plus me-3"></i> Nueva Bodega
                             </button>
@@ -37,7 +37,8 @@ export const ShowWarehouse = () => {
                             <th scope="col">Capacidad</th>
                             <th scope="col">Tipo de Bodega</th>
                             <th scope="col">Estado</th>
-                            <th scope="col">Acciones</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -49,13 +50,19 @@ export const ShowWarehouse = () => {
                             <td>Activa</td>
                             <td>
                                 <Link to={`#`}>
-                                    <button className='btn icon-link-hover ms-3 text-primary'>
+                                    <button className='btn btn-edit icon-link-hover text-primary'>
                                         <i className="fa-solid fa-pen-to-square icon-option"></i>
                                     </button>
                                 </Link>
-                                <button className='btn icon-link-hover ms-3 text-warning'>
-                                    <i className="fa-solid fa-eye icon-option"></i>
-                                </button>
+
+                            </td>
+
+                            <td>
+                                <Link to={`#`}>
+                                    <button className='btn btn-view icon-link-hover text-warning'>
+                                        <i className="fa-solid fa-eye icon-option"></i>
+                                    </button>
+                                </Link>
                             </td>
                         </tr>
                     </tbody>

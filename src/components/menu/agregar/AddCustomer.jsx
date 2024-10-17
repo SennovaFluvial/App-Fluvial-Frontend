@@ -4,12 +4,26 @@ import styles from '../../../assets/css/Forms.module.css'
 import { OptionsTypeDocument, genero, maritalStatus, nationality, useOptionsCities, useOptionsDepto, personType } from '../update/options/arrays.jsx';
 import { useParams } from 'react-router';
 import { ControllerCreateUpdateCustomer } from './controllers/ControllerCreateUpdateCustomer.jsx';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const AddCustomer = () => {
     const { id, action } = useParams();
     const cities = useOptionsCities(); // Se debe de hacer esto para mostrar las ciudades.
 
     const { formData, errorsForms, handleChange, handleSubmit, isDisabled } = ControllerCreateUpdateCustomer({ id, action });
+
+    const location = useLocation();
+    const navigate = useNavigate();
+    
+    const from = location.state?.from || 'menu';
+
+    const handleCancel = () => {
+        if (from === 'menu') {
+            navigate('/adminSection');
+        } else {
+            navigate('../show-customers');
+        }
+    };
 
     return (
         <>
@@ -103,10 +117,12 @@ export const AddCustomer = () => {
                             </div>
                         </div>
                         <div className="text-center">
+                            <button type="button" className={styles.cancelar} onClick={handleCancel}>
+                                Cancelar
+                            </button>
                             <button
                                 type="submit"
-                                className={`${styles.guardar + " ms-2"} ${isDisabled ? "is-disabled-button" : ""}`}
-                            >
+                                className={`${styles.guardar + " ms-2"} ${isDisabled ? "is-disabled-button" : ""}`}>
                                 {action && action === "update" ? "Actualizar" : "Guardar"} Cliente
                             </button>
                         </div>
