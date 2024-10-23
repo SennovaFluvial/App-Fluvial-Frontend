@@ -11,7 +11,8 @@ import { CompanySection } from './components/menu/CompanySection';
 import { SailorSection } from './components/menu/SailorSection';
 import { VehicleSection } from './components/menu/VehicleSection';
 import { ShipmentSection } from './components/menu/ShipmentSection';
-import { Inventories } from './components/menu/Inventories';
+import { Inventories } from './components/menu/InventoriesSection';
+import { BranchSection } from './components/menu/BranchSection';
 
 export const Sidebar = ({ user, setUser }) => {
     const [isCollapsed, setIsCollapsed] = useState(false); // Estado para controlar colapso del sidebar
@@ -117,13 +118,9 @@ export const Sidebar = ({ user, setUser }) => {
 
                     <ShipmentSection isCollapsed={isCollapsed} />
 
-                    <ul>
-                        <li>
-                            <Link to="/adminSection/inventories" className="nav-link show">
-                                <span>{isCollapsed ? <i className="fa-solid fa-boxes"></i> : 'Inventarios'}</span>
-                            </Link>
-                        </li>
-                    </ul>
+                    <Inventories isCollapsed={isCollapsed} />
+
+                    <BranchSection isCollapsed={isCollapsed} />
 
                     <ul>
                         <li>

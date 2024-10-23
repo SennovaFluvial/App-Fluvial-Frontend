@@ -18,7 +18,7 @@ export const CompanySection = () => {
                             </li>
                             
                             <li className='dropdown-item text-black'>
-                                <Link to={'add-company'}>
+                                <Link to={'add-company'} state={{ from: 'menu' }}>
                                     Creación de Empresas
                                 </Link>
                             </li>

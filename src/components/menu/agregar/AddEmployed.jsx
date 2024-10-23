@@ -6,11 +6,13 @@ import { ControllerCreateUpdateEmployed } from './controllers/ControllerCreateUp
 import { VerifyUserChangePassword } from './controllers/VerifyUserChangePassword.jsx';
 import { ModalRequestPassword } from './ModalRequestPassword.jsx';
 import { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';//boton cancelar
 
 export const AddEmployed = () => {
 
   const [showModal, setShowModal] = useState(false);
 
+  const location = useLocation();//boton cancelar
   const queryParam = new URLSearchParams(location.search);
   const action = queryParam.get('action');
   const userData = JSON.parse(localStorage.getItem('user'));
@@ -26,6 +28,20 @@ export const AddEmployed = () => {
   }
 
   const { handleSubmit, handleChange, formData, errorsForms, cities, deptos, roles, role, companies, isDisabled } = ControllerCreateUpdateEmployed({ updatePassword });
+
+  //boton cancelar
+  const navigate = useNavigate();
+
+  const from = location.state?.from || 'menu';
+
+  const handleCancel = () => {
+    if (from === 'menu') {
+      navigate('/adminSection');
+    } else {
+      navigate('../show-users');
+    }
+  };
+  //boton cancelar
 
   return (
     <>
@@ -178,6 +194,9 @@ export const AddEmployed = () => {
               </div>
             </div>
             <div className="text-center">
+              <button type="button" className={styles.cancelar} onClick={handleCancel}>
+                Cancelar
+              </button>
               <button type="submit" className={`${styles.guardar + " ms-2"} ${isDisabled ? "is-disabled-button" : ""}`}>{action === 'update' ? 'Actualizar' : 'Crear'} Empleado <i className="fa-solid fa-building-user"></i></button>
             </div>
           </form>

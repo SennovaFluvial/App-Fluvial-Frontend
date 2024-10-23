@@ -14,7 +14,7 @@ export const ModuleShipment = () => {
     const navigate = useNavigate();
 
     const handleNext = () => {
-        navigate('/adminSection/register-shipment/module-vehicle');
+        navigate('/adminSection/register-shipment/module-finish');
     };
 
     const handleBack = () => {
@@ -28,61 +28,6 @@ export const ModuleShipment = () => {
                     <h2 className={styles.tittle}>DATOS DE ENVíO</h2>
                     <form>
                         <div className="row">
-                            <div className="col-md-4">
-                                <Select text="Tipo de carga" options={typeCargo} name="#" />
-                            </div>
-
-                            <div className="col-md-4">
-                                <Select text="Producto/Carga" options={typeCargo} name="#" />
-                            </div>
-
-                            <div className="col-md-4">
-                                <Inputs type="number" text="Peso" name="weigh" />
-                            </div>
-
-
-                            <div className="col-md-4">
-                                <Select text="Unidad de medida" options={weightUnits} name="UnitOfunitOfMeasurement" />
-                            </div>
-
-                            <div className="col-md-4">
-                                <Inputs type="number" text="Altura/Alto" name="height" />
-                            </div>
-
-                            <div className="col-md-4">
-                                <Inputs type="number" text="Longitud/Largo" name="length" />
-                            </div>
-
-
-                            <div className="col-md-4">
-                                <Inputs type="number" text="Ancho" name="width" />
-                            </div>
-
-                            <div className="col-md-4">
-                                <Inputs type="number" text="Dimenciones/Volumen" name="dimensions" />
-                            </div>
-
-                            <div className="col-md-4">
-                                <Select text="Tipo de empaquetado/Embalaje" options={maritalStatus} name="packagingType" />
-                            </div>
-
-
-                            <div className="col-md-4">
-                                <Select text="Es perecebero" options={Booleano} name="isPerishable" />
-                            </div>
-
-                            <div className="col-md-4">
-                                <Select text="Asegurado" options={Booleano} name="insured" />
-                            </div>
-
-                            <div className="col-md-4">
-                                <Inputs text="Instruciones especiales" name="specialHandlingInstructions" />
-                            </div>
-
-
-                            <div className="col-md-4">
-                                <Select text="Contiene materiales peligrosos" options={Booleano} name="hazardousMaterials" />
-                            </div>
 
                             <div className="col-md-4">
                                 <Select text="Ruta" name="#" />

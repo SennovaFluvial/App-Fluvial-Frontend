@@ -25,7 +25,7 @@
     color: #00AF00;
     padding: 15px;
     border-radius: 5px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .titulo-section h1 {
@@ -35,7 +35,7 @@
 }
 
 .icono {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .menu {
@@ -69,8 +69,9 @@
 }
 
 .logo-sena img {
-    max-width: 60%;
-    height: 5rem;
+    margin-top: 10px;
+    max-width: 50%;
+    height: 4rem;
 }
 
 .dropdown-menu {

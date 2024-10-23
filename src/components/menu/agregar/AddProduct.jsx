@@ -21,6 +21,17 @@ export const AddProduct = () => {
 
     const { handleChange, formData, errorsForms, handleSubmit, setFormData, isDisabled, setErrorsForms } = ControllerCreateUpdateProduct({ id, action }); // Componente de logica integrada en `AddProduct()`
 
+    const from = location.state?.from || 'menu';
+
+    const handleCancel = () => {
+        if (from === 'menu') {
+            navigate('/adminSection');
+        }
+
+        if (from === 'producto') {
+            navigate('../show-products');
+        }
+    };
 
     return (
         <>

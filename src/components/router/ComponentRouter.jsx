@@ -16,6 +16,7 @@ import { AddCustomer } from '../menu/agregar/AddCustomer.jsx';
 import { AddCrew } from '../menu/agregar/AddCrew.jsx';
 import { AddProduct } from '../menu/agregar/AddProduct.jsx';
 import { AddWarehouse } from '../menu/agregar/AddWarehouse.jsx';
+import { AddBranch } from '../menu/agregar/AddBranch.jsx';
 
 import { ShowCompany } from '../menu/history/Show-Company.jsx';
 import { ShowCustomers } from '../menu/history/Show-customers.jsx';
@@ -31,13 +32,15 @@ import { Info } from '../../Info.jsx';
 import { RegisterShipment } from '../menu/ShipmentModules/RegisterShipment.jsx';
 import { ModuleSender } from '../menu/ShipmentModules/ModuleSender.jsx';
 import { ModuleRecipient } from '../menu/ShipmentModules/ModuleRecipient.jsx'
-import { ModuleShipment } from '../menu/ShipmentModules/ModuleShipment.jsx';
+import { ModuleProduct } from '../menu/ShipmentModules/ModuleProduct.jsx';
 import { ModuleVehicle } from '../menu/ShipmentModules/ModuleVehicle.jsx';
+import { ModuleShipment } from '../menu/ShipmentModules/ModuleShipment.jsx';
 import { ModuleFinish } from '../menu/ShipmentModules/ModuleFinish.jsx';
 
-import { Inventories } from '../menu/Inventories.jsx';
-import { Reports } from '../menu/Reports.jsx';
+import { Inventories } from '../menu/InventoriesSection.jsx';
+import { Reports } from '../menu/ReportsSection.jsx';
 import { MoreDetails } from '../menu/history/moreDetails/MoreDetailsCustomers.jsx';
+import { ShowBranch } from '../menu/history/Show-Branch.jsx';
 /**
  * Componente ComponentRouter
  * 
@@ -80,6 +83,7 @@ export const ComponentRouter = () => {
                     <Route path="add-customer/:id?/:action?" element={< AddCustomer />} />{/* Ruta para agregar clientes */}
                     <Route path="add-product/:id?/:action?" element={< AddProduct />} />{/* Ruta para agregar productos */}
                     <Route path="add-warehouse/:id?/:action?" element={< AddWarehouse/>} />{/* Ruta para agregar bodegas */}
+                    <Route path="add-branch/:id?/:action?" element={< AddBranch />} />{/* Ruta para agregar bodegas */}
 
                     <Route path="add-crew" element={< AddCrew />}>{/* Ruta para agregar tripulantes */}
 
@@ -104,14 +108,16 @@ export const ComponentRouter = () => {
                     <Route path="show-shipment" element={< ShowShipment />} /> {/* Ruta para ver vehículos */}
                     <Route path="show-products" element={< ShowProducts />} /> {/* Ruta para ver productos */}
                     <Route path="show-warehouse" element={< ShowWarehouse />} /> {/* Ruta para ver bodegas */}
+                    <Route path="show-branch" element={< ShowBranch />} /> {/* Ruta para ver bodegas */}
 
                     <Route path="register-shipment" element={< RegisterShipment />} > {/* Ruta padre para los moudulos de envío */}
 
                         <Route index element={<Navigate to="module-Sender" />} />
                         <Route path="module-Sender" element={< ModuleSender />} /> {/* Ruta para ver modulo de remitente */}
                         <Route path="module-recipient" element={< ModuleRecipient />} /> {/* Ruta para ver modulo de receptor */}
-                        <Route path="module-shipment" element={< ModuleShipment />} /> {/* Ruta para ver modulo de envío */}
+                        <Route path="module-product" element={< ModuleProduct />} /> {/* Ruta para ver modulo de productos */}
                         <Route path="module-vehicle" element={< ModuleVehicle />} /> {/* Ruta para ver modulo de vehiculo */}
+                        <Route path="module-shipment" element={< ModuleShipment />} /> {/* Ruta para ver modulo de envío */}
                         <Route path="module-finish" element={< ModuleFinish />} /> {/* Ruta para ver modulo de envio finalizado */}
 
                     </Route>

@@ -32,7 +32,7 @@ export const ShowCustomers = () => {
   return (
     <>
       <div className="container my-5">
-        <div className="row text-center bg-success">
+        <div className="row text-center bg-info">
           <div className="col-md-12 py-3">
             <h1>
               <b>LISTADO DE CLIENTES</b> <i className="fa-solid fa-people-robbery ms-5"></i>
@@ -51,7 +51,7 @@ export const ShowCustomers = () => {
             />
           </div>
           <div className="col-md-2 my-3 d-flex justify-content-end ms-auto">
-            <Link to={"/adminSection/add-customer"}>
+            <Link to={"/adminSection/add-customer"} state={{ from: 'listado' }}>
               <button className='btn btn-primary rounded-pill p-2 ps-2'>
                 <i className="fa-regular fa-square-plus me-3"></i>Nuevo Cliente
               </button>

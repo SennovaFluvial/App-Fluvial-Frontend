@@ -18,7 +18,7 @@ export const EmployeeSection = () => {
                             </li>
 
                             <li className='dropdown-item text-black'>
-                                <Link to={'add-employed'}>Creación de Empleados
+                                <Link to={'add-employed'} state={{ from: 'menu' }}>Creación de Empleados
                                 </Link>
                             </li>
                         </>

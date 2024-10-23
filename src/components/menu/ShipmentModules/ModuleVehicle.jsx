@@ -12,11 +12,15 @@ export const ModuleVehicle = () => {
     const navigate = useNavigate();
 
     const handleNext = () => {
-        navigate('/adminSection/register-shipment/module-finish');
+        navigate('/adminSection/register-shipment/module-shipment');
     };
 
     const handleBack = () => {
-        navigate(-1);
+        if (location.pathname.includes('module-product')) {
+            navigate('/adminSection/register-shipment/module-recipient'); // Cambia a la ruta anterior deseada.
+        } else {
+            navigate(-1); // Regresa a la página anterior en el historial.
+        }
     };
 
     return (

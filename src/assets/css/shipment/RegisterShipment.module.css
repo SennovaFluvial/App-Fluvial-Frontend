@@ -73,6 +73,12 @@
     margin-left: 5px;
 }
 
+.iconProduct::before {
+    content: "\f49e"; /* Código Unicode de fa-box-open */
+    font-family: "FontAwesome";
+    margin-left: 5px;
+}
+
 .iconShipment::before {
     content: "\f0d1";
     font-family: "FontAwesome";

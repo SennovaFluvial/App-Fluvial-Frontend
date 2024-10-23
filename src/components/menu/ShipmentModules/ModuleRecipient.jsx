@@ -13,7 +13,7 @@ export const ModuleRecipient = () => {
     const navigate = useNavigate();
 
     const handleNext = () => {
-        navigate('/adminSection/register-shipment/module-shipment');
+        navigate('/adminSection/register-shipment/module-product');
     };
 
     const handleBack = () => {
