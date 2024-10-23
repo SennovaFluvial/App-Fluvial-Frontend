@@ -50,6 +50,7 @@ export const ShowCustomers = () => {
               onChange={handleSearchChange}
             />
           </div>
+          
           <div className="col-md-2 my-3 d-flex justify-content-end ms-auto">
             <Link to={"/adminSection/add-customer"} state={{ from: 'listado' }}>
               <button className='btn btn-primary rounded-pill p-2 ps-2'>

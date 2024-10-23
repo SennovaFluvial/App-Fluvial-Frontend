@@ -12,7 +12,6 @@
     justify-content: center;
     align-items: center;
     /* min-height: 100vh;; */
-    margin-top: 30px;
     margin-bottom: 30px;
 }
 
@@ -21,11 +20,11 @@
     padding-top: 1rem;
     max-width: 1200px;
     width: 100%;
-    background-color: #9b9c9c29;
+    background-color: rgb(237, 237, 237);
     box-shadow: var(--black);
     border-radius: 0.25rem;
     padding: 2rem;
-    margin-top: 30em
+    /*margin-top: 30em*/
 }
 
 /* h2 text-center mb-2 */

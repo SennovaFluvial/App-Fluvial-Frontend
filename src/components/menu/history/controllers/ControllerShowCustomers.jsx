@@ -25,6 +25,7 @@ export const useControllerShowCustomers = () => {
         getCustomers();
     }, []);
 
+    // para buscar
     const { searchTerm, handleSearchChange, filteredItems } = useSearchFields(
         customers,
         ["numDocument", "name", "lastName", "email", "phone", "address", "cityName", "personType"]

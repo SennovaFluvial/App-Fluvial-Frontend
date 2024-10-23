@@ -205,8 +205,8 @@ export const ControllerCreateUpdateProduct = ({ id, action }) => {
                     timer: 3000,
                     buttons: false
                 });
-
-                nav("../../adminSection/show-users");
+ñ
+                nav("../../adminSection/show-products");
             }
         } catch (error) {
             console.error('Error al procesar la solicitud:', error);
