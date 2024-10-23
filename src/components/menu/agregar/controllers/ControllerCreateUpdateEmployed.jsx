@@ -4,7 +4,7 @@ import { useOptionsDepto, useOptionsCompanies, useOptionsCities, useRoles } from
 import Swal from 'sweetalert';
 import { User } from '../../../../class/User.jsx';
 import { useLocation, useNavigate, useParams } from 'react-router';
-import { handleStatusError } from '../../../../functions/functions.jsx';
+import { clearError, handleStatusError, validationFieldSubmit } from '../../../../functions/functions.jsx';
 
 export const ControllerCreateUpdateEmployed = ({ updatePassword }) => {
     const cities = useOptionsCities();
@@ -208,10 +208,7 @@ export const ControllerCreateUpdateEmployed = ({ updatePassword }) => {
             handleStatusError(setErrorsForms, "birthDate", "Fecha no válida. Debe estar entre 1700 y 2000.");
         } else {
             // Elimina el error si todas las validaciones son correctas
-            setErrorsForms(prevErrors => {
-                const { [name]: removed, ...rest } = prevErrors;
-                return rest;
-            });
+            clearError(setErrorsForms, name);
         }
     };
 
@@ -226,17 +223,9 @@ export const ControllerCreateUpdateEmployed = ({ updatePassword }) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const formElements = event.target.elements;
-        let hasErrors = false;
+        const validationResponse = validationFieldSubmit(setErrorsForms, formData, event);
 
-        for (let element of formElements) {
-            if (element.name && typeof formData[element.name] === 'string' && !formData[element.name].trim()) {
-                handleStatusError(setErrorsForms, element.name, "Campo obligatorio");
-                hasErrors = true;
-            }
-        }
-
-        if (hasErrors) {
+        if (validationResponse) {
             swal({
                 title: 'Error',
                 text: 'Hubo un error al procesar la solicitud. Por favor, intente de nuevo.',
@@ -245,7 +234,7 @@ export const ControllerCreateUpdateEmployed = ({ updatePassword }) => {
             });
             return;
         }
-
+        
         // Preparar los datos a enviar, eliminando confirmaciones innecesarias
         let dataToSend = { ...formData };
         delete dataToSend.confirmUsername;

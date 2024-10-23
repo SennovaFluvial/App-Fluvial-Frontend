@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { ApiService } from "../../../../class/ApiServices";
 import Swal from 'sweetalert';
 import { Alert } from "../../../../class/alerts";
-import { handleStatusError } from "../../../../functions/functions";
+import { clearError, handleStatusError, validationFieldSubmit } from "../../../../functions/functions";
 
 export const ControllerCreateUpdateCaptain = ({ id, action }) => {
 
@@ -91,10 +91,7 @@ export const ControllerCreateUpdateCaptain = ({ id, action }) => {
             handleStatusError(setErrorsForms, "dateOfBirth", "Fecha no válida. Debe estar entre 1700 y 2000.");
         } else {
             // Elimina el error si todas las validaciones son correctas
-            setErrorsForms(prevErrors => {
-                const { [name]: removed, ...rest } = prevErrors;
-                return rest;
-            });
+            clearError(setErrorsForms, name);
         }
     };
 
@@ -108,18 +105,10 @@ export const ControllerCreateUpdateCaptain = ({ id, action }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        
+        const validationResponse = validationFieldSubmit(setErrorsForms, formData, event);
 
-        const formElements = event.target.elements;
-        let hasErrors = false;
-
-        for (let element of formElements) {
-            if (element.name && !formData[element.name].trim()) {
-                handleStatusError(setErrorsForms, element.name, "Campo obligatorio");
-                hasErrors = true;
-            }
-        }
-
-        if (hasErrors) {
+        if (validationResponse) {
             swal({
                 title: 'Error',
                 text: 'Hubo un error al procesar la solicitud. Por favor, intente de nuevo.',

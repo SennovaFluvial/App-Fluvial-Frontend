@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import swal from 'sweetalert';
 import { ApiService } from '../../../../class/ApiServices';
 import { Alert } from '../../../../class/alerts';
-import { handleStatusError } from '../../../../functions/functions';
+import { clearError, handleStatusError, validationFieldSubmit } from '../../../../functions/functions';
 export const ControllerCreateUpdateVehicle = ({ id, action }) => {
 
     const nav = useNavigate();
@@ -95,10 +95,7 @@ export const ControllerCreateUpdateVehicle = ({ id, action }) => {
             handleStatusError(setErrorsForms, name, "No es un numero valido");
         }
         else {
-            setErrorsForms(prevErrors => {
-                const { [name]: removed, ...rest } = prevErrors;
-                return rest;
-            });
+            clearError(setErrorsForms, name);
         }
     };
 
@@ -113,17 +110,9 @@ export const ControllerCreateUpdateVehicle = ({ id, action }) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const formElements = event.target.elements;
-        let hasErrors = false;
+        const validationResponse = validationFieldSubmit(setErrorsForms, formData, event);
 
-        for (let element of formElements) {
-            if (element.name && typeof formData[element.name] === 'string' && !formData[element.name].trim()) {
-                handleStatusError(setErrorsForms, element.name, "Campo obligatorio");
-                hasErrors = true;
-            }
-        }
-
-        if (hasErrors) {
+        if (validationResponse) {
             swal({
                 title: 'Error',
                 text: 'Hubo un error al procesar la solicitud. Por favor, intente de nuevo.',
@@ -131,7 +120,7 @@ export const ControllerCreateUpdateVehicle = ({ id, action }) => {
                 timer: 4000
             });
             return;
-        };
+        }
 
         const messegueConfirmation = action && action === "update" ?
             `¿Estás seguro de actualizar el vehículo ${formData.type} - ${formData.licensePlate}?` :

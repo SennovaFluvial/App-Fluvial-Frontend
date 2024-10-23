@@ -12,24 +12,24 @@ export const Inventories = () => {
                     <ul className="dropdown-menu menu-account">
                         <>
                             <li className='dropdown-item text-black'>
-                                <Link to={'show-products'}>
+                                <Link to={'../show-products'}>
                                     <i className="fa-solid fa-box"></i> Listado de Productos
                                 </Link>
                             </li>
 
                             <li className='dropdown-item text-black'>
-                                <Link to={'add-product'}>Creación de Productos
+                                <Link to={'../add-product'}>Creación de Productos
                                 </Link>
                             </li>
 
                             <li className='dropdown-item text-black'>
-                                <Link to={'show-warehouse'}>
+                                <Link to={'../show-warehouse'}>
                                     <i className="fa-solid fa-warehouse"></i> Listado de Bodegas
                                 </Link>
                             </li>
 
                             <li className='dropdown-item text-black'>
-                                <Link to={'add-warehouse'}>Creación de Bodegas
+                                <Link to={'../add-warehouse'}>Creación de Bodegas
                                 </Link>
                             </li>
                         </>

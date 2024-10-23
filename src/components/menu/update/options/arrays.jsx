@@ -1,9 +1,22 @@
 import { useState, useEffect } from "react";
 // import Flag from "react-world-flags";
 import instance from "../../../../config/AxiosApi";
+import { ApiService } from "../../../../class/ApiServices";
 
 
-// Hook para obtener la lista de departamentos desde la API
+/**
+ * Hook para obtener la lista de departamentos desde la API.
+ *
+ * Este hook realiza una solicitud a la API para obtener todos los departamentos
+ * y los devuelve en un formato adecuado para su uso en componentes de selección.
+ *
+ * @returns {Array<{ label: string, value: string }>} - Devuelve un arreglo de objetos,
+ * cada uno representando un departamento con las propiedades `label` y `value`.
+ * 
+ * @example
+ * const departamentos = useOptionsDepto();
+ * // departamentos = [{ label: 'Departamento 1', value: 'Departamento 1' }, ...]
+ */
 export const useOptionsDepto = () => {
     const [listDeptos, setListDeptos] = useState([]);
 
@@ -54,7 +67,19 @@ export const useOptionsCompanies = () => {
     return listCompanies;
 };
 
-// Hook para obtener la lista de ciudades desde la API
+/**
+ * Hook para obtener la lista de compañías desde la API.
+ *
+ * Este hook realiza una solicitud a la API para obtener todas las compañías
+ * y las devuelve en un formato adecuado para su uso en componentes de selección.
+ *
+ * @returns {Array<{ label: string, value: string }>} - Devuelve un arreglo de objetos,
+ * cada uno representando una compañía con las propiedades `label` y `value`.
+ *
+ * @example
+ * const empresas = useOptionsCompanies();
+ * // empresas = [{ label: 'Compañía 1', value: 'Compañía 1' }, ...]
+ */
 export const useOptionsCities = () => {
     const [listCities, setListCities] = useState([]);
 
@@ -87,13 +112,26 @@ export const OptionsTypeDocument = [
     { label: 'Pasaporte', value: 'Passport' }
 ]
 
+/**
+ * Hook para obtener los roles disponibles según el rol del usuario.
+ *
+ * Este hook verifica el rol del usuario almacenado en el localStorage
+ * y devuelve una lista de roles disponibles, incluyendo 'Administrador',
+ * 'Super Administrador' (si el usuario es SUPERADMIN) y 'Empleado'.
+ *
+ * @returns {Array<{ label: string, value: string }>} - Devuelve un arreglo de objetos
+ * que representan los roles disponibles con las propiedades `label` y `value`.
+ *
+ * @example
+ * const roles = useRoles();
+ * // roles = [{ label: 'Administrador', value: 'ADMIN' }, { label: 'Empleado', value: 'EMPLOYEE' }, ...]
+ */
 export const useRoles = () => {
     const user = JSON.parse(localStorage.getItem("user"))
     const role = user?.rol;
     const [roles, setRoles] = useState([])
 
     useEffect(() => {
-
 
         const updatedRoles = [
             { label: 'Administrador', value: 'ADMIN' },
@@ -172,3 +210,139 @@ export const Booleano = [
     { label: 'No', value: 'false' }
 ];
 
+/**
+ * Hook para obtener la lista de categorías de productos desde la API.
+ *
+ * Este hook realiza una solicitud a la API para obtener todas las categorías
+ * de productos y las formatea en un arreglo de objetos que contienen las propiedades
+ * `label` y `value`. También incluye una opción adicional "Otra".
+ *
+ * @returns {Array<{ label: string, value: string }>} - Devuelve un arreglo de objetos
+ * que representan las categorías de productos disponibles, cada uno con las propiedades
+ * `label` y `value`.
+ *
+ * @example
+ * const categories = useOptionsCategory();
+ * // categories = [
+ * //   { label: 'Electrónica', value: 'Electrónica' },
+ * //   { label: 'Ropa', value: 'Ropa' },
+ * //   { label: 'Otra', value: 'other' }
+ * // ]
+ */
+export const useOptionsCategory = () => {
+    const [listCategories, setListCategories] = useState([]);
+
+    const getCateroiesList = async () => {
+        try {
+            const response = await ApiService.get('/api/v1/product-category/all');
+            setListCategories(
+                response
+                    .map(category => ({
+                        label: category.categoryName,
+                        value: category.categoryName
+                    }))
+                    .concat({ label: 'Otra', value: 'other' })
+            );
+
+
+        } catch (error) {
+            console.error('Error en obtener las categorias', error);
+        }
+    }
+
+    useEffect(() => {
+        getCateroiesList();
+    }, []);
+
+    return listCategories;
+
+}
+
+export const optionsLocationProduct = [
+    { label: 'Bodega', value: 'warehouse' },
+    { label: 'Vehiculo', value: 'vehicle' }
+];
+
+/**
+ * Hook para obtener la lista de bodegas desde la API.
+ *
+ * Este hook realiza una solicitud a la API para obtener todas las bodegas
+ * disponibles y las formatea en un arreglo de objetos que contienen las propiedades
+ * `label` y `value`.
+ *
+ * @returns {Array<{ label: string, value: string }>} - Devuelve un arreglo de objetos
+ * que representan las bodegas disponibles, cada uno con las propiedades
+ * `label` y `value`.
+ *
+ * @example
+ * const warehouses = optionsWarehouse();
+ * // warehouses = [
+ * //   { label: 'Bodega A', value: 'Bodega A' },
+ * //   { label: 'Bodega B', value: 'Bodega B' }
+ * // ]
+ */
+export const optionsWarehouse = () => {
+    const [listWarehouse, setListWarehouse] = useState([]);
+
+    const getWarehouse = async () => {
+        try {
+            const response = await ApiService.get('/api/v1/warehouse/all');
+            setListWarehouse(
+                response.map(wareHouse => ({
+                    label: wareHouse.name,
+                    value: wareHouse.name
+                }))
+            );
+        } catch (error) {
+            console.error('Error en obtener las bodegas', error);
+        }
+    }
+
+    useEffect(() => {
+        getWarehouse();
+    }, []);
+
+    return listWarehouse;
+}
+
+/**
+ * Hook para obtener la lista de vehículos desde la API.
+ *
+ * Este hook realiza una solicitud a la API para obtener todos los vehículos
+ * disponibles y los formatea en un arreglo de objetos que contienen las propiedades
+ * `label` y `value`.
+ *
+ * @returns {Array<{ label: string, value: string }>} - Devuelve un arreglo de objetos
+ * que representan los vehículos disponibles, cada uno con las propiedades
+ * `label` y `value`.
+ *
+ * @example
+ * const vehicles = optionsVehicles();
+ * // vehicles = [
+ * //   { label: 'Vehículo A', value: 'Vehículo A' },
+ * //   { label: 'Vehículo B', value: 'Vehículo B' }
+ * // ]
+ */ 
+export const optionsVehicles = () => {
+    const [listVehicles, setListVehicles] = useState([])
+
+    const getVehicles = async () => {
+        try {
+            const response = await ApiService.get('/api/v1/vehicles/all');
+            setListVehicles(
+                response.map(vehicleElement => ({
+                    label: vehicleElement.nombre,
+                    value: vehicleElement.nombre
+                }))
+            );
+        } catch (error) {
+            console.error('Error en obtener los vehiculos como opciones', error);
+        }
+    }
+
+    useEffect(() => {
+        getVehicles();
+    }, []);
+
+    return listVehicles;
+}

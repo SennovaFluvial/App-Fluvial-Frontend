@@ -32,3 +32,131 @@ export const showCustomers = async (setPeopleInfo, urlApi) => {
         console.error("Ocurrió un error al intentar mostrar los datos", error);
     }
 };
+
+/**
+ * Elimina un error específico del estado de errores de un formulario.
+ *
+ * @param {Function} setErrorsForms - Función que actualiza el estado de los errores del formulario.
+ * @param {string} name - El nombre del campo cuyo error debe eliminarse.
+ * 
+ * @returns {void} - No retorna ningún valor, solo actualiza el estado de errores.
+ */
+export const clearError = (setErrorsForms, name) => {
+    setErrorsForms(prevErrors => {
+        const { [name]: removed, ...rest } = prevErrors;
+        return rest;
+    });
+}
+
+/**
+ * Valida los campos obligatorios de un formulario antes de enviarlo.
+ *
+ * Esta función recorre los elementos del formulario y verifica si los campos
+ * obligatorios están completos. Si algún campo requerido está vacío, se
+ * establece un error correspondiente, exceptuando el campo 
+ * "specialHandlingInstructions".
+ *
+ * @param {function} setErrorsForms - Función para establecer los errores de validación en el formulario.
+ * @param {Object} formData - Objeto que contiene los datos del formulario, donde cada propiedad representa un campo.
+ * @param {Object} event - El evento del formulario que contiene los elementos a validar.
+ * @returns {boolean} - Devuelve `true` si hay errores en el formulario, `false` en caso contrario.
+ *
+ * @example
+ * const hasErrors = validationFieldSubmit(setErrorsForms, formData, event);
+ * if (hasErrors) {
+ *     console.log("Hay errores en el formulario.");
+ * } else {
+ *     console.log("El formulario es válido.");
+ * }
+ */
+export const validationFieldSubmit = (setErrorsForms, formData, event) => {
+    const formElements = event.target.elements;
+    let hasErrors = false;
+
+    // Itera sobre los elementos del formulario
+    for (let element of formElements) {
+        // Verifica que el elemento tenga un nombre y sea un string en formData
+        if (
+            element.name &&
+            typeof formData[element.name] === 'string' &&
+            !formData[element.name].trim() &&
+            element.name !== "specialHandlingInstructions" // Evita validar este campo
+        ) {
+            handleStatusError(setErrorsForms, element.name, "Campo obligatorio");
+            hasErrors = true;
+        }
+    }
+
+    return hasErrors;
+}
+
+/**
+ * Realiza una solicitud HTTP GET a la API para obtener información sobre una empresa
+ * y actualiza el campo correspondiente en el estado del formulario.
+ *
+ * @async
+ * @function getCompanyUser
+ * @param {string} url_api - La URL de la API desde donde se obtendrá la información de la empresa.
+ * @param {string} fieldName - El nombre del campo en el estado `formData` que será actualizado con el nombre de la empresa.
+ * @param {function} setFormData - La función que actualiza el estado del formulario (por ejemplo, `setState` en React).
+ * 
+ * @returns {Promise<void>} - No devuelve ningún valor, pero actualiza el estado del formulario si la solicitud es exitosa.
+ * 
+ * @throws {Error} - Lanza un error en caso de que la solicitud a la API falle.
+ * 
+ * @example
+ * // Uso de la función para obtener el nombre de la empresa y actualizar el campo 'companyName'
+ * getCompanyUser("/api/v1/companie/users", "companyName", setFormData);
+ */
+export const getCompanyUser = async (url_api, fieldName, setFormData) => {
+    try {
+        const response = await ApiService.get(url_api);
+
+        if (response) {
+            setFormData(
+                prevState => ({
+                    ...prevState, [fieldName]: response[0].company.name
+                })
+            );
+        }
+
+    } catch (error) {
+        console.error("Error al intentar obtener el nombre de la empresa", error);
+    }
+}
+
+export const getInfoProducts = async (setFieldsUpdate, urlApi) => {
+    try {
+        const response = await ApiService.get(urlApi);
+
+        if (response) {
+            setFieldsUpdate(response);
+        }
+
+    } catch (error) {
+        console.error("Error al intentar obtener la informacion de los productos", error);
+    }
+}
+
+export const idIdentifier = async (categoryName, setFormData) => {
+    try {
+        const response = await ApiService.get("/api/v1/product-category/all");
+
+        if (response && Array.isArray(response)) {
+            const filterElement = response.find(item => item.categoryName === categoryName);
+
+            if (filterElement) {
+                setFormData(prevState => ({
+                    ...prevState,
+                    category: {
+                        ...prevState.category,
+                        categoryId: filterElement.categoryId
+                    }
+                }));
+            }
+        }
+    } catch (error) {
+        console.error("Error fetching product categories:", error);
+    }
+};
+

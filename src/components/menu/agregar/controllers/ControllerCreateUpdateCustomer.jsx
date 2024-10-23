@@ -3,7 +3,7 @@ import { ApiService } from "../../../../class/ApiServices";
 import swal from "sweetalert";
 import { useNavigate } from "react-router";
 import { Alert } from "../../../../class/alerts";
-import { handleStatusError } from "../../../../functions/functions";
+import { clearError, handleStatusError, validationFieldSubmit } from "../../../../functions/functions";
 
 
 export const ControllerCreateUpdateCustomer = ({ id, action }) => {
@@ -110,10 +110,7 @@ export const ControllerCreateUpdateCustomer = ({ id, action }) => {
         } else if (name === "dateOfBirth" && (birthYear < 1700 || birthYear > 2000 || birthYear >= currentYear)) {
             handleStatusError(setErrorsForms, "dateOfBirth", "Fecha no válida. Debe estar entre 1700 y 2000.");
         } else {
-            setErrorsForms(prevErrors => {
-                const { [name]: removed, ...rest } = prevErrors;
-                return rest;
-            });
+            clearError(setErrorsForms, name);
         }
     };
 
@@ -130,17 +127,9 @@ export const ControllerCreateUpdateCustomer = ({ id, action }) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        const formElements = event.target.elements;
-        let hasErrors = false;
+        const validationResponse = validationFieldSubmit(setErrorsForms, formData, event);
 
-        for (let element of formElements) {
-            if (element.name && !formData[element.name].trim()) {
-                handleStatusError(setErrorsForms, element.name, "Campo obligatorio");
-                hasErrors = true;
-            }
-        }
-
-        if (hasErrors) {
+        if (validationResponse) {
             swal({
                 title: 'Error',
                 text: 'Hubo un error al procesar la solicitud. Por favor, intente de nuevo.',
