@@ -1,8 +1,34 @@
 import React from 'react';
 import '../../../assets/css/show/styles-Show.css';
 import { Link } from 'react-router-dom';
+import { Spinner } from '../../animations/Spiner';
+import { Grid } from '../../animations/Grid';
+import { Pagination } from './Pagination';
+import { useControllerShowWarehouse } from './controllers/ControllerShowWarehouse';
 
 export const ShowWarehouse = () => {
+    const {
+        searchTerm,
+        handleSearchChange,
+        paginatedItems,
+        elementForPage,
+        currentPage,
+        setCurrentPage,
+        totalFilteredItems,
+        loading,
+        firstIndex
+    } = useControllerShowWarehouse();
+
+    if (loading) {
+        return (
+            <div className="container">
+                <Grid>
+                    <Spinner />
+                </Grid>
+            </div>
+        );
+    }
+
     return (
         <>
             <div className="container my-5">
@@ -15,6 +41,15 @@ export const ShowWarehouse = () => {
                 </div>
 
                 <div className="row">
+                    <div className="col-md-4 my-3">
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Buscar..."
+                            value={searchTerm}
+                            onChange={handleSearchChange}
+                        />
+                    </div>
                     <div className="col-md-2 my-3 d-flex justify-content-end ms-auto">
                         <Link to={"/adminSection/add-warehouse"} state={{ from: 'listado' }}>
                             <button className='btn btn-primary rounded-pill p-2 ps-2'>
@@ -42,31 +77,44 @@ export const ShowWarehouse = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Bodega Central</td>
-                            <td>Calle Principal 123</td>
-                            <td>1000 m³</td>
-                            <td>Climatizada</td>
-                            <td>Activa</td>
-                            <td>
-                                <Link to={`#`}>
-                                    <button className='btn btn-edit icon-link-hover text-primary'>
-                                        <i className="fa-solid fa-pen-to-square icon-option"></i>
-                                    </button>
-                                </Link>
-
-                            </td>
-
-                            <td>
-                                <Link to={`#`}>
-                                    <button className='btn btn-view icon-link-hover text-warning'>
-                                        <i className="fa-solid fa-eye icon-option"></i>
-                                    </button>
-                                </Link>
-                            </td>
-                        </tr>
+                        {paginatedItems.length > 0 ? (
+                            paginatedItems.map((item) => (
+                                <tr key={item.id}>
+                                    <td>{item.warehouseName}</td>
+                                    <td>{item.location}</td>
+                                    <td>{item.capacity}</td>
+                                    <td>{item.warehouseType}</td>
+                                    <td>{item.status}</td>
+                                    <td>
+                                        <Link to={`../update-warehouse/${item.id}`}>
+                                            <button className='btn btn-edit icon-link-hover text-primary'>
+                                                <i className="fa-solid fa-pen-to-square icon-option"></i>
+                                            </button>
+                                        </Link>
+                                    </td>
+                                    <td>
+                                        <Link to={`#`}>
+                                            <button className='btn btn-view icon-link-hover text-warning'>
+                                                <i className="fa-solid fa-eye icon-option"></i>
+                                            </button>
+                                        </Link>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="7" className="text-center">No hay resultados que mostrar</td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
+
+                <Pagination
+                    elementForPage={elementForPage}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    totalElements={totalFilteredItems}
+                />
             </div>
         </>
     );

@@ -205,7 +205,7 @@ export const ControllerCreateUpdateProduct = ({ id, action }) => {
                     timer: 3000,
                     buttons: false
                 });
-ñ
+
                 nav("../../adminSection/show-products");
             }
         } catch (error) {

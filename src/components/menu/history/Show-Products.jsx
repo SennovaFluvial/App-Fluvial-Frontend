@@ -1,8 +1,34 @@
-import React from 'react'
+import React from 'react';
 import '../../../assets/css/show/styles-Show.css';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import { Spinner } from '../../animations/Spiner';
+import { Grid } from '../../animations/Grid';
+import { Pagination } from './Pagination';
+import { useControllerShowProducts } from './controllers/ControllerShowProducts';
 
 export const ShowProducts = () => {
+    const {
+        searchTerm,
+        handleSearchChange,
+        paginatedItems,
+        elementForPage,
+        currentPage,
+        setCurrentPage,
+        totalFilteredItems,
+        loading,
+        firstIndex
+    } = useControllerShowProducts();
+
+    if (loading) {
+        return (
+            <div className="container">
+                <Grid>
+                    <Spinner />
+                </Grid>
+            </div>
+        );
+    }
+
     return (
         <>
             <div className="container my-5">
@@ -15,14 +41,21 @@ export const ShowProducts = () => {
                 </div>
 
                 <div className="row">
-
+                    <div className="col-md-4 my-3">
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Buscar..."
+                            value={searchTerm}
+                            onChange={handleSearchChange}
+                        />
+                    </div>
                     <div className="col-md-2 my-3 d-flex justify-content-end ms-auto">
                         <Link to={"/adminSection/add-product"} state={{ from: 'producto' }}>
                             <button className='btn btn-primary rounded-pill p-2 ps-2'>
                                 <i className="fa-regular fa-square-plus me-3"></i>Nuevo Producto
                             </button>
                         </Link>
-
                     </div>
                     <div className="col-md-2 my-3 d-flex justify-content-end ms-2">
                         <button className='btn btn-warning rounded-pill p-2 ps-2'>
@@ -40,48 +73,56 @@ export const ShowProducts = () => {
                             <th scope="col">Nombre del Producto</th>
                             <th scope="col">Peso</th>
                             <th scope="col">Unidad de Medida</th>
-                            <th scope="col">Dimenciones</th>
+                            <th scope="col">Dimensiones</th>
                             <th scope="col">Tipo de embalaje</th>
-                            <th scope="col">Es Perecebero</th>
+                            <th scope="col">Es Perecedero</th>
                             <th scope="col"></th>
                             <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody>
-
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>
-                                <Link to={`#`}>
-                                    <button className='btn btn-edit icon-link-hover text-primary'>
-                                        <i className="fa-solid fa-pen-to-square icon-option"></i>
-                                    </button>
-                                </Link>
-
-                            </td>
-
-                            <td>
-                            <Link to={`#`}>
-                                <button className='btn btn-view icon-link-hover text-warning'>
-                                    <i className="fa-solid fa-eye icon-option"></i>
-                                </button>
-                            </Link>
-                            </td>
-                        </tr>
-
-
+                        {paginatedItems.length > 0 ? (
+                            paginatedItems.map((item, index) => (
+                                <tr key={item.id}>
+                                    <td>{item.clientId}</td>
+                                    <td>{item.warehouseName}</td>
+                                    <td>{item.category}</td>
+                                    <td>{item.productName}</td>
+                                    <td>{item.weight}</td>
+                                    <td>{item.unit}</td>
+                                    <td>{item.dimensions}</td>
+                                    <td>{item.packagingType}</td>
+                                    <td>{item.isPerishable }</td>
+                                    <td>
+                                        <Link to={`../add-product/${item.id}/update`}>
+                                            <button className='btn btn-edit icon-link-hover text-primary'>
+                                                <i className="fa-solid fa-pen-to-square icon-option"></i>
+                                            </button>
+                                        </Link>
+                                    </td>
+                                    <td>
+                                        <Link to={`more-details/${item.id}/product`}>
+                                            <button className='btn btn-view icon-link-hover text-warning'>
+                                                <i className="fa-solid fa-eye icon-option"></i>
+                                            </button>
+                                        </Link>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="11" className="text-center">No hay resultados que mostrar</td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
+                <Pagination
+                    elementForPage={elementForPage}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    totalElements={totalFilteredItems}
+                />
             </div>
-
         </>
-    )
+    );
 }
