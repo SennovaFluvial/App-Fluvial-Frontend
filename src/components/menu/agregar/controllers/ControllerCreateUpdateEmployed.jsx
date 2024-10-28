@@ -6,6 +6,28 @@ import { User } from '../../../../class/User.jsx';
 import { useLocation, useNavigate, useParams } from 'react-router';
 import { clearError, handleStatusError, validationFieldSubmit } from '../../../../functions/functions.jsx';
 
+/**
+ * Controlador para la creación y actualización de empleados.
+ *
+ * Este hook gestiona el estado del formulario, la validación de los campos y
+ * la interacción con la API para obtener la lista de empleados. Permite reiniciar
+ * los valores del formulario, cargar datos de un empleado existente para edición,
+ * y manejar el envío del formulario.
+ *
+ * @param {boolean} updatePassword - Flag que indica si se debe actualizar la contraseña del empleado.
+ * 
+ * @returns {Object} Un objeto que contiene:
+ * - errorsForms: Errores de validación del formulario.
+ * - formData: Los datos del formulario.
+ * - handleChange: Función para manejar los cambios en los campos del formulario.
+ * - handleSubmit: Función para manejar el envío del formulario.
+ * - isDisabled: Booleano que indica si el formulario está deshabilitado por errores de validación.
+ * - cities: Lista de ciudades disponibles para selección.
+ * - deptos: Lista de departamentos disponibles para selección.
+ * - roles: Lista de roles disponibles para el empleado.
+ * - role: El rol actual del empleado.
+ * - companies: Lista de empresas (solo para SUPERADMIN).
+ */
 export const ControllerCreateUpdateEmployed = ({ updatePassword }) => {
     const cities = useOptionsCities();
     const deptos = useOptionsDepto();
@@ -234,7 +256,7 @@ export const ControllerCreateUpdateEmployed = ({ updatePassword }) => {
             });
             return;
         }
-        
+
         // Preparar los datos a enviar, eliminando confirmaciones innecesarias
         let dataToSend = { ...formData };
         delete dataToSend.confirmUsername;

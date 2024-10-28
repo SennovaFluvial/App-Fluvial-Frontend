@@ -2,6 +2,28 @@ import { useEffect, useState } from 'react'
 import { useSearchFields } from '../search/SearchFields';
 import { ApiService } from '../../../../class/ApiServices';
 
+/**
+ * Controlador para mostrar y gestionar la lista de usuarios.
+ *
+ * Este hook se encarga de obtener la lista de usuarios desde la API, gestionar la paginación 
+ * y filtrar los resultados según el término de búsqueda. Además, permite manejar el estado 
+ * del formulario para la creación o edición de usuarios. Incluye un mapeo de roles para 
+ * facilitar la identificación de roles en el sistema.
+ *
+ * @returns {Object} Un objeto que contiene:
+ * - searchTerm: Término de búsqueda actual.
+ * - handleSearchChange: Función para manejar cambios en el campo de búsqueda.
+ * - paginatedItems: Lista de usuarios paginados según la página actual.
+ * - elementForPage: Número de elementos a mostrar por página.
+ * - currentPage: Página actual de la paginación.
+ * - setCurrentPage: Función para actualizar la página actual.
+ * - totalFilteredItems: Total de elementos filtrados según el término de búsqueda.
+ * - loading: Booleano que indica si los datos se están cargando.
+ * - firstIndex: Índice del primer elemento en la página actual.
+ * - formData: Datos del formulario para la creación o edición de usuarios.
+ * - setFormData: Función para actualizar los datos del formulario.
+ * - setEmployed: Función para establecer la lista de empleados.
+ */
 export const useControllerShowUsers = () => {
 
     const [employed, setEmployed] = useState([]);

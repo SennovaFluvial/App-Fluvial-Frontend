@@ -3,7 +3,27 @@ import { useNavigate } from 'react-router';
 import swal from 'sweetalert';
 import { ApiService } from '../../../../class/ApiServices';
 import { Alert } from '../../../../class/alerts';
-import { clearError, handleStatusError, validationFieldSubmit } from '../../../../functions/functions';
+import { clearError, complateFields, getElementByEndpoint, handleStatusError, validationFieldSubmit } from '../../../../functions/functions';
+
+/**
+ * Controlador para la creación y actualización de vehículos.
+ *
+ * Este hook gestiona el estado del formulario, la validación de los campos y
+ * la interacción con la API para obtener y enviar datos de vehículos. Permite
+ * reiniciar los valores del formulario, cargar datos de un vehículo existente 
+ * para edición, y manejar el envío del formulario.
+ *
+ * @param {string} id - El ID del vehículo que se está actualizando. Si es null, se crea un nuevo vehículo.
+ * @param {string} action - La acción que indica si se está creando o actualizando un vehículo.
+ * 
+ * @returns {Object} Un objeto que contiene:
+ * - errorsForms: Errores de validación del formulario.
+ * - formData: Los datos del formulario.
+ * - handleChange: Función para manejar los cambios en los campos del formulario.
+ * - handleSubmit: Función para manejar el envío del formulario.
+ * - userName: Nombre de usuario del creador del vehículo.
+ * - isDisabled: Booleano que indica si el formulario está deshabilitado por errores de validación.
+ */
 export const ControllerCreateUpdateVehicle = ({ id, action }) => {
 
     const nav = useNavigate();
@@ -25,61 +45,32 @@ export const ControllerCreateUpdateVehicle = ({ id, action }) => {
         }
     }, [userName]);
 
-    // Efecto para restablecer campos.
-
     useEffect(() => {
         const fetchData = async () => {
             if (!id && !action) {
                 setFormData({
-                    nombre: '', type: '', model: '', licensePlate: '', registration: '', weightCapacity: '',
-                    weightUnit: '', volumeCapacity: '', volumeUnit: '', passengerSpace: '', createdBy: userName
+                    nombre: '',
+                    type: '',
+                    model: '',
+                    licensePlate: '',
+                    registration: '',
+                    weightCapacity: '',
+                    weightUnit: '',
+                    volumeCapacity: '',
+                    volumeUnit: '',
+                    passengerSpace: '',
+                    createdBy: userName,
                 });
-            } else {
-                try {
-                    const response = await ApiService.get("/api/v1/vehicles/all");
-                    if (response) {
-
-                        const vehicleFiltered = response.find((item) => item.id === parseInt(id, 10));
-
-                        if (vehicleFiltered) {
-                            setFormData({
-                                nombre: vehicleFiltered.nombre,
-                                type: vehicleFiltered.type,
-                                model: vehicleFiltered.model,
-                                licensePlate: vehicleFiltered.licensePlate,
-                                registration: vehicleFiltered.registration,
-                                weightCapacity: vehicleFiltered.weightCapacity,
-                                weightUnit: vehicleFiltered.weightUnit,
-                                volumeCapacity: vehicleFiltered.volumeCapacity,
-                                volumeUnit: vehicleFiltered.volumeUnit,
-                                passengerSpace: vehicleFiltered.passengerSpace,
-                                createdBy: userName
-                            });
-                        }
-                    }
-                } catch (error) {
-                    console.error("Error al obtener datos de la Api de Vehiculos", error);
-                }
+            } else if (action === 'update' && id) {
+                const arrayApiResponse = await getElementByEndpoint("/api/v1/vehicles/all");
+                const updateFields = complateFields({ formData, id, arrayApiResponse });
+                setFormData(updateFields);
             }
         };
 
         fetchData();
     }, [id, action, userName]);
 
-    const validateField = (name, value) => {
-        let errorMessage = '';
-
-        if (typeof value === 'string' && !value.trim()) {
-            errorMessage = 'Campo obligatorio';
-        } else if (['weightCapacity', 'volumeCapacity', 'passengerSpace'].includes(name)) {
-            const numberValue = parseFloat(value);
-            if (isNaN(numberValue) || numberValue < 0) {
-                errorMessage = 'Debe ser un número válido';
-            }
-        }
-
-        return errorMessage;
-    };
 
     const handleChange = (event) => {
         const { name, value } = event.target;

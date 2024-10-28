@@ -3,13 +3,29 @@ import { ApiService } from "../../../../class/ApiServices";
 import swal from "sweetalert";
 import { useNavigate } from "react-router";
 import { Alert } from "../../../../class/alerts";
-import { clearError, handleStatusError, validationFieldSubmit } from "../../../../functions/functions";
+import { clearError, complateFields, getElementByEndpoint, handleStatusError, validationFieldSubmit } from "../../../../functions/functions";
 
-
+/**
+ * Controlador para la creación y actualización de clientes.
+ *
+ * Este hook gestiona el estado del formulario, la validación de los campos y
+ * la interacción con la API para obtener la lista de clientes. Permite reiniciar
+ * los valores del formulario, cargar datos de un cliente existente para edición,
+ * y manejar el envío del formulario.
+ *
+ * @param {string} id - El ID del cliente que se está actualizando. Si es null, se crea un nuevo cliente.
+ * @param {string} action - La acción que indica si se está creando o actualizando un cliente.
+ * 
+ * @returns {Object} Un objeto que contiene:
+ * - errorsForms: Errores de validación del formulario.
+ * - formData: Los datos del formulario.
+ * - handleChange: Función para manejar los cambios en los campos del formulario.
+ * - handleSubmit: Función para manejar el envío del formulario.
+ * - isDisabled: Booleano que indica si el formulario está deshabilitado por errores de validación.
+ */
 export const ControllerCreateUpdateCustomer = ({ id, action }) => {
 
     const navigate = useNavigate();
-    const [listCustomers, setListCustomers] = useState([]);
     const user = JSON.parse(localStorage.getItem("user"));
     const [isDisabled, setIsDisabled] = useState(false)
     const userNameUser = user?.username || null;
@@ -32,36 +48,18 @@ export const ControllerCreateUpdateCustomer = ({ id, action }) => {
         setErrorsForms({});
     }, [action, id]);
 
-    // Cargar la lista de clientes
+
     useEffect(() => {
-        const fetchCustomers = async () => {
-            try {
-                const response = await ApiService.get("/api/v1/customers/all");
-                setListCustomers(response);
-            } catch (error) {
-                console.log(error);
+        const fetchData = async () => {
+            if (action && action === 'update' && id) {
+                const arrayApiResponse = await getElementByEndpoint("/api/v1/customers/all");
+                const updateFields = complateFields({ formData, id, arrayApiResponse });
+                setFormData(updateFields);
             }
         };
 
-        fetchCustomers();
-    }, []);
-
-    // Actualizar formulario cuando se seleccione un cliente para actualización
-    useEffect(() => {
-        if (action === "update" && id && listCustomers.length > 0) {
-            const customerFilterById = listCustomers.find((customer) => customer.id === parseInt(id, 10));
-            if (customerFilterById) {
-                setFormData({
-                    name: customerFilterById.name, lastName: customerFilterById.lastName,
-                    typeDocument: customerFilterById.typeDocument, numDocument: customerFilterById.numDocument,
-                    email: customerFilterById.email, dateOfBirth: customerFilterById.dateOfBirth, nationality: customerFilterById.nationality,
-                    maritalStatus: customerFilterById.maritalStatus, phone: customerFilterById.phone, address: customerFilterById.address,
-                    sex: customerFilterById.sex, personType: customerFilterById.personType, companyName: customerFilterById.companyName, nitCompany: customerFilterById.nitCompany, cityName: customerFilterById.cityName, userNames: [userNameUser]
-                });
-            }
-        }
-    }, [action, id, listCustomers]);
-
+        fetchData();
+    }, [action, id]);
 
     const handleChange = (event) => {
         const { name, value } = event.target;

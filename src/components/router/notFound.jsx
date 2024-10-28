@@ -5,7 +5,6 @@ export const NotFound = () => {
         <>
         <div className='fondo'>
                 <h1>404 - Not Encontrado</h1>
-
         </div>
         </>
     )

@@ -1,6 +1,22 @@
 import { useEffect, useState } from "react";
 import { ApiService } from "../../../../class/ApiServices";
 
+/**
+ * Hook personalizado para gestionar el cambio de estado de campos de un item.
+ *
+ * Este hook se encarga de obtener la información de un item a partir de su ID,
+ * actualizar el estado del formulario con los datos obtenidos y permitir 
+ * la actualización del estado de un item en el servidor.
+ *
+ * @param {Object} params - Parámetros del hook.
+ * @param {number} params.id_item - ID del item cuyo estado se va a gestionar.
+ * @param {string} params.urlApiGet - URL de la API para obtener la información del item.
+ * @param {string} params.urlApiPut - URL de la API para actualizar el estado del item.
+ * @param {Object} params.formData - Datos del formulario que se van a actualizar.
+ * @param {Function} params.setFormData - Función para actualizar el estado del formulario.
+ * @param {string} params.statusField - Nombre del campo que representa el estado del item.
+ * @returns {Object} - Un objeto que contiene la función `handleStatusChange` para cambiar el estado del item.
+ */
 export const useChangeStatusFields = ({ id_item, urlApiGet, urlApiPut, formData, setFormData, statusField }) => {
     const [fields, setFields] = useState([]);
 

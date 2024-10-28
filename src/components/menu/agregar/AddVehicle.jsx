@@ -4,24 +4,15 @@ import styles from '../../../assets/css/Forms.module.css'
 import { ControllerCreateUpdateVehicle } from './controllers/ControllerCreateUpdateVehicle';
 import { typeVehicle, weightUnits, volumeUnits } from '../update/options/arrays';
 import { useParams } from 'react-router';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { CancelButton } from '../../components/CancelButton';
 
 export const AddVehicle = () => {
     const { id, action } = useParams();
     const { formData, errorsForms, handleChange, handleSubmit, isDisabled } = ControllerCreateUpdateVehicle({ id, action });
 
     const location = useLocation();
-    const navigate = useNavigate();
-
     const from = location.state?.from || 'menu';
-
-    const handleCancel = () => {
-        if (from === 'menu') {
-            navigate('/adminSection');
-        } else {
-            navigate('../show-vehicles');
-        }
-    };
 
     return (
         <>
@@ -84,9 +75,10 @@ export const AddVehicle = () => {
                             </div>
                         </div>
                         <div className="text-center">
-                            <button type="button" className={styles.cancelar} onClick={handleCancel}>
-                                Cancelar
-                            </button>
+                            <CancelButton
+                                from={from}
+                                urlPageList={"../show-vehicles"}
+                            />
                             <button type="submit" className={`${styles.guardar + " ms-2"} ${isDisabled ? "is-disabled-button" : ""}`}>{action === "update" ? "Actualizar" : "Crear"} Vehículo <i className="fa-solid fa-floppy-disk"></i></button>
                         </div>
                     </form>
