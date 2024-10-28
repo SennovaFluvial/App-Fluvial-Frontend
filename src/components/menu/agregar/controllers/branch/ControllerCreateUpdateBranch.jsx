@@ -1,28 +1,28 @@
+import { useEffect, useState } from "react"
 import { useNavigate } from "react-router";
-import { clearError, complateFields, getElementByEndpoint, handleStatusError, validationFieldSubmit } from "../../../../../functions/functions";
-import { useEffect, useState } from "react";
-import { ApiService } from "../../../../../class/ApiServices";
+import { clearError, complateFields, getCompanyUser, getElementByEndpoint, handleStatusError, validationFieldSubmit } from "../../../../../functions/functions";
 import Swal from 'sweetalert';
+import { ApiService } from "../../../../../class/ApiServices";
 
-export const ControllerCreateUpdateWarehouse = ({ id, action }) => {
+export const ControllerCreateUpdateBranch = ({ id, action }) => {
     const [isDisabled, setIsDisabled] = useState(false);
     const [errorsForms, setErrorsForms] = useState({});
     const nav = useNavigate();
     const [formData, setFormData] = useState({
-        name: "",
-        location: "",
-        capacity: "",
-        unitOfMeasurement: "",
-        description: ""
+        nombre: "",
+        direccion: "",
+        departamento: "",
+        municipio: "",
+        companiaNombre: ""
     });
 
     useEffect(() => {
-        getCompanyUser()
-    })
+        getCompanyUser("/api/v1/companie/users", "companiaNombre", setFormData);
+    }, []);
 
     useEffect(() => {
         if (action && action === 'update' && id) {
-            const arrayApiResponse = getElementByEndpoint("/api/v1/product-category/all");
+            const arrayApiResponse = getElementByEndpoint("/api/v1/sucursales/all");
             const updateFields = complateFields({ formData, id, arrayApiResponse });
             setFormData(updateFields);
         }
@@ -35,16 +35,10 @@ export const ControllerCreateUpdateWarehouse = ({ id, action }) => {
             ...prevState,
             [name]: value
         }));
-
         if (!value.trim()) {
             handleStatusError(setErrorsForms, name, "Campo obligatorio");
-        } else if (name === "capacity") {
-            const capacityValue = Number(value);
-            if (isNaN(capacityValue)) {
-                handleStatusError(setErrorsForms, name, "Debe ser un número válido");
-            } else {
-                clearError(setErrorsForms, name);
-            }
+        } else if (value.length > 100) {
+            handleStatusError(setErrorsForms, name, "No ingrese un valor tan largo");
         } else {
             clearError(setErrorsForms, name);
         }
@@ -75,8 +69,8 @@ export const ControllerCreateUpdateWarehouse = ({ id, action }) => {
         }
 
         const confirmationMessage = action === 'update' ?
-            `¿Está seguro que quiere actualizar el producto? \nNombre: ${formData.name}` :
-            `¿Está seguro que quiere registrar el producto? \nNombre: ${formData.name}`;
+            `¿Está seguro que quiere actualizar la sucursal? \nNombre: ${formData.nombre}` :
+            `¿Está seguro que quiere registrar la sucursal? \nNombre: ${formData.nombre}`;
 
 
         try {
@@ -93,22 +87,22 @@ export const ControllerCreateUpdateWarehouse = ({ id, action }) => {
 
             if (result) {
                 if (action === 'update') {
-                    await ApiService.put(`/api/v1/warehouse/update/${id}`, formData);
+                    await ApiService.put(`/api/v1/branches/update/${id}`, formData);
                 } else {
-                    await ApiService.post('/api/v1/warehouse/save', formData);
+                    await ApiService.post('/api/v1/sucursales/save', formData);
                 }
 
                 Swal({
                     title: 'Éxito',
                     text: action === 'update'
-                        ? 'Bodega actualizado correctamente'
-                        : 'Bodega creado correctamente',
+                        ? 'Sucursal actualizado correctamente'
+                        : 'Sucursal creado correctamente',
                     icon: 'success',
                     timer: 3000,
                     buttons: false
                 });
 
-                nav("../../adminSection/show-warehouse");
+                nav("../../adminSection/show-branch");
             }
         } catch (error) {
             console.error('Error al procesar la solicitud:', error);
@@ -119,14 +113,13 @@ export const ControllerCreateUpdateWarehouse = ({ id, action }) => {
                 timer: 2000
             });
         }
-
     }
 
     return {
-        isDisabled,
         errorsForms,
         formData,
         handleChange,
-        handleSubmit
+        handleSubmit,
+        isDisabled
     }
 }
