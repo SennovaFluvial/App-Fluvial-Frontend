@@ -5,8 +5,9 @@ import { weightUnits, Booleano, optionsLocationProduct, optionsWarehouse, option
 import { ControllerCreateUpdateProduct } from './controllers/inventories/ControllerCreateUpdateProduct.jsx';
 import { TextArea } from '../../html components/TextArea.jsx';
 
-import { useParams } from 'react-router';
+import { useLocation, useParams } from 'react-router';
 import { DocumentSuggestions } from '../../components/DocumentSuggestions.jsx';
+import { CancelButton } from '../../components/CancelButton.jsx';
 
 export const AddProduct = () => {
     const { id, action } = useParams();
@@ -21,17 +22,8 @@ export const AddProduct = () => {
 
     const { handleChange, formData, errorsForms, handleSubmit, setFormData, isDisabled, setErrorsForms } = ControllerCreateUpdateProduct({ id, action }); // Componente de logica integrada en `AddProduct()`
 
+    const location = useLocation();
     const from = location.state?.from || 'menu';
-
-    const handleCancel = () => {
-        if (from === 'menu') {
-            navigate('/adminSection');
-        }
-
-        if (from === 'producto') {
-            navigate('../show-products');
-        }
-    };
 
     return (
         <>
@@ -280,6 +272,10 @@ export const AddProduct = () => {
                         </div>
 
                         <div className="text-center my-3">
+                            <CancelButton
+                                from={from}
+                                urlPageList={"../show-products"}
+                            />
                             <button type="submit" className={`${styles.guardar + " ms-2"} ${isDisabled ? "is-disabled-button" : ""}`}>
                                 {action === 'update' ? 'Actualizar' : 'Registrar'} Producto <i className="fa-solid fa-building-user"></i>
                             </button>

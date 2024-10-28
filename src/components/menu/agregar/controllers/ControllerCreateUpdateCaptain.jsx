@@ -3,14 +3,32 @@ import { useNavigate } from "react-router";
 import { ApiService } from "../../../../class/ApiServices";
 import Swal from 'sweetalert';
 import { Alert } from "../../../../class/alerts";
-import { clearError, handleStatusError, validationFieldSubmit } from "../../../../functions/functions";
+import { clearError, complateFields, getElementByEndpoint, handleStatusError, validationFieldSubmit } from "../../../../functions/functions";
+
+/**
+ * Controlador para la creación y actualización de capitán.
+ * 
+ * Este hook maneja el estado del formulario, la validación y la interacción con la API
+ * para obtener la lista de empleados fluviales. Proporciona funcionalidades para
+ * reiniciar los valores del formulario, cargar datos de un empleado para la edición
+ * y manejar el envío del formulario.
+ *
+ * @param {string} id - El ID del capitán que se está actualizando. Si es null, se crea un nuevo capitán.
+ * @param {string} action - La acción que indica si se está creando o actualizando un capitán.
+ * 
+ * @returns {Object} Un objeto que contiene:
+ * - formData: Los datos del formulario.
+ * - handleSubmit: Función para manejar el envío del formulario.
+ * - errorsForms: Errores de validación del formulario.
+ * - handleChange: Función para manejar los cambios en los campos del formulario.
+ * - isDisabled: Booleano que indica si el formulario está deshabilitado por errores de validación.
+ */
 
 export const ControllerCreateUpdateCaptain = ({ id, action }) => {
 
     const navigate = useNavigate();
     const [errorsForms, setErrorsForms] = useState({});
     const [isDisabled, setIsDisabled] = useState(false)
-    const [listEmployedFluvial, setlistEmployedFluvial] = useState([])
     const [formData, setFormData] = useState({
         name: '', lastName: '', typeDocument: '', numDocument: '', licencia: '',
         email: '', dateOfBirth: '', nationality: '', maritalStatus: '', phone: '',
@@ -31,40 +49,17 @@ export const ControllerCreateUpdateCaptain = ({ id, action }) => {
 
     }, [id, action])
 
-    // Efecto para cargar la lista de empleados desde la API y actualizar el estado `listEmployedFluvial`.
     useEffect(() => {
-
-        const fetchUsers = async () => {
-            try {
-                const response = await ApiService.get("/api/v1/employeefluvial/all");
-                setlistEmployedFluvial(response)
-
-            } catch (error) {
-                console.error("Ocurrio un error al obtener los datos de la API");
+        const fetchData = async () => {
+            if (action && action === 'update' && id) {
+                const arrayApiResponse = await getElementByEndpoint("/api/v1/employeefluvial/all");
+                const updateFields = complateFields({ formData, id, arrayApiResponse });
+                setFormData(updateFields);
             }
         };
 
-        fetchUsers(); // Ejecutar la funcion
-    }, [])
-
-
-    useEffect(() => {
-        if (action && action === "update" && id && listEmployedFluvial.length > 0) {
-            const filterUserByID = listEmployedFluvial.find((user) => user.id === parseInt(id, 10));
-            if (filterUserByID) {
-                setFormData({
-                    name: filterUserByID.name, lastName: filterUserByID.lastName, typeDocument: filterUserByID.typeDocument,
-                    numDocument: filterUserByID.numDocument, licencia: filterUserByID.licencia,
-                    email: filterUserByID.email, dateOfBirth: filterUserByID.dateOfBirth, nationality: filterUserByID.nationality,
-                    maritalStatus: filterUserByID.maritalStatus, phone: filterUserByID.phone,
-                    address: filterUserByID.address, sex: filterUserByID.sex, status: filterUserByID.status, employeeType: { typeName: 'Capitan' },
-                });
-            } else {
-                console.error(`No se encontró un usuario con ID: ${id}`);
-            }
-
-        }
-    }, [action, id, listEmployedFluvial])
+        fetchData();
+    }, [action, id]);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -105,7 +100,7 @@ export const ControllerCreateUpdateCaptain = ({ id, action }) => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        
+
         const validationResponse = validationFieldSubmit(setErrorsForms, formData, event);
 
         if (validationResponse) {

@@ -3,11 +3,29 @@ import { ApiService } from "../../../../class/ApiServices";
 import { Alert } from "../../../../class/alerts";
 import swal from "sweetalert";
 import { useNavigate } from "react-router";
-import { clearError, handleStatusError, validationFieldSubmit } from "../../../../functions/functions";
+import { clearError, complateFields, getElementByEndpoint, handleStatusError, validationFieldSubmit } from "../../../../functions/functions";
+
+/**
+ * Controlador para la creación y actualización de empresas.
+ * 
+ * Este hook gestiona el estado del formulario, la validación de los campos y
+ * la interacción con la API para obtener la lista de empresas. Permite reiniciar
+ * los valores del formulario, cargar datos de una empresa existente para edición,
+ * y manejar el envío del formulario.
+ *
+ * @param {string} id - El ID de la empresa que se está actualizando. Si es null, se crea una nueva empresa.
+ * @param {string} action - La acción que indica si se está creando o actualizando una empresa.
+ * 
+ * @returns {Object} Un objeto que contiene:
+ * - errorsForms: Errores de validación del formulario.
+ * - formData: Los datos del formulario.
+ * - handleChange: Función para manejar los cambios en los campos del formulario.
+ * - handleSubmit: Función para manejar el envío del formulario.
+ * - isDisabled: Booleano que indica si el formulario está deshabilitado por errores de validación.
+ */
 export const ControllerCreateUpdateCompany = ({ id, action }) => {
     const navigate = useNavigate();
     const [errorsForms, setErrorsForms] = useState({});
-    const [listCompanies, setListCompanies] = useState([])
     const [isDisabled, setIsDisabled] = useState(false)
     const [formData, setFormData] = useState({
         nit: '', company: '', status: '', manager: '',
@@ -27,35 +45,16 @@ export const ControllerCreateUpdateCompany = ({ id, action }) => {
     }, [action, id])
 
     useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-                const response = await ApiService.get("/api/v1/companie/findAll");
-                setListCompanies(response);
-            } catch (error) {
-                console.error("Ocurrio un error al obtener los datos de esta api ", error);
+        const fetchData = async () => {
+            if (action && action === 'update' && id) {
+                const arrayApiResponse = await getElementByEndpoint("/api/v1/companie/findAll");
+                const updateFields = complateFields({ formData, id, arrayApiResponse });
+                setFormData(updateFields);
             }
-        }
+        };
 
-        fetchUsers();
-    }, [])
-
-    useEffect(() => {
-        if (action && action === "update" && id && listCompanies.length > 0) {
-
-            const filterCompanyByID = listCompanies.find((companySelected) => companySelected.id === parseInt(id, 10))
-
-            if (filterCompanyByID) {
-                setFormData({
-                    nit: filterCompanyByID.nit, company: filterCompanyByID.company, status: filterCompanyByID.status, manager: filterCompanyByID.manager,
-                    email: filterCompanyByID.email, phone: filterCompanyByID.phone, address: filterCompanyByID.address, department: filterCompanyByID.department,
-                    municipality: filterCompanyByID.municipality
-                })
-            } else {
-                console.error(`No se encontró un usuario con ID: ${id}`);
-            }
-
-        }
-    }, [action, id, listCompanies])
+        fetchData();
+    }, [action, id]);
 
 
     const handleChange = (event) => {

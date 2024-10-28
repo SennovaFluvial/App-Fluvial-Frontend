@@ -1,4 +1,28 @@
-
+/**
+ * Componente de paginación para manejar la navegación entre páginas de resultados.
+ *
+ * Este componente genera una interfaz de usuario para la paginación de una lista de elementos,
+ * permitiendo al usuario navegar entre las diferentes páginas de resultados. Incluye botones 
+ * para ir a la página anterior, siguiente y seleccionar una página específica.
+ *
+ * Props:
+ * @param {number} elementForPage - Número de elementos por página.
+ * @param {number} currentPage - Página actual seleccionada.
+ * @param {function} setCurrentPage - Función para actualizar la página actual.
+ * @param {number} totalElements - Total de elementos disponibles para paginar.
+ *
+ * Uso:
+ * ```jsx
+ * <Pagination
+ *     elementForPage={6}
+ *     currentPage={currentPage}
+ *     setCurrentPage={setCurrentPage}
+ *     totalElements={totalItems}
+ * />
+ * ```
+ *
+ * @returns {JSX.Element} Componente de paginación.
+ */
 export const Pagination = ({ elementForPage, currentPage, setCurrentPage, totalElements }) => {
 
     const pageNumbers = [];

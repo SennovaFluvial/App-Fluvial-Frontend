@@ -3,14 +3,25 @@ import { useNavigate } from "react-router";
 import { ApiService } from "../../../../class/ApiServices";
 import Swal from 'sweetalert';
 import { Alert } from "../../../../class/alerts";
-import { clearError, handleStatusError, validationFieldSubmit } from "../../../../functions/functions";
+import { clearError, complateFields, getElementByEndpoint, handleStatusError, validationFieldSubmit } from "../../../../functions/functions";
 
+/**
+ * Componente ControllerCreateUpdateBoatDriver para crear o actualizar información de un motorista.
+ *
+ * @param {Object} props - Propiedades del componente.
+ * @param {string} props.id - El ID del motorista a actualizar. Si se proporciona, el componente
+ * inicializa el formulario con los datos existentes del motorista.
+ * @param {string} props.action - La acción a realizar, puede ser 'create' o 'update'.
+ * 
+ * @returns {Object} - Retorna un objeto que contiene los datos del formulario, la función de
+ * manejo de envío, los errores del formulario, la función de manejo de cambios y el estado
+ * de habilitación del botón de envío.
+ */
 export const ControllerCreateUpdateBoatDriver = ({ id, action }) => {
 
     const navigate = useNavigate();
     const [errorsForms, setErrorsForms] = useState({});
     const [isDisabled, setIsDisabled] = useState(false)
-    const [listEmployedFluvial, setlistEmployedFluvial] = useState([])
     const [formData, setFormData] = useState({
         name: '', lastName: '', typeDocument: '', numDocument: '', licencia: '',
         email: '', dateOfBirth: '', nationality: '', maritalStatus: '', phone: '',
@@ -31,39 +42,17 @@ export const ControllerCreateUpdateBoatDriver = ({ id, action }) => {
 
     }, [id, action])
 
-    // Efecto para cargar la lista de empleados desde la API y actualizar el estado `listEmployedFluvial`.
     useEffect(() => {
-
-        const fetchUsers = async () => {
-            try {
-                const response = await ApiService.get("/api/v1/employeefluvial/all");
-                setlistEmployedFluvial(response)
-
-            } catch (error) {
-                console.error("Ocurrio un error al obtener los datos de la API");
+        const fetchData = async () => {
+            if (action && action === 'update' && id) {
+                const arrayApiResponse = await getElementByEndpoint("/api/v1/employeefluvial/all");
+                const updateFields = complateFields({ formData, id, arrayApiResponse });
+                setFormData(updateFields);
             }
         };
 
-        fetchUsers(); // Ejecutar la funcion
-    }, [])
-
-    useEffect(() => {
-        if (action && action === "update" && id && listEmployedFluvial.length > 0) {
-            const filterUserByID = listEmployedFluvial.find((user) => user.id === parseInt(id, 10));
-            if (filterUserByID) {
-                setFormData({
-                    name: filterUserByID.name, lastName: filterUserByID.lastName, typeDocument: filterUserByID.typeDocument,
-                    numDocument: filterUserByID.numDocument, licencia: filterUserByID.licencia,
-                    email: filterUserByID.email, dateOfBirth: filterUserByID.dateOfBirth, nationality: filterUserByID.nationality,
-                    maritalStatus: filterUserByID.maritalStatus, phone: filterUserByID.phone,
-                    address: filterUserByID.address, sex: filterUserByID.sex, status: filterUserByID.status, employeeType: { typeName: 'Motorista' },
-                });
-            } else {
-                console.error(`No se encontró un usuario con ID: ${id}`);
-            }
-
-        }
-    }, [action, id, listEmployedFluvial])
+        fetchData();
+    }, [action, id]);
 
     const handleChange = (event) => {
         const { name, value } = event.target;

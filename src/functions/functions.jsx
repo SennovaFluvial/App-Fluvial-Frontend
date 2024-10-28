@@ -125,6 +125,20 @@ export const getCompanyUser = async (url_api, fieldName, setFormData) => {
     }
 }
 
+/**
+ * Función getInfoProducts
+ *
+ * Esta función asíncrona se encarga de obtener información sobre productos
+ * desde una API y actualizar el estado de los campos en consecuencia.
+ *
+ * @param {function} setFieldsUpdate - Función para actualizar el estado de los campos.
+ * @param {string} urlApi - La URL de la API desde la cual se obtiene la información de los productos.
+ * 
+ * @returns {Promise<void>} - No devuelve nada, pero actualiza el estado de los campos
+ *                            si la respuesta es válida.
+ *
+ * @throws {Error} - Registra un error en la consola si la solicitud API falla.
+ */
 export const getInfoProducts = async (setFieldsUpdate, urlApi) => {
     try {
         const response = await ApiService.get(urlApi);
@@ -138,6 +152,21 @@ export const getInfoProducts = async (setFieldsUpdate, urlApi) => {
     }
 }
 
+/**
+ * Función idIdentifier
+ *
+ * Esta función asíncrona busca la identificación de una categoría de producto 
+ * basándose en su nombre y actualiza el estado del formulario con la ID de 
+ * la categoría correspondiente.
+ *
+ * @param {string} categoryName - El nombre de la categoría que se busca.
+ * @param {function} setFormData - Función para actualizar el estado del formulario.
+ * 
+ * @returns {Promise<void>} - No devuelve nada, pero actualiza el estado 
+ *                            del formulario si se encuentra la categoría.
+ *
+ * @throws {Error} - Registra un error en la consola si la solicitud API falla.
+ */
 export const idIdentifier = async (categoryName, setFormData) => {
     try {
         const response = await ApiService.get("/api/v1/product-category/all");
@@ -160,3 +189,79 @@ export const idIdentifier = async (categoryName, setFormData) => {
     }
 };
 
+/**
+ * Maneja la cancelación de acciones y redirige según la página de origen.
+ *
+ * Esta función verifica el origen de la acción y redirige al usuario a la URL correspondiente
+ * dependiendo de si la acción proviene del menú o de otra página específica.
+ *
+ * @param {Object} params - Los parámetros de la función.
+ * @param {string} params.from - Indica de dónde se originó la acción. 
+ * Si es 'menu', redirige a '/adminSection'.
+ * @param {string} params.namePageList - El nombre de la página que determina la redirección condicional.
+ * @param {string} params.urlPageList - La URL a la que redirigir si `from` no coincide con 'menu'.
+ * @param {function} params.navigate - Función de navegación para redirigir a la URL correspondiente.
+ * 
+ * @returns {void} - Redirige a la URL correspondiente utilizando `navigate`.
+ *
+ * Ejemplo de uso:
+ * ```javascript
+ * handleCancel({
+ *     from: 'menu',
+ *     urlPageList: '/someOtherPage',
+ *     navigate: navigateFunction
+ * });
+ * ```
+ */
+export const handleCancel = ({ from, urlPageList, navigate }) => {
+    if (from === 'menu') {
+        return navigate('/adminSection');
+    } else {
+        return navigate(urlPageList);
+    }
+};
+
+/**
+ * Completa los campos de un objeto de datos de formulario fusionando los valores de un elemento filtrado
+ * obtenido de un arreglo de respuestas de la API según el ID proporcionado.
+ *
+ * @param {Object} params - El objeto de parámetros.
+ * @param {Object} params.formData - El objeto de datos de formulario original que contiene los campos a actualizar.
+ * @param {number} params.id - El ID utilizado para encontrar el elemento correspondiente en el arreglo de respuestas de la API.
+ * @param {Array} params.arrayApiResponse - Un arreglo de objetos que representan las respuestas de la API,
+ * cada uno conteniendo un ID y los campos correspondientes para actualizar en los datos del formulario.
+ * 
+ * @returns {Object} Un nuevo objeto de datos de formulario con campos actualizados basados en el elemento filtrado.
+ */
+export const complateFields = ({ formData, id, arrayApiResponse }) => {
+
+    const copyFormData = { ...formData };
+
+    const filteredElement = arrayApiResponse.find((itemFilter) => itemFilter.id === parseInt(id, 10));
+
+    if (filteredElement) {
+        Object.keys(filteredElement).forEach((key) => {
+            if (key in copyFormData) {
+                copyFormData[key] = filteredElement[key];
+            }
+        });
+    }
+
+    return copyFormData;
+};
+
+/**
+ * Obtiene elementos de un endpoint específico.
+ *
+ * @param {string} urlEndpoint - La URL del endpoint desde el cual obtener los elementos.
+ * @returns {Promise<Array>} Una promesa que resuelve en un arreglo de elementos obtenidos.
+ */
+export const getElementByEndpoint = async (urlEndpoint) => {
+    try {
+        const response = await ApiService.get(urlEndpoint);
+        return response || [];
+    } catch (error) {
+        console.error(error);
+        return [];
+    }
+};

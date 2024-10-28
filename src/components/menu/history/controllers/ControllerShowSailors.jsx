@@ -2,6 +2,27 @@ import { useEffect, useState } from 'react'
 import { useSearchFields } from '../search/SearchFields';
 import { ApiService } from '../../../../class/ApiServices';
 
+/**
+ * Controlador para mostrar y gestionar la lista de marineros.
+ *
+ * Este hook se encarga de obtener la lista de marineros desde la API, gestionar la paginación 
+ * y filtrar los resultados según el término de búsqueda. Además, permite manejar el estado 
+ * del formulario para la creación o edición de marineros. 
+ *
+ * @returns {Object} Un objeto que contiene:
+ * - searchTerm: Término de búsqueda actual.
+ * - handleSearchChange: Función para manejar cambios en el campo de búsqueda.
+ * - paginatedItems: Lista de marineros paginados según la página actual.
+ * - elementForPage: Número de elementos a mostrar por página.
+ * - currentPage: Página actual de la paginación.
+ * - setCurrentPage: Función para actualizar la página actual.
+ * - totalFilteredItems: Total de elementos filtrados según el término de búsqueda.
+ * - loading: Booleano que indica si los datos se están cargando.
+ * - firstIndex: Índice del primer elemento en la página actual.
+ * - formData: Datos del formulario para la creación o edición de marineros.
+ * - setFormData: Función para actualizar los datos del formulario.
+ * - setCrew: Función para establecer la lista de marineros.
+ */
 export const useControllerShowSailors = () => {
 
     const [crew, setCrew] = useState([]);

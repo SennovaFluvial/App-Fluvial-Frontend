@@ -2,6 +2,23 @@ import { useState } from "react";
 import { ApiService } from "../../../../class/ApiServices";
 import swal from "sweetalert";
 
+/**
+ * Controlador para la verificación del cambio de contraseña de un usuario.
+ *
+ * Este hook gestiona el estado del formulario de verificación de contraseña, 
+ * la validación de los campos y la interacción con la API para autenticar al usuario. 
+ * Permite manejar cambios en el formulario, validar el campo de contraseña 
+ * y enviar la solicitud de verificación.
+ *
+ * @returns {Object} Un objeto que contiene:
+ * - updatePassword: Booleano que indica si se ha validado correctamente la contraseña.
+ * - handleChangeVerify: Función para manejar los cambios en los campos del formulario.
+ * - errorsFormsVerify: Errores de validación del formulario de verificación.
+ * - handleSubmitVerify: Función para manejar el envío del formulario de verificación.
+ * - formLogin: Datos del formulario de verificación.
+ * - userName: Nombre de usuario del usuario en sesión.
+ * - setUpdatePassword: Función para actualizar el estado de `updatePassword`.
+ */
 export const VerifyUserChangePassword = () => {
     const userlocal = JSON.parse(localStorage.getItem("user"));
     const userName = userlocal?.username;
@@ -80,7 +97,7 @@ export const VerifyUserChangePassword = () => {
                     ...prevFormLogin,
                     password: "",
                 }));
-                
+
                 throw new Error(response.data.message || "Error inesperado");
             }
         } catch (error) {

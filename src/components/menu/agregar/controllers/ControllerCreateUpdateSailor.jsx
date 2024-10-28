@@ -3,13 +3,32 @@ import { useNavigate } from "react-router";
 import { ApiService } from "../../../../class/ApiServices";
 import Swal from 'sweetalert';
 import { Alert } from "../../../../class/alerts";
-import { clearError, handleStatusError, validationFieldSubmit } from "../../../../functions/functions";
+import { clearError, complateFields, getElementByEndpoint, handleStatusError, validationFieldSubmit } from "../../../../functions/functions";
 
+
+/**
+ * Controlador para la creación y actualización de marineros.
+ *
+ * Este hook gestiona el estado del formulario, la validación de los campos y
+ * la interacción con la API para obtener la lista de marineros. Permite reiniciar
+ * los valores del formulario, cargar datos de un marinero existente para edición,
+ * y manejar el envío del formulario.
+ *
+ * @param {string} id - El ID del marinero que se está actualizando. Si es null, se crea un nuevo marinero.
+ * @param {string} action - La acción que indica si se está creando o actualizando un marinero.
+ * 
+ * @returns {Object} Un objeto que contiene:
+ * - errorsForms: Errores de validación del formulario.
+ * - formData: Los datos del formulario.
+ * - handleChange: Función para manejar los cambios en los campos del formulario.
+ * - handleSubmit: Función para manejar el envío del formulario.
+ * - isDisabled: Booleano que indica si el formulario está deshabilitado por errores de validación.
+ * - listEmployedFluvial: Lista de marineros disponibles.
+ */
 export const ControllerCreateUpdateSailor = ({ id, action }) => {
     const navigate = useNavigate();
     const [errorsForms, setErrorsForms] = useState({});
     const [isDisabled, setIsDisabled] = useState(false)
-    const [listEmployedFluvial, setlistEmployedFluvial] = useState([])
     const [formData, setFormData] = useState({
         name: '', lastName: '', typeDocument: '', numDocument: '', licencia: '',
         email: '', dateOfBirth: '', nationality: '', maritalStatus: '', phone: '',
@@ -30,40 +49,17 @@ export const ControllerCreateUpdateSailor = ({ id, action }) => {
 
     }, [id, action])
 
-    // Efecto para cargar la lista de empleados desde la API y actualizar el estado `listEmployedFluvial`.
     useEffect(() => {
-
-        const fetchUsers = async () => {
-            try {
-                const response = await ApiService.get("/api/v1/employeefluvial/all");
-                setlistEmployedFluvial(response)
-
-            } catch (error) {
-                console.error("Ocurrio un error al obtener los datos de la API");
+        const fetchData = async () => {
+            if (action && action === 'update' && id) {
+                const arrayApiResponse = await getElementByEndpoint("/api/v1/employeefluvial/all");
+                const updateFields = complateFields({ formData, id, arrayApiResponse });
+                setFormData(updateFields);
             }
         };
 
-        fetchUsers();
-    }, [])
-
-    useEffect(() => {
-        if (action && action === "update" && id && listEmployedFluvial.length > 0) {
-            const filterUserByID = listEmployedFluvial.find((user) => user.id === parseInt(id, 10));
-            if (filterUserByID) {
-                setFormData({
-                    name: filterUserByID.name, lastName: filterUserByID.lastName, typeDocument: filterUserByID.typeDocument,
-                    numDocument: filterUserByID.numDocument, licencia: filterUserByID.licencia,
-                    email: filterUserByID.email, dateOfBirth: filterUserByID.dateOfBirth, nationality: filterUserByID.nationality,
-                    maritalStatus: filterUserByID.maritalStatus, phone: filterUserByID.phone,
-                    address: filterUserByID.address, sex: filterUserByID.sex, status: filterUserByID.status, employeeType: { typeName: 'Marinero' },
-                });
-            } else {
-                console.error(`No se encontró un usuario con ID: ${id}`);
-            }
-
-        }
-    }, [action, id, listEmployedFluvial])
-
+        fetchData();
+    }, [action, id]);
 
     const handleChange = (event) => {
         const { name, value } = event.target;

@@ -41,12 +41,26 @@ import { Inventories } from '../menu/InventoriesSection.jsx';
 import { Reports } from '../menu/ReportsSection.jsx';
 import { MoreDetails } from '../menu/history/moreDetails/MoreDetailsCustomers.jsx';
 import { ShowBranch } from '../menu/history/Show-Branch.jsx';
+
 /**
  * Componente ComponentRouter
  * 
- * Configura las rutas de la aplicación. Muestra diferentes componentes basados en la URL actual.
+ * Este componente configura las rutas de la aplicación utilizando React Router. 
+ * Muestra diferentes componentes basados en la URL actual y maneja la 
+ * validación de acceso para las rutas protegidas.
+ *
+ * - Rutas Públicas:
+ *   - `/`: Página principal.
+ *   - `/Login`: Página de inicio de sesión.
+ *
+ * - Rutas protegidas:
+ *   - `/adminSection`: Panel de administración, requiere validación.
+ *     - Sub-rutas para agregar y mostrar datos (empresas, empleados, vehículos, etc.)
+ *     - Módulos para gestionar envíos e inventarios.
+ *
+ * - Ruta para manejar errores 404: `*`
  * 
- * @returns {React.ReactNode} - Configuración de rutas para la aplicación.
+ * @returns {React.ReactNode} - Elemento que configura las rutas para la aplicación.
  */
 export const ComponentRouter = () => {
     const [user, setUser] = useState(null);
@@ -82,7 +96,7 @@ export const ComponentRouter = () => {
                     <Route path="add-vehicle/:id?/:action?" element={< AddVehicle />} /> {/* Ruta para agregar vehículos */}
                     <Route path="add-customer/:id?/:action?" element={< AddCustomer />} />{/* Ruta para agregar clientes */}
                     <Route path="add-product/:id?/:action?" element={< AddProduct />} />{/* Ruta para agregar productos */}
-                    <Route path="add-warehouse/:id?/:action?" element={< AddWarehouse/>} />{/* Ruta para agregar bodegas */}
+                    <Route path="add-warehouse/:id?/:action?" element={< AddWarehouse />} />{/* Ruta para agregar bodegas */}
                     <Route path="add-branch/:id?/:action?" element={< AddBranch />} />{/* Ruta para agregar bodegas */}
 
                     <Route path="add-crew" element={< AddCrew />}>{/* Ruta para agregar tripulantes */}

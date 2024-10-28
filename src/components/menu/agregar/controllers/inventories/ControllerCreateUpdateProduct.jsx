@@ -4,12 +4,26 @@ import Swal from 'sweetalert';
 import { ApiService } from '../../../../../class/ApiServices';
 import { useNavigate } from 'react-router';
 
+/**
+ * Controlador para crear o actualizar un producto.
+ *
+ * Este componente maneja el estado y las operaciones necesarias
+ * para crear o actualizar productos en una aplicación. Utiliza hooks
+ * de React para manejar el estado y efectos secundarios.
+ *
+ * @param {Object} props - Props que recibe el controlador.
+ * @param {string} props.id - ID del producto que se va a actualizar (opcional).
+ * @param {string} props.action - Acción a realizar ('create' o 'update').
+ *
+ * @returns {Object} - Un objeto que contiene funciones y estados relevantes para el formulario.
+ */
 export const ControllerCreateUpdateProduct = ({ id, action }) => {
 
     const [isDisabled, setIsDisabled] = useState(false)
     const [errorsForms, setErrorsForms] = useState({});
     const [fieldsUpdate, setFieldsUpdate] = useState([]);
     const nav = useNavigate();
+
     const [formData, setFormData] = useState({
         productName: "",// STRING
         description: "",// STRING
@@ -199,13 +213,13 @@ export const ControllerCreateUpdateProduct = ({ id, action }) => {
                 Swal({
                     title: 'Éxito',
                     text: action === 'update'
-                        ? 'Usuario actualizado correctamente'
-                        : 'Usuario creado correctamente',
+                        ? 'Producto actualizado correctamente'
+                        : 'Producto creado correctamente',
                     icon: 'success',
                     timer: 3000,
-                    buttons: false
+                    buttons: false  
                 });
-ñ
+
                 nav("../../adminSection/show-products");
             }
         } catch (error) {
@@ -227,6 +241,6 @@ export const ControllerCreateUpdateProduct = ({ id, action }) => {
         handleSubmit, // Funcion de registro
         setFormData, // Funcion para camboar el estado de formulario a enviar
         isDisabled, // Estado de inavilitado
-        setErrorsForms // Cambiar estado de errores
+        setErrorsForms, // Cambiar estado de errores,
     }
 }
