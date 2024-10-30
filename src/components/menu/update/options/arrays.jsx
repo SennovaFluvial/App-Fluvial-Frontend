@@ -162,7 +162,7 @@ export const codigoPaises = [
 
 export const maritalStatus = [
     { label: 'Soltero', value: 'soltero' },
-    { label: 'Casado', value: 'sasado' },
+    { label: 'Casado', value: 'casado' },
     { label: 'Divorciado', value: 'divorciado' },
     { label: 'Unión libre', value: 'unión libre' }
 ];

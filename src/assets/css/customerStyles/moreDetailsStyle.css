@@ -19,40 +19,45 @@
 }
 
 /* Card Styles */
-.more-details-card {
+/* .more-details-card {
     border: 1px solid #e0e0e0;
     border-radius: 8px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
     background-color: #fff;
     transition: transform 0.2s ease-in-out;
-}
+} */
 
 .more-details-card:hover {
     transform: scale(1.02);
 }
 
-.more-details-card-body {
+/* .more-details-card-body {
     padding: 20px;
-}
+} */
 
 /* Section Titles */
-.more-details-section-title {
+/* .more-details-section-title {
     font-size: 1.2rem;
     font-weight: 700;
     color: #007bff;
     margin-bottom: 1rem;
-}
+} */
 
 /* Text Styles */
-.more-details-text {
+/* .more-details-text {
     font-size: 1.1rem;
     color: #555;
     line-height: 1.6;
     margin-bottom: 0.5rem;
-}
+} */
 
 /* Button Styles */
 .more-details-btn {
+    width: 150px;
+    /* Ajusta el tamaño deseado para los botones */
+    padding: 10px;
+    /* Espaciado interno para consistencia */
+    text-align: center;
     display: block;
     width: 100%;
     max-width: 200px;
@@ -88,4 +93,11 @@
 
 .more-details-btn-edit:hover {
     background: linear-gradient(90deg, #ff9900, #cc7a00);
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 }
