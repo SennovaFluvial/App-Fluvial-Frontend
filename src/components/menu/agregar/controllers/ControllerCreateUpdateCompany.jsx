@@ -3,7 +3,7 @@ import { ApiService } from "../../../../class/ApiServices";
 import { Alert } from "../../../../class/alerts";
 import swal from "sweetalert";
 import { useNavigate } from "react-router";
-import { clearError, complateFields, getElementByEndpoint, handleStatusError, validationFieldSubmit } from "../../../../functions/functions";
+import { clearError, completeFields, getElementByEndpoint, handleStatusError, sanitizedValue, validationFieldSubmit } from "../../../../functions/functions";
 
 /**
  * Controlador para la creación y actualización de empresas.
@@ -48,7 +48,7 @@ export const ControllerCreateUpdateCompany = ({ id, action }) => {
         const fetchData = async () => {
             if (action && action === 'update' && id) {
                 const arrayApiResponse = await getElementByEndpoint("/api/v1/companie/findAll");
-                const updateFields = complateFields({ formData, id, arrayApiResponse });
+                const updateFields = completeFields({ formData, id, arrayApiResponse, nameFieldId: 'id' });
                 setFormData(updateFields);
             }
         };
@@ -62,7 +62,7 @@ export const ControllerCreateUpdateCompany = ({ id, action }) => {
 
         setFormData(prevState => ({
             ...prevState,
-            [name]: value
+            [name]: sanitizedValue(value)
         }));
 
         const expresionEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

@@ -12,7 +12,6 @@ import { CancelButton } from '../../components/CancelButton.jsx';
 export const AddProduct = () => {
     const { id, action } = useParams();
 
-
     /* ELEMENTOS DE OPCIONES */
     const useOptionsLocationProduct = optionsLocationProduct;
     const useOptionsWarehouse = optionsWarehouse();
@@ -29,7 +28,7 @@ export const AddProduct = () => {
         <>
             <div className={styles.card}>
                 <div className={styles.container}>
-                    <h2 className={styles.title}>CREAR PRODUCTO</h2>
+                    <h2 className={styles.title}>{action === "update" ? 'ACTUALIZAR' : 'CREAR'} PRODUCTO</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="row">
                             <div className={styles.h3}>
@@ -49,7 +48,7 @@ export const AddProduct = () => {
                                 <Select
                                     text="Categoría"
                                     name="categoryName"
-                                    value={formData.category.categoryName}
+                                    value={formData.categoryName}
                                     event={handleChange}
                                     options={useCategoriesOptions}
                                 />
@@ -88,7 +87,7 @@ export const AddProduct = () => {
                                 {errorsForms.description && <div className="text-danger">{errorsForms.description}</div>}
                             </div>
 
-                            {formData.category.categoryName === "other" && (
+                            {formData.categoryName === "other" && (
                                 <div className="col-md-4 mb-3">
                                     <button className="btn btn-primary d-flex align-items-center">
                                         <i className="fa-solid fa-circle-plus rounded-circle me-2" style={{ padding: '8px', background: '#fff', color: '#007bff' }}></i>

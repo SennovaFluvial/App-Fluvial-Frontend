@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Spinner } from '../../animations/Spiner';
 import { Grid } from '../../animations/Grid';
 import { Pagination } from './Pagination';
-import { useControllerShowWarehouse } from './controllers/ControllerShowWarehouse';
+import { useControllerShowWarehouse } from './controllers/inventories/ControllerShowWarehouse';
 
 export const ShowWarehouse = () => {
     const {
@@ -67,10 +67,10 @@ export const ShowWarehouse = () => {
                 <table className="table table-hover border table-striped my-5">
                     <thead>
                         <tr>
+                            <th scope="col">Numero de registro</th>
                             <th scope="col">Nombre de la Bodega</th>
                             <th scope="col">Ubicación</th>
                             <th scope="col">Capacidad</th>
-                            <th scope="col">Tipo de Bodega</th>
                             <th scope="col">Estado</th>
                             <th scope="col"></th>
                             <th scope="col"></th>
@@ -78,15 +78,16 @@ export const ShowWarehouse = () => {
                     </thead>
                     <tbody>
                         {paginatedItems.length > 0 ? (
-                            paginatedItems.map((item) => (
-                                <tr key={item.id}>
-                                    <td>{item.warehouseName}</td>
+                            paginatedItems.map((item, index) => (
+                                <tr key={index}>
+                                    <td><b>{firstIndex + index + 1}</b></td>
+                                    <td>{item.name}</td>
                                     <td>{item.location}</td>
                                     <td>{item.capacity}</td>
                                     <td>{item.warehouseType}</td>
                                     <td>{item.status}</td>
                                     <td>
-                                        <Link to={`../update-warehouse/${item.id}`}>
+                                        <Link to={`../add-warehouse/${item.id}/update`}>
                                             <button className='btn btn-edit icon-link-hover text-primary'>
                                                 <i className="fa-solid fa-pen-to-square icon-option"></i>
                                             </button>

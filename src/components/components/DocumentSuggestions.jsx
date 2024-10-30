@@ -59,7 +59,6 @@ export const DocumentSuggestions = ({ numDocumentToSearch, setFormData, setError
         setFormData(prevState => ({
             ...prevState,
             customerNumDocument: value,
-            customerFlag: true
         }));
         clearError(setErrorsForms, "customerNumDocument");
     };

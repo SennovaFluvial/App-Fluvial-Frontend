@@ -4,7 +4,7 @@ import { useOptionsDepto, useOptionsCompanies, useOptionsCities, useRoles } from
 import Swal from 'sweetalert';
 import { User } from '../../../../class/User.jsx';
 import { useLocation, useNavigate, useParams } from 'react-router';
-import { clearError, handleStatusError, validationFieldSubmit } from '../../../../functions/functions.jsx';
+import { clearError, handleStatusError, sanitizedValue, validationFieldSubmit } from '../../../../functions/functions.jsx';
 
 /**
  * Controlador para la creación y actualización de empleados.
@@ -192,7 +192,7 @@ export const ControllerCreateUpdateEmployed = ({ updatePassword }) => {
             // Maneja todos los otros campos
             setFormData(prevState => ({
                 ...prevState,
-                [name]: value
+                [name]: sanitizedValue(value)
             }));
         }
 

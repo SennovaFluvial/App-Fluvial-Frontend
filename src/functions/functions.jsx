@@ -222,26 +222,41 @@ export const handleCancel = ({ from, urlPageList, navigate }) => {
 };
 
 /**
- * Completa los campos de un objeto de datos de formulario fusionando los valores de un elemento filtrado
- * obtenido de un arreglo de respuestas de la API según el ID proporcionado.
+ * Completa los campos de un formulario con datos de un elemento filtrado
+ * de una respuesta de API, asignando valores a campos anidados si es necesario.
  *
- * @param {Object} params - El objeto de parámetros.
- * @param {Object} params.formData - El objeto de datos de formulario original que contiene los campos a actualizar.
- * @param {number} params.id - El ID utilizado para encontrar el elemento correspondiente en el arreglo de respuestas de la API.
- * @param {Array} params.arrayApiResponse - Un arreglo de objetos que representan las respuestas de la API,
- * cada uno conteniendo un ID y los campos correspondientes para actualizar en los datos del formulario.
+ * @param {Object} params - Objeto que contiene los parámetros necesarios.
+ * @param {Object} params.formData - Datos del formulario que se van a completar.
+ * @param {string|number} params.id - ID del elemento que se utilizará para buscar
+ *                                      en la respuesta de la API.
+ * @param {Array} params.arrayApiResponse - Array de objetos que representa la
+ *                                           respuesta de la API.
+ * @param {string} params.nameFieldId - Nombre del campo en los objetos de la
+ *                                        respuesta de la API que se utilizará
+ *                                        para buscar el elemento específico.
  * 
- * @returns {Object} Un nuevo objeto de datos de formulario con campos actualizados basados en el elemento filtrado.
+ * @returns {Object} - Un nuevo objeto que representa los datos del formulario
+ *                     completos, con valores actualizados de acuerdo a los datos
+ *                     del elemento filtrado.
  */
-export const complateFields = ({ formData, id, arrayApiResponse }) => {
-
+export const completeFields = ({ formData, id, arrayApiResponse, nameFieldId }) => {
     const copyFormData = { ...formData };
 
-    const filteredElement = arrayApiResponse.find((itemFilter) => itemFilter.id === parseInt(id, 10));
+    const filteredElement = arrayApiResponse.find((itemFilter) => itemFilter[nameFieldId] === parseInt(id, 10));
 
     if (filteredElement) {
-        Object.keys(filteredElement).forEach((key) => {
-            if (key in copyFormData) {
+        Object.keys(copyFormData).forEach((key) => {
+
+            if (copyFormData[key] && typeof copyFormData[key] === 'object') {
+
+                Object.keys(copyFormData[key]).forEach((nestedKey) => {
+                    if (nestedKey in filteredElement) {
+
+                        copyFormData[key][nestedKey] = filteredElement[nestedKey];
+                    }
+                });
+            } else if (key in filteredElement) {
+
                 copyFormData[key] = filteredElement[key];
             }
         });
@@ -265,3 +280,27 @@ export const getElementByEndpoint = async (urlEndpoint) => {
         return [];
     }
 };
+
+/**
+ * Filtra y elimina caracteres no permitidos en una cadena.
+ *
+ * @function sanitizedValue
+ * @param {string} value - La cadena de texto que se desea limpiar.
+ * @returns {string} - La cadena limpia que contiene solo caracteres permitidos.
+ *
+ * @description
+ * Esta función toma una cadena de entrada y elimina cualquier carácter que no sea 
+ * letras, números, espacios, el símbolo "@", punto ".", o guión "-". Utiliza una expresión 
+ * regular para reemplazar los caracteres no permitidos con una cadena vacía, devolviendo
+ * así solo los caracteres válidos.
+ *
+ * @example
+ * sanitizedValue("Hello!@World#2024") // "Hello@World2024"
+ *
+ * @example
+ * sanitizedValue("user@example.com") // "user@example.com"
+ */
+export const sanitizedValue = (value) => {
+    const validCharactersRegex = /[^a-zA-Z0-9\s@.\-]/g;
+    return value.replace(validCharactersRegex, '');
+}

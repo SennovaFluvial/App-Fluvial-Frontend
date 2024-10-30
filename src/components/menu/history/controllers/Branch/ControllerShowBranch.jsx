@@ -1,32 +1,32 @@
 import { useEffect, useState } from 'react';
-import { useSearchFields } from '../search/SearchFields';
-import { ApiService } from '../../../../class/ApiServices';
+import { useSearchFields } from '../../search/SearchFields';
+import { ApiService } from '../../../../../class/ApiServices';
 
-export const useControllerShowWarehouse = () => {
-
-    const [warehouses, setWarehouses] = useState([]);
+export const ControllerShowBranches = () => {
+    
+    const [branches, setBranches] = useState([]);
     const [elementForPage, setElementForPage] = useState(6);
     const [currentPage, setCurrentPage] = useState(1);
     const [loading, setLoading] = useState(true);
 
-    const getWarehouses = async () => {
+    const getBranches = async () => {
         try {
-            const response = await ApiService.get("/api/v1/warehouse/all");
-            setWarehouses(response);
+            const response = await ApiService.get("/api/v1/branches/all");
+            setBranches(response);
         } catch (error) {
-            console.error("Error fetching warehouses:", error);
+            console.error("Error fetching branches:", error);
         } finally {
             setLoading(false);
         }
     };
 
     useEffect(() => {
-        getWarehouses();
+        getBranches();
     }, []);
 
     const { searchTerm, handleSearchChange, filteredItems } = useSearchFields(
-        warehouses,
-        ["name", "location", "capacity", "unitOfMeasurement", "description", "companyName"]
+        branches,
+        ["nombre", "direccion", "departamento", "municipio", "companiaNombre"]
     );
 
     const totalFilteredItems = filteredItems.length;
@@ -54,5 +54,5 @@ export const useControllerShowWarehouse = () => {
         totalFilteredItems,
         loading,
         firstIndex
-    }
-}
+    };
+};

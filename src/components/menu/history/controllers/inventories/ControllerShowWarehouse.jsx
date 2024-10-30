@@ -1,32 +1,32 @@
 import { useEffect, useState } from 'react';
-import { useSearchFields } from '../search/SearchFields';
-import { ApiService } from '../../../../class/ApiServices';
+import { useSearchFields } from '../../search/SearchFields';
+import { ApiService } from '../../../../../class/ApiServices';
 
-export const useControllerShowProducts = () => {
+export const useControllerShowWarehouse = () => {
 
-    const [products, setProducts] = useState([]);
+    const [warehouses, setWarehouses] = useState([]);
     const [elementForPage, setElementForPage] = useState(6);
     const [currentPage, setCurrentPage] = useState(1);
     const [loading, setLoading] = useState(true);
 
-    const getProducts = async () => {
+    const getWarehouses = async () => {
         try {
-            const response = await ApiService.get("/api/v1/products/all");
-            setProducts(response);
+            const response = await ApiService.get("/api/v1/warehouse/all");
+            setWarehouses(response);
         } catch (error) {
-            console.error("Error fetching products:", error);
+            console.error("Error fetching warehouses:", error);
         } finally {
             setLoading(false);
         }
     };
 
     useEffect(() => {
-        getProducts();
+        getWarehouses();
     }, []);
 
     const { searchTerm, handleSearchChange, filteredItems } = useSearchFields(
-        products,
-        ["productName", "description", "weight", "unitOfMeasurement", "dimensions", "packagingType", "categoryName"]
+        warehouses,
+        ["name", "location", "capacity", "unitOfMeasurement", "description", "companyName"]
     );
 
     const totalFilteredItems = filteredItems.length;

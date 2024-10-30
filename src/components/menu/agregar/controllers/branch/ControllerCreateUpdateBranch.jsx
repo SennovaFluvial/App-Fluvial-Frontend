@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router";
-import { clearError, complateFields, getCompanyUser, getElementByEndpoint, handleStatusError, validationFieldSubmit } from "../../../../../functions/functions";
+import { clearError, completeFields, getCompanyUser, getElementByEndpoint, handleStatusError, sanitizedValue, validationFieldSubmit } from "../../../../../functions/functions";
 import Swal from 'sweetalert';
 import { ApiService } from "../../../../../class/ApiServices";
 
@@ -23,7 +23,7 @@ export const ControllerCreateUpdateBranch = ({ id, action }) => {
     useEffect(() => {
         if (action && action === 'update' && id) {
             const arrayApiResponse = getElementByEndpoint("/api/v1/sucursales/all");
-            const updateFields = complateFields({ formData, id, arrayApiResponse });
+            const updateFields = completeFields({ formData, id, arrayApiResponse });
             setFormData(updateFields);
         }
     }, [action, id]);
@@ -33,8 +33,9 @@ export const ControllerCreateUpdateBranch = ({ id, action }) => {
 
         setFormData(prevState => ({
             ...prevState,
-            [name]: value
+            [name]: sanitizedValue(value)
         }));
+
         if (!value.trim()) {
             handleStatusError(setErrorsForms, name, "Campo obligatorio");
         } else if (value.length > 100) {

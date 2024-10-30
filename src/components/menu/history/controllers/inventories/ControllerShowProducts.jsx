@@ -1,32 +1,32 @@
 import { useEffect, useState } from 'react';
-import { useSearchFields } from '../search/SearchFields';
-import { ApiService } from '../../../../class/ApiServices';
+import { useSearchFields } from '../../search/SearchFields';
+import { ApiService } from '../../../../../class/ApiServices';
 
-export const ControllerShowBranches = () => {
-    
-    const [branches, setBranches] = useState([]);
+export const useControllerShowProducts = () => {
+
+    const [products, setProducts] = useState([]);
     const [elementForPage, setElementForPage] = useState(6);
     const [currentPage, setCurrentPage] = useState(1);
     const [loading, setLoading] = useState(true);
 
-    const getBranches = async () => {
+    const getProducts = async () => {
         try {
-            const response = await ApiService.get("/api/v1/branches/all");
-            setBranches(response);
+            const response = await ApiService.get("/api/v1/product/all");
+            setProducts(response);
         } catch (error) {
-            console.error("Error fetching branches:", error);
+            console.error("Error fetching products:", error);
         } finally {
             setLoading(false);
         }
     };
 
     useEffect(() => {
-        getBranches();
+        getProducts();
     }, []);
 
     const { searchTerm, handleSearchChange, filteredItems } = useSearchFields(
-        branches,
-        ["nombre", "direccion", "departamento", "municipio", "companiaNombre"]
+        products,
+        ["productName", "description", "weight", "unitOfMeasurement", "dimensions", "packagingType", "categoryName"]
     );
 
     const totalFilteredItems = filteredItems.length;
@@ -54,5 +54,5 @@ export const ControllerShowBranches = () => {
         totalFilteredItems,
         loading,
         firstIndex
-    };
-};
+    }
+}

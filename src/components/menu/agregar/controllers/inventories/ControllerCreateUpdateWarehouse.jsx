@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import { clearError, complateFields, getElementByEndpoint, handleStatusError, validationFieldSubmit } from "../../../../../functions/functions";
+import { clearError, completeFields, getElementByEndpoint, handleStatusError, sanitizedValue, validationFieldSubmit } from "../../../../../functions/functions";
 import { useEffect, useState } from "react";
 import { ApiService } from "../../../../../class/ApiServices";
 import Swal from 'sweetalert';
@@ -17,15 +17,15 @@ export const ControllerCreateUpdateWarehouse = ({ id, action }) => {
     });
 
     useEffect(() => {
-        getCompanyUser()
-    })
+        const fetchData = async () => {
+            if (action && action === 'update' && id) {
+                const arrayApiResponse = await getElementByEndpoint("/api/v1/warehouse/all");
+                const updateFields = completeFields({ formData, id, arrayApiResponse, nameFieldId: 'id' });
+                setFormData(updateFields);
+            }
+        };
 
-    useEffect(() => {
-        if (action && action === 'update' && id) {
-            const arrayApiResponse = getElementByEndpoint("/api/v1/product-category/all");
-            const updateFields = complateFields({ formData, id, arrayApiResponse });
-            setFormData(updateFields);
-        }
+        fetchData();
     }, [action, id]);
 
     const handleChange = (event) => {
@@ -33,7 +33,7 @@ export const ControllerCreateUpdateWarehouse = ({ id, action }) => {
 
         setFormData(prevState => ({
             ...prevState,
-            [name]: value
+            [name]: sanitizedValue(value)
         }));
 
         if (!value.trim()) {

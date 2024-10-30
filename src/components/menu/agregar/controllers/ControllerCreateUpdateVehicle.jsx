@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router';
 import swal from 'sweetalert';
 import { ApiService } from '../../../../class/ApiServices';
 import { Alert } from '../../../../class/alerts';
-import { clearError, complateFields, getElementByEndpoint, handleStatusError, validationFieldSubmit } from '../../../../functions/functions';
+import { clearError, completeFields, getElementByEndpoint, handleStatusError, sanitizedValue, validationFieldSubmit } from '../../../../functions/functions';
 
 /**
  * Controlador para la creación y actualización de vehículos.
@@ -63,7 +63,7 @@ export const ControllerCreateUpdateVehicle = ({ id, action }) => {
                 });
             } else if (action === 'update' && id) {
                 const arrayApiResponse = await getElementByEndpoint("/api/v1/vehicles/all");
-                const updateFields = complateFields({ formData, id, arrayApiResponse });
+                const updateFields = completeFields({ formData, id, arrayApiResponse, nameFieldId: 'id' });
                 setFormData(updateFields);
             }
         };
@@ -77,7 +77,7 @@ export const ControllerCreateUpdateVehicle = ({ id, action }) => {
 
         setFormData(prevState => ({
             ...prevState,
-            [name]: value
+            [name]: sanitizedValue(value)
         }));
 
         if (!value.trim()) {

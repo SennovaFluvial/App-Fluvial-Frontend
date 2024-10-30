@@ -3,7 +3,7 @@ import { ApiService } from "../../../../class/ApiServices";
 import swal from "sweetalert";
 import { useNavigate } from "react-router";
 import { Alert } from "../../../../class/alerts";
-import { clearError, complateFields, getElementByEndpoint, handleStatusError, validationFieldSubmit } from "../../../../functions/functions";
+import { clearError, completeFields, getElementByEndpoint, handleStatusError, sanitizedValue, validationFieldSubmit } from "../../../../functions/functions";
 
 /**
  * Controlador para la creación y actualización de clientes.
@@ -53,20 +53,20 @@ export const ControllerCreateUpdateCustomer = ({ id, action }) => {
         const fetchData = async () => {
             if (action && action === 'update' && id) {
                 const arrayApiResponse = await getElementByEndpoint("/api/v1/customers/all");
-                const updateFields = complateFields({ formData, id, arrayApiResponse });
+                const updateFields = completeFields({ formData, id, arrayApiResponse, nameFieldId: 'id' });
                 setFormData(updateFields);
             }
         };
-
+        
         fetchData();
     }, [action, id]);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
 
-        setFormData((prevFormData) => ({
-            ...prevFormData,
-            [name]: value
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: sanitizedValue(value)
         }));
 
         // Verificar el tipo de persona

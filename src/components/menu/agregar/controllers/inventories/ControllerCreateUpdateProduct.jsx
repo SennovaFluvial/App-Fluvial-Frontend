@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { clearError, getCompanyUser, getInfoProducts, handleStatusError, idIdentifier, validationFieldSubmit } from '../../../../../functions/functions';
+import { clearError, completeFields, getCompanyUser, getElementByEndpoint, getInfoProducts, handleStatusError, idIdentifier, sanitizedValue, validationFieldSubmit } from '../../../../../functions/functions';
 import Swal from 'sweetalert';
 import { ApiService } from '../../../../../class/ApiServices';
 import { useNavigate } from 'react-router';
@@ -21,46 +21,42 @@ export const ControllerCreateUpdateProduct = ({ id, action }) => {
 
     const [isDisabled, setIsDisabled] = useState(false)
     const [errorsForms, setErrorsForms] = useState({});
-    const [fieldsUpdate, setFieldsUpdate] = useState([]);
     const nav = useNavigate();
 
     const [formData, setFormData] = useState({
-        productName: "",// STRING
-        description: "",// STRING
-        weight: "", // NUMBER
-        unitOfMeasurement: "",// STRING
-        height: "", // NUMBER
-        length: "", // NUMBER
-        width: "", // NUMBER
-        dimensions: "",// STRING
-        packagingType: "",// STRING
-        isPerishable: "", // BOlEAN
-        insured: "", // BOlEAN
-        specialHandlingInstructions: "",// STRING
-        hazardousMaterials: "", // BOlEAN
-        category: {
-            categoryId: "", // NUMBER ID
-            categoryName: ""// STRING
-        },
-        vehicleName: "",// STRING
-        companyName: "",// STRING
-        customerNumDocument: "",// STRING
-        customerFlag: false, // Campo extra solo para el front-end - No se envia
-        warehouseName: "",// STRING
-        productLocation: "", // Campo extra solo para el front-end - No se envia
+        productLocation: '', // Campo extra solo para el front-end - No se envia
+        productName: '',
+        description: '',
+        weight: '',
+        unitOfMeasurement: '',
+        height: '',
+        length: '',
+        width: '',
+        dimensions: '',
+        packagingType: '',
+        isPerishable: '',
+        insured: '',
+        specialHandlingInstructions: '',
+        hazardousMaterials: '',
+        categoryName: '',
+        vehicleName: '',
+        companyName: '',
+        customerNumDocument: '',
+        warehouseName: ''
     });
 
     useEffect(() => {
         getCompanyUser("/api/v1/companie/users", "companyName", setFormData);
     }, []);
 
+    // Efecto para reiniciar los valores del formulario cuando no existen los parámetros `action` e `id`.
     useEffect(() => {
         if (!action && !id) {
             const updatedFormData = { ...formData };
 
-            Object.keys(updatedFormData).forEach(keyName => {
+            Object.keys(updatedFormData).forEach((keyName) => {
                 if (typeof updatedFormData[keyName] === 'object' && updatedFormData[keyName] !== null) {
-                    Object.keys(updatedFormData[keyName]).forEach(subKey => {
+                    Object.keys(updatedFormData[keyName]).forEach((subKey) => {
                         updatedFormData[keyName][subKey] = '';
                     });
                 } else {
@@ -70,48 +66,44 @@ export const ControllerCreateUpdateProduct = ({ id, action }) => {
 
             setFormData(updatedFormData);
             setErrorsForms({});
-        } else {
-            getInfoProducts(setFieldsUpdate, "/api/v1/product/all");
-
-            const filterElement = fieldsUpdate.find((item) => item.id === parseInt(id, 10));
-            if (filterElement) {
-                const updatedFormData = { ...formData };
-
-                Object.keys(updatedFormData).forEach(keyName => {
-                    if (filterUserId[keyName] !== undefined) {
-                        updatedFormData[keyName] = filterUserId[keyName];
-                    } else {
-                        updatedFormData[keyName] = '';
-                    }
-                });
-
-                setFormData(updatedFormData);
-            }
         }
     }, [action, id]);
+
+    // Efecto para obtener y actualizar los datos del formulario cuando `action` es 'update' y `id` existe.
+    useEffect(() => {
+        const fetchData = async () => {
+            if (action === 'update' && id) {
+                const arrayApiResponse = await getElementByEndpoint("/api/v1/product/all");
+                const updateFields = completeFields({ formData, id, arrayApiResponse, nameFieldId: 'productId' });
+                setFormData(updateFields);
+            }
+        };
+
+        fetchData();
+    }, [action, id]);
+
+    useEffect(() => {
+        if (action && action === 'update') {
+            if (formData.vehicleName) {
+                setFormData(prevState => ({
+                    ...prevState, productLocation: vehicle
+                }))
+            } else if (formData.warehouseName) {
+                setFormData(prevState => ({
+                    ...prevState, productLocation: warehouse
+                }))
+            }
+        }
+    }, [action]);
 
     // EXPORTAR
     const handleChange = (event) => {
         const { name, value } = event.target;
 
-
-        if (name === "categoryName") {
-            setFormData(prevState => ({
-                ...prevState,
-                category: {
-                    ...prevState.category,
-                    categoryName: value
-                }
-            }));
-
-
-            idIdentifier(value, setFormData);
-        } else {
-            setFormData(prevState => ({
-                ...prevState,
-                [name]: value
-            }));
-        }
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: sanitizedValue(value)
+        }));
 
         if (value !== '') {
             const resetFields = {
@@ -176,11 +168,7 @@ export const ControllerCreateUpdateProduct = ({ id, action }) => {
             weight: parseFloat(formData.weight),
             height: parseFloat(formData.height),
             length: parseFloat(formData.length),
-            width: parseFloat(formData.width),
-            category: {
-                ...formData.category,
-                categoryId: parseInt(formData.category.categoryId, 10)
-            }
+            width: parseFloat(formData.width)
         };
 
         // Eliminar el campo 'productLocation' antes de enviar
@@ -217,7 +205,7 @@ export const ControllerCreateUpdateProduct = ({ id, action }) => {
                         : 'Producto creado correctamente',
                     icon: 'success',
                     timer: 3000,
-                    buttons: false  
+                    buttons: false
                 });
 
                 nav("../../adminSection/show-products");

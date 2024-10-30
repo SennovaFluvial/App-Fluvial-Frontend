@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { ApiService } from "../../../../class/ApiServices";
 import Swal from 'sweetalert';
 import { Alert } from "../../../../class/alerts";
-import { clearError, complateFields, getElementByEndpoint, handleStatusError, validationFieldSubmit } from "../../../../functions/functions";
+import { clearError, completeFields, getElementByEndpoint, handleStatusError, sanitizedValue, validationFieldSubmit } from "../../../../functions/functions";
 
 /**
  * Componente ControllerCreateUpdateBoatDriver para crear o actualizar información de un motorista.
@@ -46,7 +46,7 @@ export const ControllerCreateUpdateBoatDriver = ({ id, action }) => {
         const fetchData = async () => {
             if (action && action === 'update' && id) {
                 const arrayApiResponse = await getElementByEndpoint("/api/v1/employeefluvial/all");
-                const updateFields = complateFields({ formData, id, arrayApiResponse });
+                const updateFields = completeFields({ formData, id, arrayApiResponse, nameFieldId: 'id' });
                 setFormData(updateFields);
             }
         };
@@ -59,8 +59,9 @@ export const ControllerCreateUpdateBoatDriver = ({ id, action }) => {
 
         setFormData(prevState => ({
             ...prevState,
-            [name]: value
-        }))
+            [name]: sanitizedValue(value)
+        }));
+
         const expresionEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         const birthYear = name === "dateOfBirth" ? new Date(value).getFullYear() : null;
         const currentYear = new Date().getFullYear();
