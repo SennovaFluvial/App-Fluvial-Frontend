@@ -18,7 +18,8 @@ export const EmployeeSection = () => {
                             </li>
 
                             <li className='dropdown-item text-black'>
-                                <Link to={'add-employed'} state={{ from: 'menu' }}>Creación de Empleados
+                                <Link to={'add-employed'} state={{ from: 'menu' }}>
+                                    <i className="fa-solid fa-circle-plus"></i> Creación de Empleados
                                 </Link>
                             </li>
                         </>

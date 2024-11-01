@@ -88,7 +88,7 @@ export const ModuleFinish = () => {
                         <div className={styles.section}>
                             <div className="row">
                                 <div className="col-md-3">
-                                    <p><strong>Dirección:</strong> Calle XX</p>
+                                    <p><strong>Dirección de residencia:</strong> Calle XX</p>
                                 </div>
                                 <div className="col-md-3">
                                     <p><strong>País:</strong> Colombia</p>

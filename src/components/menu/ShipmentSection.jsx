@@ -19,7 +19,7 @@ export const ShipmentSection = () => {
 
                             <li className='dropdown-item text-black'>
                                 <Link to={'register-shipment'} state={{ from: 'menu' }}>
-                                    Creación de Enviós
+                                    <i className="fa-solid fa-circle-plus"></i> Creación de Enviós
                                 </Link>
                             </li>
                         </>

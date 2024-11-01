@@ -195,7 +195,7 @@ export const MoreDetails = () => {
                                                     <b>Teléfono</b>: {item.phone}
                                                 </p>
                                                 <p className="more-details-text">
-                                                    <b>Dirección</b>: {item.address}
+                                                    <b>Dirección de residencia</b>: {item.address}
                                                 </p>
                                                 <p className="more-details-text">
                                                     <b>Género</b>: {item.sex}
@@ -247,7 +247,7 @@ export const MoreDetails = () => {
                                                     <p><strong>Teléfono:</strong> {item.phone}</p>
                                                 </div>
                                                 <div className="col-md-3">
-                                                    <p><strong>Dirección:</strong> {item.address}</p>
+                                                    <p><strong>Dirección de residencia:</strong> {item.address}</p>
                                                 </div>
                                                 <div className="col-md-3">
                                                     <p><strong>Género:</strong> {item.sex}</p>

@@ -140,7 +140,7 @@ export const ShowUsers = () => {
                             <th scope="col">Fecha de Nacimiento</th>
                             <th scope="col">Genero</th>
                             <th scope="col">Correo Electronico</th>
-                            <th scope="col">Dirección</th>
+                            <th scope="col">Dirección de residencia</th>
                             <th scope="col">Estado</th>
                             <th scope="col">Empresa</th>
                             <th scope="col"></th>

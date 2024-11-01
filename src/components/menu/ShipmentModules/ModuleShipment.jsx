@@ -34,7 +34,7 @@ export const ModuleShipment = () => {
                             </div>
 
                             <div className="col-md-4">
-                                <Inputs text="Dirección" name="#" />
+                                <Inputs text="Dirección de residencia" name="#" />
                             </div>
 
 

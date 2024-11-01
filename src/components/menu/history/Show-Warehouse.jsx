@@ -1,12 +1,18 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import '../../../assets/css/show/styles-Show.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Spinner } from '../../animations/Spiner';
 import { Grid } from '../../animations/Grid';
 import { Pagination } from './Pagination';
 import { useControllerShowWarehouse } from './controllers/inventories/ControllerShowWarehouse';
+import { VerifyUserChangePassword } from '../agregar/controllers/VerifyUserChangePassword';
+import { ModalRequestPassword } from '../agregar/ModalRequestPassword';
 
 export const ShowWarehouse = () => {
+
+    const nav = useNavigate();
+    const [showModal, setShowModal] = useState(false);
+
     const {
         searchTerm,
         handleSearchChange,
@@ -18,6 +24,34 @@ export const ShowWarehouse = () => {
         loading,
         firstIndex
     } = useControllerShowWarehouse();
+
+    const { updatePassword,
+        handleChangeVerify,
+        errorsFormsVerify,
+        handleSubmitVerify,
+        formLogin,
+        userName,
+        setUpdatePassword } = VerifyUserChangePassword();
+
+    const handleChangeShowModal = () => {
+        setShowModal(!showModal);
+    }
+    const handleCloseModal = () => {
+        setShowModal(false);
+    }
+
+    const onStatusChange = () => {
+        handleChangeShowModal()
+        return;
+    };
+
+    useEffect(() => {
+        if (updatePassword) {
+            nav('/adminSection/add-warehouse', { state: { from: 'listado' } });
+            setUpdatePassword(false);
+        }
+    }, [updatePassword])
+
 
     if (loading) {
         return (
@@ -51,11 +85,9 @@ export const ShowWarehouse = () => {
                         />
                     </div>
                     <div className="col-md-2 my-3 d-flex justify-content-end ms-auto">
-                        <Link to={"/adminSection/add-warehouse"} state={{ from: 'listado' }}>
-                            <button className='btn btn-primary rounded-pill p-2 ps-2'>
-                                <i className="fa-regular fa-square-plus me-3"></i> Nueva Bodega
-                            </button>
-                        </Link>
+                        <button className='btn btn-primary rounded-pill p-2 ps-2' onClick={onStatusChange}>
+                            <i className="fa-regular fa-square-plus me-3"></i> Nueva Bodega
+                        </button>
                     </div>
                     <div className="col-md-2 my-3 d-flex justify-content-end ms-2">
                         <button className='btn btn-warning rounded-pill p-2 ps-2'>
@@ -117,6 +149,19 @@ export const ShowWarehouse = () => {
                     totalElements={totalFilteredItems}
                 />
             </div>
+
+
+            {showModal && (
+                <ModalRequestPassword
+                    userNameUser={userName}
+                    showModal={showModal}
+                    handleClose={handleCloseModal}
+                    handleChangeVerify={handleChangeVerify}
+                    errorsFormsVerify={errorsFormsVerify}
+                    handleSubmitVerify={handleSubmitVerify}
+                    formLogin={formLogin}
+                />)}
+
         </>
     );
 };

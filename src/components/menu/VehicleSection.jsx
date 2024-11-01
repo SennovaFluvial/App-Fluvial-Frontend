@@ -19,7 +19,7 @@ export const VehicleSection = () => {
 
                             <li className='dropdown-item text-black'>
                                 <Link to={'add-vehicle'} state={{ from: 'menu' }}>
-                                    Creación de Vehículos
+                                    <i className="fa-solid fa-circle-plus"></i> Creación de Vehículos
                                 </Link>
                             </li>
                         </>

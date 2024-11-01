@@ -16,10 +16,10 @@ export const CompanySection = () => {
                                     <i className="fa-solid fa-building me-2"></i> Listado de Empresas
                                 </Link>
                             </li>
-                            
+
                             <li className='dropdown-item text-black'>
                                 <Link to={'add-company'} state={{ from: 'menu' }}>
-                                    Creación de Empresas
+                                    <i className="fa-solid fa-circle-plus"></i> Creación de Empresas
                                 </Link>
                             </li>
                         </>

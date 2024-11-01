@@ -101,13 +101,53 @@ export const VerifyUserChangePassword = () => {
                 throw new Error(response.data.message || "Error inesperado");
             }
         } catch (error) {
-
+            // Restablece el campo de contraseña en el formulario
             setFormLogin((prevFormLogin) => ({
                 ...prevFormLogin,
                 password: "",
             }));
+
+            // Manejo de errores específicos
+            if (error.response) {
+                const { status, data } = error.response;
+
+                // Caso 1: Usuario no encontrado
+                if (status === 200 && data.message === 'User not found') {
+                    const errorMessage = 'Usuario no encontrado';
+                    swal({
+                        title: "Error",
+                        text: errorMessage,
+                        icon: "error",
+                        timer: 3000,
+                    });
+                    return false;
+                }
+
+                // Caso 2: Contraseña incorrecta (código 401)
+                if (status === 401) {
+                    const errorMessage = 'Contraseña Incorrecta';
+                    swal({
+                        title: "Error",
+                        text: errorMessage,
+                        icon: "error",
+                        timer: 3000,
+                    });
+                    return false;
+                }
+            }
+
+            // Mensaje de error genérico
+            const errorMessage = error.response?.data?.message || 'No fue posible el Login. Por favor, intenta nuevamente.';
+            swal({
+                title: "Error",
+                text: errorMessage,
+                icon: "error",
+                timer: 3000,
+            });
+
             return false;
         }
+
     };
 
     return {

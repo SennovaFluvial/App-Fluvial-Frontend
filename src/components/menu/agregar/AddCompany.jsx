@@ -68,7 +68,7 @@ export const AddCompany = () => {
                                 {errorsForms.municipality && <div className="text-danger">{errorsForms.municipality}</div>}
                             </div>
                             <div className="col-md-6">
-                                <Inputs text="Dirección" name="address" event={handleChange} icon="fa-solid fa-map-pin" value={formData.address} />
+                                <Inputs text="Dirección de residencia" name="address" event={handleChange} icon="fa-solid fa-map-pin" value={formData.address} />
                                 {errorsForms.address && <div className="text-danger">{errorsForms.address}</div>}
                             </div>
                         </div>

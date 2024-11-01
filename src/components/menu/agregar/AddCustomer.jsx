@@ -99,7 +99,7 @@ export const AddCustomer = () => {
                                 {errorsForms.phone && <div className="text-danger">{errorsForms.phone}</div>}
                             </div>
                             <div className="col-md-6">
-                                <Inputs event={handleChange} text="Dirección" name="address" icon="fa-solid fa-map-pin" value={formData.address} />
+                                <Inputs event={handleChange} text="Dirección de residencia" name="address" icon="fa-solid fa-map-pin" value={formData.address} />
                                 {errorsForms.address && <div className="text-danger">{errorsForms.address}</div>}
                             </div>
                             <div className="col-md-6">

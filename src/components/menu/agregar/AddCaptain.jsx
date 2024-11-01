@@ -54,7 +54,7 @@ export const AddCaptain = () => {
                             {errorsForms.sex && <div className="text-danger">{errorsForms.sex}</div>}
                         </div>
                     </div>
-                    {/* Contacto y Dirección */}
+                    {/* Contacto y Dirección de residencia */}
                     <div className="text-center mt-3">
                         <h3><b>CONTACTO Y DIRECCIÓN</b></h3>
                     </div>
@@ -68,7 +68,7 @@ export const AddCaptain = () => {
                             {errorsForms.phone && <div className="text-danger">{errorsForms.phone}</div>}
                         </div>
                         <div className="col-md-4">
-                            <Inputs text="Dirección" name="address" event={handleChange} icon="fa-solid fa-map-pin" value={formData.address} />
+                            <Inputs text="Dirección de residencia" name="address" event={handleChange} icon="fa-solid fa-map-pin" value={formData.address} />
                             {errorsForms.address && <div className="text-danger">{errorsForms.address}</div>}
                         </div>
 

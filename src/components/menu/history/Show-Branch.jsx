@@ -1,9 +1,41 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import '../../../assets/css/show/styles-Show.css';
-import { Link } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
+import { VerifyUserChangePassword } from '../agregar/controllers/VerifyUserChangePassword';
+import { ModalRequestPassword } from '../agregar/ModalRequestPassword';
 
 export const ShowBranch = () => {
+
+    const nav = useNavigate();
+    const [showModal, setShowModal] = useState(false);
+
+    const { updatePassword,
+        handleChangeVerify,
+        errorsFormsVerify,
+        handleSubmitVerify,
+        formLogin,
+        userName,
+        setUpdatePassword } = VerifyUserChangePassword();
+
+    const handleChangeShowModal = () => {
+        setShowModal(!showModal);
+    }
+    const handleCloseModal = () => {
+        setShowModal(false);
+    }
+
+    const onStatusChange = () => {
+        handleChangeShowModal()
+        return;
+    };
+
+    useEffect(() => {
+        if (updatePassword) {
+            nav('/adminSection/add-branch', { state: { from: 'listado' } });
+            setUpdatePassword(false);
+        }
+    }, [updatePassword])
+
     return (
         <>
             <div className="container my-5">
@@ -17,11 +49,9 @@ export const ShowBranch = () => {
 
                 <div className="row">
                     <div className="col-md-2 my-3 d-flex justify-content-end ms-auto">
-                        <Link to={"/adminSection/add-branch"} state={{ from: 'listado' }}>
-                            <button className='btn btn-primary rounded-pill p-2 ps-2'>
-                                <i className="fa-regular fa-square-plus me-3"></i> Nueva Sucursal
-                            </button>
-                        </Link>
+                        <button className='btn btn-primary rounded-pill p-2 ps-2' onClick={onStatusChange}>
+                            <i className="fa-regular fa-square-plus me-3"></i> Nueva Sucursal
+                        </button>
                     </div>
                     <div className="col-md-2 my-3 d-flex justify-content-end ms-2">
                         <button className='btn btn-warning rounded-pill p-2 ps-2'>
@@ -34,7 +64,7 @@ export const ShowBranch = () => {
                     <thead>
                         <tr>
                             <th scope="col">Nombre de la Sucursal</th>
-                            <th scope="col">Dirección</th>
+                            <th scope="col">Dirección de residencia</th>
                             <th scope="col">Departamento</th>
                             <th scope="col">Municipio</th>
                             <th scope="col">Compañía</th>
@@ -70,6 +100,18 @@ export const ShowBranch = () => {
                     </tbody>
                 </table>
             </div>
+
+            {showModal && (
+                <ModalRequestPassword
+                    userNameUser={userName}
+                    showModal={showModal}
+                    handleClose={handleCloseModal}
+                    handleChangeVerify={handleChangeVerify}
+                    errorsFormsVerify={errorsFormsVerify}
+                    handleSubmitVerify={handleSubmitVerify}
+                    formLogin={formLogin}
+                />)}
+
         </>
     )
 }
