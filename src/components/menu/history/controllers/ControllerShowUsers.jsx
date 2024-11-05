@@ -57,8 +57,7 @@ export const useControllerShowUsers = () => {
         departmentName: '',
         sex: '',
         birthDate: '',
-        maritalStatus: '',
-        codigoPais: ''
+        maritalStatus: ''
     });
 
     const getEmployed = async () => {

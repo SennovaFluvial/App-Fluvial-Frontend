@@ -54,13 +54,11 @@
 /* Button Styles */
 .more-details-btn {
     width: 150px;
-    /* Ajusta el tamaño deseado para los botones */
     padding: 10px;
-    /* Espaciado interno para consistencia */
     text-align: center;
     display: block;
     width: 100%;
-    max-width: 200px;
+    max-width: 300px;
     margin: 2rem auto;
     text-align: center;
     border: none;
@@ -80,6 +78,7 @@
 
 .more-details-btn-back {
     background: linear-gradient(90deg, #ff4d4d, #ff1a1a);
+    display: inline-flex;
 }
 
 .more-details-btn-back:hover {
@@ -89,6 +88,9 @@
 /* Edit button */
 .more-details-btn-edit {
     background: linear-gradient(90deg, #ffcc00, #ff9900);
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .more-details-btn-edit:hover {
@@ -100,4 +102,22 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
+}
+
+.subTitle {
+    font-size: 1.45rem;
+    font-weight: bold;
+    color: #333;
+    margin-top: 1rem;
+    margin-right: 2rem;
+    margin-left: 10px;
+    margin-bottom: 0.5rem;
+}
+
+.section {
+    background-color: var(--white);
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 10px;
 }

@@ -2,7 +2,7 @@ import { useParams } from 'react-router';
 import '../../../../assets/css/customerStyles/moreDetailsStyle.css';
 import { ControllerMoreDetails } from '../controllers/ControllerMoreDetails';
 import { Link } from 'react-router-dom';
-import styles from '../../../../assets/css/shipment/shipment.module.css'
+// import styles from '../../../../assets/css/shipment/shipment.module.css'
 
 export const MoreDetails = () => {
     const { id, category } = useParams();
@@ -100,8 +100,8 @@ export const MoreDetails = () => {
                             </div> */}
 
                             <div className="col-md-12">
-                                <h3 className={styles.subTitle}>Información {category === "vehicle" ? "de la embarcación" : "personal"}</h3>
-                                <div className={styles.section}>
+                                <h3 className="subTitle">Información {category === "vehicle" ? "de la embarcación" : "personal"}</h3>
+                                <div className="section">
                                     <div className="row">
                                         <div className="col-md-3">
                                             <p><strong>Nombres:</strong> {category === "vehicle" ? item.nombre : item.name}</p>
@@ -215,8 +215,8 @@ export const MoreDetails = () => {
                             </div> */}
 
                             <div className="col-md-12">
-                                <h3 className={styles.subTitle}>{category === "vehicle" ? "Capaciades de carga" : "Información de contacto"}</h3>
-                                <div className={styles.section}>
+                                <h3 className="subTitle">{category === "vehicle" ? "Capaciades de carga" : "Información de contacto"}</h3>
+                                <div className="section">
                                     <div className="row">
                                         <div className="col-md-3">
                                             <p><strong>Nombres:</strong> {category === "vehicle" ? item.nombre : item.name}</p>
@@ -303,8 +303,8 @@ export const MoreDetails = () => {
                             {category !== "crew" && category !== "vehicle" && (
                                 <>
                                     <div className="col-md-12">
-                                        <h3 className={styles.subTitle}>Información de Ubicación</h3>
-                                        <div className={styles.section}>
+                                        <h3 className="subTitle">Información de Ubicación</h3>
+                                        <div className="section">
                                             <div className="row">
 
                                                 {category === "customer" && (
@@ -338,8 +338,8 @@ export const MoreDetails = () => {
                             {category !== "vehicle" && (
                                 <>
                                     <div className="col-md-12">
-                                        <h3 className={styles.subTitle}>Información de Empresa</h3>
-                                        <div className={styles.section}>
+                                        <h3 className="subTitle">Información de Empresa</h3>
+                                        <div className="section">
                                             <div className="row">
                                                 
                                                 {item.personType && (
@@ -353,7 +353,7 @@ export const MoreDetails = () => {
                                                             </div>
                                                         </>
                                                     ) : (
-                                                            <div className="col-md-3">No aplica (persona natural).</div>
+                                                        <div className="col-md-3">No aplica (persona natural).</div>
                                                     )
                                                 )}
 
@@ -496,19 +496,19 @@ export const MoreDetails = () => {
                             )} */}
 
                             <div className="button-container">
-                            <Link to={category === "customer" ? '../show-customers' : (category === "employee" ? '../show-users' : (category === "crew" ? "../show-crew" : (category === "vehicle" ? "../show-vehicles" : "")))}>
-                                <button className='more-details-btn more-details-btn-back'>
-                                    Volver
-                                </button>
-                            </Link>
+                                <Link to={category === "customer" ? '../show-customers' : (category === "employee" ? '../show-users' : (category === "crew" ? "../show-crew" : (category === "vehicle" ? "../show-vehicles" : "")))}>
+                                    <button className='more-details-btn more-details-btn-back'>
+                                        Volver
+                                    </button>
+                                </Link>
 
-                            <Link to={category === "crew" ? url + `/${item.id}/update` : urlUpdateData}>
-                                <button className='more-details-btn more-details-btn-edit'>
-                                    Editar información <i className="fa-solid fa-pen-to-square icon-option"></i>
-                                </button>
-                            </Link>
+                                <Link to={category === "crew" ? url + `/${item.id}/update` : urlUpdateData} state={{ from: 'listado' }}>
+                                    <button className='more-details-btn more-details-btn-edit'>
+                                        <span> Editar información </span><i className="fa-solid fa-pen-to-square icon-option"></i>
+                                    </button>
+                                </Link>
                             </div>
-                            
+
                         </div>
                     </div>
                 )

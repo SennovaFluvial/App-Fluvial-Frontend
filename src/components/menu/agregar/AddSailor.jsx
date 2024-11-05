@@ -21,31 +21,31 @@ export const AddSailor = () => {
                     </div>
                     <div className="row">
                         <div className="col-md-4">
-                            <Inputs text="Nombres" name="name" event={handleChange} value={formData.name} />
+                            <Inputs text="Nombres" name="name" event={handleChange} value={formData.name} required={true} />
                             {errorsForms.name && <div className="text-danger">{errorsForms.name}</div>}
                         </div>
                         <div className="col-md-4">
-                            <Inputs text="Apellidos" name="lastName" event={handleChange} value={formData.lastName} />
+                            <Inputs text="Apellidos" name="lastName" event={handleChange} value={formData.lastName} required={true} />
                             {errorsForms.lastName && <div className="text-danger">{errorsForms.lastName}</div>}
                         </div>
                         <div className="col-md-4">
-                            <Select text="Tipo de Documento" value={formData.typeDocument} name="typeDocument" event={handleChange} options={OptionsTypeDocument} />
+                            <Select text="Tipo de Documento" value={formData.typeDocument} name="typeDocument" event={handleChange} options={OptionsTypeDocument} required={true} />
                             {errorsForms.typeDocument && <div className="text-danger">{errorsForms.typeDocument}</div>}
                         </div>
                         <div className="col-md-4">
-                            <Inputs text="Número de Documento" name="numDocument" event={handleChange} icon="fa-solid fa-address-card" value={formData.numDocument} />
+                            <Inputs text="Número de Documento" name="numDocument" event={handleChange} icon="fa-solid fa-address-card" value={formData.numDocument} required={true} />
                             {errorsForms.numDocument && <div className="text-danger">{errorsForms.numDocument}</div>}
                         </div>
                         <div className="col-md-4">
-                            <Inputs type="date" text="Fecha de Nacimiento" name="dateOfBirth" event={handleChange} icon="fa-solid fa-calendar-days" value={formData.dateOfBirth} />
+                            <Inputs type="date" text="Fecha de Nacimiento" name="dateOfBirth" event={handleChange} icon="fa-solid fa-calendar-days" value={formData.dateOfBirth} required={true} />
                             {errorsForms.dateOfBirth && <div className="text-danger">{errorsForms.dateOfBirth}</div>}
                         </div>
                         <div className="col-md-4">
-                            <Select text="Nacionalidad" value={formData.nationality} name="nationality" event={handleChange} options={nationality} />
+                            <Select text="Nacionalidad" value={formData.nationality} name="nationality" event={handleChange} options={nationality} required={true} />
                             {errorsForms.nationality && <div className="text-danger">{errorsForms.nationality}</div>}
                         </div>
                         <div className="col-md-4">
-                            <Select text="Estado civil" value={formData.maritalStatus} name="maritalStatus" event={handleChange} options={maritalStatus} />
+                            <Select text="Estado civil" value={formData.maritalStatus} name="maritalStatus" event={handleChange} options={maritalStatus} required={true} />
                             {errorsForms.maritalStatus && <div className="text-danger">{errorsForms.maritalStatus}</div>}
                         </div>
                         <div className="col-md-4">

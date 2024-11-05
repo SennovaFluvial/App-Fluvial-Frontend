@@ -82,7 +82,6 @@ export const Sidebar = ({ user, setUser }) => {
                                     </a>
                                     <ul className="dropdown-menu menu-account">
                                         <li><a className="dropdown-item text-black option-menu" href="#">Mi Cuenta</a></li>
-                                        <li><a className="dropdown-item text-black option-menu" href="#">Administración</a></li>
                                         <li><hr className="dropdown-divider" /></li>
                                         <li>
                                             <button onClick={logout} className='btn btn-danger boton-logout ms-2'>
@@ -111,16 +110,19 @@ export const Sidebar = ({ user, setUser }) => {
                     {!user?.rol?.includes('SUPERADMIN') && (
                         <>
                             <SailorSection isCollapsed={isCollapsed} />
+
                             <VehicleSection isCollapsed={isCollapsed} />
+
                             <CustomerSection isCollapsed={isCollapsed} />
+
+                            <ShipmentSection isCollapsed={isCollapsed} />
+                            
+                            <Inventories isCollapsed={isCollapsed} />
+
+                            <BranchSection isCollapsed={isCollapsed} />
                         </>
                     )}
 
-                    <ShipmentSection isCollapsed={isCollapsed} />
-
-                    <Inventories isCollapsed={isCollapsed} />
-
-                    <BranchSection isCollapsed={isCollapsed} />
 
                     <ul>
                         <li>

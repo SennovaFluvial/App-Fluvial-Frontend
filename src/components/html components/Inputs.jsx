@@ -22,7 +22,7 @@ export const Inputs = ({ type, text, name, event, placeholder, icon, value }) =>
 
     return (
         <div className="form-group"> {/* Contenedor principal del input */}
-            <label htmlFor={name}>{text}</label> {/* Etiqueta asociada al input */}
+            <label htmlFor={name}>{text}<span className="text-danger">*</span> </label> {/* Etiqueta asociada al input */}
             <div className="input-group">
                 {/* Si hay un icono, lo muestra en el lado izquierdo del input */}
                 {icon && (

@@ -34,7 +34,7 @@ export const AddProduct = () => {
                             <div className={styles.h3}>
                                 <h3><b>INFORMACIÓN DEL PRODUCTO</b></h3>
                             </div>
-                            <div className="col-md-4 mb-3">
+                            <div className="col-md-4 ">
                                 <Inputs
                                     text="Nombre del Producto"
                                     name="productName"
@@ -44,7 +44,7 @@ export const AddProduct = () => {
                                 {errorsForms.productName && <div className="text-danger">{errorsForms.productName}</div>}
                             </div>
 
-                            <div className="col-md-4 mb-3">
+                            <div className="col-md-4 ">
                                 <Select
                                     text="Categoría"
                                     name="categoryName"
@@ -55,7 +55,7 @@ export const AddProduct = () => {
                                 {errorsForms.categoryName && <div className="text-danger">{errorsForms.categoryName}</div>}
                             </div>
 
-                            <div className="col-md-4 mb-3">
+                            <div className="col-md-4 ">
                                 <Inputs
                                     text="Número Documento del responsable (Cliente)"
                                     name="customerNumDocument"
@@ -76,19 +76,19 @@ export const AddProduct = () => {
                                 }
                             </div>
 
-                            <div className="col-md-12 mb-3">
+                            <div className="col-md-12">
                                 <TextArea
                                     name="description"
                                     value={formData.description}
                                     onChange={handleChange}
-                                    rows={5}
+                                    rows={1}
                                     placeholder="Escribe una descripción del producto"
                                 />
                                 {errorsForms.description && <div className="text-danger">{errorsForms.description}</div>}
                             </div>
 
                             {formData.categoryName === "other" && (
-                                <div className="col-md-4 mb-3">
+                                <div className="col-md-4 ">
                                     <button className="btn btn-primary d-flex align-items-center">
                                         <i className="fa-solid fa-circle-plus rounded-circle me-2" style={{ padding: '8px', background: '#fff', color: '#007bff' }}></i>
                                         Agregar Categoría
@@ -97,178 +97,177 @@ export const AddProduct = () => {
                             )}
                         </div>
 
-                        <div className="row my-5">
                             <div className="text-center">
                                 <h3><b>MEDIDAS DEL PRODUCTO</b></h3>
                             </div>
-                            <div className="col-md-2 mb-3">
-                                <Inputs
-                                    text="Altura en Cm"
-                                    name="height"
-                                    value={formData.height}
-                                    event={handleChange}
-                                />
-                                {errorsForms.height && <div className="text-danger">{errorsForms.height}</div>}
-                            </div>
-
-                            <div className="col-md-2 mb-3">
-                                <Inputs
-                                    text="Longitud en Cm"
-                                    name="length"
-                                    value={formData.length}
-                                    event={handleChange}
-                                />
-                                {errorsForms.length && <div className="text-danger">{errorsForms.length}</div>}
-                            </div>
-
-                            <div className="col-md-2 mb-3">
-                                <Inputs
-                                    text="Ancho en Cm"
-                                    name="width"
-                                    value={formData.width}
-                                    event={handleChange}
-                                />
-                                {errorsForms.width && <div className="text-danger">{errorsForms.width}</div>}
-                            </div>
-
-                            <div className="col-md-2 mb-3">
-                                <Inputs
-                                    text="Peso"
-                                    name="weight"
-                                    value={formData.weight}
-                                    event={handleChange}
-                                />
-                                {errorsForms.weight && <div className="text-danger">{errorsForms.weight}</div>}
-                            </div>
-
-                            <div className="col-md-2 mb-3">
-                                <Select
-                                    text="Unidad de Medida"
-                                    name="unitOfMeasurement"
-                                    options={weightUnits}
-                                    value={formData.unitOfMeasurement}
-                                    event={handleChange}
-                                />
-                                {errorsForms.unitOfMeasurement && <div className="text-danger">{errorsForms.unitOfMeasurement}</div>}
-                            </div>
-
-                            <div className="col-md-2 mb-3">
-                                <Inputs
-                                    text="Dimensiones"
-                                    placeholder='30x20x2'
-                                    name="dimensions"
-                                    value={formData.dimensions}
-                                    event={handleChange}
-                                />
-                                {errorsForms.dimensions && <div className="text-danger">{errorsForms.dimensions}</div>}
-                            </div>
-                        </div>
-
-
-                        <div className="row my-5">
-                            <div className="text-center">
-                                <h3><b>SEGURIDAD</b></h3>
-                            </div>
                             <div className="row">
-                                <div className="col-md-3">
+                                <div className="col-md-2 ">
                                     <Inputs
-                                        text="Tipo de empaquetado"
-                                        name="packagingType"
-                                        value={formData.packagingType}
+                                        text="Altura en Cm"
+                                        name="height"
+                                        value={formData.height}
                                         event={handleChange}
                                     />
-                                    {errorsForms.packagingType && <div className="text-danger">{errorsForms.packagingType}</div>}
+                                    {errorsForms.height && <div className="text-danger">{errorsForms.height}</div>}
                                 </div>
 
-                                <div className="col-md-3">
+                                <div className="col-md-2 ">
+                                    <Inputs
+                                        text="Longitud en Cm"
+                                        name="length"
+                                        value={formData.length}
+                                        event={handleChange}
+                                    />
+                                    {errorsForms.length && <div className="text-danger">{errorsForms.length}</div>}
+                                </div>
+
+                                <div className="col-md-2 ">
+                                    <Inputs
+                                        text="Ancho en Cm"
+                                        name="width"
+                                        value={formData.width}
+                                        event={handleChange}
+                                    />
+                                    {errorsForms.width && <div className="text-danger">{errorsForms.width}</div>}
+                                </div>
+
+                                <div className="col-md-2 ">
+                                    <Inputs
+                                        text="Peso"
+                                        name="weight"
+                                        value={formData.weight}
+                                        event={handleChange}
+                                    />
+                                    {errorsForms.weight && <div className="text-danger">{errorsForms.weight}</div>}
+                                </div>
+
+                                <div className="col-md-2 ">
                                     <Select
-                                        text="¿Es Perecedero?"
-                                        name="isPerishable"
-                                        options={Booleano}
-                                        value={formData.isPerishable}
+                                        text="Unidad de Medida"
+                                        name="unitOfMeasurement"
+                                        options={weightUnits}
+                                        value={formData.unitOfMeasurement}
                                         event={handleChange}
                                     />
-                                    {errorsForms.isPerishable && <div className="text-danger">{errorsForms.isPerishable}</div>}
+                                    {errorsForms.unitOfMeasurement && <div className="text-danger">{errorsForms.unitOfMeasurement}</div>}
                                 </div>
 
-                                <div className="col-md-3">
-                                    <Select
-                                        text="¿Está Asegurado?"
-                                        name="insured"
-                                        options={Booleano}
-                                        value={formData.insured}
+                                <div className="col-md-2 ">
+                                    <Inputs
+                                        text="Dimensiones"
+                                        placeholder='30x20x2'
+                                        name="dimensions"
+                                        value={formData.dimensions}
                                         event={handleChange}
                                     />
-                                    {errorsForms.insured && <div className="text-danger">{errorsForms.insured}</div>}
+                                    {errorsForms.dimensions && <div className="text-danger">{errorsForms.dimensions}</div>}
                                 </div>
+                            </div>
 
-                                <div className="col-md-3">
-                                    <Select
-                                        text="¿Materiales Peligrosos?"
-                                        name="hazardousMaterials"
-                                        options={Booleano}
-                                        value={formData.hazardousMaterials}
-                                        event={handleChange}
-                                    />
-                                    {errorsForms.hazardousMaterials && <div className="text-danger">{errorsForms.hazardousMaterials}</div>}
-                                </div>
 
-                                <div className="col-md-12">
-                                    <TextArea
-                                        name="specialHandlingInstructions"
-                                        value={formData.specialHandlingInstructions}
-                                        onChange={handleChange}
-                                        rows={5}
-                                        placeholder="¿Alguna instrucción de manejo adicional? (opcional)"
-                                    />
-                                    {errorsForms.specialHandlingInstructions && <div className="text-danger">{errorsForms.specialHandlingInstructions}</div>}
-                                </div>
+
+                        <div className="text-center">
+                            <h3><b>SEGURIDAD</b></h3>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-3">
+                                <Inputs
+                                    text="Tipo de empaquetado"
+                                    name="packagingType"
+                                    value={formData.packagingType}
+                                    event={handleChange}
+                                />
+                                {errorsForms.packagingType && <div className="text-danger">{errorsForms.packagingType}</div>}
+                            </div>
+
+                            <div className="col-md-3">
+                                <Select
+                                    text="¿Es Perecedero?"
+                                    name="isPerishable"
+                                    options={Booleano}
+                                    value={formData.isPerishable}
+                                    event={handleChange}
+                                />
+                                {errorsForms.isPerishable && <div className="text-danger">{errorsForms.isPerishable}</div>}
+                            </div>
+
+                            <div className="col-md-3">
+                                <Select
+                                    text="¿Está Asegurado?"
+                                    name="insured"
+                                    options={Booleano}
+                                    value={formData.insured}
+                                    event={handleChange}
+                                />
+                                {errorsForms.insured && <div className="text-danger">{errorsForms.insured}</div>}
+                            </div>
+
+                            <div className="col-md-3">
+                                <Select
+                                    text="¿Materiales Peligrosos?"
+                                    name="hazardousMaterials"
+                                    options={Booleano}
+                                    value={formData.hazardousMaterials}
+                                    event={handleChange}
+                                />
+                                {errorsForms.hazardousMaterials && <div className="text-danger">{errorsForms.hazardousMaterials}</div>}
+                            </div>
+
+                            <div className="col-md-12">
+                                <TextArea
+                                    name="specialHandlingInstructions"
+                                    value={formData.specialHandlingInstructions}
+                                    onChange={handleChange}
+                                    rows={1}
+                                    placeholder="¿Alguna instrucción de manejo adicional? (opcional)"
+                                />
+                                {errorsForms.specialHandlingInstructions && <div className="text-danger">{errorsForms.specialHandlingInstructions}</div>}
                             </div>
                         </div>
 
-                        <div className="row my-5">
-                            <div className="text-center">
-                                <h3><b>INFORMACIÓN ADICIONAL</b></h3>
+
+                        <div className="text-center">
+                            <h3><b>LUGAR DE ALMACENAMIENTO</b></h3>
+                        </div>
+                        <div className="row justify-content-center mt-2">
+                            <div className="col-md-3 ">
+                                <Select
+                                    text="Almacenar en:"
+                                    name="productLocation"
+                                    options={useOptionsLocationProduct}
+                                    value={formData.productLocation}
+                                    event={handleChange}
+                                />
+                                {errorsForms.productLocation && <div className="text-danger">{errorsForms.productLocation}</div>}
                             </div>
-                            <div className="row justify-content-center mt-2">
-                                <div className="col-md-3 mb-3">
+
+                            {formData.productLocation === "warehouse" && (
+                                <div className="col-md-3 ">
                                     <Select
-                                        text="¿El producto se encuentra en?"
-                                        name="productLocation"
-                                        options={useOptionsLocationProduct}
-                                        value={formData.productLocation}
+                                        text="¿En qué bodega se encuentra?"
+                                        name="warehouseName"
+                                        options={useOptionsWarehouse}
+                                        value={formData.warehouseName}
                                         event={handleChange}
                                     />
-                                    {errorsForms.productLocation && <div className="text-danger">{errorsForms.productLocation}</div>}
+                                    {errorsForms.warehouseName && <div className="text-danger">{errorsForms.warehouseName}</div>}
                                 </div>
+                            )}
 
-                                {formData.productLocation === "warehouse" && (
-                                    <div className="col-md-3 mb-3">
-                                        <Select
-                                            text="¿En qué bodega se encuentra?"
-                                            name="warehouseName"
-                                            options={useOptionsWarehouse}
-                                            value={formData.warehouseName}
-                                            event={handleChange}
-                                        />
-                                        {errorsForms.warehouseName && <div className="text-danger">{errorsForms.warehouseName}</div>}
-                                    </div>
-                                )}
-
-                                {formData.productLocation === "vehicle" && (
-                                    <div className="col-md-3 mb-3">
-                                        <Select
-                                            text="¿En qué vehículo se encuentra?"
-                                            name="vehicleName"
-                                            options={useOptionsVehicles}
-                                            value={formData.vehicleName}
-                                            event={handleChange}
-                                        />
-                                        {errorsForms.vehicleName && <div className="text-danger">{errorsForms.vehicleName}</div>}
-                                    </div>
-                                )}
-                            </div>
+                            {formData.productLocation === "vehicle" && (
+                                <div className="col-md-3 ">
+                                    <Select
+                                        text="¿En qué vehículo se encuentra?"
+                                        name="vehicleName"
+                                        options={useOptionsVehicles}
+                                        value={formData.vehicleName}
+                                        event={handleChange}
+                                    />
+                                    {errorsForms.vehicleName && <div className="text-danger">{errorsForms.vehicleName}</div>}
+                                </div>
+                            )}
                         </div>
+
 
                         <div className="text-center my-3">
                             <CancelButton
