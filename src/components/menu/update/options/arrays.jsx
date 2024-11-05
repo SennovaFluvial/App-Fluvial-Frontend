@@ -152,8 +152,8 @@ export const genero = [
     { label: 'Otro', value: 'Otro' }
 ];
 export const status = [
-    { label: 'ACTIVO', value: 'ACTIVO' },
-    { label: 'INACTIVO', value: 'INACTIVO' }
+    { label: 'ACTIVO', value: 'activo' },
+    { label: 'INACTIVO', value: 'inactivo' }
 ];
 
 // export const codigoPaises = [
