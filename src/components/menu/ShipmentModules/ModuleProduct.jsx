@@ -86,7 +86,7 @@ export const ModuleProduct = () => {
 
                             </div>
                             <div className="col-md-4">
-                                <Select text="¿Es Perecebero?" name="isPerishable" options={Booleano} onChange={handleChange} />
+                                <Select text="¿Es Perecedero?" name="isPerishable" options={Booleano} onChange={handleChange} />
 
                             </div>
                             <div className="col-md-4">

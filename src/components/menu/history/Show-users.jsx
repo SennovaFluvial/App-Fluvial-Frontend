@@ -36,7 +36,6 @@ export const ShowUsers = () => {
     delete dataToSend.confirmUsername;
     delete dataToSend.password;
     delete dataToSend.confirmPassword;
-    delete dataToSend.codigoPais;
 
     const { handleStatusChange } = useChangeStatusFields({
         id_item: itemId,
@@ -145,12 +144,12 @@ export const ShowUsers = () => {
                             <th scope="col">Fecha de Nacimiento</th>
                             <th scope="col">Genero</th>
                             <th scope="col">Correo Electronico</th>
-                            <th scope="col">Dirección de residencia</th>
+                            <th scope="col">Dirección</th>
                             <th scope="col">Estado</th>
                             <th scope="col">Empresa</th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
+                            <th scope="col">Actualizar</th>
+                            <th scope="col">Detalles</th>
+                            <th scope="col">Estado</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -179,7 +178,7 @@ export const ShowUsers = () => {
                                         <b>{item.status}</b>
                                     </td>
                                     <td>{item.company?.name}</td>
-                                    <td>  <Link to={`../add-employed/${item.id}?action=update`}>
+                                    <td>  <Link to={`../add-employed/${item.id}?action=update`} state={{ from: 'listado' }}>
                                         <button className='btn btn-edit icon-link-hover text-primary'>
                                             <i className="fa-solid fa-pen-to-square icon-option"></i>
                                         </button>
@@ -200,7 +199,7 @@ export const ShowUsers = () => {
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="11" className="text-center">No hay resultados que mostrar</td>
+                                <td colSpan="13" className="text-center">No hay resultados que mostrar</td>
                             </tr>
                         )}
                     </tbody>

@@ -131,9 +131,9 @@ export const ShowCrew = () => {
                             <th scope="col">Origen</th>
                             <th scope="col">Categoría</th>
                             <th scope="col">Estado</th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
+                            <th scope="col">Actualizar</th>
+                            <th scope="col">Detalles</th>
+                            <th scope="col">Estado</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -161,7 +161,7 @@ export const ShowCrew = () => {
                                             <b>{item.status}</b>
                                         </td>
                                         <td>
-                                            <Link to={url + `/${item.id}/update`}>
+                                            <Link to={url + `/${item.id}/update`} state={{ from: 'listado' }}>
                                                 <button className='btn btn-edit icon-link-hover text-primary'>
                                                     <i className="fa-solid fa-pen-to-square icon-option"></i>
                                                 </button>
@@ -186,7 +186,7 @@ export const ShowCrew = () => {
                             })
                         ) : (
                             <tr>
-                                <td colSpan="8" className="text-center">No hay resultados que mostrar</td>
+                                <td colSpan="10" className="text-center">No hay resultados que mostrar</td>
                             </tr>
                         )}
                     </tbody>

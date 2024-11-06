@@ -106,10 +106,11 @@ export const useOptionsCities = () => {
 };
 
 export const OptionsTypeDocument = [
-    { label: 'C.C', value: 'Cedula' },
-    { label: 'T.I', value: 'tarjeta de identidad' },
-    { label: 'C.E', value: 'cedula extranjera' },
-    { label: 'Pasaporte', value: 'Passport' }
+    { label: 'Cedula', value: 'Cedula' },
+    { label: 'Tarjeta de identidad', value: 'Tarjeta de identidad' },
+    { label: 'Cedula de extranjeria', value: 'Tedula extranjera' },
+    { label: 'Pasaporte', value: 'Passporte' },
+    { label: 'Otro', value: 'Otro' }
 ]
 
 /**
@@ -151,14 +152,14 @@ export const genero = [
     { label: 'Otro', value: 'Otro' }
 ];
 export const status = [
-    { label: 'Activo', value: 'activo' },
-    { label: 'Inactivo', value: 'inactivo' }
+    { label: 'ACTIVO', value: 'activo' },
+    { label: 'INACTIVO', value: 'inactivo' }
 ];
 
-export const codigoPaises = [
-    { label: "+57", value: 'colombia' },
-    { label: "+52", value: 'mexico' }
-];
+// export const codigoPaises = [
+//     { label: "+57", value: 'colombia' },
+//     { label: "+52", value: 'mexico' }
+// ];
 
 export const maritalStatus = [
     { label: 'Soltero', value: 'soltero' },
@@ -176,7 +177,13 @@ export const nationality = [
 ];
 
 export const typeVehicle = [
+    { label: 'Bote', value: 'Bote' },
+    { label: 'Bote Motor', value: 'Bote Motor' },
+    { label: 'Chalupa', value: 'Chalupa' },
+    { label: 'Deslizador', value: 'Deslizador' },
     { label: 'Lancha', value: 'Lancha' },
+    { label: 'Planchon', value: 'Remolcador' },
+    { label: 'Remolcador', value: 'Remolcador' },
 ];
 
 export const weightUnits = [
@@ -322,7 +329,7 @@ export const optionsWarehouse = () => {
  * //   { label: 'Vehículo A', value: 'Vehículo A' },
  * //   { label: 'Vehículo B', value: 'Vehículo B' }
  * // ]
- */ 
+ */
 export const optionsVehicles = () => {
     const [listVehicles, setListVehicles] = useState([])
 

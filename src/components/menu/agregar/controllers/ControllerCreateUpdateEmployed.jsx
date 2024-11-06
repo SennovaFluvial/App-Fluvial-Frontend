@@ -66,8 +66,7 @@ export const ControllerCreateUpdateEmployed = ({ updatePassword }) => {
         departmentName: '',
         sex: '',
         birthDate: '',
-        maritalStatus: '',
-        codigoPais: ''
+        maritalStatus: ''
     });
 
     // 1. Efecto para obtener y establecer `nameCompany` si el rol es "ADMIN"
@@ -113,8 +112,7 @@ export const ControllerCreateUpdateEmployed = ({ updatePassword }) => {
                 departmentName: '',
                 sex: '',
                 birthDate: '',
-                maritalStatus: '',
-                codigoPais: ''
+                maritalStatus: ''
             });
             setErrorsForms({});
         }

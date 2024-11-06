@@ -77,8 +77,8 @@ export const ShowProducts = () => {
                             <th scope="col">Dimensiones</th>
                             <th scope="col">Tipo de embalaje</th>
                             <th scope="col">Es Perecedero</th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
+                            <th scope="col">Actualizar</th>
+                            <th scope="col">Detalles</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -94,7 +94,7 @@ export const ShowProducts = () => {
                                     <td>{item.packagingType}</td>
                                     <td>{item.isPerishable}</td>
                                     <td>
-                                        <Link to={`../add-product/${item.productId}/update`}>
+                                        <Link to={`../add-product/${item.productId}/update`} state={{ from: 'listado' }}>
                                             <button className='btn btn-edit icon-link-hover text-primary'>
                                                 <i className="fa-solid fa-pen-to-square icon-option"></i>
                                             </button>
@@ -111,7 +111,7 @@ export const ShowProducts = () => {
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="11" className="text-center">No hay resultados que mostrar</td>
+                                <td colSpan="10" className="text-center">No hay resultados que mostrar</td>
                             </tr>
                         )}
                     </tbody>

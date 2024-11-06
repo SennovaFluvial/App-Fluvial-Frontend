@@ -40,9 +40,9 @@ export const ShowShipment = () => {
                             <th scope="col">Unidad de Medida</th>
                             <th scope="col">Dimenciones</th>
                             <th scope="col">Tipo de embalaje</th>
-                            <th scope="col">Es Perecebero</th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
+                            <th scope="col">Es Perecedero</th>
+                            <th scope="col">Actualizar</th>
+                            <th scope="col">Detalles</th>
                         </tr>
                     </thead>
                     <tbody>

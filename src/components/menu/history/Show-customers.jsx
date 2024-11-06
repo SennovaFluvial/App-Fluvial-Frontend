@@ -77,8 +77,8 @@ export const ShowCustomers = () => {
               <th scope="col">Ciudad</th>
               <th scope="col">Tipo de Persona</th>
               <th scope="col">Nombre de empresa</th>
-              <th scope="col"></th>
-              <th scope="col"></th>
+              <th scope="col">Actualizar</th>
+              <th scope="col">Detalles</th>
             </tr>
           </thead>
           <tbody className="table-group-divider">
@@ -95,7 +95,7 @@ export const ShowCustomers = () => {
                   <td>{item.personType}</td>
                   <td>{item.personType === "Juridica" ? item.companyName : "➖"}</td>
                   <td>
-                    <Link to={`../add-customer/${item.id}/update`}>
+                    <Link to={`../add-customer/${item.id}/update`} state={{ from: 'listado' }}>
                       <button className='btn btn-edit icon-link-hover text-primary'>
                         <i className="fa-solid fa-pen-to-square icon-option"></i>
                       </button>
@@ -112,7 +112,7 @@ export const ShowCustomers = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="8" className="text-center">No hay resultados que mostrar</td>
+                <td colSpan="11" className="text-center">No hay resultados que mostrar</td>
               </tr>
             )}
           </tbody>

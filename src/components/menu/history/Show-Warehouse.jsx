@@ -104,8 +104,8 @@ export const ShowWarehouse = () => {
                             <th scope="col">Ubicación</th>
                             <th scope="col">Capacidad</th>
                             <th scope="col">Estado</th>
-                            <th scope="col"></th>
-                            <th scope="col"></th>
+                            <th scope="col">Actualizar</th>
+                            <th scope="col">Detalles</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -119,7 +119,7 @@ export const ShowWarehouse = () => {
                                     <td>{item.warehouseType}</td>
                                     <td>{item.status}</td>
                                     <td>
-                                        <Link to={`../add-warehouse/${item.id}/update`}>
+                                        <Link to={`../add-warehouse/${item.id}/update`} state={{ from: 'listado' }}>
                                             <button className='btn btn-edit icon-link-hover text-primary'>
                                                 <i className="fa-solid fa-pen-to-square icon-option"></i>
                                             </button>

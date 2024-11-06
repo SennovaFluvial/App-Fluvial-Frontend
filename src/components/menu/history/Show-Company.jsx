@@ -73,7 +73,8 @@ export const ShowCompany = () => {
               <th scope="col">Gerente</th>
               <th scope="col">Linea movil</th>
               <th scope="col">Estado</th>
-              <th scope="col">Acciones</th>
+              <th scope="col">Actualizar</th>
+              <th scope="col">Detalles</th>
             </tr>
           </thead>
           <tbody>
@@ -89,11 +90,14 @@ export const ShowCompany = () => {
                     <b>{item.status}</b>
                   </td>
                   <td>
-                    <Link to={`../add-company/${item.id}/update`}>
+                    <Link to={`../add-company/${item.id}/update`} state={{ from: 'listado' }}>
                       <button className='btn icon-link-hover ms-3 text-primary'>
                         <i className="fa-solid fa-pen-to-square icon-option"></i>
                       </button>
                     </Link>
+                  </td>
+
+                  <td>
                     <button className='btn icon-link-hover ms-3 text-warning'>
                       <i className="fa-solid fa-eye icon-option"></i>
                     </button>
@@ -102,7 +106,7 @@ export const ShowCompany = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="7" className="text-center">No hay resultados que mostrar</td>
+                <td colSpan="8" className="text-center">No hay resultados que mostrar</td>
               </tr>
             )}
           </tbody>
