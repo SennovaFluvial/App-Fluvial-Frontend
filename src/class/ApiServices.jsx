@@ -108,4 +108,18 @@ export class ApiService {
         }
     }
 
+    static async getReports(url_api) {
+        try {
+            // Realiza la solicitud GET a la API, configurando la respuesta como 'blob'
+            const response = await instance.get(url_api, { responseType: 'blob' });
+
+            // Devuelve el blob obtenido (que es el archivo PDF)
+            return response.data;  // Esto será un Blob
+        } catch (error) {
+            // Muestra un mensaje de error en la consola, incluyendo información del error si está disponible
+            console.error("Error al obtener los datos:", error.response ? error.response.data : error.message);
+            throw error;
+        }
+    }
+
 }
