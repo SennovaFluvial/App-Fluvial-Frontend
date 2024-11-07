@@ -4,6 +4,8 @@ import { Grid } from '../../animations/Grid';
 import { Link } from 'react-router-dom';
 import { Pagination } from './Pagination';
 import { useControllerShowVehicles } from './controllers/ControllerShowVehicles';
+import { useLocation } from 'react-router-dom';
+import { CancelButton } from '../../components/BackButton';
 
 export const ShowVehicles = () => {
 
@@ -18,6 +20,9 @@ export const ShowVehicles = () => {
     loading,
     firstIndex
   } = useControllerShowVehicles();
+
+  const location = useLocation();
+  const from = location.state?.from || 'menu';
 
   if (loading) {
     return (
@@ -112,12 +117,22 @@ export const ShowVehicles = () => {
             )}
           </tbody>
         </table>
-        <Pagination
-          elementForPage={elementForPage}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-          totalElements={totalFilteredItems}
-        />
+        <div className="d-flex w-100">
+          <div className="d-flex justify-content-start w-25">
+            <CancelButton
+              from={from}
+            />
+          </div>
+          <div className="d-flex justify-content-center w-50">
+            <Pagination
+              elementForPage={elementForPage}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              totalElements={totalFilteredItems}
+            />
+          </div>
+          <div className="w-25"></div> {/* Columna vacía para balancear el espacio */}
+        </div>
       </div>
     </>
   )

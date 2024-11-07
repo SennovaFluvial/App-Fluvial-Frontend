@@ -8,7 +8,8 @@ import { useChangeStatusFields } from './search/ChangeStatusFields';
 import { useEffect, useState } from 'react';
 import { VerifyUserChangePassword } from '../agregar/controllers/VerifyUserChangePassword';
 import { ModalRequestPassword } from '../agregar/ModalRequestPassword';
-
+import { useLocation } from 'react-router-dom';
+import { CancelButton } from '../../components/BackButton';
 
 export const ShowUsers = () => {
 
@@ -85,6 +86,8 @@ export const ShowUsers = () => {
         }
     }, [updatePassword, itemId]);
 
+    const location = useLocation();
+    const from = location.state?.from || 'menu';
 
     if (loading) {
         return (
@@ -199,12 +202,23 @@ export const ShowUsers = () => {
                         )}
                     </tbody>
                 </table>
-                <Pagination
-                    elementForPage={elementForPage}
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
-                    totalElements={totalFilteredItems}
-                />
+
+                <div className="d-flex w-100">
+                    <div className="d-flex justify-content-start w-25">
+                        <CancelButton
+                            from={from}
+                        />
+                    </div>
+                    <div className="d-flex justify-content-center w-50">
+                        <Pagination
+                            elementForPage={elementForPage}
+                            currentPage={currentPage}
+                            setCurrentPage={setCurrentPage}
+                            totalElements={totalFilteredItems}
+                        />
+                    </div>
+                    <div className="w-25"></div> {/* Columna vacía para balancear el espacio */}
+                </div>
             </div>
 
             {showModal && (
