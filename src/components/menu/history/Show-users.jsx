@@ -8,6 +8,7 @@ import { useChangeStatusFields } from './search/ChangeStatusFields';
 import { useEffect, useState } from 'react';
 import { VerifyUserChangePassword } from '../agregar/controllers/VerifyUserChangePassword';
 import { ModalRequestPassword } from '../agregar/ModalRequestPassword';
+import { downloadReport } from '../../../functions/functions';
 import { useLocation } from 'react-router-dom';
 import { CancelButton } from '../../components/BackButton';
 
@@ -27,7 +28,7 @@ export const ShowUsers = () => {
         loading,
         firstIndex,
         formData,
-        setFormData
+        setFormData,
     } = useControllerShowUsers();
 
     let dataToSend = { ...formData };
@@ -66,6 +67,10 @@ export const ShowUsers = () => {
         handleChangeShowModal()
         return;
     };
+
+    const handlePrint = () => {
+        downloadReport('/api/v1/companie/usersReport', 'informe_empleados');
+    }
 
     useEffect(() => {
         if (updatePassword && itemId) {
@@ -126,8 +131,8 @@ export const ShowUsers = () => {
                         </Link>
                     </div>
                     <div className="col-md-2 my-3 d-flex justify-content-end ms-2">
-                        <button className='btn btn-warning rounded-pill p-2 ps-2'>
-                            <i className="fa-solid fa-print me-3"></i> Imprimir Informe
+                        <button className='btn btn-warning rounded-pill p-2 ps-2' onClick={handlePrint}>
+                            <i className="fa-solid fa-print me-3"></i>Imprimir Informe
                         </button>
                     </div>
                 </div>

@@ -1,4 +1,5 @@
 import { ApiService } from "../class/ApiServices";
+import { saveAs } from 'file-saver';
 
 /**
  * Maneja y actualiza los errores en los formularios.
@@ -304,3 +305,30 @@ export const sanitizedValue = (value) => {
     const validCharactersRegex = /[^a-zA-Z0-9\s@.\-]/g;
     return value.replace(validCharactersRegex, '');
 }
+
+/**
+ * Realiza una solicitud a la API para descargar un archivo y lo guarda en el dispositivo con el nombre y la extensión especificada.
+ *
+ * @param {string} url_report_api - La URL de la API desde la cual se va a descargar el archivo.
+ * @param {string} name_field - El nombre del archivo que se va a guardar.
+ * @param {string} [extension='.pdf'] - La extensión del archivo. Por defecto, se establece como `.pdf`.
+ *
+ * @throws {Error} Lanza un error si la respuesta no es un archivo válido o si ocurre algún otro problema en el proceso.
+ */
+export const downloadReport = async (url_report_api, name_field, extension = '.pdf') => {
+    try {
+        // Realiza la solicitud a la API que ahora devuelve un Blob (archivo)
+        const response = await ApiService.getReports(url_report_api);
+
+        // Verifica si la respuesta contiene un Blob
+        if (response && response instanceof Blob) {
+            // Guardamos el archivo con la extensión especificada
+            saveAs(response, `${name_field}${extension}`);
+        } else {
+            throw new Error('La respuesta no es un archivo válido.');
+        }
+    } catch (error) {
+        console.error("Error al descargar el informe:", error);
+        alert(`Hubo un error al intentar descargar el informe: ${error.message}`);
+    }
+};
