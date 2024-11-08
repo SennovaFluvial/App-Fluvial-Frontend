@@ -218,6 +218,13 @@ export const Booleano = [
     { label: 'No', value: 'false' }
 ];
 
+export const crewType = [
+    { label: "Capitan", value: "Capitan" },
+    { label: "Marinero", value: "Marinero" },
+    { label: "Motorista", value: "Motorista" },
+    { label: "Auxiliar de cocina", value: "Auxiliar de cocina" }
+]
+
 /**
  * Hook para obtener la lista de categorías de productos desde la API.
  *

@@ -45,6 +45,9 @@ export const AddVehicle = () => {
                                 <Inputs event={handleChange} text="Registro" name="registration" icon="fa-solid fa-id-card" value={formData.registration} />
                                 {errorsForms.registration && <div className="text-danger">{errorsForms.registration}</div>}
                             </div>
+                            <div className="col-md-6">
+                                <Inputs event={handleChange} type="date" text="Fecha de expiración de registro" name="#" icon="fa-solid fa-clock" />
+                            </div>
                         </div>
                         <div className="row">
                             {/* Capacidad de Peso y Unidad de Medida */}

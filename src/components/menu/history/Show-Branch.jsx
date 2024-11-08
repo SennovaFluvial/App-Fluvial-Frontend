@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import '../../../assets/css/show/styles-Show.css';
 import { Link, useNavigate } from 'react-router-dom';
+import { Spinner } from '../../animations/Spiner';
+import { Grid } from '../../animations/Grid';
 import { VerifyUserChangePassword } from '../agregar/controllers/VerifyUserChangePassword';
 import { ModalRequestPassword } from '../agregar/ModalRequestPassword';
 import { useLocation } from 'react-router-dom';
@@ -41,6 +43,16 @@ export const ShowBranch = () => {
     const location = useLocation();
     const from = location.state?.from || 'menu';
     
+    if (loading) {
+        return (
+            <div className="container">
+                <Grid>
+                    <Spinner />
+                </Grid>
+            </div>
+        );
+    }
+
     return (
         <>
             <div className="container my-5">
