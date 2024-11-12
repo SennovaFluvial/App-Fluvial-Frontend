@@ -4,7 +4,7 @@ import { showCustomers } from "../../../../functions/functions";
 export const ControllerMoreDetails = ({ id, category }) => {
     const [peopleInfo, setPeopleInfo] = useState([]);
     const [filterData, setFilterData] = useState([]);
-    
+
     const urlUpdateData = category === "employee"
         ? `../add-employed/${id}?action=update`
         : (category === "customer")

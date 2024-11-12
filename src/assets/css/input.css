@@ -2,6 +2,18 @@
     --green: #00AF00;
 }
 
+.btn.btn-success.btn-personalized {
+    background: linear-gradient(45deg, #28a745, #218838);
+    border: none;
+    color: white;
+    transition: background 0.3s ease;
+}
+
+.btn.btn-success.btn-personalized:hover {
+    background: linear-gradient(45deg, #218838, #28a745);
+}
+
+
 .input-group {
     position: relative;
 }

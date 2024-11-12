@@ -77,6 +77,7 @@ export const ShowProducts = () => {
                             <th scope="col">Dimensiones</th>
                             <th scope="col">Tipo de embalaje</th>
                             <th scope="col">Es Perecedero</th>
+                            <th scope="col">Cantidad restante</th>
                             <th scope="col">Actualizar</th>
                             <th scope="col">Detalles</th>
                         </tr>
@@ -85,14 +86,23 @@ export const ShowProducts = () => {
                         {paginatedItems.length > 0 ? (
                             paginatedItems.map((item, index) => (
                                 <tr key={index}>
-                                    <td><b>{firstIndex + index + 1}</b></td>
-                                    <td><b>{item.customerNumDocument}</b></td>
+                                    <td>
+                                        <b>{firstIndex + index + 1}</b>
+                                    </td>
+                                    <td>
+                                        <b>{item.customerNumDocument}</b>
+                                    </td>
                                     <td>{item.warehouseName}</td>
                                     <td>{item.categoryName}</td>
-                                    <td><b>{item.productName}</b></td>
+                                    <td>
+                                        <b>{item.productName}</b>
+                                    </td>
                                     <td>{item.dimensions}</td>
                                     <td>{item.packagingType}</td>
-                                    <td>{item.isPerishable}</td>
+                                    <td>
+                                        <b>{item.isPerishable ? 'Si' : 'No'}</b>
+                                    </td>
+                                    <td>{item.number}</td>
                                     <td>
                                         <Link to={`../add-product/${item.productId}/update`} state={{ from: 'listado' }}>
                                             <button className='btn btn-edit icon-link-hover text-primary'>

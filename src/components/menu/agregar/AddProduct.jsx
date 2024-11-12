@@ -67,6 +67,7 @@ export const AddProduct = () => {
                                     formData.customerNumDocument && (
                                         <>
                                             <DocumentSuggestions
+                                                nameField={'customerNumDocument'}
                                                 numDocumentToSearch={formData.customerNumDocument}
                                                 setFormData={setFormData}
                                                 setErrorsForms={setErrorsForms}
@@ -86,6 +87,15 @@ export const AddProduct = () => {
                                 />
                                 {errorsForms.description && <div className="text-danger">{errorsForms.description}</div>}
                             </div>
+                            <div className="col-md-2">
+                                <Inputs
+                                    text="Cantidad"
+                                    name="number"
+                                    value={formData.number}
+                                    event={handleChange}
+                                />
+                                {errorsForms.number && <div className="text-danger">{errorsForms.number}</div>}
+                            </div>
 
                             {formData.categoryName === "other" && (
                                 <div className="col-md-4 ">
@@ -97,72 +107,72 @@ export const AddProduct = () => {
                             )}
                         </div>
 
-                            <div className="text-center">
-                                <h3><b>MEDIDAS DEL PRODUCTO</b></h3>
+                        <div className="text-center">
+                            <h3><b>MEDIDAS DEL PRODUCTO</b></h3>
+                        </div>
+                        <div className="row">
+                            <div className="col-md-2 ">
+                                <Inputs
+                                    text="Altura en Cm"
+                                    name="height"
+                                    value={formData.height}
+                                    event={handleChange}
+                                />
+                                {errorsForms.height && <div className="text-danger">{errorsForms.height}</div>}
                             </div>
-                            <div className="row">
-                                <div className="col-md-2 ">
-                                    <Inputs
-                                        text="Altura en Cm"
-                                        name="height"
-                                        value={formData.height}
-                                        event={handleChange}
-                                    />
-                                    {errorsForms.height && <div className="text-danger">{errorsForms.height}</div>}
-                                </div>
 
-                                <div className="col-md-2 ">
-                                    <Inputs
-                                        text="Longitud en Cm"
-                                        name="length"
-                                        value={formData.length}
-                                        event={handleChange}
-                                    />
-                                    {errorsForms.length && <div className="text-danger">{errorsForms.length}</div>}
-                                </div>
-
-                                <div className="col-md-2 ">
-                                    <Inputs
-                                        text="Ancho en Cm"
-                                        name="width"
-                                        value={formData.width}
-                                        event={handleChange}
-                                    />
-                                    {errorsForms.width && <div className="text-danger">{errorsForms.width}</div>}
-                                </div>
-
-                                <div className="col-md-2 ">
-                                    <Inputs
-                                        text="Peso"
-                                        name="weight"
-                                        value={formData.weight}
-                                        event={handleChange}
-                                    />
-                                    {errorsForms.weight && <div className="text-danger">{errorsForms.weight}</div>}
-                                </div>
-
-                                <div className="col-md-2 ">
-                                    <Select
-                                        text="Unidad de Medida"
-                                        name="unitOfMeasurement"
-                                        options={weightUnits}
-                                        value={formData.unitOfMeasurement}
-                                        event={handleChange}
-                                    />
-                                    {errorsForms.unitOfMeasurement && <div className="text-danger">{errorsForms.unitOfMeasurement}</div>}
-                                </div>
-
-                                <div className="col-md-2 ">
-                                    <Inputs
-                                        text="Dimensiones"
-                                        placeholder='30x20x2'
-                                        name="dimensions"
-                                        value={formData.dimensions}
-                                        event={handleChange}
-                                    />
-                                    {errorsForms.dimensions && <div className="text-danger">{errorsForms.dimensions}</div>}
-                                </div>
+                            <div className="col-md-2 ">
+                                <Inputs
+                                    text="Longitud en Cm"
+                                    name="length"
+                                    value={formData.length}
+                                    event={handleChange}
+                                />
+                                {errorsForms.length && <div className="text-danger">{errorsForms.length}</div>}
                             </div>
+
+                            <div className="col-md-2 ">
+                                <Inputs
+                                    text="Ancho en Cm"
+                                    name="width"
+                                    value={formData.width}
+                                    event={handleChange}
+                                />
+                                {errorsForms.width && <div className="text-danger">{errorsForms.width}</div>}
+                            </div>
+
+                            <div className="col-md-2 ">
+                                <Inputs
+                                    text="Peso"
+                                    name="weight"
+                                    value={formData.weight}
+                                    event={handleChange}
+                                />
+                                {errorsForms.weight && <div className="text-danger">{errorsForms.weight}</div>}
+                            </div>
+
+                            <div className="col-md-2 ">
+                                <Select
+                                    text="Unidad de Medida"
+                                    name="unitOfMeasurement"
+                                    options={weightUnits}
+                                    value={formData.unitOfMeasurement}
+                                    event={handleChange}
+                                />
+                                {errorsForms.unitOfMeasurement && <div className="text-danger">{errorsForms.unitOfMeasurement}</div>}
+                            </div>
+
+                            <div className="col-md-2 ">
+                                <Inputs
+                                    text="Dimensiones"
+                                    placeholder='30x20x2'
+                                    name="dimensions"
+                                    value={formData.dimensions}
+                                    event={handleChange}
+                                />
+                                {errorsForms.dimensions && <div className="text-danger">{errorsForms.dimensions}</div>}
+                            </div>
+                        </div>
 
 
 
@@ -185,7 +195,7 @@ export const AddProduct = () => {
                                     text="¿Es Perecedero?"
                                     name="isPerishable"
                                     options={Booleano}
-                                    value={formData.isPerishable}
+                                    value={formData.isPerishable ? 'true' : 'false'}
                                     event={handleChange}
                                 />
                                 {errorsForms.isPerishable && <div className="text-danger">{errorsForms.isPerishable}</div>}
@@ -207,7 +217,7 @@ export const AddProduct = () => {
                                     text="¿Materiales Peligrosos?"
                                     name="hazardousMaterials"
                                     options={Booleano}
-                                    value={formData.hazardousMaterials}
+                                    value={formData.hazardousMaterials ? 'true' : 'false'}
                                     event={handleChange}
                                 />
                                 {errorsForms.hazardousMaterials && <div className="text-danger">{errorsForms.hazardousMaterials}</div>}

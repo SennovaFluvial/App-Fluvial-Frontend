@@ -41,10 +41,10 @@ export class ApiService {
             });
 
             // Muestra un mensaje en la consola si la solicitud es exitosa
-            console.log("Respuesta del servidor:", response);
+            console.log("Respuesta del servidor:", response.data);
 
             // Devuelve la respuesta para que pueda ser utilizada por el código que llama a esta función
-            return response;
+            return response.data;
         } catch (error) {
 
             // Muestra un mensaje de error en la consola si ocurre un problema con la solicitud
@@ -69,8 +69,8 @@ export class ApiService {
             });
 
             // Muestra un mensaje en la consola si la solicitud es exitosa
-            console.log("Respuesta del servidor:", response);
-            return response
+            console.log("Respuesta del servidor:", response.data);
+            return response.data
 
         } catch (error) {
 

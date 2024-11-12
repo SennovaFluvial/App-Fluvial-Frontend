@@ -332,3 +332,128 @@ export const downloadReport = async (url_report_api, name_field, extension = '.p
         alert(`Hubo un error al intentar descargar el informe: ${error.message}`);
     }
 };
+
+/**
+ * Obtiene el identificador de un documento basado en un número de documento específico.
+ *
+ * Esta función hace una solicitud a una API para obtener una lista de objetos y luego busca el objeto
+ * cuyo valor en el campo `nameFielDocument` coincida con el `numDocument` proporcionado. Si encuentra el objeto,
+ * retorna su identificador; de lo contrario, retorna `null`.
+ *
+ * @param {Object} params - Parámetros para la solicitud.
+ * @param {string} params.url_api - La URL de la API para obtener los datos.
+ * @param {string} params.nameFielDocument - El nombre del campo en el objeto donde se encuentra el número de documento.
+ * @param {string|number} params.numDocument - El número de documento para buscar.
+ *
+ * @returns {number|null} El identificador del documento si se encuentra, o `null` si no se encuentra o si ocurre un error.
+ */
+export const getIdForNumDocument = async ({ url_api, nameFielDocument, numDocument }) => {
+    try {
+        const response = await ApiService.get(url_api);
+        // Verifica si response es un arreglo antes de hacer la búsqueda
+        if (Array.isArray(response)) {
+            // Retorna directamente el id si se encuentra, de lo contrario retorna null
+            return response.find(item => item[nameFielDocument] === numDocument)?.id || null;
+        }
+        return null;
+    } catch (error) {
+        console.log('Error al intentar obtener el identificador por número de documento', numDocument, error);
+        return null; // Retorna null si hay un error
+    }
+}
+
+/**
+ * Obtiene los productos asociados a un número de documento.
+ * 
+ * @param {string} numDocument - El número de documento para el que se desean obtener los productos.
+ * @returns {Array} Devuelve un arreglo de productos obtenidos de la API, o un arreglo vacío en caso de error o si no se pasa un número de documento.
+ * 
+ * @throws {Error} Si ocurre un error al hacer la solicitud a la API.
+ */
+export const getProductsByDocumentNumber = async (numDocument) => {
+    if (!numDocument) {
+        console.error("Número de documento es requerido.");
+        return [];
+    }
+
+    try {
+        const response = await ApiService.get(`/api/v1/product/document/${numDocument}/products`);
+        return response || [];
+    } catch (error) {
+        console.error(`Error al obtener los productos para el documento ${numDocument}:`, error);
+        return [];
+    }
+}
+
+/**
+ * Filtra los productos que tienen un `id` presente en el arreglo de `ids`.
+ *
+ * Esta función toma dos parámetros:
+ * - `products`: Un arreglo de objetos de productos. Cada objeto de producto debe tener una propiedad `id` que se utilizará para la comparación.
+ * - `ids`: Un arreglo de valores `id` con los cuales se desea filtrar los productos. Solo los productos cuyos `id` estén en este arreglo serán devueltos.
+ *
+ * @param {Array} products - Un arreglo de objetos de productos, donde cada producto tiene una propiedad `id`.
+ * @param {Array} ids - Un arreglo de `id`s que se utilizarán para filtrar los productos.
+ *
+ * @returns {Array} Un nuevo arreglo con los productos cuyo `id` está presente en el arreglo `ids`.
+ *
+ * @example
+ * const products = [
+ *   { id: 1, name: "Producto 1" },
+ *   { id: 2, name: "Producto 2" },
+ *   { id: 3, name: "Producto 3" },
+ *   { id: 4, name: "Producto 4" }
+ * ];
+ * 
+ * const ids = [1, 3];
+ * 
+ * const result = showProductsToSend(products, ids);
+ * console.log(result);
+ * // Resultado: [
+ * //   { id: 1, name: "Producto 1" },
+ * //   { id: 3, name: "Producto 3" }
+ * // ]
+ */
+export const showProductsToSend = (products, ids) => {
+    return products.filter((item) => ids.includes(item.id))
+}
+
+/**
+ * Elimina un producto específico de las listas `productosIds` y `productsToSend` para actualizar el estado en la interfaz.
+ * 
+ * @param {function} setProductsToSend - Función para actualizar el estado de `productsToSend`, una lista de productos seleccionados.
+ * @param {function} setFormData - Función para actualizar el estado de `formData`, que contiene los `productosIds`.
+ * @param {number} id - El ID del producto que se desea eliminar de las listas `productosIds` y `productsToSend`.
+ */
+export const removeProductToSend = (setProductsToSend, setFormData, id) => {
+    if (id) {
+        setFormData(prevState => ({
+            ...prevState,
+            productosIds: prevState.productosIds.filter(productId => productId !== id)
+        }));
+
+        setProductsToSend(prevProductsToSend => prevProductsToSend.filter(product => product.id !== id));
+    }
+};
+
+/**
+ * Obtiene un elemento específico de una lista consultando un endpoint y buscando coincidencias por un campo.
+ * @param {string} campoBuscar - El nombre del campo en el que se buscará la coincidencia.
+ * @param {any} valorIdentificador - El valor a buscar dentro del campo especificado.
+ * @param {string} apiUrl - La URL de la API REST de la cual obtener los datos.
+ * @returns {Promise<Array<Object>>} - Retorna un array con el objeto encontrado o un array vacío si no hay coincidencias.
+ */
+export const getElementoPorCampo = async (campoBuscar, valorIdentificador, apiUrl) => {
+    try {
+        const respuesta = await ApiService.get(apiUrl);
+
+        if (respuesta) {
+            // Buscar coincidencia en el campo especificado
+            const elemento = respuesta.find((item) => item[campoBuscar] == valorIdentificador);
+            return elemento ? [elemento] : []; // Retorna un array con el elemento o un array vacío si no se encuentra
+        }
+    } catch (error) {
+        console.log(`Error al filtrar la información con identificador ${valorIdentificador} con valor - ${campoBuscar}:`, error);
+        return [];
+    }
+};

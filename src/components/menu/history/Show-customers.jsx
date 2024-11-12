@@ -4,6 +4,7 @@ import { Grid } from '../../animations/Grid';
 import { Link } from 'react-router-dom';
 import { Pagination } from './Pagination';
 import { useControllerShowCustomers } from './controllers/ControllerShowCustomers';
+import { downloadReport } from '../../../functions/functions';
 
 export const ShowCustomers = () => {
 
@@ -18,6 +19,10 @@ export const ShowCustomers = () => {
     loading,
     firstIndex
   } = useControllerShowCustomers();
+
+  const handlePrint = () => {
+    downloadReport('/api/v1/customers/customerReport', 'informe_clientes');
+  }
 
   if (loading) {
     return (
@@ -50,7 +55,7 @@ export const ShowCustomers = () => {
               onChange={handleSearchChange}
             />
           </div>
-          
+
           <div className="col-md-2 my-3 d-flex justify-content-end ms-auto">
             <Link to={"/adminSection/add-customer"} state={{ from: 'listado' }}>
               <button className='btn btn-primary rounded-pill p-2 ps-2'>
@@ -59,8 +64,8 @@ export const ShowCustomers = () => {
             </Link>
           </div>
           <div className="col-md-2 my-3 d-flex justify-content-end ms-2">
-            <button className='btn btn-warning rounded-pill p-2 ps-2'>
-              <i className="fa-solid fa-print me-3"></i> Imprimir Informe
+            <button className='btn btn-warning rounded-pill p-2 ps-2' onClick={handlePrint}>
+              <i className="fa-solid fa-print me-3"></i>Imprimir Informe
             </button>
           </div>
         </div>

@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-// import Flag from "react-world-flags";
-import instance from "../../../../config/AxiosApi";
-import { ApiService } from "../../../../class/ApiServices";
+import { useState, useEffect } from "react"
+// import Flag from "react-world-flags" 
+import instance from "../../../../config/AxiosApi"
+import { ApiService } from "../../../../class/ApiServices"
 
 
 /**
@@ -14,58 +14,58 @@ import { ApiService } from "../../../../class/ApiServices";
  * cada uno representando un departamento con las propiedades `label` y `value`.
  * 
  * @example
- * const departamentos = useOptionsDepto();
+ * const departamentos = useOptionsDepto() 
  * // departamentos = [{ label: 'Departamento 1', value: 'Departamento 1' }, ...]
  */
 export const useOptionsDepto = () => {
-    const [listDeptos, setListDeptos] = useState([]);
+    const [listDeptos, setListDeptos] = useState([])
 
     // Obtiene la lista de departamentos desde la API
     const getDeptos = async () => {
         try {
-            const response = await instance.get('/api/v1/department/all');
+            const response = await instance.get('/api/v1/department/all')
             setListDeptos(
                 response.data.map(depto => ({
                     label: depto.departamento,
                     value: depto.departamento
                 }))
-            );
+            )
         } catch (error) {
-            console.error('Error en obtener departamentos', error);
+            console.error('Error en obtener departamentos', error)
         }
-    };
+    }
 
     useEffect(() => {
-        getDeptos();
-    }, []); // Solo se ejecuta una vez al montar el componente
+        getDeptos()
+    }, [])  // Solo se ejecuta una vez al montar el componente
 
-    return listDeptos;
-};
+    return listDeptos
+}
 
 // Hook para obtener la lista de compañías desde la API
 export const useOptionsCompanies = () => {
-    const [listCompanies, setListCompanies] = useState([]);
+    const [listCompanies, setListCompanies] = useState([])
 
     const getCompanies = async () => {
         try {
-            const response = await instance.get("/api/v1/companie/findAll");
+            const response = await instance.get("/api/v1/companie/findAll")
             setListCompanies(
                 response.data.map(company => ({
                     label: company.company,
                     value: company.company
                 }))
-            );
+            )
         } catch (error) {
-            console.error('Error en obtener las empresas', error);
+            console.error('Error en obtener las empresas', error)
         }
     }
 
     useEffect(() => {
-        getCompanies();
-    }, []);
+        getCompanies()
+    }, [])
 
-    return listCompanies;
-};
+    return listCompanies
+}
 
 /**
  * Hook para obtener la lista de compañías desde la API.
@@ -77,33 +77,33 @@ export const useOptionsCompanies = () => {
  * cada uno representando una compañía con las propiedades `label` y `value`.
  *
  * @example
- * const empresas = useOptionsCompanies();
+ * const empresas = useOptionsCompanies() 
  * // empresas = [{ label: 'Compañía 1', value: 'Compañía 1' }, ...]
  */
 export const useOptionsCities = () => {
-    const [listCities, setListCities] = useState([]);
+    const [listCities, setListCities] = useState([])
 
     // Obtiene la lista de ciudades desde la API
     const getCities = async () => {
         try {
-            const response = await instance.get('/api/v1/city/all');
+            const response = await instance.get('/api/v1/city/all')
             setListCities(
                 response.data.map(city => ({
                     label: city.ciudad,
                     value: city.ciudad
                 }))
-            );
+            )
         } catch (error) {
-            console.error('Error en obtener ciudades', error);
+            console.error('Error en obtener ciudades', error)
         }
-    };
+    }
 
     useEffect(() => {
-        getCities();
-    }, []); // Solo se ejecuta una vez al montar el componente
+        getCities()
+    }, [])  // Solo se ejecuta una vez al montar el componente
 
-    return listCities;
-};
+    return listCities
+}
 
 export const OptionsTypeDocument = [
     { label: 'Cedula', value: 'Cedula' },
@@ -124,12 +124,12 @@ export const OptionsTypeDocument = [
  * que representan los roles disponibles con las propiedades `label` y `value`.
  *
  * @example
- * const roles = useRoles();
+ * const roles = useRoles() 
  * // roles = [{ label: 'Administrador', value: 'ADMIN' }, { label: 'Empleado', value: 'EMPLOYEE' }, ...]
  */
 export const useRoles = () => {
     const user = JSON.parse(localStorage.getItem("user"))
-    const role = user?.rol;
+    const role = user?.rol
     const [roles, setRoles] = useState([])
 
     useEffect(() => {
@@ -138,35 +138,35 @@ export const useRoles = () => {
             { label: 'Administrador', value: 'ADMIN' },
             ...(role === "SUPERADMIN" ? [{ label: 'Super Administrador', value: 'SUPERADMIN' }] : []),
             { label: 'Empleado', value: 'EMPLOYEE' }
-        ];
-        setRoles(updatedRoles);
+        ]
+        setRoles(updatedRoles)
 
     }, [user?.rol])
 
-    return roles;
-};
+    return roles
+}
 
 export const genero = [
     { label: 'Femenino', value: 'Femenino' },
     { label: 'Masculino', value: 'Masculino' },
     { label: 'Otro', value: 'Otro' }
-];
+]
 export const status = [
     { label: 'ACTIVO', value: 'activo' },
     { label: 'INACTIVO', value: 'inactivo' }
-];
+]
 
 // export const codigoPaises = [
 //     { label: "+57", value: 'colombia' },
 //     { label: "+52", value: 'mexico' }
-// ];
+// ] 
 
 export const maritalStatus = [
     { label: 'Soltero', value: 'soltero' },
     { label: 'Casado', value: 'casado' },
     { label: 'Divorciado', value: 'divorciado' },
     { label: 'Unión libre', value: 'unión libre' }
-];
+]
 
 export const nationality = [
     { label: 'Colombiano', value: 'colombiano' },
@@ -174,7 +174,7 @@ export const nationality = [
     { label: 'Chileno', value: 'chileno' },
     { label: 'Argentino', value: 'argentino' },
     { label: 'Chileno', value: 'chileno' },
-];
+]
 
 export const typeVehicle = [
     { label: 'Bote', value: 'Bote' },
@@ -184,7 +184,7 @@ export const typeVehicle = [
     { label: 'Lancha', value: 'Lancha' },
     { label: 'Planchon', value: 'Remolcador' },
     { label: 'Remolcador', value: 'Remolcador' },
-];
+]
 
 export const weightUnits = [
     { label: 'Kilogramos', value: 'kg' },
@@ -193,7 +193,7 @@ export const weightUnits = [
     { label: 'Libras', value: 'lb' },
     { label: 'Onzas', value: 'oz' },
     { label: 'Miligramos', value: 'mg' },
-];
+]
 
 export const volumeUnits = [
     { label: 'Metros cúbicos', value: 'm3' },
@@ -202,7 +202,8 @@ export const volumeUnits = [
     { label: 'Galones', value: 'gal' },
     { label: 'Pies cúbicos', value: 'ft3' },
     { label: 'Pulgadas cúbicas', value: 'in3' },
-];
+]
+
 export const personType = [
     { label: "Persona Natural", value: "Natural" },
     { label: "Persona Juridica", value: "Juridica" }
@@ -215,7 +216,29 @@ export const typeCargo = [
 export const Booleano = [
     { label: 'Si', value: 'true' },
     { label: 'No', value: 'false' }
-];
+]
+
+// ESTADOS DE PAGO
+export const usePaymentStatuses = [
+    { label: 'PAGADO', value: 'PAGADO' },
+    { label: 'PENDIENTE', value: 'PENDIENTE' },
+    { label: 'RECHAZADO', value: 'RECHAZADO' },
+]
+// TIPOS DE PAGO
+export const usePaymentTypes = [
+    { label: 'EFECTIVO', value: 'EFECTIVO' },
+    { label: 'TARJETA DE CREDITO', value: 'TARJETA_CREDITO' },
+    { label: 'TRANSFERENCIA', value: 'TRANSFERENCIA' },
+    { label: 'PAYPAL', value: 'PAYPAL' },
+]
+// ESTADOS DE ENTREGA
+export const useDeliveryStatuses = [
+    { label: 'EN PREPARACION', value: 'EN_PREPARACION' },
+    { label: 'EN TRANSITO', value: 'EN_TRANSITO' },
+    { label: 'ENTREGADO', value: 'ENTREGADO' },
+    { label: 'DEVUELTO', value: 'DEVUELTO' },
+    { label: 'CANCELADO', value: 'CANCELADO' },
+]
 
 /**
  * Hook para obtener la lista de categorías de productos desde la API.
@@ -229,7 +252,7 @@ export const Booleano = [
  * `label` y `value`.
  *
  * @example
- * const categories = useOptionsCategory();
+ * const categories = useOptionsCategory() 
  * // categories = [
  * //   { label: 'Electrónica', value: 'Electrónica' },
  * //   { label: 'Ropa', value: 'Ropa' },
@@ -237,11 +260,11 @@ export const Booleano = [
  * // ]
  */
 export const useOptionsCategory = () => {
-    const [listCategories, setListCategories] = useState([]);
+    const [listCategories, setListCategories] = useState([])
 
     const getCateroiesList = async () => {
         try {
-            const response = await ApiService.get('/api/v1/product-category/all');
+            const response = await ApiService.get('/api/v1/product-category/all')
             setListCategories(
                 response
                     .map(category => ({
@@ -249,26 +272,26 @@ export const useOptionsCategory = () => {
                         value: category.categoryName
                     }))
                     .concat({ label: 'Otra', value: 'other' })
-            );
+            )
 
 
         } catch (error) {
-            console.error('Error en obtener las categorias', error);
+            console.error('Error en obtener las categorias', error)
         }
     }
 
     useEffect(() => {
-        getCateroiesList();
-    }, []);
+        getCateroiesList()
+    }, [])
 
-    return listCategories;
+    return listCategories
 
 }
 
 export const optionsLocationProduct = [
     { label: 'Bodega', value: 'warehouse' },
     { label: 'Vehiculo', value: 'vehicle' }
-];
+]
 
 /**
  * Hook para obtener la lista de bodegas desde la API.
@@ -282,34 +305,34 @@ export const optionsLocationProduct = [
  * `label` y `value`.
  *
  * @example
- * const warehouses = optionsWarehouse();
+ * const warehouses = optionsWarehouse() 
  * // warehouses = [
  * //   { label: 'Bodega A', value: 'Bodega A' },
  * //   { label: 'Bodega B', value: 'Bodega B' }
  * // ]
  */
 export const optionsWarehouse = () => {
-    const [listWarehouse, setListWarehouse] = useState([]);
+    const [listWarehouse, setListWarehouse] = useState([])
 
     const getWarehouse = async () => {
         try {
-            const response = await ApiService.get('/api/v1/warehouse/all');
+            const response = await ApiService.get('/api/v1/warehouse/all')
             setListWarehouse(
                 response.map(wareHouse => ({
                     label: wareHouse.name,
                     value: wareHouse.name
                 }))
-            );
+            )
         } catch (error) {
-            console.error('Error en obtener las bodegas', error);
+            console.error('Error en obtener las bodegas', error)
         }
     }
 
     useEffect(() => {
-        getWarehouse();
-    }, []);
+        getWarehouse()
+    }, [])
 
-    return listWarehouse;
+    return listWarehouse
 }
 
 /**
@@ -324,7 +347,7 @@ export const optionsWarehouse = () => {
  * `label` y `value`.
  *
  * @example
- * const vehicles = optionsVehicles();
+ * const vehicles = optionsVehicles() 
  * // vehicles = [
  * //   { label: 'Vehículo A', value: 'Vehículo A' },
  * //   { label: 'Vehículo B', value: 'Vehículo B' }
@@ -335,21 +358,47 @@ export const optionsVehicles = () => {
 
     const getVehicles = async () => {
         try {
-            const response = await ApiService.get('/api/v1/vehicles/all');
+            const response = await ApiService.get('/api/v1/vehicles/all')
             setListVehicles(
                 response.map(vehicleElement => ({
                     label: vehicleElement.nombre,
                     value: vehicleElement.nombre
                 }))
-            );
+            )
         } catch (error) {
-            console.error('Error en obtener los vehiculos como opciones', error);
+            console.error('Error en obtener los vehiculos como opciones', error)
         }
     }
 
     useEffect(() => {
-        getVehicles();
-    }, []);
+        getVehicles()
+    }, [])
 
-    return listVehicles;
+    return listVehicles
+}
+
+export const useOptionsBranch = () => {
+    const [listBranchs, setListBranchs] = useState([])
+
+    const getBranchs = async () => {
+        try {
+            const response = await ApiService.get("/api/v1/sucursales/all")
+            if (response) {
+                setListBranchs(
+                    response.map(branch => ({
+                        label: branch.nombre,
+                        value: branch.nombre,
+                    }))
+                )
+            }
+        } catch (error) {
+            console.error('Error en obtener las sucursales como opciones', error)
+        }
+    }
+
+    useEffect(() => {
+        getBranchs()
+    }, [])
+
+    return listBranchs
 }

@@ -170,3 +170,14 @@ button.cancelar:hover {
     border-color: darkred;
     /* box-shadow: 0 4px 8px rgba(255, 0, 0, 0.2); */
 }
+
+.btn_remove_personalized {
+    background: linear-gradient(45deg, #ff3b3b, #d70000);
+    border: none;
+    color: white;
+    transition: background 0.3s ease;
+}
+
+.btn_remove_personalized:hover {
+    background: linear-gradient(45deg, #d70000, #ff3b3b);
+}

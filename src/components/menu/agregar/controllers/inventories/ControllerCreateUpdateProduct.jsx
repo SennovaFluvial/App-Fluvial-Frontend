@@ -27,6 +27,7 @@ export const ControllerCreateUpdateProduct = ({ id, action }) => {
         productLocation: '', // Campo extra solo para el front-end - No se envia
         productName: '',
         description: '',
+        number: '',
         weight: '',
         unitOfMeasurement: '',
         height: '',
@@ -122,7 +123,7 @@ export const ControllerCreateUpdateProduct = ({ id, action }) => {
         if (name !== "specialHandlingInstructions") {
             if (!value.trim()) {
                 handleStatusError(setErrorsForms, name, "Campo obligatorio");
-            } else if ((name === 'weight' || name === "height" || name === "length" || name === "width" || name === 'customerNumDocument') && isNaN(value)) {
+            } else if ((name === 'weight' || name === "height" || name === "length" || name === "width" || name === 'customerNumDocument' || name === 'number') && isNaN(value)) {
                 handleStatusError(setErrorsForms, name, "Debe ser un número válido");
             } else if (name === "customerNumDocument" && (value.length < 5 || value.length > 11)) {
                 handleStatusError(setErrorsForms, name, "El valor debe ser un número positivo con entre 5 y 11 dígitos");
@@ -168,7 +169,8 @@ export const ControllerCreateUpdateProduct = ({ id, action }) => {
             weight: parseFloat(formData.weight),
             height: parseFloat(formData.height),
             length: parseFloat(formData.length),
-            width: parseFloat(formData.width)
+            width: parseFloat(formData.width),
+            number: parseInt(formData.number)
         };
 
         // Eliminar el campo 'productLocation' antes de enviar
@@ -219,7 +221,6 @@ export const ControllerCreateUpdateProduct = ({ id, action }) => {
                 timer: 2000
             });
         }
-
     }
 
     return {

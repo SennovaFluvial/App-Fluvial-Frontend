@@ -17,7 +17,7 @@ import { clearError } from "../../functions/functions";
  * @param {Function} props.setErrorsForms - Función para manejar los errores en el formulario.
  * @returns {JSX.Element} - Un conjunto de botones que representan los documentos filtrados.
  */
-export const DocumentSuggestions = ({ numDocumentToSearch, setFormData, setErrorsForms }) => {
+export const DocumentSuggestions = ({ numDocumentToSearch, setFormData, setErrorsForms, nameField }) => {
     const [listNumDocuments, setListNumDocuments] = useState([]);
     const [filteredDocuments, setFilteredDocuments] = useState([]);
 
@@ -58,9 +58,9 @@ export const DocumentSuggestions = ({ numDocumentToSearch, setFormData, setError
         const { value } = event.target;
         setFormData(prevState => ({
             ...prevState,
-            customerNumDocument: value,
+            [nameField]: value,
         }));
-        clearError(setErrorsForms, "customerNumDocument");
+        clearError(setErrorsForms, nameField);
     };
 
     return (

@@ -26,7 +26,7 @@ export const useControllerShowProducts = () => {
 
     const { searchTerm, handleSearchChange, filteredItems } = useSearchFields(
         products,
-        ["productName", "description", "weight", "unitOfMeasurement", "dimensions", "packagingType", "categoryName"]
+        ["productName", "description", "weight", "unitOfMeasurement", "dimensions", "packagingType", "categoryName", "number"]
     );
 
     const totalFilteredItems = filteredItems.length;
