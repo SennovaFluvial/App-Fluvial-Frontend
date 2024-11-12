@@ -137,9 +137,10 @@ export const useRoles = () => {
         const updatedRoles = [
             { label: 'Administrador', value: 'ADMIN' },
             ...(role === "SUPERADMIN" ? [{ label: 'Super Administrador', value: 'SUPERADMIN' }] : []),
-            { label: 'Empleado', value: 'EMPLOYEE' }
-        ]
-        setRoles(updatedRoles)
+            { label: 'Empleado', value: 'EMPLOYEE' },
+            { label: 'Invitado', value: 'INVITED' }
+        ];
+        setRoles(updatedRoles);
 
     }, [user?.rol])
 
@@ -238,6 +239,13 @@ export const useDeliveryStatuses = [
     { label: 'ENTREGADO', value: 'ENTREGADO' },
     { label: 'DEVUELTO', value: 'DEVUELTO' },
     { label: 'CANCELADO', value: 'CANCELADO' },
+]
+
+export const crewType = [
+    { label: "Capitan", value: "Capitan" },
+    { label: "Marinero", value: "Marinero" },
+    { label: "Motorista", value: "Motorista" },
+    { label: "Auxiliar de cocina", value: "Auxiliar de cocina" }
 ]
 
 /**

@@ -32,9 +32,21 @@ export const ControllerCreateUpdateVehicle = ({ id, action }) => {
     const userName = userCreater?.username;
     const [errorsForms, setErrorsForms] = useState({});
     const [formData, setFormData] = useState({
-        nombre: '', type: '', model: '', licensePlate: '', registration: '', weightCapacity: '',
-        weightUnit: '', volumeCapacity: '', volumeUnit: '', passengerSpace: '', createdBy: ''
+        nombre: "",
+        type: "",
+        model: "",
+        licensePlate: "",
+        registration: "",
+        fechaExpPatente: "",
+        weightCapacity: "",
+        weightUnit: "",
+        volumeCapacity: "",
+        volumeUnit: "",
+        passengerSpace: "",
+        passengers: "",
+        createdBy: userName,
     });
+
 
     useEffect(() => {
         if (userName) {
@@ -46,19 +58,29 @@ export const ControllerCreateUpdateVehicle = ({ id, action }) => {
     }, [userName]);
 
     useEffect(() => {
+        if (formData.passengerSpace === "false") {
+            setFormData(prevState => ({
+                ...prevState, passengers: 0
+            }))
+        }
+    }, [formData.passengerSpace])
+
+    useEffect(() => {
         const fetchData = async () => {
             if (!id && !action) {
                 setFormData({
-                    nombre: '',
-                    type: '',
-                    model: '',
-                    licensePlate: '',
-                    registration: '',
-                    weightCapacity: '',
-                    weightUnit: '',
-                    volumeCapacity: '',
-                    volumeUnit: '',
-                    passengerSpace: '',
+                    nombre: "",
+                    type: "",
+                    model: "",
+                    licensePlate: "",
+                    registration: "",
+                    fechaExpPatente: "",
+                    weightCapacity: "",
+                    weightUnit: "",
+                    volumeCapacity: "",
+                    volumeUnit: "",
+                    passengerSpace: "",
+                    passengers: "",
                     createdBy: userName,
                 });
             } else if (action === 'update' && id) {
@@ -82,10 +104,11 @@ export const ControllerCreateUpdateVehicle = ({ id, action }) => {
 
         if (!value.trim()) {
             handleStatusError(setErrorsForms, name, "Campo obligatorio");
-        } else if ((name === "weightCapacity" || name === "volumeCapacity" || name === "passengerSpace") && isNaN(value)) {
+        } else if ((name === "weightCapacity" || name === "volumeCapacity") && isNaN(value)) {
             handleStatusError(setErrorsForms, name, "No es un numero valido");
-        }
-        else {
+        } else if (formData.passengerSpace === 'true' && name === 'passengers' && isNaN(value)) {
+            handleStatusError(setErrorsForms, name, "No es un numero valido");
+        } else {
             clearError(setErrorsForms, name);
         }
     };
@@ -146,6 +169,7 @@ export const ControllerCreateUpdateVehicle = ({ id, action }) => {
         }
     };
 
+    console.log(formData)
     return {
         formData,
         errorsForms,

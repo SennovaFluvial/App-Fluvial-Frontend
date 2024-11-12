@@ -15,7 +15,6 @@ import { Inventories } from './components/menu/InventoriesSection';
 import { BranchSection } from './components/menu/BranchSection';
 
 export const Sidebar = ({ user, setUser }) => {
-    const [isCollapsed, setIsCollapsed] = useState(false); // Estado para controlar colapso del sidebar
     const [users, setUsers] = useState([]);
     const [filteredUser, setFilteredUser] = useState(null);
     const nav = useNavigate();
@@ -48,26 +47,14 @@ export const Sidebar = ({ user, setUser }) => {
 
         fetchUsers();
 
-        // Evento para detectar el tamaño de la ventana
-        const handleResize = () => {
-            if (window.innerWidth <= 768) {
-                setIsCollapsed(true); // Colapsar el menú en pantallas pequeñas
-            } else {
-                setIsCollapsed(false);
-            }
-        };
-
-        window.addEventListener('resize', handleResize);
-        handleResize(); // Ejecutar cuando se carga la página
-
-        return () => window.removeEventListener('resize', handleResize);
+        
     }, []);
 
     return (
         <>
-            <aside className={`sidebar ${isCollapsed ? 'collapsed' : ''}`}>
+            <aside className="sidebar">
                 <div className="titulo-section">
-                    <h1>{!isCollapsed ? 'Transporte Fluvial' : 'TF'}</h1>
+                    <h1>Transporte Fluvial</h1>
                 </div>
                 <div className="icono">
                     <div className="row section-account">
@@ -98,28 +85,24 @@ export const Sidebar = ({ user, setUser }) => {
                     <ul>
                         <li>
                             <Link to="/adminSection" className="nav-link show">
-                                <span>{isCollapsed ? <i className="fa-solid fa-home"></i> : 'Dashboard'}</span>
+                                <span><i className="fa-solid fa-home"></i></span>
+                                <span className="menu-text"> Dashboard</span>
                             </Link>
                         </li>
                     </ul>
 
-                    {user?.rol?.includes('SUPERADMIN') && <CompanySection isCollapsed={isCollapsed} />}
+                    {user?.rol?.includes('SUPERADMIN') && <CompanySection />}
 
-                    <EmployeeSection isCollapsed={isCollapsed} />
+                    <EmployeeSection />
 
                     {!user?.rol?.includes('SUPERADMIN') && (
                         <>
-                            <SailorSection isCollapsed={isCollapsed} />
-
-                            <VehicleSection isCollapsed={isCollapsed} />
-
-                            <CustomerSection isCollapsed={isCollapsed} />
-
-                            <ShipmentSection isCollapsed={isCollapsed} />
-                            
-                            <Inventories isCollapsed={isCollapsed} />
-
-                            <BranchSection isCollapsed={isCollapsed} />
+                            <SailorSection />
+                            <VehicleSection />
+                            <CustomerSection />
+                            <ShipmentSection />
+                            <Inventories />
+                            <BranchSection />
                         </>
                     )}
 
@@ -127,7 +110,7 @@ export const Sidebar = ({ user, setUser }) => {
                     <ul>
                         <li>
                             <Link to="/adminSection/reports" className="nav-link show">
-                                <span>{isCollapsed ? <i className="fa-solid fa-chart-line"></i> : 'Informes'}</span>
+                                <span>Informes</span>
                             </Link>
                         </li>
                     </ul>

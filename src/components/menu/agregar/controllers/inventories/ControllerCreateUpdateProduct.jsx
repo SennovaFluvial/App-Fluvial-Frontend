@@ -84,18 +84,19 @@ export const ControllerCreateUpdateProduct = ({ id, action }) => {
     }, [action, id]);
 
     useEffect(() => {
-        if (action && action === 'update') {
+        if (action && action == 'update') {
             if (formData.vehicleName) {
                 setFormData(prevState => ({
-                    ...prevState, productLocation: vehicle
+                    ...prevState, productLocation: "vehicle"
+
                 }))
             } else if (formData.warehouseName) {
                 setFormData(prevState => ({
-                    ...prevState, productLocation: warehouse
+                    ...prevState, productLocation: "warehouse"
                 }))
             }
         }
-    }, [action]);
+    }, [action, formData.vehicleName, formData.warehouseName]);
 
     // EXPORTAR
     const handleChange = (event) => {
@@ -115,7 +116,7 @@ export const ControllerCreateUpdateProduct = ({ id, action }) => {
             if (resetFields[name]) {
                 setFormData(prevState => ({
                     ...prevState,
-                    [resetFields[name]]: null
+                    [resetFields[name]]: "null"
                 }));
             }
         }
@@ -222,6 +223,7 @@ export const ControllerCreateUpdateProduct = ({ id, action }) => {
             });
         }
     }
+    console.log(formData) // ----------------
 
     return {
         handleChange,

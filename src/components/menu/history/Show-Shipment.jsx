@@ -1,8 +1,26 @@
 import React from 'react'
 import '../../../assets/css/show/styles-Show.css';
+import { Spinner } from '../../animations/Spiner';
+import { Grid } from '../../animations/Grid';
 import { Link } from 'react-router-dom'
+import { useLocation } from 'react-router-dom';
+import { CancelButton } from '../../components/BackButton'
 
 export const ShowShipment = () => {
+
+    const location = useLocation();
+    const from = location.state?.from || 'menu';
+
+    if (loading) {
+        return (
+            <div className="container">
+                <Grid>
+                    <Spinner />
+                </Grid>
+            </div>
+        );
+    }
+
     return (
         <>
             <div className="container my-5">
@@ -76,6 +94,23 @@ export const ShowShipment = () => {
 
                     </tbody>
                 </table>
+                <div className="d-flex w-100">
+                    <div className="d-flex justify-content-start w-25">
+                        <CancelButton
+                            from={from}
+                        />
+                    </div>
+                    {/* Para cuando se añada la logica del paginador y del buscador */}
+                    {/* <div className="d-flex justify-content-center w-50">
+                        <Pagination
+                            elementForPage={elementForPage}
+                            currentPage={currentPage}
+                            setCurrentPage={setCurrentPage}
+                            totalElements={totalFilteredItems}
+                        />
+                    </div> */}
+                    <div className="w-25"></div> {/* Columna vacía para balancear el espacio */}
+                </div>
             </div>
 
         </>

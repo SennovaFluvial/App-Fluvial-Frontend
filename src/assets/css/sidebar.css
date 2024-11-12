@@ -25,10 +25,9 @@
     left: 20px;
     z-index: 1100;
 }
-.sidebar.collapsed {
+/* .sidebar.collapsed {
     width: 60px;
-    /* Ancho del sidebar colapsado */
-}
+} */
 
 .titulo-section {
     background-color: #001600;
@@ -134,7 +133,7 @@ nav.pagination {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
+    /* margin-top: 20px; */
 }
 
 .pagination-list {

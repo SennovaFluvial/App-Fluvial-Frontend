@@ -36,7 +36,7 @@ export const Inputs = ({ type, text, name, event, placeholder, icon, value, isRe
 
     // Función para alternar la visibilidad de la contraseña
     const togglePasswordVisibility = () => {
-        setShowPassword(!showPassword); // Cambia el estado de showPassword entre true y false
+        setShowPassword(prevState => !prevState); // Cambia el estado de showPassword entre true y false
     };
 
     return (
@@ -80,12 +80,9 @@ export const Inputs = ({ type, text, name, event, placeholder, icon, value, isRe
 
                 {/* Si el input es de tipo 'password', muestra el icono para alternar visibilidad */}
                 {type === 'password' && (
-                    <div className="password-icon">
-                        {/* Icono para alternar la visibilidad de la contraseña */}
-                        <span onClick={togglePasswordVisibility}>
+                        <span onClick={togglePasswordVisibility} className="input-group-text toggle-password"> {/* Icono para alternar la visibilidad de la contraseña */}
                             <i className={showPassword ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'}></i>  {/* Cambia el icono según el estado de showPassword */}
                         </span>
-                    </div>
                 )}
             </div>
         </div>
