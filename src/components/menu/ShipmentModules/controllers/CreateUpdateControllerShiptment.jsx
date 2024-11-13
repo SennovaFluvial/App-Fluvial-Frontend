@@ -3,6 +3,7 @@ import { clearError, getCompanyUser, getIdForNumDocument, getProductsByDocumentN
 import { useNavigate } from "react-router"
 import Swal from "sweetalert"
 import { ApiService } from "../../../../class/ApiServices"
+import { useSearchFields } from "../../history/search/SearchFields"
 
 export const CreateUpdateControllerShiptment = () => {
 
@@ -12,6 +13,9 @@ export const CreateUpdateControllerShiptment = () => {
     const [productsToSend, setProductsToSend] = useState([]) // Productos selecionados
     const [loading, setLoading] = useState(true); // Estado de carga
 
+    // paginacion
+    const [elementForPage, setElementForPage] = useState(6);
+    const [currentPage, setCurrentPage] = useState(1);
 
     /* Inicializacion de variables */
     const [formData, setFormData] = useState({
@@ -72,6 +76,40 @@ export const CreateUpdateControllerShiptment = () => {
     const removeProduct = (id) => {
         removeProductToSend(setProductsToSend, setFormData, id)
     }
+
+    // Funcion para la paginacion
+
+    const { searchTerm, handleSearchChange, filteredItems } = useSearchFields(
+        productosRemitente.products,
+        [
+            "productName",
+            "description",
+            "number",
+            "weight",
+            "unitOfMeasurement",
+            "height",
+            "length",
+            "width",
+            "dimensions",
+            "packagingType",
+            "specialHandlingInstructions"
+        ]
+    );
+
+    const totalFilteredItems = filteredItems.length;
+    const totalPages = Math.ceil(totalFilteredItems / elementForPage);
+
+    useEffect(() => {
+        if (totalFilteredItems === 0) {
+            setCurrentPage(1);
+        } else if (currentPage > totalPages) {
+            setCurrentPage(totalPages);
+        }
+    }, [filteredItems, totalPages, currentPage, totalFilteredItems]);
+
+    const lastIndex = currentPage * elementForPage;
+    const firstIndex = lastIndex - elementForPage;
+    const paginatedItems = filteredItems.slice(firstIndex, lastIndex);
 
     /* Efectos terceros */
 
@@ -256,6 +294,14 @@ export const CreateUpdateControllerShiptment = () => {
         removeProduct,
         setIsDisabled,
         numeroGuia,
-        loading
+        loading,
+        paginatedItems, // paginacion
+        searchTerm, // paginacion
+        handleSearchChange, // paginacion
+        elementForPage, // paginacion
+        currentPage, // paginacion
+        setCurrentPage, // paginacion
+        totalFilteredItems, // paginacion
+        firstIndex, // paginacion
     }
 }
