@@ -31,7 +31,7 @@ export class ApiService {
 
             // Convierte los datos a formato JSON
             const jsonData = JSON.stringify(data);
-
+             
             // Realiza una solicitud POST a la API con los datos y encabezados proporcionados
             const response = await instance.post(url_api, jsonData, {
                 headers: {

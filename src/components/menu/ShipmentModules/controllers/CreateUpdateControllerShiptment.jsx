@@ -10,6 +10,8 @@ export const CreateUpdateControllerShiptment = () => {
     const [isDisabled, setIsDisabled] = useState(false)
     const [productosRemitente, setProductosRemitente] = useState([]) // Estado para almacenar los productos del remitente a mostrar
     const [productsToSend, setProductsToSend] = useState([]) // Productos selecionados
+    const [loading, setLoading] = useState(true); // Estado de carga
+
 
     /* Inicializacion de variables */
     const [formData, setFormData] = useState({
@@ -33,7 +35,6 @@ export const CreateUpdateControllerShiptment = () => {
         idDestinatario: "" // Propiedad de desarrollo
     })
     const [errorsForms, setErrorsForms] = useState({})
-
     const [numeroGuia, setNumeroGuia] = useState([])
 
     /* HandleChange */
@@ -86,8 +87,13 @@ export const CreateUpdateControllerShiptment = () => {
     /** */
     useEffect(() => {
         const fetchProducts = async () => {
+
+            setLoading(true) // cargando
+
             const response = await getProductsByDocumentNumber(formData.remitenteCedula)
             setProductosRemitente(response)
+
+            setLoading(false) // cargando
         }
 
         fetchProducts()
@@ -114,6 +120,8 @@ export const CreateUpdateControllerShiptment = () => {
     useEffect(() => {
         const fetchRemitente = async () => {
             try {
+                setLoading(true) // cargando
+
                 const idRemitente = await getIdForNumDocument({
                     url_api: "/api/v1/customers/all",
                     nameFielDocument: 'numDocument',
@@ -121,6 +129,8 @@ export const CreateUpdateControllerShiptment = () => {
                 })
 
                 setFormData(prev => ({ ...prev, idRemitente }))
+                setLoading(false) // cargando
+
             } catch (error) {
                 console.error("Error fetching remitente:", error)
             }
@@ -132,6 +142,8 @@ export const CreateUpdateControllerShiptment = () => {
     useEffect(() => {
         const fetchDestinatario = async () => {
             try {
+                setLoading(true) // cargando
+
                 const idDestinatario = await getIdForNumDocument({
                     url_api: "/api/v1/customers/all",
                     nameFielDocument: 'numDocument',
@@ -139,6 +151,8 @@ export const CreateUpdateControllerShiptment = () => {
                 })
 
                 setFormData(prev => ({ ...prev, idDestinatario }))
+                setLoading(false) // cargando
+
             } catch (error) {
                 console.error("Error fetching Destinatario:", error)
             }
@@ -241,6 +255,7 @@ export const CreateUpdateControllerShiptment = () => {
         productsToSend,
         removeProduct,
         setIsDisabled,
-        numeroGuia
+        numeroGuia,
+        loading
     }
 }

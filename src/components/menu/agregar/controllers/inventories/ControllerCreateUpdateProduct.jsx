@@ -223,7 +223,6 @@ export const ControllerCreateUpdateProduct = ({ id, action }) => {
             });
         }
     }
-    console.log(formData) // ----------------
 
     return {
         handleChange,

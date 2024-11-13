@@ -22,7 +22,8 @@ export const ShiptmentProvider = ({ children }) => {
         productsToSend,
         removeProduct,
         setIsDisabled,
-        numeroGuia
+        numeroGuia,
+        loading
     } = CreateUpdateControllerShiptment();
 
     return (
@@ -38,7 +39,8 @@ export const ShiptmentProvider = ({ children }) => {
             productsToSend,
             removeProduct,
             setIsDisabled,
-            numeroGuia
+            numeroGuia,
+            loading
         }}>
             {children}
         </ShiptmentContext.Provider>

@@ -1,37 +1,48 @@
-import { useParams } from 'react-router';
-import '../../../../assets/css/customerStyles/moreDetailsStyle.css';
-import { ControllerMoreDetails } from '../controllers/ControllerMoreDetails';
-import { Link } from 'react-router-dom';
-import { Inputs } from '../../../html components/Inputs';
+import { useParams } from 'react-router'
+import '../../../../assets/css/customerStyles/moreDetailsStyle.css'
+import { ControllerMoreDetails } from '../controllers/ControllerMoreDetails'
+import { Link } from 'react-router-dom'
+import { Grid } from '../../../animations/Grid'
+import { Spinner } from '../../../animations/Spiner'
 // import styles from '../../../../assets/css/shipment/shipment.module.css'
 
 export const MoreDetails = ({ data = null }) => {
-    let id, category, from;
+    let id, category, from
 
     if (data) {
-        ({ id, category, from } = data);
+        ({ id, category, from } = data)
     } else {
-        ({ id, category } = useParams());
+        ({ id, category } = useParams())
     }
 
-    const { filterData, urlUpdateData } = ControllerMoreDetails({ id, category });
+    const { filterData, urlUpdateData, loading } = ControllerMoreDetails({ id, category })
+
+    if (loading) {
+        return (
+            <div className="container d-flex justify-content-center align-items-center vh-100">
+                <Grid>
+                    <Spinner />
+                </Grid>
+            </div>
+        )
+    }
 
     return (
         <>
 
             {filterData.map((item) => {
-                let url = '';
+                let url = ''
 
                 if (category === "crew") {
                     const url_typeEmployed = [
                         { url: "../add-crew/add-boat-driver", typeEmployed: "Motorista" },
                         { url: "../add-crew/add-sailor", typeEmployed: "Marinero" },
                         { url: "../add-crew/add-captain", typeEmployed: "Capitan" },
-                    ];
+                    ]
 
-                    const typeEmployed = item.employeeType.typeName;
-                    const urlFound = url_typeEmployed.find((type) => type.typeEmployed === typeEmployed);
-                    url = urlFound ? urlFound.url : '';
+                    const typeEmployed = item.employeeType.typeName
+                    const urlFound = url_typeEmployed.find((type) => type.typeEmployed === typeEmployed)
+                    url = urlFound ? urlFound.url : ''
                 }
 
                 return (
