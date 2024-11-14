@@ -169,7 +169,7 @@ export const ControllerCreateUpdateVehicle = ({ id, action }) => {
         }
     };
 
-    console.log(formData)
+     
     return {
         formData,
         errorsForms,

@@ -49,7 +49,7 @@ export const ShowVehicles = () => {
           <div className="col-md-4 my-3">
             <input
               type="text"
-              className="form-control"
+              className="form-control"  
               placeholder="Buscar..."
               value={searchTerm}
               onChange={handleSearchChange}
@@ -155,4 +155,3 @@ export const ShowVehicles = () => {
     </>
   )
 }
-

@@ -22,7 +22,16 @@ export const ShiptmentProvider = ({ children }) => {
         productsToSend,
         removeProduct,
         setIsDisabled,
-        numeroGuia
+        numeroGuia,
+        loading,
+        paginatedItems, // paginacion
+        searchTerm, // paginacion
+        handleSearchChange, // paginacion
+        elementForPage, // paginacion
+        currentPage, // paginacion
+        setCurrentPage, // paginacion
+        totalFilteredItems, // paginacion
+        firstIndex, // paginacion
     } = CreateUpdateControllerShiptment();
 
     return (
@@ -38,7 +47,16 @@ export const ShiptmentProvider = ({ children }) => {
             productsToSend,
             removeProduct,
             setIsDisabled,
-            numeroGuia
+            numeroGuia,
+            loading,
+            paginatedItems, // paginacion
+            searchTerm, // paginacion
+            handleSearchChange, // paginacion
+            elementForPage, // paginacion
+            currentPage, // paginacion
+            setCurrentPage, // paginacion
+            totalFilteredItems, // paginacion
+            firstIndex, // paginacion
         }}>
             {children}
         </ShiptmentContext.Provider>

@@ -3,6 +3,8 @@ import { Inputs } from '../../html components/Inputs.jsx'
 import styles from '../../../assets/css/shipment/shipment.module.css'
 import { useShiptment } from './controllers/ProviderContextShiptmen.jsx';
 import { useEffect } from 'react';
+import { Pagination } from '../history/Pagination.jsx';
+
 
 export const ModuleProduct = () => {
     const navigate = useNavigate();
@@ -17,7 +19,15 @@ export const ModuleProduct = () => {
         productosRemitente,
         productsToSend,
         removeProduct,
-        setIsDisabled
+        setIsDisabled,
+        paginatedItems, // paginacion
+        searchTerm, // paginacion
+        handleSearchChange, // paginacion
+        elementForPage, // paginacion
+        currentPage, // paginacion
+        setCurrentPage, // paginacion
+        totalFilteredItems, // paginacion
+        firstIndex, // paginacion
     } = useShiptment()
     // Context
 
@@ -46,7 +56,13 @@ export const ModuleProduct = () => {
                 <div className={styles.contenedor}>
                     <h2 className={styles.tittle}>SELECCIONE LOS PRODUCTOS A ENVIAR</h2>
                     <div className="row">
-
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Buscar..."
+                            value={searchTerm}
+                            onChange={handleSearchChange}
+                        />
                         {formData.productosIds.length > 0 ? (
                             <div className="col-md-12">
                                 <h1>Productos a enviar:</h1>
@@ -68,7 +84,8 @@ export const ModuleProduct = () => {
                         <hr />
 
                         {productosRemitente.products && productosRemitente.products.length > 0 ? (
-                            productosRemitente.products
+                            // productosRemitente.products
+                            paginatedItems
                                 .filter(item => !productsToSend.some(product => product.id === item.id))
                                 .map((item) => (
                                     <div className="col-md-4 mb-4" key={item.id}>
@@ -109,6 +126,17 @@ export const ModuleProduct = () => {
                         )}
                     </div>
 
+                    <div className="row mb-5">
+                        <div className="col-md-12">
+                            <Pagination
+                                elementForPage={elementForPage}
+                                currentPage={currentPage}
+                                setCurrentPage={setCurrentPage}
+                                totalElements={totalFilteredItems}
+                            />
+                        </div>
+                    </div>
+
                     <div className={styles.fila}>
                         <div className="col-md-auto">
                             <button className={styles.cancelar} onClick={handleBack}>
@@ -128,67 +156,3 @@ export const ModuleProduct = () => {
         </>
     )
 }
-{/*
-
-     <div className="row">
-         <div className="col-md-4">
-             <Inputs text="Nombre del Producto" name="productName" onChange={handleChange} />
-         </div>
-         <div className="col-md-3">
-             <Select text="Categoría" name="category" onChange={handleChange} />
-         </div>
-         <div className="col-md-2">
-             <Inputs text="Peso" name="weight" onChange={handleChange} />
-         </div>
-         <div className="col-md-3">
-             <Select text="Unidad de Medida" name="unitOfMeasurement" options={weightUnits} onChange={handleChange} />
-         </div>
-         <div className="col-md-12">
-             <Inputs text="Descripción del Producto" name="description" onChange={handleChange} />
-         </div>
-         <div className="col-md-3">
-             <Inputs text="Altura" name="height" onChange={handleChange} />
-         </div>
-         <div className="col-md-3">
-             <Inputs text="Longitud" name="length" onChange={handleChange} />
-         </div>
-         <div className="col-md-3">
-             <Inputs text="Ancho" name="width" onChange={handleChange} />
-         </div>
-         <div className="col-md-3">
-             <Inputs text="Dimenciones" name="dimensions" onChange={handleChange} />
-         </div>
-     </div>
-     <div className="row">
-         <div className="col-md-4">
-             <Inputs text="Tipo de empaquetado" name="packagingType" onChange={handleChange} />
-         </div>
-         <div className="col-md-4">
-             <Select text="¿Es Perecedero?" name="isPerishable" options={Booleano} onChange={handleChange} />
-         </div>
-         <div className="col-md-4">
-             <Select text="¿Esta Asegurado?" name="insured" options={Booleano} onChange={handleChange} />
-         </div>
-         <div className="col-md-12">
-             <Inputs text="Instrucciones de Manejo Especial" name="specialHandlingInstructions" onChange={handleChange} />
-         </div>
-         <div className="col-md-4">
-             <Select text="¿Materiales Peligrosos?" name="hazardousMaterials" options={Booleano} onChange={handleChange} />
-         </div>
-     </div>
-     <div className="row">
-         <div className="col-md-4">
-             <Inputs text="Nombre del Vehículo" name="vehicleName" onChange={handleChange} />
-         </div>
-         <div className="col-md-4">
-             <Inputs text="Número Documento del Cliente" name="customerName" onChange={handleChange} />
-         </div>
-         <div className="col-md-4">
-             <Select text="Bodega" name="customerName" onChange={handleChange} />
-         </div>
-     </div>
-     <div className="col-md-4">
-         <Inputs type="number" text="Peso" name="weigh" />
-     </div>
- </form>    
-*/} // Codigo anterior documentado

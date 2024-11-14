@@ -32,7 +32,7 @@ const spinTransition = {
 export const Spinner = () => {
     return (
         <div style={styleContainer}>
-            <h1 className="me-5">Procesando su Solicitud...</h1>
+            <h1 className="me-5">Espere un momento... <i className="fa-solid fa-hourglass-half"></i></h1>
             <motion.span
                 style={styleSpan}
                 animate={{ rotate: 360 }}
