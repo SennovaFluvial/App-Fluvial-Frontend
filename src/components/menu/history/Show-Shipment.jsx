@@ -1,7 +1,7 @@
 import React from 'react'
 import '../../../assets/css/show/styles-Show.css';
-import { Spinner } from '../../animations/Spiner';
-import { Grid } from '../../animations/Grid';
+// import { Spinner } from '../../animations/Spiner';
+// import { Grid } from '../../animations/Grid';
 import { Link } from 'react-router-dom'
 import { useLocation } from 'react-router-dom';
 import { CancelButton } from '../../components/BackButton'
@@ -11,15 +11,15 @@ export const ShowShipment = () => {
     const location = useLocation();
     const from = location.state?.from || 'menu';
 
-    if (loading) {
-        return (
-            <div className="container">
-                <Grid>
-                    <Spinner />
-                </Grid>
-            </div>
-        );
-    }
+    // if (loading) {
+    //     return (
+    //         <div className="container">
+    //             <Grid>
+    //                 <Spinner />
+    //             </Grid>
+    //         </div>
+    //     );
+    // }
 
     return (
         <>

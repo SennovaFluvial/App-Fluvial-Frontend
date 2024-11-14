@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { VerifyUserChangePassword } from './agregar/controllers/VerifyUserChangePassword';
 import { ModalRequestPassword } from './agregar/ModalRequestPassword';
 
-export const BranchSection = () => {
+export const BranchSection = ({ isCollapsed }) => {
 
     const nav = useNavigate();
     const [showModal, setShowModal] = useState(false);
@@ -40,7 +40,8 @@ export const BranchSection = () => {
             <ul className='navbar-nav me-auto mb-2 mb-lg-0'>
                 <li className="nav-item dropdown section-account-part2">
                     <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Sucursales
+                        <i class="fas fa-map-marked-alt"></i>
+                        {!isCollapsed && <span className="menu-text"> Sucursales</span>}
                     </a>
                     <ul className="dropdown-menu menu-account">
                         <>

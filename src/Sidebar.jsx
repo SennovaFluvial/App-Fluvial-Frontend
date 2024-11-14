@@ -17,6 +17,7 @@ import { BranchSection } from './components/menu/BranchSection';
 export const Sidebar = ({ user, setUser }) => {
     const [users, setUsers] = useState([]);
     const [filteredUser, setFilteredUser] = useState(null);
+    const [isCollapsed, setIsCollapsed] = useState(false);
     const nav = useNavigate();
 
     // Función para cerrar sesión
@@ -46,15 +47,20 @@ export const Sidebar = ({ user, setUser }) => {
         };
 
         fetchUsers();
-
-        
     }, []);
+
+    const toggleSidebar = () => {
+        setIsCollapsed(!isCollapsed);
+    };
 
     return (
         <>
-            <aside className="sidebar">
+            <aside className={`sidebar ${isCollapsed ? 'collapsed' : ''}`}>
+                <button className="toggle-btn" onClick={toggleSidebar}>
+                    {isCollapsed ? '☰' : '✖'}
+                </button>
                 <div className="titulo-section">
-                    <h1>Transporte Fluvial</h1>
+                    <h1>{isCollapsed ? 'TF' : 'Transporte Fluvial'}</h1>
                 </div>
                 <div className="icono">
                     <div className="row section-account">
@@ -86,38 +92,45 @@ export const Sidebar = ({ user, setUser }) => {
                         <li>
                             <Link to="/adminSection" className="nav-link show">
                                 <span><i className="fa-solid fa-home"></i></span>
-                                <span className="menu-text"> Dashboard</span>
+                                {!isCollapsed && <span className="menu-text"> Dashboard</span>}
                             </Link>
                         </li>
                     </ul>
 
                     {user?.rol?.includes('SUPERADMIN') && <CompanySection />}
 
-                    <EmployeeSection />
+                    <EmployeeSection isCollapsed={false} isOpen={activeSection === 'employees'} toggleSection={() => handleToggleSection('employees')}
+                    />
 
                     {!user?.rol?.includes('SUPERADMIN') && (
                         <>
-                            <SailorSection />
-                            <VehicleSection />
-                            <CustomerSection />
-                            <ShipmentSection />
-                            <Inventories />
-                            <BranchSection />
+                            <SailorSection isCollapsed={isCollapsed} />
+
+                            <VehicleSection isCollapsed={isCollapsed} />
+
+                            <CustomerSection isCollapsed={isCollapsed} />
+
+                            <ShipmentSection isCollapsed={isCollapsed} />
+
+                            <Inventories isCollapsed={isCollapsed} />
+                            <BranchSection isCollapsed={isCollapsed} />
                         </>
                     )}
-
 
                     <ul>
                         <li>
                             <Link to="/adminSection/reports" className="nav-link show">
-                                <span>Informes</span>
+                                <span><i className="fa-solid fa-file-alt"></i></span>
+                                {!isCollapsed && <span className="menu-text"> Informes</span>}
                             </Link>
                         </li>
                     </ul>
                 </nav>
-                <div className='logo-sena'>
-                    <img src={Logo} alt="Logo SENA" />
-                </div>
+                {!isCollapsed &&
+                    <div className='logo-sena'>
+                        <img src={Logo} alt="Logo SENA" />
+                    </div>
+                }
             </aside>
         </>
     );

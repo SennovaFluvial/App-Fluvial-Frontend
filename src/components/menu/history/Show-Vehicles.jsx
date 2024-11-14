@@ -130,7 +130,7 @@ export const ShowVehicles = () => {
               })
             ) : (
               <tr>
-                <td colSpan="9" className="text-center">No hay resultados que mostrar</td>
+                <td colSpan="11" className="text-center">No hay resultados que mostrar</td>
               </tr>
             )}
           </tbody>

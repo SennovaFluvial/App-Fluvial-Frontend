@@ -24,7 +24,7 @@
     box-shadow: var(--black);
     border-radius: 0.25rem;
     padding: 2rem;
-    margin-top: 88.5px;
+    margin-top: 47px;
 }
 
 /* h2 text-center mb-2 */
@@ -67,6 +67,18 @@ button.cancelar {
 }
 
 button.cancelar:hover {
+    background-color: #8b0000;
+    color: var(--white);
+    border-color: darkred;
+}
+
+button.cancelarButton {
+    background-color: #DC3545;
+    color: var(--white);
+    border-color: #DC3545;
+}
+
+button.cancelarButton:hover {
     background-color: #8b0000;
     color: var(--white);
     border-color: darkred;

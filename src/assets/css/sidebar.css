@@ -2,32 +2,39 @@
     display: flex;
     flex-direction: column;
     background-color: #ffffff;
-    width: 250px;
-    /* Ancho del sidebar expandido */
+    width: auto;
     height: 100vh;
+    /* Esto puede ser problemático si cambias a position: relative */
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    position: fixed;
+    padding: 10px;
+    /* position: fixed; */
+    /* Cambiar esto */
     top: 0;
     left: 0;
     overflow-y: auto;
     transition: width 0.3s ease;
-    /* Transición suave al colapsar */
 }
+
 .toggle-btn {
     background: none;
     border: none;
     cursor: pointer;
     font-size: 1.5rem;
     color: rgb(0, 0, 0);
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 1100;
+    padding: 0px;
+
 }
-/* .sidebar.collapsed {
-    width: 60px;
-} */
+
+.sidebar.collapsed {
+    width: auto;
+}
+
+.sidebar.collapsed i{
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
 
 .titulo-section {
     background-color: #001600;
@@ -46,10 +53,13 @@
 .icono {
     margin-bottom: 10px;
 }
+.menuAccount.collapsed {
+    position: fixed;
+}
 
 .menu {
     background-color: #EDEDED;
-    padding: 15px;
+    padding: 0;
     border-radius: 5px;
 }
 
@@ -129,84 +139,17 @@
     padding: 10px;
 }
 
-nav.pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* margin-top: 20px; */
-}
+/* @media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        position: relative;
+    }
 
-.pagination-list {
-    display: flex;
-    gap: 10px;
-    list-style: none;
-    padding: 0;
-    margin: 0 15px;
-}
+    .sidebar.collapsed {
+        width: 100%;
+    }
 
-.pagination-previous,
-.pagination-next {
-    background-color: #00AF00;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    font-family: 'Arial', sans-serif;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.pagination-previous:hover,
-.pagination-next:hover {
-    background-color: #007F00;
-    transform: translateX(5px);
-}
-
-.pagination-previous.is-disabled,
-.pagination-next.is-disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-}
-
-.pagination-link {
-    background-color: #00AF00;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    font-family: 'Arial', sans-serif;
-    font-size: 16px;
-}
-
-.pagination-link:hover {
-    background-color: #007F00;
-    transform: scale(1.05);
-}
-
-.pagination-link.is-current {
-    background-color: #007F00;
-    color: white;
-}
-
-button {
-    outline: none;
-}
-
-/* Ajustar el contenido principal al colapsar el sidebar */
-.main-content {
-    margin-left: 250px;
-    /* Espacio para el sidebar expandido */
-    transition: margin-left 0.3s ease;
-    /* Transición suave al colapsar */
-}
-
-.sidebar.collapsed+.main-content {
-    margin-left: 60px;
-    /* Ajuste del margen para el sidebar colapsado */
-}
+    .toggle-btn {
+        left: 10px;
+    }
+} */

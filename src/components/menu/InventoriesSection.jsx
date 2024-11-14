@@ -3,8 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { VerifyUserChangePassword } from './agregar/controllers/VerifyUserChangePassword';
 import { ModalRequestPassword } from './agregar/ModalRequestPassword';
 
-export const Inventories = () => {
-
+export const Inventories = ({ isCollapsed }) => {
     const nav = useNavigate();
     const [showModal, setShowModal] = useState(false);
 
@@ -40,37 +39,33 @@ export const Inventories = () => {
             <ul className='navbar-nav me-auto mb-2 mb-lg-0'>
                 <li className="nav-item dropdown section-account-part2">
                     <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Inventario
+                        <i className="fas fa-boxes"></i>
+                        {!isCollapsed && <span className="menu-text"> Inventario</span>}
                     </a>
                     <ul className="dropdown-menu menu-account">
-                        <>
+                        <li className='dropdown-item text-black'>
+                            <Link to={'show-products'}>
+                                <i className="fa-solid fa-box"></i> {isCollapsed ? '' : 'Listado de Productos'}
+                            </Link>
+                        </li>
+                        <li className='dropdown-item text-black'>
+                            <Link to={'add-product'} state={{ from: 'menu' }}>
+                                <i className="fa-solid fa-circle-plus"></i> {isCollapsed ? '' : 'Creación de Productos'}
+                            </Link>
+                        </li>
+                        <li className='dropdown-item text-black'>
+                            <Link to={'show-warehouse'}>
+                                <i className="fa-solid fa-warehouse"></i> {isCollapsed ? '' : 'Listado de Bodegas'}
+                            </Link>
+                        </li>
+                        <button className='btn' onClick={onStatusChange}>
                             <li className='dropdown-item text-black'>
-                                <Link to={'show-products'}>
-                                    <i className="fa-solid fa-box"></i> Listado de Productos
-                                </Link>
+                                <i className="fa-solid fa-circle-plus"></i> {isCollapsed ? '' : 'Creación de Bodegas'}
                             </li>
-
-                            <li className='dropdown-item text-black'>
-                                <Link to={'add-product'} state={{ from: 'menu' }}>
-                                    <i className="fa-solid fa-circle-plus"></i> Creación de Productos
-                                </Link>
-                            </li>
-
-                            <li className='dropdown-item text-black'>
-                                <Link to={'show-warehouse'}>
-                                    <i className="fa-solid fa-warehouse"></i> Listado de Bodegas
-                                </Link>
-                            </li>
-
-                            <button className='btn' onClick={onStatusChange}>
-                                <li className='dropdown-item text-black'>
-                                    <i className="fa-solid fa-circle-plus"></i> Creación de Bodegas
-                                </li>
-                            </button>
-                        </>
-                    </ul >
-                </li >
-            </ul >
+                        </button>
+                    </ul>
+                </li>
+            </ul>
 
             {showModal && (
                 <ModalRequestPassword
