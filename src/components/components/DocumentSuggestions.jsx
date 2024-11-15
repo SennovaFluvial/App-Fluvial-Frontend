@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { ApiService } from "../../class/ApiServices";
+import { useEffect, useState } from "react"
+import { ApiService } from "../../class/ApiServices"
 import '../../assets/css/suggestions/stylesOptionsSuggestions.css'
-import { clearError } from "../../functions/functions";
+import { clearError } from "../../functions/functions"
 
 /**
  * Componente que sugiere números de documentos y nombres de clientes.
@@ -18,53 +18,61 @@ import { clearError } from "../../functions/functions";
  * @returns {JSX.Element} - Un conjunto de botones que representan los documentos filtrados.
  */
 export const DocumentSuggestions = ({ numDocumentToSearch, setFormData, setErrorsForms, nameField }) => {
-    const [listNumDocuments, setListNumDocuments] = useState([]);
-    const [filteredDocuments, setFilteredDocuments] = useState([]);
+    const [listNumDocuments, setListNumDocuments] = useState([])
+    const [filteredDocuments, setFilteredDocuments] = useState([])
+
+    // Obtener la bandera 'shouldUpdateFlag' desde localStorage
+    const shouldUpdateFlag = JSON.parse(localStorage.getItem('shouldUpdateFlag'))
 
     const handleChangelistState = async () => {
         try {
-            const urlApi = "/api/v1/customers/all";
-            const response = await ApiService.get(urlApi);
+            const urlApi = "/api/v1/customers/all"
+            const response = await ApiService.get(urlApi)
 
             if (response) {
                 const formattedData = response.map(item => ({
                     name: `${item.name} ${item.lastName}`,
                     numDocument: item.numDocument
-                }));
+                }))
 
-                setListNumDocuments(formattedData);
-                setFilteredDocuments(formattedData);
+                setListNumDocuments(formattedData)
+                setFilteredDocuments(formattedData)
             }
         } catch (error) {
-            console.error("Error al obtener documentos:", error);
+            console.error("Error al obtener documentos:", error)
         }
-    };
+    }
 
     useEffect(() => {
-        handleChangelistState();
-    }, []);
+        handleChangelistState()  // Llamar la API para obtener los datos
+    }, [shouldUpdateFlag])   // Vuelve a ejecutarse si cambia la bandera
+
+    useEffect(() => {
+        // Eliminar la bandera 'shouldUpdateFlag' del localStorage solo una vez cuando el componente se monte
+        localStorage.removeItem('shouldUpdateFlag')
+    }, [])   // Este useEffect solo se ejecuta una vez al montar el componente
 
     useEffect(() => {
         // Filtrar los documentos según el número de documento a buscar
         const elementsFilter = listNumDocuments.filter(element =>
             element.numDocument.includes(numDocumentToSearch)
-        );
+        )
 
-        setFilteredDocuments(elementsFilter);
-    }, [listNumDocuments, numDocumentToSearch]);
+        setFilteredDocuments(elementsFilter)
+    }, [listNumDocuments, numDocumentToSearch])
 
     const handleChangeSearch = (event) => {
-        event.preventDefault();
-        const { value } = event.target;
+        event.preventDefault()
+        const { value } = event.target
         setFormData(prevState => ({
             ...prevState,
             [nameField]: value,
-        }));
-        clearError(setErrorsForms, nameField);
-    };
+        }))
+        clearError(setErrorsForms, nameField)
+    }
 
     return (
-        <div className="">
+        <div>
             {filteredDocuments.map((option, index) => (
                 <button
                     className="custom-button2"
@@ -74,7 +82,6 @@ export const DocumentSuggestions = ({ numDocumentToSearch, setFormData, setError
                     {option.numDocument} ({option.name} )
                 </button>
             ))}
-
-        </div >
-    );
-};
+        </div>
+    )
+} 
