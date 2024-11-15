@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { clearError, getCompanyUser, getIdForNumDocument, getProductsByDocumentNumber, handleStatusError, removeProductToSend, showProductsToSend, validationFieldSubmit } from "../../../../functions/functions"
+import { clearError, getCompanyUser, getIdForNumDocument, getProductsByDocumentNumber, handleStatusError, removeProductToSend, sanitizedValue, showProductsToSend, validationFieldSubmit } from "../../../../functions/functions"
 import { useNavigate } from "react-router"
 import Swal from "sweetalert"
 import { ApiService } from "../../../../class/ApiServices"
@@ -11,11 +11,11 @@ export const CreateUpdateControllerShiptment = () => {
     const [isDisabled, setIsDisabled] = useState(false)
     const [productosRemitente, setProductosRemitente] = useState([]) // Estado para almacenar los productos del remitente a mostrar
     const [productsToSend, setProductsToSend] = useState([]) // Productos selecionados
-    const [loading, setLoading] = useState(true); // Estado de carga
+    const [loading, setLoading] = useState(true) // Estado de carga
 
     // paginacion
-    const [elementForPage, setElementForPage] = useState(6);
-    const [currentPage, setCurrentPage] = useState(1);
+    const [elementForPage, setElementForPage] = useState(6)
+    const [currentPage, setCurrentPage] = useState(1)
 
     /* Inicializacion de variables */
     const [formData, setFormData] = useState({
@@ -54,8 +54,8 @@ export const CreateUpdateControllerShiptment = () => {
         } else {
             setFormData(prevState => ({
                 ...prevState,
-                [name]: value
-            }))
+                [name]: sanitizedValue(value)
+            }));
         }
 
         if (name !== 'productosIds') {
@@ -66,6 +66,15 @@ export const CreateUpdateControllerShiptment = () => {
                 (!/^\d+$/.test(value) || value.length < 5 || value.length > 11 || Number(value) < 0)
             ) {
                 handleStatusError(setErrorsForms, name, "Debe ser un número entero positivo entre 5 y 11 dígitos")
+            } else if (
+                name === 'costoEnvio' &&
+                (isNaN(value) || value.trim() === "" || Number(value) <= 0)
+            ) {
+                handleStatusError(
+                    setErrorsForms,
+                    name,
+                    "Debe ser un número positivo válido y no puede contener el signo negativo"
+                )
             } else {
                 clearError(setErrorsForms, name)
             }
@@ -94,22 +103,22 @@ export const CreateUpdateControllerShiptment = () => {
             "packagingType",
             "specialHandlingInstructions"
         ]
-    );
+    )
 
-    const totalFilteredItems = filteredItems.length;
-    const totalPages = Math.ceil(totalFilteredItems / elementForPage);
+    const totalFilteredItems = filteredItems.length
+    const totalPages = Math.ceil(totalFilteredItems / elementForPage)
 
     useEffect(() => {
         if (totalFilteredItems === 0) {
-            setCurrentPage(1);
+            setCurrentPage(1)
         } else if (currentPage > totalPages) {
-            setCurrentPage(totalPages);
+            setCurrentPage(totalPages)
         }
-    }, [filteredItems, totalPages, currentPage, totalFilteredItems]);
+    }, [filteredItems, totalPages, currentPage, totalFilteredItems])
 
-    const lastIndex = currentPage * elementForPage;
-    const firstIndex = lastIndex - elementForPage;
-    const paginatedItems = filteredItems.slice(firstIndex, lastIndex);
+    const lastIndex = currentPage * elementForPage
+    const firstIndex = lastIndex - elementForPage
+    const paginatedItems = filteredItems.slice(firstIndex, lastIndex)
 
     /* Efectos terceros */
 
@@ -176,6 +185,7 @@ export const CreateUpdateControllerShiptment = () => {
 
         if (formData.remitenteCedula) fetchRemitente()
     }, [formData.remitenteCedula])
+
     /** */
     useEffect(() => {
         const fetchDestinatario = async () => {
@@ -198,8 +208,6 @@ export const CreateUpdateControllerShiptment = () => {
 
         if (formData.destinatarioCedula) fetchDestinatario()
     }, [formData.destinatarioCedula])
-
-    /* Efecto para el isDisabled */
 
     /* HandleSubmit */
     const handleSubmit = async (event) => {
@@ -281,6 +289,7 @@ export const CreateUpdateControllerShiptment = () => {
         }
 
     }
+
     return {
         formData,
         setFormData,

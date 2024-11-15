@@ -7,7 +7,7 @@ export const VehicleSection = ({ isCollapsed }) => {
             <ul className='navbar-nav me-auto mb-2 mb-lg-0'>
                 <li className="nav-item dropdown section-account-part2">
                     <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-ship"></i>
+                        <i  className="fa-solid fa-ship"></i>
                         {!isCollapsed && <span className="menu-text"> Vehículos</span>}
                     </a>
                     <ul className="dropdown-menu menu-account">

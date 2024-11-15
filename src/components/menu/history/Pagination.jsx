@@ -1,3 +1,5 @@
+import "../../../assets/css/components/pagination.css";
+
 /**
  * Componente de paginación para manejar la navegación entre páginas de resultados.
  *
