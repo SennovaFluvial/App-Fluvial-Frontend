@@ -1,9 +1,9 @@
-import { useNavigate } from 'react-router-dom' 
+import { useNavigate } from 'react-router-dom'
 import { Inputs } from '../../html components/Inputs.jsx'
-import styles from '../../../assets/css/shipment/shipment.module.css' 
-import { DocumentSuggestions } from '../../components/DocumentSuggestions.jsx' 
-import { MoreDetails } from '../history/moreDetails/MoreDetailsCustomers.jsx' 
-import { useShiptment } from './controllers/ProviderContextShiptmen.jsx' 
+import styles from '../../../assets/css/shipment/shipment.module.css'
+import { DocumentSuggestions } from '../../components/DocumentSuggestions.jsx'
+import { MoreDetails } from '../history/moreDetails/MoreDetailsCustomers.jsx'
+import { useShiptment } from './controllers/ProviderContextShiptmen.jsx'
 
 export const ModuleSender = () => {
     const navigate = useNavigate()
@@ -18,12 +18,12 @@ export const ModuleSender = () => {
     } = useShiptment()
 
     const handleNext = () => {
-        navigate('/adminSection/register-shipment/module-recipient') 
-    } 
+        navigate('/adminSection/register-shipment/module-recipient')
+    }
 
     const handleBack = () => {
-        navigate('#') 
-    } 
+        navigate('#')
+    }
 
     return (
         <>
@@ -72,5 +72,5 @@ export const ModuleSender = () => {
                 </div>
             </div>
         </>
-    ) 
+    )
 }

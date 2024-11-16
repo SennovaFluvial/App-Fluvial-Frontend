@@ -315,7 +315,6 @@ export const MoreDetails = ({ data = null }) => {
                                         </Link>
                                     </>
                                 )}
-
                                 {
                                     from && from == 'external' ? (
                                         <>

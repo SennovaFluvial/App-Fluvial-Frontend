@@ -17,7 +17,7 @@ import { useNavigate } from 'react-router';
  *
  * @returns {Object} - Un objeto que contiene funciones y estados relevantes para el formulario.
  */
-export const ControllerCreateUpdateProduct = ({ id, action }) => {
+export const ControllerCreateUpdateProduct = ({ funcChangeState, id, action }) => {
 
     const [isDisabled, setIsDisabled] = useState(false)
     const [errorsForms, setErrorsForms] = useState({});
@@ -210,8 +210,14 @@ export const ControllerCreateUpdateProduct = ({ id, action }) => {
                     timer: 3000,
                     buttons: false
                 });
+                // Cambiar el estado para ocultar el modal
+                if (funcChangeState) {
+                    funcChangeState(false)
+                    localStorage.setItem('shouldUpdateFlag', 'true');  // Guardar como string 'true'
+                } else {
+                    nav("../../adminSection/show-products");
+                }
 
-                nav("../../adminSection/show-products");
             }
         } catch (error) {
             console.error('Error al procesar la solicitud:', error);

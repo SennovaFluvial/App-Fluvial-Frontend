@@ -1,14 +1,18 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 import { Inputs } from '../../html components/Inputs.jsx'
 import styles from '../../../assets/css/shipment/shipment.module.css'
-import { useShiptment } from './controllers/ProviderContextShiptmen.jsx';
-import { useEffect } from 'react';
-import { Pagination } from '../history/Pagination.jsx';
+import { useShiptment } from './controllers/ProviderContextShiptmen.jsx'
+import { useEffect, useState } from 'react'
+import { Pagination } from '../history/Pagination.jsx'
+import { ModalforComponent } from '../../components/ModalforComponent.jsx'
+import { AddProduct } from '../agregar/AddProduct.jsx'
 
 
 export const ModuleProduct = () => {
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
+    const [openCloseModal, setOpenCloseModal] = useState(false)
+    const [selectedProductId, setSelectedProductId] = useState(null)
     // Context
     const {
         formData,
@@ -32,20 +36,29 @@ export const ModuleProduct = () => {
     // Context
 
     const handleNext = () => {
-        // navigate('/adminSection/register-shipment/module-vehicle');
-        navigate('/adminSection/register-shipment/module-shipment');
-    };
+        // navigate('/adminSection/register-shipment/module-vehicle')
+        navigate('/adminSection/register-shipment/module-shipment')
+    }
 
     const handleBack = () => {
-        event.preventDefault();
-        navigate(-1);
-    };
+        event.preventDefault()
+        navigate(-1)
+    }
+
+    const openModal = (id) => {
+        setSelectedProductId(id);  // Solo actualiza cuando sea necesario
+        setOpenCloseModal(true);
+    }
+
+    const closeModal = () => {
+        setOpenCloseModal(false)
+    }
 
     useEffect(() => {
         if (formData.productosIds.length <= 0) {
-            setIsDisabled(true);
+            setIsDisabled(true)
         } else {
-            setIsDisabled(false);
+            setIsDisabled(false)
         }
     }, [formData.productosIds])
 
@@ -89,35 +102,62 @@ export const ModuleProduct = () => {
                                 .filter(item => !productsToSend.some(product => product.id === item.id))
                                 .map((item) => (
                                     <div className="col-md-4 mb-4" key={item.id}>
-                                        <div className="card" style={{ width: '18rem' }}>
+                                        {/* Tarjeta principal */}
+                                        <div className="card" style={{ width: '18rem', overflow: 'hidden' }}>
+                                            {/* Cuerpo de la tarjeta */}
                                             <div className="card-body">
+                                                {/* Título y descripción */}
                                                 <h5 className="card-title">{item.productName}</h5>
                                                 <p className="card-text">{item.description}</p>
+
+                                                {/* Lista de características */}
                                                 <ul className="list-group list-group-flush">
-                                                    <li className="list-group-item"><strong>Dimensiones:</strong> {item.dimensions}</li>
-                                                    <li className="list-group-item"><strong>Cantidad:</strong> {item.number} unidades</li>
+                                                    <li className="list-group-item">
+                                                        <strong>Dimensiones:</strong> {item.dimensions}
+                                                    </li>
+                                                    <li className="list-group-item">
+                                                        <strong>Cantidad:</strong> {item.number} unidades
+                                                    </li>
                                                 </ul>
                                             </div>
 
-                                            <div className="row justify-content-center">
-                                                <div className="col-md-6">
-                                                    <Inputs
-                                                        type='button'
-                                                        text={(<> Agregar <i className="fa-solid fa-box-open"></i></>)}
-                                                        name="productosIds"
-                                                        value={item.id || ''}
-                                                        event={handleChange}
-                                                    />
+                                            {/* Controles de botones */}
+                                            <div className="card-footer d-flex justify-content-around">
+                                                {/* Botón Agregar */}
+                                                <Inputs
+                                                    type="button"
+                                                    text={(<><i className="fa-solid fa-box-open"></i></>)}
+                                                    name="productosIds"
+                                                    value={item.id ? item.id : ''}
+                                                    event={handleChange}
+                                                    className="btn btn-primary"
+                                                />
 
-                                                </div>
-                                                <div className="col-md-6">
-                                                    <button className='btn btn-primary'>
-                                                        <i className="fa-regular fa-pen-to-square"></i>
-                                                    </button>
-                                                </div>
+                                                {/* Botón Más detalles */}
+                                                <button
+                                                    className="more-details-btn btn btn-secondary"
+                                                    onClick={() => openModal(item.id)}
+                                                >
+                                                    <i className="fa-solid fa-pencil"></i>
+                                                </button>
+
+                                                {openCloseModal && (
+                                                    <ModalforComponent
+                                                        showModal={openCloseModal}
+                                                        handleClose={closeModal}
+                                                        BodyComponent={
+                                                            <AddProduct
+                                                                dataOfUser={{ id: selectedProductId, action: 'update' }}
+                                                                funcChangeState={setOpenCloseModal}
+                                                            />
+                                                        }
+                                                    />
+                                                )}
+
                                             </div>
                                         </div>
                                     </div>
+
                                 ))
                         ) : (
                             <div className="col-12">

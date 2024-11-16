@@ -12,6 +12,7 @@ export const CreateUpdateControllerShiptment = () => {
     const [productosRemitente, setProductosRemitente] = useState([]) // Estado para almacenar los productos del remitente a mostrar
     const [productsToSend, setProductsToSend] = useState([]) // Productos selecionados
     const [loading, setLoading] = useState(true) // Estado de carga
+    const shouldUpdateFlag = JSON.parse(localStorage.getItem('shouldUpdateFlag'))
 
     // paginacion
     const [elementForPage, setElementForPage] = useState(6)
@@ -43,41 +44,47 @@ export const CreateUpdateControllerShiptment = () => {
 
     /* HandleChange */
     const handleChange = (event) => {
-        const { name, value } = event.target
+        try {
+            const { name, value } = event.target
 
-        if (name === "productosIds") {
+            if (name === "productosIds") {
 
-            setFormData(prevState => ({
-                ...prevState,
-                productosIds: [...prevState.productosIds, parseInt(value, 10)]
-            }))
-        } else {
-            setFormData(prevState => ({
-                ...prevState,
-                [name]: sanitizedValue(value)
-            }));
-        }
-
-        if (name !== 'productosIds') {
-            if (!value.trim()) {
-                handleStatusError(setErrorsForms, name, "Campo obligatorio")
-            } else if (
-                (name === 'remitenteCedula' || name === 'destinatarioCedula') &&
-                (!/^\d+$/.test(value) || value.length < 5 || value.length > 11 || Number(value) < 0)
-            ) {
-                handleStatusError(setErrorsForms, name, "Debe ser un número entero positivo entre 5 y 11 dígitos")
-            } else if (
-                name === 'costoEnvio' &&
-                (isNaN(value) || value.trim() === "" || Number(value) <= 0)
-            ) {
-                handleStatusError(
-                    setErrorsForms,
-                    name,
-                    "Debe ser un número positivo válido y no puede contener el signo negativo"
-                )
+                setFormData(prevState => ({
+                    ...prevState,
+                    productosIds: [...prevState.productosIds, parseInt(value, 10)]
+                }))
             } else {
-                clearError(setErrorsForms, name)
+                setFormData(prevState => ({
+                    ...prevState,
+                    [name]: (name === 'tipoPago' || name === 'estadoPago' || name === 'estadoEntrega')
+                        ? value
+                        : sanitizedValue(value)
+                }))
             }
+
+            if (name !== 'productosIds') {
+                if (!value.trim()) {
+                    handleStatusError(setErrorsForms, name, "Campo obligatorio")
+                } else if (
+                    (name === 'remitenteCedula' || name === 'destinatarioCedula') &&
+                    (!/^\d+$/.test(value) || value.length < 5 || value.length > 11 || Number(value) < 0)
+                ) {
+                    handleStatusError(setErrorsForms, name, "Debe ser un número entero positivo entre 5 y 11 dígitos")
+                } else if (
+                    name === 'costoEnvio' &&
+                    (isNaN(value) || value.trim() === "" || Number(value) <= 0)
+                ) {
+                    handleStatusError(
+                        setErrorsForms,
+                        name,
+                        "Debe ser un número positivo válido"
+                    )
+                } else {
+                    clearError(setErrorsForms, name)
+                }
+            }
+        } catch (error) {
+            console.error("Error en handleChange:", error)
         }
     }
 
@@ -121,6 +128,10 @@ export const CreateUpdateControllerShiptment = () => {
     const paginatedItems = filteredItems.slice(firstIndex, lastIndex)
 
     /* Efectos terceros */
+    useEffect(() => {
+        // Eliminar la bandera del localStorage solo una vez cuando el componente se monte
+        localStorage.removeItem('shouldUpdateFlag')
+    }, [])
 
     /** */
     useEffect(() => {
@@ -144,7 +155,7 @@ export const CreateUpdateControllerShiptment = () => {
         }
 
         fetchProducts()
-    }, [formData.remitenteCedula])
+    }, [formData.remitenteCedula, shouldUpdateFlag])
 
     /** */
     useEffect(() => {
