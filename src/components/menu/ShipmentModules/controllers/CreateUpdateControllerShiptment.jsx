@@ -5,14 +5,14 @@ import Swal from "sweetalert"
 import { ApiService } from "../../../../class/ApiServices"
 import { useSearchFields } from "../../history/search/SearchFields"
 
-export const CreateUpdateControllerShiptment = () => {
+export const CreateUpdateControllerShiptment = ({ flag }) => {
 
     const nav = useNavigate()
     const [isDisabled, setIsDisabled] = useState(false)
     const [productosRemitente, setProductosRemitente] = useState([]) // Estado para almacenar los productos del remitente a mostrar
     const [productsToSend, setProductsToSend] = useState([]) // Productos selecionados
     const [loading, setLoading] = useState(true) // Estado de carga
-    const shouldUpdateFlag = JSON.parse(localStorage.getItem('shouldUpdateFlag'))
+    // const shouldUpdateFlag = JSON.parse(localStorage.getItem('shouldUpdateFlag'))
 
     // paginacion
     const [elementForPage, setElementForPage] = useState(6)
@@ -44,48 +44,56 @@ export const CreateUpdateControllerShiptment = () => {
 
     /* HandleChange */
     const handleChange = (event) => {
-        try {
-            const { name, value } = event.target
 
-            if (name === "productosIds") {
-
-                setFormData(prevState => ({
-                    ...prevState,
-                    productosIds: [...prevState.productosIds, parseInt(value, 10)]
-                }))
-            } else {
-                setFormData(prevState => ({
-                    ...prevState,
-                    [name]: (name === 'tipoPago' || name === 'estadoPago' || name === 'estadoEntrega')
-                        ? value
-                        : sanitizedValue(value)
-                }))
-            }
-
-            if (name !== 'productosIds') {
-                if (!value.trim()) {
-                    handleStatusError(setErrorsForms, name, "Campo obligatorio")
-                } else if (
-                    (name === 'remitenteCedula' || name === 'destinatarioCedula') &&
-                    (!/^\d+$/.test(value) || value.length < 5 || value.length > 11 || Number(value) < 0)
-                ) {
-                    handleStatusError(setErrorsForms, name, "Debe ser un número entero positivo entre 5 y 11 dígitos")
-                } else if (
-                    name === 'costoEnvio' &&
-                    (isNaN(value) || value.trim() === "" || Number(value) <= 0)
-                ) {
-                    handleStatusError(
-                        setErrorsForms,
-                        name,
-                        "Debe ser un número positivo válido"
-                    )
-                } else {
-                    clearError(setErrorsForms, name)
-                }
-            }
-        } catch (error) {
-            console.error("Error en handleChange:", error)
+        const { name, value } = event.target
+        console.log(name, value)
+        if (name === undefined || value === undefined) {
+            console.error(`Error: uno o más valores son undefined. Detalles: 
+                    Name: ${name}, 
+                    Value: ${value}`
+            )
+            alert(`Error: 
+                    Name es ${name === undefined ? 'undefined' : name}, 
+                    Value es ${value === undefined ? 'undefined' : value}`)
+            return // Detenemos la ejecución si hay un error
         }
+
+        if (name === "productosIds") {
+            setFormData(prevState => ({
+                ...prevState,
+                productosIds: [...prevState.productosIds, parseInt(value, 10)]
+            }))
+        } else {
+            setFormData(prevState => ({
+                ...prevState,
+                [name]: (name === 'tipoPago' || name === 'estadoPago' || name === 'estadoEntrega')
+                    ? value
+                    : sanitizedValue(value)
+            }))
+        }
+
+        if (name !== 'productosIds') {
+            if (!value.trim()) {
+                handleStatusError(setErrorsForms, name, "Campo obligatorio")
+            } else if (
+                (name === 'remitenteCedula' || name === 'destinatarioCedula') &&
+                (!/^\d+$/.test(value) || value.length < 5 || value.length > 11 || Number(value) < 0)
+            ) {
+                handleStatusError(setErrorsForms, name, "Debe ser un número entero positivo entre 5 y 11 dígitos")
+            } else if (
+                name === 'costoEnvio' &&
+                (isNaN(value) || value.trim() === "" || Number(value) <= 0)
+            ) {
+                handleStatusError(
+                    setErrorsForms,
+                    name,
+                    "Debe ser un número positivo válido"
+                )
+            } else {
+                clearError(setErrorsForms, name)
+            }
+        }
+
     }
 
     /* Funciones terceras */
@@ -127,11 +135,8 @@ export const CreateUpdateControllerShiptment = () => {
     const firstIndex = lastIndex - elementForPage
     const paginatedItems = filteredItems.slice(firstIndex, lastIndex)
 
+
     /* Efectos terceros */
-    useEffect(() => {
-        // Eliminar la bandera del localStorage solo una vez cuando el componente se monte
-        localStorage.removeItem('shouldUpdateFlag')
-    }, [])
 
     /** */
     useEffect(() => {
@@ -139,23 +144,41 @@ export const CreateUpdateControllerShiptment = () => {
             await getCompanyUser('/api/v1/companie/users', 'companiaNombre', setFormData)
         }
 
-        getCompany() // ejecucion
+        getCompany()
     }, [])
 
     /** */
     useEffect(() => {
         const fetchProducts = async () => {
+            if (!formData.remitenteCedula) return // Valida que haya un valor válido
 
-            setLoading(true) // cargando
-
-            const response = await getProductsByDocumentNumber(formData.remitenteCedula)
-            setProductosRemitente(response)
-
-            setLoading(false) // cargando
+            try {
+                setLoading(true) // Activa el estado de carga
+                const response = await getProductsByDocumentNumber(formData.remitenteCedula)
+                setProductosRemitente(response)
+            } catch (error) {
+                console.error("Error fetching products:", error) // Manejo de errores
+            } finally {
+                setLoading(false)
+            }
         }
 
+        // Ejecutar la función solo si flag es true
+
         fetchProducts()
-    }, [formData.remitenteCedula, shouldUpdateFlag])
+
+
+    }, [formData.remitenteCedula, flag])
+
+
+    /** */
+    useEffect(() => {
+        // Eliminar la bandera del localStorage solo una vez cuando el componente se monte
+        if (flag) {
+            localStorage.removeItem('shouldUpdateFlag');
+            console.log('Flag removed');
+        }
+    }, [flag])
 
     /** */
     useEffect(() => {

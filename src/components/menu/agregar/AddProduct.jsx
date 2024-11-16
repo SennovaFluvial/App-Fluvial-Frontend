@@ -8,10 +8,17 @@ import { TextArea } from '../../html components/TextArea.jsx';
 import { useLocation, useParams } from 'react-router';
 import { DocumentSuggestions } from '../../components/DocumentSuggestions.jsx';
 import { CancelButton } from '../../components/CancelButton.jsx';
+import { useEffect } from 'react';
 
 export const AddProduct = ({ funcChangeState = null, dataOfUser = null }) => {
-    const { id, action } = dataOfUser ? dataOfUser : useParams()
-    console.log(id, action)
+    // Si `dataOfUser` existe, usa sus valores, si no, usa `useParams()`
+    const { id: paramId, action: paramAction } = useParams();  // Toma los valores de los parámetros de la URL
+    const { id, action } = dataOfUser || { id: paramId, action: paramAction };  // Desestructurando de `dataOfUser` o usando los valores de `useParams()`
+
+    useEffect(() => {
+        console.log(id, action);  // Solo se ejecuta cuando `id` o `action` cambian
+    }, [id, action]);
+
     /* ELEMENTOS DE OPCIONES */
     const useOptionsLocationProduct = optionsLocationProduct;
     const useOptionsWarehouse = optionsWarehouse();
@@ -19,11 +26,16 @@ export const AddProduct = ({ funcChangeState = null, dataOfUser = null }) => {
     const useCategoriesOptions = useOptionsCategory();
     /* --------------------- */
 
-    const { handleChange, formData, errorsForms, handleSubmit, setFormData, isDisabled, setErrorsForms } = ControllerCreateUpdateProduct({ id, action, funcChangeState }); // Componente de logica integrada en `AddProduct()`
+    const {
+        handleChange,
+        formData, errorsForms,
+        handleSubmit, setFormData,
+        isDisabled, setErrorsForms
+    } = ControllerCreateUpdateProduct({ id, action, funcChangeState }); // Componente de logica integrada en `AddProduct()`
 
     const location = useLocation();
     const from = location.state?.from || 'menu';
-    
+
     const handleCloseModal = () => {
         funcChangeState(false)
     }

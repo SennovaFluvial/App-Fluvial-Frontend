@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react'
 import { Pagination } from '../history/Pagination.jsx'
 import { ModalforComponent } from '../../components/ModalforComponent.jsx'
 import { AddProduct } from '../agregar/AddProduct.jsx'
+import { Grid } from '../../animations/Grid.jsx'
+import { Spinner } from '../../animations/Spiner.jsx'
 
 
 export const ModuleProduct = () => {
@@ -13,6 +15,7 @@ export const ModuleProduct = () => {
 
     const [openCloseModal, setOpenCloseModal] = useState(false)
     const [selectedProductId, setSelectedProductId] = useState(null)
+
     // Context
     const {
         formData,
@@ -31,7 +34,8 @@ export const ModuleProduct = () => {
         currentPage, // paginacion
         setCurrentPage, // paginacion
         totalFilteredItems, // paginacion
-        firstIndex, // paginacion
+        // firstIndex, // paginacion,
+        loading
     } = useShiptment()
     // Context
 
@@ -62,6 +66,15 @@ export const ModuleProduct = () => {
         }
     }, [formData.productosIds])
 
+    if (loading) {
+        return (
+            <div className="container d-flex justify-content-center align-items-center vh-100">
+                <Grid>
+                    <Spinner />
+                </Grid>
+            </div>
+        );
+    }
     return (
         <>
 
@@ -98,7 +111,7 @@ export const ModuleProduct = () => {
 
                         {productosRemitente.products && productosRemitente.products.length > 0 ? (
                             // productosRemitente.products
-                            paginatedItems
+                            paginatedItems && paginatedItems
                                 .filter(item => !productsToSend.some(product => product.id === item.id))
                                 .map((item) => (
                                     <div className="col-md-4 mb-4" key={item.id}>
@@ -126,7 +139,7 @@ export const ModuleProduct = () => {
                                                 {/* Botón Agregar */}
                                                 <Inputs
                                                     type="button"
-                                                    text={(<><i className="fa-solid fa-box-open"></i></>)}
+                                                    text={(<> <i className="fa-solid fa-box-open"></i></>)}
                                                     name="productosIds"
                                                     value={item.id ? item.id : ''}
                                                     event={handleChange}
@@ -153,7 +166,6 @@ export const ModuleProduct = () => {
                                                         }
                                                     />
                                                 )}
-
                                             </div>
                                         </div>
                                     </div>

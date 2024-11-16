@@ -210,10 +210,11 @@ export const ControllerCreateUpdateProduct = ({ funcChangeState, id, action }) =
                     timer: 3000,
                     buttons: false
                 });
+                
                 // Cambiar el estado para ocultar el modal
                 if (funcChangeState) {
                     funcChangeState(false)
-                    localStorage.setItem('shouldUpdateFlag', 'true');  // Guardar como string 'true'
+                    localStorage.setItem('shouldUpdateFlag', 'true');
                 } else {
                     nav("../../adminSection/show-products");
                 }
