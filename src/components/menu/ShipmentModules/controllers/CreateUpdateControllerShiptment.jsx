@@ -46,7 +46,6 @@ export const CreateUpdateControllerShiptment = ({ flag }) => {
     const handleChange = (event) => {
 
         const { name, value } = event.target
-        console.log(name, value)
         if (name === undefined || value === undefined) {
             console.error(`Error: uno o más valores son undefined. Detalles: 
                     Name: ${name}, 

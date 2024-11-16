@@ -15,10 +15,6 @@ export const AddProduct = ({ funcChangeState = null, dataOfUser = null }) => {
     const { id: paramId, action: paramAction } = useParams();  // Toma los valores de los parámetros de la URL
     const { id, action } = dataOfUser || { id: paramId, action: paramAction };  // Desestructurando de `dataOfUser` o usando los valores de `useParams()`
 
-    useEffect(() => {
-        console.log(id, action);  // Solo se ejecuta cuando `id` o `action` cambian
-    }, [id, action]);
-
     /* ELEMENTOS DE OPCIONES */
     const useOptionsLocationProduct = optionsLocationProduct;
     const useOptionsWarehouse = optionsWarehouse();
