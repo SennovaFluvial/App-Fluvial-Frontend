@@ -33,7 +33,6 @@
 
 .navLink:hover {
     color: #0056b3;
-    /* Color del texto al pasar el ratón */
 }
 
 .collapsed .navLink {
@@ -71,7 +70,6 @@
 
 }
 
-
 .dropdownItem {
     padding: 0;
     border: 0;
@@ -92,6 +90,7 @@
     border: 0;
     margin: 0;
 }
+
 .link:hover {
     background-color: #007bff;
     /* Color de fondo azul al pasar el ratón */

@@ -90,7 +90,7 @@ export const Sidebar = ({ user, setUser }) => {
                 <nav className="menu">
                     <ul>
                         <li>
-                            <Link to="/adminSection" className="nav-link show">
+                            <Link to="/adminSection" className={styles.dashboard}>
                                 <span><i className="fa-solid fa-home"></i></span>
                                 {!isCollapsed && <span className="menu-text"> Dashboard</span>}
                             </Link>
@@ -119,7 +119,7 @@ export const Sidebar = ({ user, setUser }) => {
 
                     <ul>
                         <li>
-                            <Link to="/adminSection/reports" className="nav-link show">
+                            <Link to="/adminSection/reports" className={`nav-link show ${styles.reportsLink}`}>
                                 <span><i className="fa-solid fa-file-alt"></i></span>
                                 {!isCollapsed && <span className="menu-text"> Informes</span>}
                             </Link>

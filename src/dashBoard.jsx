@@ -1,6 +1,5 @@
 import { Outlet } from 'react-router-dom'; // Importa herramientas para navegación
 import React from 'react' // Importa React y useEffect
-import { Sidebar } from './Sidebar'; // Importa el componente Sidebar
 import { Info } from "../src/Info";
 import { useLocation } from 'react-router-dom';
 import './assets/css/DashBoard.css'
@@ -9,6 +8,7 @@ import './assets/css/sidebar.css';
 import Logo from './assets/img/LogoSena.png';
 import { Link, useNavigate } from "react-router-dom";
 import { ApiService } from './class/ApiServices';
+import styles from './assets/css/section.module.css';
 
 /* Importaciones de componentes para el menú */
 import { EmployeeSection } from './components/menu/EmployeeSection';
@@ -112,7 +112,7 @@ export const DashBoard = ({ user, setUser }) => {
                             <nav className="menu">
                                 <ul>
                                     <li>
-                                        <Link to="/adminSection" className="nav-link show">
+                                        <Link to="/adminSection" className={styles.navLink}>
                                             <span><i className="fa-solid fa-home"></i></span>
                                             {!isCollapsed && <span className="menu-text"> Dashboard</span>}
                                         </Link>
@@ -134,13 +134,14 @@ export const DashBoard = ({ user, setUser }) => {
                                         <ShipmentSection isCollapsed={isCollapsed} />
 
                                         <Inventories isCollapsed={isCollapsed} />
+                                        
                                         <BranchSection isCollapsed={isCollapsed} />
                                     </>
                                 )}
 
                                 <ul>
                                     <li>
-                                        <Link to="/adminSection/reports" className="nav-link show">
+                                        <Link to="/adminSection/reports" className={styles.navLink} >
                                             <span><i className="fa-solid fa-file-alt"></i></span>
                                             {!isCollapsed && <span className="menu-text"> Informes</span>}
                                         </Link>
