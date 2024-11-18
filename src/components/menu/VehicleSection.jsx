@@ -17,25 +17,23 @@ export const VehicleSection = ({ isCollapsed }) => {
         <div className={styles.Section}>
             <ul className={styles.navbarNav}>
                 <li className={styles.sectionAccountPart2}>
-                    <button onClick={toggleMenu} className={styles.navLink} aria-haspopup="false" aria-expanded={!isOpen}>
+                    <button onClick={() => { toggleMenu(); console.log(`Menu toggled, isOpen: ${!isOpen}`); }} className={styles.navLink} aria-haspopup="true" aria-expanded={isOpen} >
                         <i className={`fa-solid fa-ship me-2${isCollapsed ? styles.iconCentered : ''}`}></i>
                         {!isCollapsed && <span className="menu-text"> Vehículos</span>}
                     </button>
-                    {isOpen && (
-                        <ul className={styles.menuAccount}>
-                            <li className={styles.dropdownItem}>
-                                <Link to={'show-vehicles'} className={styles.link} onClick={closeMenu}>
-                                    <i className="fa-solid fa-sailboat me-2"></i>Listado de Vehículos
-                                </Link>
-                            </li>
+                    <ul className={styles.menuAccount} style={{ display: isOpen ? 'block' : 'none' }} >
+                        <li className={styles.dropdownItem}>
+                            <Link to={'show-vehicles'} className={styles.link} onClick={closeMenu}>
+                                <i className="fa-solid fa-sailboat me-2"></i>Listado de Vehículos
+                            </Link>
+                        </li>
 
-                            <li className={styles.dropdownItem}>
-                                <Link to={'add-vehicle'} state={{ from: 'menu' }} className={styles.link} onClick={closeMenu}>
-                                    <i className="fa-solid fa-circle-plus me-2"></i> Creación de Vehículos
-                                </Link>
-                            </li>
-                        </ul>
-                    )}
+                        <li className={styles.dropdownItem}>
+                            <Link to={'add-vehicle'} state={{ from: 'menu' }} className={styles.link} onClick={closeMenu}>
+                                <i className="fa-solid fa-circle-plus me-2"></i> Creación de Vehículos
+                            </Link>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </div>

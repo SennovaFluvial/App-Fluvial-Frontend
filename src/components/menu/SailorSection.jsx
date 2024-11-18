@@ -17,25 +17,23 @@ export const SailorSection = ({ isCollapsed }) => {
         <div className={styles.Section}>
             <ul className={styles.navbarNav}>
                 <li className={styles.sectionAccountPart2}>
-                    <button onClick={toggleMenu} className={styles.navLink} aria-haspopup="false" aria-expanded={!isOpen}>
+                    <button onClick={() => { toggleMenu(); console.log(`Menu toggled, isOpen: ${!isOpen}`); }} className={styles.navLink} aria-haspopup="true" aria-expanded={isOpen} >
                         <i className={`fas fa-life-ring me-2${isCollapsed ? styles.iconCentered : ''}`}></i>
                         {!isCollapsed && <span className="menu-text"> Tripulantes</span>}
                     </button>
-                    {isOpen && (
-                        <ul className={styles.menuAccount}>
-                            <li className={styles.dropdownItem}>
-                                <Link to={'show-crew'} className={styles.link} onClick={closeMenu}>
-                                    <i className="fa-solid fa-person-military-pointing me-2"></i>Listado de Tripulantes
-                                </Link>
-                            </li>
+                    <ul className={styles.menuAccount} style={{ display: isOpen ? 'block' : 'none' }} >
+                        <li className={styles.dropdownItem}>
+                            <Link to={'show-crew'} className={styles.link} onClick={closeMenu}>
+                                <i className="fa-solid fa-person-military-pointing me-2"></i>Listado de Tripulantes
+                            </Link>
+                        </li>
 
-                            <li className={styles.dropdownItem}>
-                                <Link to={'add-crew'} state={{ from: 'menu' }} className={styles.link} onClick={closeMenu}>
-                                    <i className="fa-solid fa-circle-plus me-2"></i>Creación de Tripulantes
-                                </Link>
-                            </li>
-                        </ul>
-                    )}
+                        <li className={styles.dropdownItem}>
+                            <Link to={'add-crew'} state={{ from: 'menu' }} className={styles.link} onClick={closeMenu}>
+                                <i className="fa-solid fa-circle-plus me-2"></i>Creación de Tripulantes
+                            </Link>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </div>

@@ -4,7 +4,7 @@
 
 .navbarNav {
     list-style: none;
-    padding: auto;
+    padding: 0;
     margin: 0;
 }
 
@@ -22,13 +22,13 @@
     color: #007bff;
     font-weight: bold;
     cursor: pointer;
-    padding: auto;
+    padding: 8px 16px;
+    /* Ajuste de padding */
     width: 100%;
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
-
 }
 
 .navLink:hover {
@@ -39,61 +39,87 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: auto;
+    padding: 8px 16px;
 }
 
 .menuAccount {
     display: none;
+    /* Oculta el menú por defecto */
     position: absolute;
     top: 100%;
+    /* Posición debajo del contenedor */
     left: 0;
+    /* Alineado a la izquierda */
     right: 0;
+    /* Alineado a la derecha */
     z-index: 1000;
     background-color: #ffffff;
     border: 1px solid #dee2e6;
     border-radius: 0.25rem;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.sectionAccountPart2:focus-within .menuAccount,
-.sectionAccountPart2:hover .menuAccount {
-    display: block;
+    padding: 8px 0;
+    /* Espaciado adecuado */
 }
 
 .collapsed .menuAccount {
-    /* left: 50%; */
+    /* display: block; */
+    /* Mostrar el menú cuando se está colapsado */
+    position: absolute;
+    top: 100%;
+    /* Alinea debajo del elemento */
+    left: 50%;
+    /* Centrado horizontalmente */
     transform: translateX(-50%);
-    /* width: max-content; */
-    position: relative;
-    right: -2;
-    left: -2;
-
+    /* Ajusta el centro */
+    width: auto;
+    /* Se ajusta al contenido */
 }
 
 .dropdownItem {
-    padding: 0;
+    padding: auto;
+    /* Asegura que los items no se vean demasiado comprimidos */
     border: 0;
-}
-
-.collapsed .dropdownItem{
-    padding: 2px 10px;
 }
 
 .link {
     color: #333;
     text-decoration: none;
     padding: auto;
+    display: block;
+    text-align: center;
+    /* Hace que los enlaces sean bloques */
 }
 
-.collapsed .link{
+.collapsed .link {
     padding: 0;
-    border: 0;
     margin: 0;
 }
 
 .link:hover {
     background-color: #007bff;
-    /* Color de fondo azul al pasar el ratón */
     color: #ffffff;
-    /* Color del texto blanco al pasar el ratón */
+}
+
+.buttonLink {
+    color: #333;
+    text-decoration: none;
+    padding: 10px;
+    display: block;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    /* text-align: left; */
+}
+
+.collapsed .buttonLink {
+    padding: 0;
+    margin: 0;
+}
+
+.buttonLink:hover {
+    background-color: #007bff;
+    /* Fondo azul al pasar el ratón */
+    color: #ffffff;
+    /* Texto blanco al pasar el ratón */
 }
