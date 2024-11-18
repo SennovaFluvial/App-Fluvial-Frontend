@@ -40,7 +40,7 @@ export const BranchSection = ({ isCollapsed }) => {
             <ul className='navbar-nav me-auto mb-2 mb-lg-0'>
                 <li className="nav-item dropdown section-account-part2">
                     <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fas fa-map-marked-alt"></i>
+                        <i  className="fas fa-map-marked-alt"></i>
                         {!isCollapsed && <span className="menu-text"> Sucursales</span>}
                     </a>
                     <ul className="dropdown-menu menu-account">

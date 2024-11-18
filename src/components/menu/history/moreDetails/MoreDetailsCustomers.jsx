@@ -4,7 +4,9 @@ import { ControllerMoreDetails } from '../controllers/ControllerMoreDetails'
 import { Link } from 'react-router-dom'
 import { Grid } from '../../../animations/Grid'
 import { Spinner } from '../../../animations/Spiner'
-// import styles from '../../../../assets/css/shipment/shipment.module.css'
+import { ModalforComponent } from '../../../components/ModalforComponent'
+import { AddCustomer } from '../../agregar/AddCustomer'
+import { useState } from 'react'
 
 export const MoreDetails = ({ data = null }) => {
     let id, category, from
@@ -15,7 +17,17 @@ export const MoreDetails = ({ data = null }) => {
         ({ id, category } = useParams())
     }
 
-    const { filterData, urlUpdateData, loading } = ControllerMoreDetails({ id, category })
+    const { filterData, urlUpdateData, loading } = ControllerMoreDetails({ id, category, from })
+
+    const [openCloseModal, setOpenCloseModal] = useState(false);
+
+    const openModal = () => {
+        setOpenCloseModal(true);
+    };
+
+    const closeModal = () => {
+        setOpenCloseModal(false);
+    };
 
     if (loading) {
         return (
@@ -26,6 +38,7 @@ export const MoreDetails = ({ data = null }) => {
             </div>
         )
     }
+
 
     return (
         <>
@@ -302,16 +315,35 @@ export const MoreDetails = ({ data = null }) => {
                                         </Link>
                                     </>
                                 )}
+                                {
+                                    from && from == 'external' ? (
+                                        <>
+                                            <div>
+                                                <button className='more-details-btn more-details-btn-edi' onClick={openModal}>Editar</button>
+                                                {openCloseModal && (
+                                                    <ModalforComponent
+                                                        showModal={openCloseModal}
+                                                        handleClose={closeModal}
+                                                        BodyComponent={<AddCustomer dataOfUser={{ id, action: 'update' }} funcChangeState={setOpenCloseModal} />}
+                                                    />
+                                                )}
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Link to={category === "crew" ? url + `/${item.id}/update` : urlUpdateData} state={{ from: 'listado' }}>
+                                                <button className='more-details-btn more-details-btn-edit'>
+                                                    <span> Editar información </span><i className="fa-solid fa-pen-to-square icon-option"></i>
+                                                </button>
+                                            </Link>
+                                        </>
+                                    )
+                                }
 
-                                <Link to={category === "crew" ? url + `/${item.id}/update` : urlUpdateData} state={{ from: 'listado' }}>
-                                    <button className='more-details-btn more-details-btn-edit'>
-                                        <span> Editar información </span><i className="fa-solid fa-pen-to-square icon-option"></i>
-                                    </button>
-                                </Link>
                             </div >
-
                         </div >
                     </div >
+
                 )
 
             })}

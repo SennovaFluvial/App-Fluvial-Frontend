@@ -144,12 +144,11 @@ export const VerifyUserChangePassword = () => {
                 icon: "error",
                 timer: 3000,
             });
-
+            console.log(error)
             return false;
         }
 
     };
-
     return {
         updatePassword,
         handleChangeVerify,

@@ -159,7 +159,6 @@ export const ModuleShipment = () => {
 
                             <div className="col-md-4">
                                 <Inputs
-                                    type="number"
                                     text="Costo de Envío"
                                     name="costoEnvio"
                                     placeholder={'Cop Ej: 200000'}

@@ -31,7 +31,7 @@ export class ApiService {
 
             // Convierte los datos a formato JSON
             const jsonData = JSON.stringify(data);
-             
+
             // Realiza una solicitud POST a la API con los datos y encabezados proporcionados
             const response = await instance.post(url_api, jsonData, {
                 headers: {
@@ -42,7 +42,7 @@ export class ApiService {
 
             // Muestra un mensaje en la consola si la solicitud es exitosa
             // console.log("Respuesta del servidor:", response.data);
-            return response.data;
+            return url_api == '/auth/log-in' ? response : response.data;
 
         } catch (error) {
 

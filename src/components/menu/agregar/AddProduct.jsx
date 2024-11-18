@@ -8,9 +8,12 @@ import { TextArea } from '../../html components/TextArea.jsx';
 import { useLocation, useParams } from 'react-router';
 import { DocumentSuggestions } from '../../components/DocumentSuggestions.jsx';
 import { CancelButton } from '../../components/CancelButton.jsx';
+import { useEffect } from 'react';
 
-export const AddProduct = () => {
-    const { id, action } = useParams();
+export const AddProduct = ({ funcChangeState = null, dataOfUser = null }) => {
+    // Si `dataOfUser` existe, usa sus valores, si no, usa `useParams()`
+    const { id: paramId, action: paramAction } = useParams();  // Toma los valores de los parámetros de la URL
+    const { id, action } = dataOfUser || { id: paramId, action: paramAction };  // Desestructurando de `dataOfUser` o usando los valores de `useParams()`
 
     /* ELEMENTOS DE OPCIONES */
     const useOptionsLocationProduct = optionsLocationProduct;
@@ -19,10 +22,19 @@ export const AddProduct = () => {
     const useCategoriesOptions = useOptionsCategory();
     /* --------------------- */
 
-    const { handleChange, formData, errorsForms, handleSubmit, setFormData, isDisabled, setErrorsForms } = ControllerCreateUpdateProduct({ id, action }); // Componente de logica integrada en `AddProduct()`
+    const {
+        handleChange,
+        formData, errorsForms,
+        handleSubmit, setFormData,
+        isDisabled, setErrorsForms
+    } = ControllerCreateUpdateProduct({ id, action, funcChangeState }); // Componente de logica integrada en `AddProduct()`
 
     const location = useLocation();
     const from = location.state?.from || 'menu';
+
+    const handleCloseModal = () => {
+        funcChangeState(false)
+    }
 
     return (
         <>
@@ -280,10 +292,22 @@ export const AddProduct = () => {
 
 
                         <div className="text-center my-3">
-                            <CancelButton
-                                from={from}
-                                urlPageList={"../show-products"}
-                            />
+
+                            {funcChangeState ? (
+                                <>
+                                    <button type="button" className={styles.cancelar} onClick={handleCloseModal}>
+                                        Cancelar
+                                    </button>
+                                </>
+                            ) : (
+                                <>
+                                    <CancelButton
+                                        from={from}
+                                        urlPageList={"../show-products"}
+                                    />
+                                </>
+                            )}
+
                             <button type="submit" className={`${styles.guardar + " ms-2"} ${isDisabled ? "is-disabled-button" : ""}`}>
                                 {action === 'update' ? 'Actualizar' : 'Registrar'} Producto <i className="fa-solid fa-building-user"></i>
                             </button>

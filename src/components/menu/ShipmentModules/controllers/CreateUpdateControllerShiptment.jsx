@@ -1,21 +1,22 @@
 import { useState, useEffect } from "react"
-import { clearError, getCompanyUser, getIdForNumDocument, getProductsByDocumentNumber, handleStatusError, removeProductToSend, showProductsToSend, validationFieldSubmit } from "../../../../functions/functions"
+import { clearError, getCompanyUser, getIdForNumDocument, getProductsByDocumentNumber, handleStatusError, removeProductToSend, sanitizedValue, showProductsToSend, validationFieldSubmit } from "../../../../functions/functions"
 import { useNavigate } from "react-router"
 import Swal from "sweetalert"
 import { ApiService } from "../../../../class/ApiServices"
 import { useSearchFields } from "../../history/search/SearchFields"
 
-export const CreateUpdateControllerShiptment = () => {
+export const CreateUpdateControllerShiptment = ({ flag }) => {
 
     const nav = useNavigate()
     const [isDisabled, setIsDisabled] = useState(false)
     const [productosRemitente, setProductosRemitente] = useState([]) // Estado para almacenar los productos del remitente a mostrar
     const [productsToSend, setProductsToSend] = useState([]) // Productos selecionados
-    const [loading, setLoading] = useState(true); // Estado de carga
+    const [loading, setLoading] = useState(true) // Estado de carga
+    // const shouldUpdateFlag = JSON.parse(localStorage.getItem('shouldUpdateFlag'))
 
     // paginacion
-    const [elementForPage, setElementForPage] = useState(6);
-    const [currentPage, setCurrentPage] = useState(1);
+    const [elementForPage, setElementForPage] = useState(6)
+    const [currentPage, setCurrentPage] = useState(1)
 
     /* Inicializacion de variables */
     const [formData, setFormData] = useState({
@@ -43,10 +44,20 @@ export const CreateUpdateControllerShiptment = () => {
 
     /* HandleChange */
     const handleChange = (event) => {
+
         const { name, value } = event.target
+        if (name === undefined || value === undefined) {
+            console.error(`Error: uno o más valores son undefined. Detalles: 
+                    Name: ${name}, 
+                    Value: ${value}`
+            )
+            alert(`Error: 
+                    Name es ${name === undefined ? 'undefined' : name}, 
+                    Value es ${value === undefined ? 'undefined' : value}`)
+            return // Detenemos la ejecución si hay un error
+        }
 
         if (name === "productosIds") {
-
             setFormData(prevState => ({
                 ...prevState,
                 productosIds: [...prevState.productosIds, parseInt(value, 10)]
@@ -54,7 +65,9 @@ export const CreateUpdateControllerShiptment = () => {
         } else {
             setFormData(prevState => ({
                 ...prevState,
-                [name]: value
+                [name]: (name === 'tipoPago' || name === 'estadoPago' || name === 'estadoEntrega')
+                    ? value
+                    : sanitizedValue(value)
             }))
         }
 
@@ -66,10 +79,20 @@ export const CreateUpdateControllerShiptment = () => {
                 (!/^\d+$/.test(value) || value.length < 5 || value.length > 11 || Number(value) < 0)
             ) {
                 handleStatusError(setErrorsForms, name, "Debe ser un número entero positivo entre 5 y 11 dígitos")
+            } else if (
+                name === 'costoEnvio' &&
+                (isNaN(value) || value.trim() === "" || Number(value) <= 0)
+            ) {
+                handleStatusError(
+                    setErrorsForms,
+                    name,
+                    "Debe ser un número positivo válido"
+                )
             } else {
                 clearError(setErrorsForms, name)
             }
         }
+
     }
 
     /* Funciones terceras */
@@ -94,22 +117,23 @@ export const CreateUpdateControllerShiptment = () => {
             "packagingType",
             "specialHandlingInstructions"
         ]
-    );
+    )
 
-    const totalFilteredItems = filteredItems.length;
-    const totalPages = Math.ceil(totalFilteredItems / elementForPage);
+    const totalFilteredItems = filteredItems.length
+    const totalPages = Math.ceil(totalFilteredItems / elementForPage)
 
     useEffect(() => {
         if (totalFilteredItems === 0) {
-            setCurrentPage(1);
+            setCurrentPage(1)
         } else if (currentPage > totalPages) {
-            setCurrentPage(totalPages);
+            setCurrentPage(totalPages)
         }
-    }, [filteredItems, totalPages, currentPage, totalFilteredItems]);
+    }, [filteredItems, totalPages, currentPage, totalFilteredItems])
 
-    const lastIndex = currentPage * elementForPage;
-    const firstIndex = lastIndex - elementForPage;
-    const paginatedItems = filteredItems.slice(firstIndex, lastIndex);
+    const lastIndex = currentPage * elementForPage
+    const firstIndex = lastIndex - elementForPage
+    const paginatedItems = filteredItems.slice(firstIndex, lastIndex)
+
 
     /* Efectos terceros */
 
@@ -119,23 +143,41 @@ export const CreateUpdateControllerShiptment = () => {
             await getCompanyUser('/api/v1/companie/users', 'companiaNombre', setFormData)
         }
 
-        getCompany() // ejecucion
+        getCompany()
     }, [])
 
     /** */
     useEffect(() => {
         const fetchProducts = async () => {
+            if (!formData.remitenteCedula) return // Valida que haya un valor válido
 
-            setLoading(true) // cargando
-
-            const response = await getProductsByDocumentNumber(formData.remitenteCedula)
-            setProductosRemitente(response)
-
-            setLoading(false) // cargando
+            try {
+                setLoading(true) // Activa el estado de carga
+                const response = await getProductsByDocumentNumber(formData.remitenteCedula)
+                setProductosRemitente(response)
+            } catch (error) {
+                console.error("Error fetching products:", error) // Manejo de errores
+            } finally {
+                setLoading(false)
+            }
         }
 
+        // Ejecutar la función solo si flag es true
+
         fetchProducts()
-    }, [formData.remitenteCedula])
+
+
+    }, [formData.remitenteCedula, flag])
+
+
+    /** */
+    useEffect(() => {
+        // Eliminar la bandera del localStorage solo una vez cuando el componente se monte
+        if (flag) {
+            localStorage.removeItem('shouldUpdateFlag');
+            console.log('Flag removed');
+        }
+    }, [flag])
 
     /** */
     useEffect(() => {
@@ -176,6 +218,7 @@ export const CreateUpdateControllerShiptment = () => {
 
         if (formData.remitenteCedula) fetchRemitente()
     }, [formData.remitenteCedula])
+
     /** */
     useEffect(() => {
         const fetchDestinatario = async () => {
@@ -198,8 +241,6 @@ export const CreateUpdateControllerShiptment = () => {
 
         if (formData.destinatarioCedula) fetchDestinatario()
     }, [formData.destinatarioCedula])
-
-    /* Efecto para el isDisabled */
 
     /* HandleSubmit */
     const handleSubmit = async (event) => {
@@ -281,6 +322,7 @@ export const CreateUpdateControllerShiptment = () => {
         }
 
     }
+
     return {
         formData,
         setFormData,

@@ -1,20 +1,25 @@
-import { Select } from '../../html components/Selects.jsx';
-import { Inputs } from '../../html components/Inputs.jsx';
+import { Select } from '../../html components/Selects.jsx'
+import { Inputs } from '../../html components/Inputs.jsx'
 import styles from '../../../assets/css/Forms.module.css'
-import { OptionsTypeDocument, genero, maritalStatus, nationality, useOptionsCities, useOptionsDepto, personType } from '../update/options/arrays.jsx';
-import { useParams } from 'react-router';
-import { ControllerCreateUpdateCustomer } from './controllers/ControllerCreateUpdateCustomer.jsx';
-import { useLocation } from 'react-router-dom';
-import { CancelButton } from '../../components/CancelButton.jsx';
 
-export const AddCustomer = () => {
-    const { id, action } = useParams();
-    const cities = useOptionsCities(); // Se debe de hacer esto para mostrar las ciudades.
+import { OptionsTypeDocument, genero, maritalStatus, nationality, useOptionsCities, useOptionsDepto, personType } from '../update/options/arrays.jsx'
+import { useParams } from 'react-router'
+import { ControllerCreateUpdateCustomer } from './controllers/ControllerCreateUpdateCustomer.jsx'
+import { useLocation } from 'react-router-dom'
+import { CancelButton } from '../../components/CancelButton.jsx'
 
-    const { formData, errorsForms, handleChange, handleSubmit, isDisabled } = ControllerCreateUpdateCustomer({ id, action });
+export const AddCustomer = ({ funcChangeState = null, dataOfUser = null }) => {
+    const { id, action } = dataOfUser ? dataOfUser : useParams()
 
-    const location = useLocation();
-    const from = location.state?.from || 'menu';
+    const cities = useOptionsCities()
+    const { formData, errorsForms, handleChange, handleSubmit, isDisabled } = ControllerCreateUpdateCustomer({ id, action, funcChangeState })
+
+    const location = useLocation()
+    const from = location.state?.from || 'menu'
+
+    const handleCloseModal = () => {
+        funcChangeState(false)
+    }
 
     return (
         <>
@@ -108,10 +113,20 @@ export const AddCustomer = () => {
                             </div>
                         </div>
                         <div className="text-center">
-                            <CancelButton
-                                from={from}
-                                urlPageList={"../show-customers"}
-                            />
+                            {funcChangeState ? (
+                                <>
+                                    <button type="button" className={styles.cancelar} onClick={handleCloseModal}>
+                                        Cancelar
+                                    </button>
+                                </>
+                            ) : (
+                                <>
+                                    <CancelButton
+                                        from={from}
+                                        urlPageList={"../show-customers"}
+                                    />
+                                </>
+                            )}
                             <button
                                 type="submit"
                                 className={`${styles.guardar + " ms-2"} ${isDisabled ? "is-disabled-button" : ""}`}>
@@ -122,5 +137,5 @@ export const AddCustomer = () => {
                 </div>
             </div>
         </>
-    );
-};
+    )
+} 

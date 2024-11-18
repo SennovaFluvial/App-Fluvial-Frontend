@@ -1,5 +1,5 @@
-import { ApiService } from "../class/ApiServices";
-import { saveAs } from 'file-saver';
+import { ApiService } from "../class/ApiServices"
+import { saveAs } from 'file-saver'
 
 /**
  * Maneja y actualiza los errores en los formularios.
@@ -25,14 +25,14 @@ export const handleStatusError = (setErrorsForms, nameE, messegue) => {
  */
 export const showCustomers = async (setPeopleInfo, urlApi) => {
     try {
-        const response = await ApiService.get(urlApi);
+        const response = await ApiService.get(urlApi)
         if (response) {
-            setPeopleInfo(response);
+            setPeopleInfo(response)
         }
     } catch (error) {
-        console.error("Ocurrió un error al intentar mostrar los datos", error);
+        console.error("Ocurrió un error al intentar mostrar los datos", error)
     }
-};
+}
 
 /**
  * Elimina un error específico del estado de errores de un formulario.
@@ -44,9 +44,9 @@ export const showCustomers = async (setPeopleInfo, urlApi) => {
  */
 export const clearError = (setErrorsForms, name) => {
     setErrorsForms(prevErrors => {
-        const { [name]: removed, ...rest } = prevErrors;
-        return rest;
-    });
+        const { [name]: removed, ...rest } = prevErrors
+        return rest
+    })
 }
 
 /**
@@ -63,16 +63,16 @@ export const clearError = (setErrorsForms, name) => {
  * @returns {boolean} - Devuelve `true` si hay errores en el formulario, `false` en caso contrario.
  *
  * @example
- * const hasErrors = validationFieldSubmit(setErrorsForms, formData, event);
+ * const hasErrors = validationFieldSubmit(setErrorsForms, formData, event)
  * if (hasErrors) {
- *     console.log("Hay errores en el formulario.");
+ *     console.log("Hay errores en el formulario.")
  * } else {
- *     console.log("El formulario es válido.");
+ *     console.log("El formulario es válido.")
  * }
  */
 export const validationFieldSubmit = (setErrorsForms, formData, event) => {
-    const formElements = event.target.elements;
-    let hasErrors = false;
+    const formElements = event.target.elements
+    let hasErrors = false
 
     // Itera sobre los elementos del formulario
     for (let element of formElements) {
@@ -83,12 +83,12 @@ export const validationFieldSubmit = (setErrorsForms, formData, event) => {
             !formData[element.name].trim() &&
             element.name !== "specialHandlingInstructions" // Evita validar este campo
         ) {
-            handleStatusError(setErrorsForms, element.name, "Campo obligatorio");
-            hasErrors = true;
+            handleStatusError(setErrorsForms, element.name, "Campo obligatorio")
+            hasErrors = true
         }
     }
 
-    return hasErrors;
+    return hasErrors
 }
 
 /**
@@ -107,22 +107,22 @@ export const validationFieldSubmit = (setErrorsForms, formData, event) => {
  * 
  * @example
  * // Uso de la función para obtener el nombre de la empresa y actualizar el campo 'companyName'
- * getCompanyUser("/api/v1/companie/users", "companyName", setFormData);
+ * getCompanyUser("/api/v1/companie/users", "companyName", setFormData)
  */
 export const getCompanyUser = async (url_api, fieldName, setFormData) => {
     try {
-        const response = await ApiService.get(url_api);
+        const response = await ApiService.get(url_api)
 
         if (response) {
             setFormData(
                 prevState => ({
                     ...prevState, [fieldName]: response[0].company.name
                 })
-            );
+            )
         }
 
     } catch (error) {
-        console.error("Error al intentar obtener el nombre de la empresa", error);
+        console.error("Error al intentar obtener el nombre de la empresa", error)
     }
 }
 
@@ -142,14 +142,14 @@ export const getCompanyUser = async (url_api, fieldName, setFormData) => {
  */
 export const getInfoProducts = async (setFieldsUpdate, urlApi) => {
     try {
-        const response = await ApiService.get(urlApi);
+        const response = await ApiService.get(urlApi)
 
         if (response) {
-            setFieldsUpdate(response);
+            setFieldsUpdate(response)
         }
 
     } catch (error) {
-        console.error("Error al intentar obtener la informacion de los productos", error);
+        console.error("Error al intentar obtener la informacion de los productos", error)
     }
 }
 
@@ -170,10 +170,10 @@ export const getInfoProducts = async (setFieldsUpdate, urlApi) => {
  */
 export const idIdentifier = async (categoryName, setFormData) => {
     try {
-        const response = await ApiService.get("/api/v1/product-category/all");
+        const response = await ApiService.get("/api/v1/product-category/all")
 
         if (response && Array.isArray(response)) {
-            const filterElement = response.find(item => item.categoryName === categoryName);
+            const filterElement = response.find(item => item.categoryName === categoryName)
 
             if (filterElement) {
                 setFormData(prevState => ({
@@ -182,13 +182,13 @@ export const idIdentifier = async (categoryName, setFormData) => {
                         ...prevState.category,
                         categoryId: filterElement.categoryId
                     }
-                }));
+                }))
             }
         }
     } catch (error) {
-        console.error("Error fetching product categories:", error);
+        console.error("Error fetching product categories:", error)
     }
-};
+}
 
 /**
  * Maneja la cancelación de acciones y redirige según la página de origen.
@@ -211,16 +211,16 @@ export const idIdentifier = async (categoryName, setFormData) => {
  *     from: 'menu',
  *     urlPageList: '/someOtherPage',
  *     navigate: navigateFunction
- * });
+ * })
  * ```
  */
 export const handleCancel = ({ from, urlPageList, navigate }) => {
     if (from === 'menu') {
-        return navigate('/adminSection');
+        return navigate('/adminSection')
     } else {
-        return navigate(urlPageList);
+        return navigate(urlPageList)
     }
-};
+}
 
 /**
  * Completa los campos de un formulario con datos de un elemento filtrado
@@ -241,9 +241,9 @@ export const handleCancel = ({ from, urlPageList, navigate }) => {
  *                     del elemento filtrado.
  */
 export const completeFields = ({ formData, id, arrayApiResponse, nameFieldId }) => {
-    const copyFormData = { ...formData };
+    const copyFormData = { ...formData }
 
-    const filteredElement = arrayApiResponse.find((itemFilter) => itemFilter[nameFieldId] === parseInt(id, 10));
+    const filteredElement = arrayApiResponse.find((itemFilter) => itemFilter[nameFieldId] === parseInt(id, 10))
 
     if (filteredElement) {
         Object.keys(copyFormData).forEach((key) => {
@@ -253,18 +253,18 @@ export const completeFields = ({ formData, id, arrayApiResponse, nameFieldId }) 
                 Object.keys(copyFormData[key]).forEach((nestedKey) => {
                     if (nestedKey in filteredElement) {
 
-                        copyFormData[key][nestedKey] = filteredElement[nestedKey];
+                        copyFormData[key][nestedKey] = filteredElement[nestedKey]
                     }
-                });
+                })
             } else if (key in filteredElement) {
 
-                copyFormData[key] = filteredElement[key];
+                copyFormData[key] = filteredElement[key]
             }
-        });
+        })
     }
 
-    return copyFormData;
-};
+    return copyFormData
+}
 
 /**
  * Obtiene elementos de un endpoint específico.
@@ -274,13 +274,13 @@ export const completeFields = ({ formData, id, arrayApiResponse, nameFieldId }) 
  */
 export const getElementByEndpoint = async (urlEndpoint) => {
     try {
-        const response = await ApiService.get(urlEndpoint);
-        return response || [];
+        const response = await ApiService.get(urlEndpoint)
+        return response || []
     } catch (error) {
-        console.error(error);
-        return [];
+        console.error(error)
+        return []
     }
-};
+}
 
 /**
  * Filtra y elimina caracteres no permitidos en una cadena.
@@ -302,9 +302,10 @@ export const getElementByEndpoint = async (urlEndpoint) => {
  * sanitizedValue("user@example.com") // "user@example.com"
  */
 export const sanitizedValue = (value) => {
-    const validCharactersRegex = /[^a-zA-Z0-9\s@.\-]/g;
-    return value.replace(validCharactersRegex, '');
+    const validCharactersRegex = /[^a-zA-Z0-9\s@.\-áéíóúÁÉÍÓÚñÑ]/g
+    return value.replace(validCharactersRegex, '')
 }
+
 
 /**
  * Realiza una solicitud a la API para descargar un archivo y lo guarda en el dispositivo con el nombre y la extensión especificada.
@@ -318,27 +319,27 @@ export const sanitizedValue = (value) => {
 export const downloadReport = async (url_report_api, name_field, extension = '.pdf') => {
     try {
         // Realiza la solicitud a la API que ahora devuelve un Blob (archivo)
-        const response = await ApiService.getReports(url_report_api);
+        const response = await ApiService.getReports(url_report_api)
 
         // Verifica si la respuesta contiene un Blob
         if (response && response instanceof Blob) {
             // Guardamos el archivo con la extensión especificada
-            saveAs(response, `${name_field}${extension}`);
+            saveAs(response, `${name_field}${extension}`)
         } else {
-            throw new Error('La respuesta no es un archivo válido.');
+            throw new Error('La respuesta no es un archivo válido.')
         }
     } catch (error) {
-        console.error("Error al descargar el informe:", error);
-        alert(`Hubo un error al intentar descargar el informe: ${error.message}`);
+        console.error("Error al descargar el informe:", error)
+        alert(`Hubo un error al intentar descargar el informe: ${error.message}`)
     }
-};
+}
 
 /**
  * Obtiene el identificador de un documento basado en un número de documento específico.
  *
  * Esta función hace una solicitud a una API para obtener una lista de objetos y luego busca el objeto
  * cuyo valor en el campo `nameFielDocument` coincida con el `numDocument` proporcionado. Si encuentra el objeto,
- * retorna su identificador; de lo contrario, retorna `null`.
+ * retorna su identificador de lo contrario, retorna `null`.
  *
  * @param {Object} params - Parámetros para la solicitud.
  * @param {string} params.url_api - La URL de la API para obtener los datos.
@@ -349,16 +350,16 @@ export const downloadReport = async (url_report_api, name_field, extension = '.p
  */
 export const getIdForNumDocument = async ({ url_api, nameFielDocument, numDocument }) => {
     try {
-        const response = await ApiService.get(url_api);
+        const response = await ApiService.get(url_api)
         // Verifica si response es un arreglo antes de hacer la búsqueda
         if (Array.isArray(response)) {
             // Retorna directamente el id si se encuentra, de lo contrario retorna null
-            return response.find(item => item[nameFielDocument] === numDocument)?.id || null;
+            return response.find(item => item[nameFielDocument] === numDocument)?.id || null
         }
-        return null;
+        return null
     } catch (error) {
-        console.log('Error al intentar obtener el identificador por número de documento', numDocument, error);
-        return null; // Retorna null si hay un error
+        console.log('Error al intentar obtener el identificador por número de documento', numDocument, error)
+        return null // Retorna null si hay un error
     }
 }
 
@@ -372,16 +373,16 @@ export const getIdForNumDocument = async ({ url_api, nameFielDocument, numDocume
  */
 export const getProductsByDocumentNumber = async (numDocument) => {
     if (!numDocument) {
-        console.error("Número de documento es requerido.");
-        return [];
+        console.error("Número de documento es requerido.")
+        return []
     }
 
     try {
-        const response = await ApiService.get(`/api/v1/product/document/${numDocument}/products`);
-        return response || [];
+        const response = await ApiService.get(`/api/v1/product/document/${numDocument}/products`)
+        return response || []
     } catch (error) {
-        console.error(`Error al obtener los productos para el documento ${numDocument}:`, error);
-        return [];
+        console.error(`Error al obtener los productos para el documento ${numDocument}:`, error)
+        return []
     }
 }
 
@@ -403,12 +404,12 @@ export const getProductsByDocumentNumber = async (numDocument) => {
  *   { id: 2, name: "Producto 2" },
  *   { id: 3, name: "Producto 3" },
  *   { id: 4, name: "Producto 4" }
- * ];
+ * ]
  * 
- * const ids = [1, 3];
+ * const ids = [1, 3]
  * 
- * const result = showProductsToSend(products, ids);
- * console.log(result);
+ * const result = showProductsToSend(products, ids)
+ * console.log(result)
  * // Resultado: [
  * //   { id: 1, name: "Producto 1" },
  * //   { id: 3, name: "Producto 3" }
@@ -430,11 +431,11 @@ export const removeProductToSend = (setProductsToSend, setFormData, id) => {
         setFormData(prevState => ({
             ...prevState,
             productosIds: prevState.productosIds.filter(productId => productId !== id)
-        }));
+        }))
 
-        setProductsToSend(prevProductsToSend => prevProductsToSend.filter(product => product.id !== id));
+        setProductsToSend(prevProductsToSend => prevProductsToSend.filter(product => product.id !== id))
     }
-};
+}
 
 /**
  * Obtiene un elemento específico de una lista consultando un endpoint y buscando coincidencias por un campo.
@@ -445,15 +446,15 @@ export const removeProductToSend = (setProductsToSend, setFormData, id) => {
  */
 export const getElementoPorCampo = async (campoBuscar, valorIdentificador, apiUrl) => {
     try {
-        const respuesta = await ApiService.get(apiUrl);
+        const respuesta = await ApiService.get(apiUrl)
 
         if (respuesta) {
             // Buscar coincidencia en el campo especificado
-            const elemento = respuesta.find((item) => item[campoBuscar] == valorIdentificador);
-            return elemento ? [elemento] : []; // Retorna un array con el elemento o un array vacío si no se encuentra
+            const elemento = respuesta.find((item) => item[campoBuscar] == valorIdentificador)
+            return elemento ? [elemento] : [] // Retorna un array con el elemento o un array vacío si no se encuentra
         }
     } catch (error) {
-        console.log(`Error al filtrar la información con identificador ${valorIdentificador} con valor - ${campoBuscar}:`, error);
-        return [];
+        console.log(`Error al filtrar la información con identificador ${valorIdentificador} con valor - ${campoBuscar}:`, error)
+        return []
     }
-};
+}
