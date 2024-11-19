@@ -1,32 +1,41 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import styles from '../../assets/css/section.module.css';
 
 export const ShipmentSection = ({ isCollapsed }) => {
-    return (
-        <>
-            <ul className='navbar-nav me-auto mb-2 mb-lg-0'>
-                <li className='nav-item dropdown section-account-part2'>
-                    <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i  className="fas fa-dolly"></i>
-                        {!isCollapsed && <span className="menu-text"> Envíos</span>}
-                    </a>
-                    <ul className="dropdown-menu menu-account">
-                        <>
-                            <li className='dropdown-item text-black'>
-                                <Link to={'show-shipment'}>
-                                    <i className="fa-solid fa-box"></i> Listado de Envíos
-                                </Link>
-                            </li>
+    const [isOpen, setIsOpen] = useState(false);
 
-                            <li className='dropdown-item text-black'>
-                                <Link to={'register-shipment'} state={{ from: 'menu' }}>
-                                    <i className="fa-solid fa-circle-plus"></i> Creación de Enviós
-                                </Link>
-                            </li>
-                        </>
+    const toggleMenu = () => {
+        setIsOpen(!isOpen);
+    };
+
+    const closeMenu = () => {
+        setIsOpen(false);
+    };
+
+    return (
+        <div className={styles.Section}>
+            <ul className={styles.navbarNav}>
+                <li className={styles.sectionAccountPart2}>
+                    <button onClick={() => { toggleMenu(); console.log(`Menu toggled, isOpen: ${!isOpen}`); }} className={styles.navLink} aria-haspopup="true" aria-expanded={isOpen} >
+                        <i className={`fas fa-dolly me-2${isCollapsed ? styles.iconCentered : ''}`}></i>
+                        {!isCollapsed && <span className="menu-text"> Envíos</span>}
+                    </button>
+                    <ul className={styles.menuAccount} style={{ display: isOpen ? 'block' : 'none' }} >
+                        <li className={styles.dropdownItem}>
+                            <Link to={'show-shipment'} className={styles.link} onClick={closeMenu}>
+                                <i className="fa-solid fa-box me-2"></i>Listado de Enviós
+                            </Link>
+                        </li>
+
+                        <li className={styles.dropdownItem}>
+                            <Link to={'register-shipment'} state={{ from: 'menu' }} className={styles.link} onClick={closeMenu}>
+                                <i className="fa-solid fa-circle-plus me-2"></i> Creación de Enviós
+                            </Link>
+                        </li>
                     </ul>
                 </li>
             </ul>
-        </>
+        </div>
     )
 }

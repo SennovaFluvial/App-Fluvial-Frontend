@@ -137,9 +137,6 @@ export const MoreDetails = ({ data = null }) => {
                                 <h3 className="subTitle">{category === "vehicle" ? "Capaciades de carga" : "Información de contacto"}</h3>
                                 <div className="section">
                                     <div className="row">
-                                        <div className="col-md-3">
-                                            <strong>Nombres:</strong> {category === "vehicle" ? item.nombre : item.name}
-                                        </div>
 
                                         {category === "vehicle" && (
                                             <>

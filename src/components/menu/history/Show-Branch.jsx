@@ -43,15 +43,15 @@ export const ShowBranch = () => {
     const location = useLocation();
     const from = location.state?.from || 'menu';
     
-    if (loading) {
-        return (
-            <div className="container">
-                <Grid>
-                    <Spinner />
-                </Grid>
-            </div>
-        );
-    }
+    // if (loading) {
+    //     return (
+    //         <div className="container">
+    //             <Grid>
+    //                 <Spinner />
+    //             </Grid>
+    //         </div>
+    //     );
+    // }
 
     return (
         <>

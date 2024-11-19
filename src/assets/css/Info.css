@@ -1,45 +1,61 @@
+/* Estilos generales compartidos */
 :root {
     --white: #fff;
     --green: #00AF00;
-    --black: #0000001a;
+    --black: rgba(0, 0, 0, 0.1);
+    --hover-green: #007a00;
 }
 
-.info-container {
-    padding: 20px;
+.info-container,
+.reports-container {
+    padding: 30px;
     background-color: #f7f7f7;
-    border-radius: 10px;
-    box-shadow: 0 0 10px var(--black);
-    margin: 20px
+    border-radius: 15px;
+    box-shadow: 0 4px 15px var(--black);
+    margin: 20px auto;
+    max-width: 1200px;
 }
 
-.info-container h1 {
-    font-size: 24px;
+.info-container h1,
+.reports-container h1 {
+    font-size: 36px;
     font-weight: bold;
-    margin-bottom: 10px;
     color: var(--green);
+    /* text-align: center; */
+    margin-bottom: 20px;
 }
 
-.h4_title {
+.card {
+    background-color: var(--white);
+    border-radius: 15px;
+    box-shadow: 0 4px 10px var(--black);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-    font-size: 30px;
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 6px 20px var(--hover-green);
+}
+
+.card-title {
+    font-size: 18px;
+    color: #333;
     font-weight: bold;
-    margin-bottom: 10px;
-    color: var(--green);
-
 }
 
+/* .card img {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+} */
+
+/* Estilos específicos para Info */
 .info-container p {
     font-size: 16px;
     color: #666;
     margin-bottom: 20px;
 }
 
-.card {
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px var(--green);
-}
-
-.row {
-    --bs-gutter-x: 0;
+/* Estilos específicos para Reports */
+.reports-container .card-title {
+    text-align: center;
 }

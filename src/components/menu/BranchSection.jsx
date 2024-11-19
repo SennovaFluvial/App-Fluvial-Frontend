@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { VerifyUserChangePassword } from './agregar/controllers/VerifyUserChangePassword';
 import { ModalRequestPassword } from './agregar/ModalRequestPassword';
+import styles from '../../assets/css/section.module.css';
 
 export const BranchSection = ({ isCollapsed }) => {
 
     const nav = useNavigate();
     const [showModal, setShowModal] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
 
     const { updatePassword,
         handleChangeVerify,
@@ -35,32 +37,40 @@ export const BranchSection = ({ isCollapsed }) => {
         }
     }, [updatePassword])
 
+    const toggleMenu = () => {
+        setIsOpen(!isOpen);
+    };
+
+    const closeMenu = () => {
+        setIsOpen(false);
+    };
+
     return (
         <>
-            <ul className='navbar-nav me-auto mb-2 mb-lg-0'>
-                <li className="nav-item dropdown section-account-part2">
-                    <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i  className="fas fa-map-marked-alt"></i>
-                        {!isCollapsed && <span className="menu-text"> Sucursales</span>}
-                    </a>
-                    <ul className="dropdown-menu menu-account">
-                        <>
-                            <li className='dropdown-item text-black'>
-                                <Link to={'show-branch'}>
+            <div className={styles.Section}>
+                <ul className={styles.navbarNav}>
+                    <li className={styles.sectionAccountPart2}>
+                        <button onClick={() => { toggleMenu(); console.log(`Menu toggled, isOpen: ${!isOpen}`); }} className={styles.navLink} aria-haspopup="true" aria-expanded={isOpen} >
+                            <i className={`fas fa-map-marked-alt me-2${isCollapsed ? styles.iconCentered : ''}`}></i>
+                            {!isCollapsed && <span className="menu-text"> Sucursales</span>}
+                        </button>
+                        <ul className={styles.menuAccount} style={{ display: isOpen ? 'block' : 'none' }} >
+                            <li className={styles.dropdownItem}>
+                                <Link to={'show-branch'} className={styles.link} onClick={closeMenu}>
                                     <i className="fa-solid fa-box"></i> Listado de Sucursales
                                 </Link>
                             </li>
 
-                            <button className='btn' onClick={onStatusChange}>
-                                <li className='dropdown-item text-black'>
-                                <i className="fa-solid fa-circle-plus"></i> Creación de Sucursales
-                                </li>
-                            </button>
+                            <li className={styles.dropdownItem}>
+                                <button onClick={onStatusChange} className={styles.buttonLink}>
+                                    <i className="fa-solid fa-circle-plus me-2"></i> Creación de Sucursales
+                                </button>
+                            </li>
 
-                        </>
-                    </ul>
-                </li>
-            </ul>
+                        </ul>
+                    </li>
+                </ul >
+            </div>
 
             {showModal && (
                 <ModalRequestPassword
@@ -71,7 +81,8 @@ export const BranchSection = ({ isCollapsed }) => {
                     errorsFormsVerify={errorsFormsVerify}
                     handleSubmitVerify={handleSubmitVerify}
                     formLogin={formLogin}
-                />)}
+                />)
+            }
 
         </>
     )
