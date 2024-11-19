@@ -165,7 +165,9 @@ export const CreateUpdateControllerShiptment = () => {
             } finally {
                 setLoading(false);
             }
-        };
+        }
+
+        fetchProducts()
 
     }, [formData.remitenteCedula, shouldUpdateFlag])
 
@@ -313,6 +315,7 @@ export const CreateUpdateControllerShiptment = () => {
         }
 
     }
+    console.log(formData.productosRemitente)
 
     return {
         formData,
