@@ -23,7 +23,6 @@ export const DocumentSuggestions = ({ numDocumentToSearch, setFormData, setError
     const [filteredDocuments, setFilteredDocuments] = useState([])
     const { shouldUpdateFlag, setShouldUpdateFlag } = useGlobalContext() // Variables globales
 
-    console.log('shouldUpdateFlag en el componente de DocumentSuggestions: ', shouldUpdateFlag)
     const handleChangelistState = async () => {
         try {
             const urlApi = "/api/v1/customers/all"

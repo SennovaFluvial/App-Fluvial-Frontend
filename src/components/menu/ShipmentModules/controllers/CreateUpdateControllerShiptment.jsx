@@ -171,7 +171,6 @@ export const CreateUpdateControllerShiptment = () => {
 
     }, [formData.remitenteCedula, shouldUpdateFlag])
 
-
     /** */
     useEffect(() => {
         if (formData.productosIds.length > 0) {
@@ -315,7 +314,6 @@ export const CreateUpdateControllerShiptment = () => {
         }
 
     }
-    console.log(formData.productosRemitente)
 
     return {
         formData,

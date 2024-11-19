@@ -61,6 +61,33 @@ export const ModuleSender = () => {
                             />
                         </div>
 
+                        <div className={styles.fila}>
+                            <div className="col-md-auto">
+                                <button className={styles.cancelar} onClick={handleBack}>
+                                    Cancelar <i className="fa-solid fa-ban"></i>
+                                </button>
+                            </div>
+
+                            <div className="col-md-auto">
+                                <button onClick={openModal} className={`${styles.addCustomer}`}>
+                                    <i className="fa-solid fa-user-plus"></i>
+                                </button>
+                            </div>
+                            {openCloseModal && (
+                                <ModalforComponent
+                                    showModal={openCloseModal}
+                                    handleClose={closeModal}
+                                    BodyComponent={<AddCustomer funcChangeState={setOpenCloseModal} />}
+                                />
+                            )}
+
+                            <div className="col-md-auto">
+                                <button onClick={handleNext} className={`${styles.siguiente + " ms-2"} ${isDisabled ? "is-disabled-button" : ""}`}>
+                                    Siguiente <i className="fa-regular fa-circle-right"></i>
+                                </button>
+                            </div>
+                        </div>
+
                         {formData.idRemitente && formData.remitenteCedula ? (
                             <>
                                 <MoreDetails data={{ id: formData.idRemitente, category: 'customer', from: 'external' }} />
@@ -69,35 +96,8 @@ export const ModuleSender = () => {
                         ) : ''}
 
                     </div>
-
-                    <div className={styles.fila}>
-                        <div className="col-md-auto">
-                            <button className={styles.cancelar} onClick={handleBack}>
-                                Cancelar <i className="fa-solid fa-ban"></i>
-                            </button>
-                        </div>
-
-                        <div className="col-md-auto">
-                            <button onClick={openModal} className={`${styles.addCustomer}`}>
-                                <i className="fa-solid fa-user-plus"></i>
-                            </button>
-                        </div>
-                        {openCloseModal && (
-                            <ModalforComponent
-                                showModal={openCloseModal}
-                                handleClose={closeModal}
-                                BodyComponent={<AddCustomer funcChangeState={setOpenCloseModal} />}
-                            />
-                        )}
-                        
-                        <div className="col-md-auto">
-                            <button onClick={handleNext} className={`${styles.siguiente + " ms-2"} ${isDisabled ? "is-disabled-button" : ""}`}>
-                                Siguiente <i className="fa-regular fa-circle-right"></i>
-                            </button>
-                        </div>
-                    </div>
                 </div>
-            </div >
+            </div>
         </>
     )
 }

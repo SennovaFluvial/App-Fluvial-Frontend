@@ -30,7 +30,6 @@ export const Info = () => {
         <div className="info-container">
             <h1>Información General</h1>
             <p>Bienvenido a la sección de información del dashboard. Aquí puedes encontrar pequeñas descripciones de algunos empleados.</p>
-            {/* {console.log("Hola4")} */}
             <Box sx={{ flexGrow: 1, padding: 4 }}>
                 <Typography variant="h4" component="h1" gutterBottom>
                     Tipos de Empleados

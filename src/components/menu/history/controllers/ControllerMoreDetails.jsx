@@ -37,7 +37,6 @@ export const ControllerMoreDetails = ({ id, category, from = null }) => {
             }
         }
         fetchCustomers()
-        console.log('Se ejecuto desde ControllerMoreDetails nuevamente', shouldUpdateFlag)
         setShouldUpdateFlag(false)
     }, [category, shouldUpdateFlag])  // Dependencia para cuando cambia `category` o `shouldUpdateFlag`
 
