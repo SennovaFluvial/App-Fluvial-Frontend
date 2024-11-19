@@ -3,6 +3,7 @@ import { clearError, completeFields, getCompanyUser, getElementByEndpoint, getIn
 import Swal from 'sweetalert';
 import { ApiService } from '../../../../../class/ApiServices';
 import { useNavigate } from 'react-router';
+import { useGlobalContext } from '../../../../../GlobalContext ';
 
 /**
  * Controlador para crear o actualizar un producto.
@@ -20,7 +21,8 @@ import { useNavigate } from 'react-router';
 export const ControllerCreateUpdateProduct = ({ funcChangeState, id, action }) => {
 
     const [isDisabled, setIsDisabled] = useState(false)
-    const [errorsForms, setErrorsForms] = useState({});
+    const [errorsForms, setErrorsForms] = useState({})
+    const { setShouldUpdateFlag } = useGlobalContext() // Variables globales
     const nav = useNavigate();
 
     const [formData, setFormData] = useState({
@@ -210,11 +212,11 @@ export const ControllerCreateUpdateProduct = ({ funcChangeState, id, action }) =
                     timer: 3000,
                     buttons: false
                 });
-                
+
                 // Cambiar el estado para ocultar el modal
                 if (funcChangeState) {
                     funcChangeState(false)
-                    localStorage.setItem('shouldUpdateFlag', 'true');
+                    setShouldUpdateFlag(true)
                 } else {
                     nav("../../adminSection/show-products");
                 }

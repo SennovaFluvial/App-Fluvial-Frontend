@@ -4,6 +4,7 @@ import swal from "sweetalert"
 import { useNavigate } from "react-router"
 import { Alert } from "../../../../class/alerts"
 import { clearError, completeFields, getElementByEndpoint, handleStatusError, sanitizedValue, validationFieldSubmit } from "../../../../functions/functions"
+import { useGlobalContext } from "../../../../GlobalContext "
 
 /**
  * Controlador para la creación y actualización de clientes.
@@ -30,8 +31,7 @@ export const ControllerCreateUpdateCustomer = ({ id, action, funcChangeState }) 
     const [isDisabled, setIsDisabled] = useState(false)
     const userNameUser = user?.username || null
     const [errorsForms, setErrorsForms] = useState({})
-    // const [shouldUpdate, setShouldUpdate] = useState(false)  // Bandera de actualización
-
+    const { setShouldUpdateFlag } = useGlobalContext() // Variables globales
 
     const [formData, setFormData] = useState({
         name: '', lastName: '', typeDocument: '', numDocument: '', email: '', dateOfBirth: '', nationality: '',
@@ -171,7 +171,8 @@ export const ControllerCreateUpdateCustomer = ({ id, action, funcChangeState }) 
                 // Cambiar el estado para ocultar el modal
                 if (funcChangeState) {
                     funcChangeState(false)
-                    localStorage.setItem('shouldUpdateFlag', 'true');  // Guardar como string 'true'
+                    setShouldUpdateFlag(true)
+                    
                 } else {
                     navigate("/adminSection/show-customers")
                 }

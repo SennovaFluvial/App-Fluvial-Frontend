@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { ApiService } from "../../class/ApiServices"
 import '../../assets/css/suggestions/stylesOptionsSuggestions.css'
 import { clearError } from "../../functions/functions"
+import { useGlobalContext } from "../../GlobalContext "
 
 /**
  * Componente que sugiere números de documentos y nombres de clientes.
@@ -20,10 +21,9 @@ import { clearError } from "../../functions/functions"
 export const DocumentSuggestions = ({ numDocumentToSearch, setFormData, setErrorsForms, nameField }) => {
     const [listNumDocuments, setListNumDocuments] = useState([])
     const [filteredDocuments, setFilteredDocuments] = useState([])
+    const { shouldUpdateFlag, setShouldUpdateFlag } = useGlobalContext() // Variables globales
 
-    // Obtener la bandera 'shouldUpdateFlag' desde localStorage
-    const shouldUpdateFlag = JSON.parse(localStorage.getItem('shouldUpdateFlag'))
-
+    console.log('shouldUpdateFlag en el componente de DocumentSuggestions: ', shouldUpdateFlag)
     const handleChangelistState = async () => {
         try {
             const urlApi = "/api/v1/customers/all"
@@ -42,15 +42,12 @@ export const DocumentSuggestions = ({ numDocumentToSearch, setFormData, setError
             console.error("Error al obtener documentos:", error)
         }
     }
-
+    // Escuchar eventos personalizados para forzar la actualización
     useEffect(() => {
-        handleChangelistState()  // Llamar la API para obtener los datos
-    }, [shouldUpdateFlag])   // Vuelve a ejecutarse si cambia la bandera
+        handleChangelistState()
 
-    useEffect(() => {
-        // Eliminar la bandera 'shouldUpdateFlag' del localStorage solo una vez cuando el componente se monte
-        localStorage.removeItem('shouldUpdateFlag')
-    }, [])   // Este useEffect solo se ejecuta una vez al montar el componente
+        setShouldUpdateFlag(false)
+    }, [shouldUpdateFlag])
 
     useEffect(() => {
         // Filtrar los documentos según el número de documento a buscar

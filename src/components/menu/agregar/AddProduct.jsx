@@ -8,7 +8,6 @@ import { TextArea } from '../../html components/TextArea.jsx';
 import { useLocation, useParams } from 'react-router';
 import { DocumentSuggestions } from '../../components/DocumentSuggestions.jsx';
 import { CancelButton } from '../../components/CancelButton.jsx';
-import { useEffect } from 'react';
 
 export const AddProduct = ({ funcChangeState = null, dataOfUser = null }) => {
     // Si `dataOfUser` existe, usa sus valores, si no, usa `useParams()`
@@ -207,7 +206,7 @@ export const AddProduct = ({ funcChangeState = null, dataOfUser = null }) => {
                                     text="¿Es Perecedero?"
                                     name="isPerishable"
                                     options={Booleano}
-                                    value={formData.isPerishable ? 'true' : 'false'}
+                                    value={formData.isPerishable}
                                     event={handleChange}
                                 />
                                 {errorsForms.isPerishable && <div className="text-danger">{errorsForms.isPerishable}</div>}
@@ -229,7 +228,7 @@ export const AddProduct = ({ funcChangeState = null, dataOfUser = null }) => {
                                     text="¿Materiales Peligrosos?"
                                     name="hazardousMaterials"
                                     options={Booleano}
-                                    value={formData.hazardousMaterials ? 'true' : 'false'}
+                                    value={formData.hazardousMaterials}
                                     event={handleChange}
                                 />
                                 {errorsForms.hazardousMaterials && <div className="text-danger">{errorsForms.hazardousMaterials}</div>}

@@ -19,19 +19,19 @@ export const MoreDetails = ({ data = null }) => {
 
     const { filterData, urlUpdateData, loading } = ControllerMoreDetails({ id, category, from })
 
-    const [openCloseModal, setOpenCloseModal] = useState(false);
+    const [openCloseModal, setOpenCloseModal] = useState(false)
 
     const openModal = () => {
-        setOpenCloseModal(true);
-    };
+        setOpenCloseModal(true)
+    }
 
     const closeModal = () => {
-        setOpenCloseModal(false);
-    };
+        setOpenCloseModal(false)
+    }
 
     if (loading) {
         return (
-            <div className="container d-flex justify-content-center align-items-center vh-100">
+            <div className="container">
                 <Grid>
                     <Spinner />
                 </Grid>

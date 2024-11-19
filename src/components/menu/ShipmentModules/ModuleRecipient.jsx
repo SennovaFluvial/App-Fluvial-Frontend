@@ -1,13 +1,17 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
 import { Inputs } from '../../html components/Inputs.jsx'
 import styles from '../../../assets/css/shipment/shipment.module.css'
-import { useShiptment } from './controllers/ProviderContextShiptmen.jsx';
-import { MoreDetails } from '../history/moreDetails/MoreDetailsCustomers.jsx';
-import { DocumentSuggestions } from '../../components/DocumentSuggestions.jsx';
+import { useShiptment } from './controllers/ProviderContextShiptmen.jsx'
+import { MoreDetails } from '../history/moreDetails/MoreDetailsCustomers.jsx'
+import { DocumentSuggestions } from '../../components/DocumentSuggestions.jsx'
+import { ModalforComponent } from '../../components/ModalforComponent.jsx'
+import { AddCustomer } from '../agregar/AddCustomer.jsx'
+import { useState } from 'react'
 
 export const ModuleRecipient = () => {
 
-    const navigate = useNavigate();
+    const navigate = useNavigate()
+    const [openCloseModal, setOpenCloseModal] = useState(false)
 
     // Context
     const {
@@ -21,13 +25,20 @@ export const ModuleRecipient = () => {
     // Context
 
     const handleNext = () => {
-        navigate('/adminSection/register-shipment/module-product');
-    };
+        navigate('/adminSection/register-shipment/module-product')
+    }
 
     const handleBack = () => {
-        navigate(-1);
-    };
+        navigate(-1)
+    }
 
+    const openModal = () => {
+        setOpenCloseModal(true)
+    }
+
+    const closeModal = () => {
+        setOpenCloseModal(false)
+    }
     return (
         <>
             <div className={styles.tarjeta}>
@@ -52,11 +63,13 @@ export const ModuleRecipient = () => {
                             />
                         </div>
 
-                        {formData.idDestinatario && (
+                        {formData.idDestinatario && formData.destinatarioCedula ? (
                             <>
                                 <MoreDetails data={{ id: formData.idDestinatario, category: 'customer', from: 'external' }} />
+
                             </>
-                        )}
+                        ) : ''}
+
                     </div>
 
                     <div className={styles.fila}>
@@ -65,6 +78,19 @@ export const ModuleRecipient = () => {
                                 Atrás <i className="fa-regular fa-circle-left"></i>
                             </button>
                         </div>
+
+                        <div className="col-md-auto">
+                            <button onClick={openModal} className={`${styles.addCustomer}`}>
+                                <i className="fa-solid fa-user-plus"></i>
+                            </button>
+                        </div>
+                        {openCloseModal && (
+                            <ModalforComponent
+                                showModal={openCloseModal}
+                                handleClose={closeModal}
+                                BodyComponent={<AddCustomer funcChangeState={setOpenCloseModal} />}
+                            />
+                        )}
 
                         <div className="col-md-auto">
                             <button onClick={handleNext} className={`${styles.siguiente + " ms-2"} ${isDisabled ? "is-disabled-button" : ""}`}>
