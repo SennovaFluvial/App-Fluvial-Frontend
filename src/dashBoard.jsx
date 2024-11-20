@@ -43,6 +43,7 @@ export const DashBoard = ({ user, setUser }) => {
     const logout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
+        localStorage.removeItem('tokenTimestamp');
         setUser(null);
         nav('/Login');
     };

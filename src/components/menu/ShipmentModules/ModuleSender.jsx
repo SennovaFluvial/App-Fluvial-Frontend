@@ -4,9 +4,13 @@ import styles from '../../../assets/css/shipment/shipment.module.css'
 import { DocumentSuggestions } from '../../components/DocumentSuggestions.jsx'
 import { MoreDetails } from '../history/moreDetails/MoreDetailsCustomers.jsx'
 import { useShiptment } from './controllers/ProviderContextShiptmen.jsx'
+import { useState } from 'react'
+import { ModalforComponent } from '../../components/ModalforComponent.jsx'
+import { AddCustomer } from '../agregar/AddCustomer.jsx'
 
 export const ModuleSender = () => {
     const navigate = useNavigate()
+    const [openCloseModal, setOpenCloseModal] = useState(false)
 
     const {
         formData,
@@ -23,6 +27,14 @@ export const ModuleSender = () => {
 
     const handleBack = () => {
         navigate('#')
+    }
+
+    const openModal = () => {
+        setOpenCloseModal(true)
+    }
+
+    const closeModal = () => {
+        setOpenCloseModal(false)
     }
 
     return (
@@ -49,25 +61,40 @@ export const ModuleSender = () => {
                             />
                         </div>
 
-                        {formData.idRemitente && (
+                        <div className={styles.fila}>
+                            <div className="col-md-auto">
+                                <button className={styles.cancelar} onClick={handleBack}>
+                                    Cancelar <i className="fa-solid fa-ban"></i>
+                                </button>
+                            </div>
+
+                            <div className="col-md-auto">
+                                <button onClick={openModal} className={`${styles.addCustomer}`}>
+                                    <i className="fa-solid fa-user-plus"></i>
+                                </button>
+                            </div>
+                            {openCloseModal && (
+                                <ModalforComponent
+                                    showModal={openCloseModal}
+                                    handleClose={closeModal}
+                                    BodyComponent={<AddCustomer funcChangeState={setOpenCloseModal} />}
+                                />
+                            )}
+
+                            <div className="col-md-auto">
+                                <button onClick={handleNext} className={`${styles.siguiente + " ms-2"} ${isDisabled ? "is-disabled-button" : ""}`}>
+                                    Siguiente <i className="fa-regular fa-circle-right"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        {formData.idRemitente && formData.remitenteCedula ? (
                             <>
                                 <MoreDetails data={{ id: formData.idRemitente, category: 'customer', from: 'external' }} />
+
                             </>
-                        )}
-                    </div>
+                        ) : ''}
 
-                    <div className={styles.fila}>
-                        <div className="col-md-auto">
-                            <button className={styles.cancelar} onClick={handleBack}>
-                                Cancelar <i className="fa-solid fa-ban"></i>
-                            </button>
-                        </div>
-
-                        <div className="col-md-auto">
-                            <button onClick={handleNext} className={`${styles.siguiente + " ms-2"} ${isDisabled ? "is-disabled-button" : ""}`}>
-                                Siguiente <i className="fa-regular fa-circle-right"></i>
-                            </button>
-                        </div>
                     </div>
                 </div>
             </div>

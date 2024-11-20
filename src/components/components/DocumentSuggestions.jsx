@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { ApiService } from "../../class/ApiServices"
 import '../../assets/css/suggestions/stylesOptionsSuggestions.css'
 import { clearError } from "../../functions/functions"
+import { useGlobalContext } from "../../GlobalContext "
 
 /**
  * Componente que sugiere números de documentos y nombres de clientes.
@@ -17,13 +18,29 @@ import { clearError } from "../../functions/functions"
  * @param {Function} props.setErrorsForms - Función para manejar los errores en el formulario.
  * @returns {JSX.Element} - Un conjunto de botones que representan los documentos filtrados.
  */
-export const DocumentSuggestions = ({ numDocumentToSearch, setFormData, setErrorsForms, nameField }) => {
+export const DocumentSuggestions = ({ numDocumentToSearch, setFormData, setErrorsForms, nameField, dropSelection = false }) => {
     const [listNumDocuments, setListNumDocuments] = useState([])
     const [filteredDocuments, setFilteredDocuments] = useState([])
+    const { shouldUpdateFlag, setShouldUpdateFlag } = useGlobalContext() // Variables globales
+    const [isSelectedOption, setIsSelectedOption] = useState(false)
 
-    // Obtener la bandera 'shouldUpdateFlag' desde localStorage
-    const shouldUpdateFlag = JSON.parse(localStorage.getItem('shouldUpdateFlag'))
+    //EFECTOS --
+    useEffect(() => {
+        handleChangelistState()
 
+        setShouldUpdateFlag(false)
+    }, [shouldUpdateFlag])
+
+    useEffect(() => {
+        // Filtrar los documentos según el número de documento a buscar
+        const elementsFilter = listNumDocuments.filter(element =>
+            element.numDocument.includes(numDocumentToSearch)
+        )
+
+        setFilteredDocuments(elementsFilter)
+    }, [listNumDocuments, numDocumentToSearch])
+
+    // FUNCIONES --
     const handleChangelistState = async () => {
         try {
             const urlApi = "/api/v1/customers/all"
@@ -43,24 +60,6 @@ export const DocumentSuggestions = ({ numDocumentToSearch, setFormData, setError
         }
     }
 
-    useEffect(() => {
-        handleChangelistState()  // Llamar la API para obtener los datos
-    }, [shouldUpdateFlag])   // Vuelve a ejecutarse si cambia la bandera
-
-    useEffect(() => {
-        // Eliminar la bandera 'shouldUpdateFlag' del localStorage solo una vez cuando el componente se monte
-        localStorage.removeItem('shouldUpdateFlag')
-    }, [])   // Este useEffect solo se ejecuta una vez al montar el componente
-
-    useEffect(() => {
-        // Filtrar los documentos según el número de documento a buscar
-        const elementsFilter = listNumDocuments.filter(element =>
-            element.numDocument.includes(numDocumentToSearch)
-        )
-
-        setFilteredDocuments(elementsFilter)
-    }, [listNumDocuments, numDocumentToSearch])
-
     const handleChangeSearch = (event) => {
         event.preventDefault()
         const { value } = event.target
@@ -69,18 +68,39 @@ export const DocumentSuggestions = ({ numDocumentToSearch, setFormData, setError
             [nameField]: value,
         }))
         clearError(setErrorsForms, nameField)
+        setIsSelectedOption(true)
     }
 
+
+    const handleDropSelection = () => {
+        setFormData(prevState => ({
+            ...prevState, [nameField]: '',
+        }))
+        setIsSelectedOption(false)
+    }
+    
     return (
         <div>
             {filteredDocuments.map((option, index) => (
-                <button
-                    className="custom-button2"
+                <div
+                    className="custom-container"
                     key={index}
-                    onClick={handleChangeSearch}
-                    value={option.numDocument}>
-                    {option.numDocument} ({option.name} )
-                </button>
+                >
+                    <div className="d-flex justify-content-between align-items-center px-3">
+                        <button
+                            className="btn custom-btn text-decoration-none text-dark p-0"
+                            onClick={handleChangeSearch}
+                            value={option.numDocument}
+                        >
+                            {option.numDocument} ({option.name})
+                        </button>
+                        {isSelectedOption && (
+                            <button onClick={handleDropSelection} className="custom-close-btn">
+                                <i className="fa-regular fa-circle-xmark"></i>
+                            </button>
+                        )}
+                    </div>
+                </div>
             ))}
         </div>
     )

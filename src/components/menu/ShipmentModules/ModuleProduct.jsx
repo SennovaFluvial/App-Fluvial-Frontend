@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { Inputs } from '../../html components/Inputs.jsx'
 import styles from '../../../assets/css/shipment/shipment.module.css'
 import { useShiptment } from './controllers/ProviderContextShiptmen.jsx'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Pagination } from '../history/Pagination.jsx'
 import { ModalforComponent } from '../../components/ModalforComponent.jsx'
 import { AddProduct } from '../agregar/AddProduct.jsx'
@@ -50,12 +50,13 @@ export const ModuleProduct = () => {
     }
 
     const openModal = (id) => {
-        setSelectedProductId(id);  // Solo actualiza cuando sea necesario
-        setOpenCloseModal(true);
+        setSelectedProductId(id)  // Solo actualiza cuando sea necesario
+        setOpenCloseModal(true)
     }
 
     const closeModal = () => {
         setOpenCloseModal(false)
+        setSelectedProductId(null)
     }
 
     useEffect(() => {
@@ -73,7 +74,7 @@ export const ModuleProduct = () => {
                     <Spinner />
                 </Grid>
             </div>
-        );
+        )
     }
     return (
         <>
@@ -153,19 +154,6 @@ export const ModuleProduct = () => {
                                                 >
                                                     <i className="fa-solid fa-pencil"></i>
                                                 </button>
-
-                                                {openCloseModal && (
-                                                    <ModalforComponent
-                                                        showModal={openCloseModal}
-                                                        handleClose={closeModal}
-                                                        BodyComponent={
-                                                            <AddProduct
-                                                                dataOfUser={{ id: selectedProductId, action: 'update' }}
-                                                                funcChangeState={setOpenCloseModal}
-                                                            />
-                                                        }
-                                                    />
-                                                )}
                                             </div>
                                         </div>
                                     </div>
@@ -177,6 +165,19 @@ export const ModuleProduct = () => {
                             </div>
                         )}
                     </div>
+
+                    {openCloseModal && (
+                        <ModalforComponent
+                            showModal={openCloseModal}
+                            handleClose={closeModal}
+                            BodyComponent={
+                                <AddProduct
+                                    dataOfUser={{ id: selectedProductId, action: 'update' }}
+                                    funcChangeState={setOpenCloseModal}
+                                />
+                            }
+                        />
+                    )}
 
                     <div className="row mb-5">
                         <div className="col-md-12">

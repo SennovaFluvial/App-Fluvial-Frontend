@@ -8,7 +8,6 @@ import { TextArea } from '../../html components/TextArea.jsx';
 import { useLocation, useParams } from 'react-router';
 import { DocumentSuggestions } from '../../components/DocumentSuggestions.jsx';
 import { CancelButton } from '../../components/CancelButton.jsx';
-import { useEffect } from 'react';
 
 export const AddProduct = ({ funcChangeState = null, dataOfUser = null }) => {
     // Si `dataOfUser` existe, usa sus valores, si no, usa `useParams()`
@@ -174,17 +173,18 @@ export const AddProduct = ({ funcChangeState = null, dataOfUser = null }) => {
                                 {errorsForms.unitOfMeasurement && <div className="text-danger">{errorsForms.unitOfMeasurement}</div>}
                             </div>
 
-                            <div className="col-md-2 ">
+                            <div className="col-md-2 "> {/** Dimenciones a digitar solas */}
                                 <Inputs
                                     text="Dimensiones"
                                     placeholder='30x20x2'
                                     name="dimensions"
                                     value={formData.dimensions}
                                     event={handleChange}
+                                    isReadOnly={true}
                                 />
                                 {errorsForms.dimensions && <div className="text-danger">{errorsForms.dimensions}</div>}
                             </div>
-                        </div>
+                        </div>  
 
 
 
@@ -207,7 +207,7 @@ export const AddProduct = ({ funcChangeState = null, dataOfUser = null }) => {
                                     text="¿Es Perecedero?"
                                     name="isPerishable"
                                     options={Booleano}
-                                    value={formData.isPerishable ? 'true' : 'false'}
+                                    value={formData.isPerishable}
                                     event={handleChange}
                                 />
                                 {errorsForms.isPerishable && <div className="text-danger">{errorsForms.isPerishable}</div>}
@@ -229,7 +229,7 @@ export const AddProduct = ({ funcChangeState = null, dataOfUser = null }) => {
                                     text="¿Materiales Peligrosos?"
                                     name="hazardousMaterials"
                                     options={Booleano}
-                                    value={formData.hazardousMaterials ? 'true' : 'false'}
+                                    value={formData.hazardousMaterials}
                                     event={handleChange}
                                 />
                                 {errorsForms.hazardousMaterials && <div className="text-danger">{errorsForms.hazardousMaterials}</div>}

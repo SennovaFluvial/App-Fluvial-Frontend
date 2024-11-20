@@ -4,15 +4,16 @@ import { useNavigate } from "react-router"
 import Swal from "sweetalert"
 import { ApiService } from "../../../../class/ApiServices"
 import { useSearchFields } from "../../history/search/SearchFields"
+import { useGlobalContext } from "../../../../GlobalContext "
 
-export const CreateUpdateControllerShiptment = ({ flag }) => {
+export const CreateUpdateControllerShiptment = () => {
 
     const nav = useNavigate()
     const [isDisabled, setIsDisabled] = useState(false)
     const [productosRemitente, setProductosRemitente] = useState([]) // Estado para almacenar los productos del remitente a mostrar
     const [productsToSend, setProductsToSend] = useState([]) // Productos selecionados
     const [loading, setLoading] = useState(true) // Estado de carga
-    // const shouldUpdateFlag = JSON.parse(localStorage.getItem('shouldUpdateFlag'))
+    const { shouldUpdateFlag, setShouldUpdateFlag } = useGlobalContext() // Variables globales
 
     // paginacion
     const [elementForPage, setElementForPage] = useState(6)
@@ -128,7 +129,7 @@ export const CreateUpdateControllerShiptment = ({ flag }) => {
         } else if (currentPage > totalPages) {
             setCurrentPage(totalPages)
         }
-    }, [filteredItems, totalPages, currentPage, totalFilteredItems])
+    }, [filteredItems, totalPages, currentPage, totalFilteredItems, shouldUpdateFlag])
 
     const lastIndex = currentPage * elementForPage
     const firstIndex = lastIndex - elementForPage
@@ -149,35 +150,26 @@ export const CreateUpdateControllerShiptment = ({ flag }) => {
     /** */
     useEffect(() => {
         const fetchProducts = async () => {
-            if (!formData.remitenteCedula) return // Valida que haya un valor válido
+            if (!formData.remitenteCedula) return; // Valida que haya un valor válido
 
             try {
-                setLoading(true) // Activa el estado de carga
-                const response = await getProductsByDocumentNumber(formData.remitenteCedula)
-                setProductosRemitente(response)
+                setLoading(true); // Activa el estado de carga
+                const response = await getProductsByDocumentNumber(formData.remitenteCedula);
+
+                setProductosRemitente(response);
+
+                setShouldUpdateFlag(false)
+
             } catch (error) {
-                console.error("Error fetching products:", error) // Manejo de errores
+                console.error('Error fetching products:', error);
             } finally {
-                setLoading(false)
+                setLoading(false);
             }
         }
 
-        // Ejecutar la función solo si flag es true
-
         fetchProducts()
 
-
-    }, [formData.remitenteCedula, flag])
-
-
-    /** */
-    useEffect(() => {
-        // Eliminar la bandera del localStorage solo una vez cuando el componente se monte
-        if (flag) {
-            localStorage.removeItem('shouldUpdateFlag');
-            console.log('Flag removed');
-        }
-    }, [flag])
+    }, [formData.remitenteCedula, shouldUpdateFlag])
 
     /** */
     useEffect(() => {
@@ -294,7 +286,7 @@ export const CreateUpdateControllerShiptment = ({ flag }) => {
                 // if (action === 'update') {
                 //     await ApiService.put(`/api/v1/product/update/${id}`, dataToSend) 
                 // } else {
-                const responseApi = await ApiService.post('/api/v1/envios/save', dataToSend)
+                const responseApi = await ApiService.post('/api/v1/envios/crear-con-costo', dataToSend)
                 setNumeroGuia(responseApi.numeroGuia)
                 // }
 
