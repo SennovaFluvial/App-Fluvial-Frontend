@@ -22,11 +22,8 @@ const reportsType = [
     {
         title: 'Imprimir Clientes',
         image: Motorista,
-    },
-    {
-        title: 'Imprimir Envios',
-        image: Motorista,
     }
+
 
 ];
 

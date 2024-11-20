@@ -50,7 +50,7 @@ export const Inventories = ({ isCollapsed }) => {
                 <ul className={styles.navbarNav}>
                     <li className={styles.sectionAccountPart2}>
                         <button onClick={() => { toggleMenu(); console.log(`Menu toggled, isOpen: ${!isOpen}`); }} className={styles.navLink} aria-haspopup="true" aria-expanded={isOpen} >
-                            <i className={`fas fa-boxes me-2${isCollapsed ? styles.iconCentered : ''}`}></i>
+                            <i className={`fas fa-boxes ${isCollapsed ? styles.iconCentered : ''}`} style={{ marginRight: isCollapsed ? '0' : '8px' }}></i>
                             {!isCollapsed && <span className="menu-text"> Inventario</span>}
                         </button>
                         <ul className={styles.menuAccount} style={{ display: isOpen ? 'block' : 'none' }} >
@@ -61,17 +61,17 @@ export const Inventories = ({ isCollapsed }) => {
                             </li>
                             <li className='dropdown-item text-black'>
                                 <Link to={'add-product'} state={{ from: 'menu' }} className={styles.link} onClick={closeMenu}>
-                                    <i className="fa-solid fa-circle-plus"></i> Creación de Productos
+                                    <i className="fa-solid fa-circle-plus me-2"></i>Creación de Productos
                                 </Link>
                             </li>
                             <li className='dropdown-item text-black'>
                                 <Link to={'show-warehouse'} className={styles.link} onClick={closeMenu}>
-                                    <i className="fa-solid fa-warehouse"></i> Listado de Bodegas
+                                    <i className="fa-solid fa-warehouse me-2"></i>Listado de Bodegas
                                 </Link>
                             </li>
                             <li className={styles.dropdownItem}>
                                 <button onClick={onStatusChange} className={styles.buttonLink}>
-                                    <i className="fa-solid fa-circle-plus"></i> Creación de Bodegas
+                                    <i className="fa-solid fa-circle-plus me-2"></i>Creación de Bodegas
                                 </button>
                             </li>
                         </ul>

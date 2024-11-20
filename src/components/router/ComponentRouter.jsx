@@ -41,6 +41,7 @@ import { Inventories } from '../menu/InventoriesSection.jsx';
 import { Reports } from '../menu/ReportsSection.jsx';
 import { MoreDetails } from '../menu/history/moreDetails/MoreDetailsCustomers.jsx';
 import { ShowBranch } from '../menu/history/Show-Branch.jsx';
+import { ChatSection } from '../menu/ChatSection.jsx';
 
 /**
  * Componente ComponentRouter
@@ -138,6 +139,8 @@ export const ComponentRouter = () => {
 
                     <Route path="inventories" element={< Inventories />} /> {/* Ruta para ver los inventarios */}
                     <Route path="reports" element={< Reports />} />
+                    <Route path="smartChat" element={< ChatSection />} />
+                
 
                 </Route>
             </Route>

@@ -18,7 +18,7 @@ export const SailorSection = ({ isCollapsed }) => {
             <ul className={styles.navbarNav}>
                 <li className={styles.sectionAccountPart2}>
                     <button onClick={() => { toggleMenu(); console.log(`Menu toggled, isOpen: ${!isOpen}`); }} className={styles.navLink} aria-haspopup="true" aria-expanded={isOpen} >
-                        <i className={`fas fa-life-ring me-2${isCollapsed ? styles.iconCentered : ''}`}></i>
+                        <i className={`fas fa-life-ring ${isCollapsed ? styles.iconCentered : ''}`} style={{ marginRight: isCollapsed ? '0' : '8px' }}></i>
                         {!isCollapsed && <span className="menu-text"> Tripulantes</span>}
                     </button>
                     <ul className={styles.menuAccount} style={{ display: isOpen ? 'block' : 'none' }} >

@@ -2,12 +2,19 @@ import { useEffect, useState } from 'react';
 import { useSearchFields } from '../../search/SearchFields';
 import { ApiService } from '../../../../../class/ApiServices';
 
-export const ControllerShowBranches = () => {
+export const useControllerShowBranches = () => {
     
     const [branches, setBranches] = useState([]);
     const [elementForPage, setElementForPage] = useState(6);
     const [currentPage, setCurrentPage] = useState(1);
     const [loading, setLoading] = useState(true);
+    const [formData, setFormData] = useState({
+        nombre: "",
+        direccion: "",
+        departamento: "",
+        municipio: "",
+        companiaNombre: ""
+    });
 
     const getBranches = async () => {
         try {

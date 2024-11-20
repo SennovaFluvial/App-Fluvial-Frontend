@@ -18,7 +18,7 @@ export const ShipmentSection = ({ isCollapsed }) => {
             <ul className={styles.navbarNav}>
                 <li className={styles.sectionAccountPart2}>
                     <button onClick={() => { toggleMenu(); console.log(`Menu toggled, isOpen: ${!isOpen}`); }} className={styles.navLink} aria-haspopup="true" aria-expanded={isOpen} >
-                        <i className={`fas fa-dolly me-2${isCollapsed ? styles.iconCentered : ''}`}></i>
+                        <i className={`fas fa-dolly ${isCollapsed ? styles.iconCentered : ''}`} style={{ marginRight: isCollapsed ? '0' : '8px' }}></i>
                         {!isCollapsed && <span className="menu-text"> Envíos</span>}
                     </button>
                     <ul className={styles.menuAccount} style={{ display: isOpen ? 'block' : 'none' }} >
@@ -30,7 +30,7 @@ export const ShipmentSection = ({ isCollapsed }) => {
 
                         <li className={styles.dropdownItem}>
                             <Link to={'register-shipment'} state={{ from: 'menu' }} className={styles.link} onClick={closeMenu}>
-                                <i className="fa-solid fa-circle-plus me-2"></i> Creación de Enviós
+                                <i className="fa-solid fa-circle-plus me-2"></i>Creación de Enviós
                             </Link>
                         </li>
                     </ul>
