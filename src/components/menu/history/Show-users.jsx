@@ -107,7 +107,7 @@ export const ShowUsers = () => {
     return (
         <>
             <div className="container my-5">
-                <div className="row text-center bg-info">
+                <div className="row text-center bg-info" style={{ marginLeft: "0px", marginRight: "0px" }}>
                     <div className="col-md-12 py-3">
                         <h1> <b>LISTADO DE EMPLEADOS</b> <i className="fa-solid fa-address-card ms-5"></i></h1>
                     </div>

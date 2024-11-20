@@ -18,8 +18,8 @@ export const VehicleSection = ({ isCollapsed }) => {
             <ul className={styles.navbarNav}>
                 <li className={styles.sectionAccountPart2}>
                     <button onClick={() => { toggleMenu(); console.log(`Menu toggled, isOpen: ${!isOpen}`); }} className={styles.navLink} aria-haspopup="true" aria-expanded={isOpen} >
-                        <i className={`fa-solid fa-ship me-2${isCollapsed ? styles.iconCentered : ''}`}></i>
-                        {!isCollapsed && <span className="menu-text"> Vehículos</span>}
+                        <i className={`fa-solid fa-ship ${isCollapsed ? styles.iconCentered : ''}`} style={{ marginRight: isCollapsed ? '0' : '8px' }}></i>
+                        {!isCollapsed && <span className={styles.menuText}> Vehículos</span>}
                     </button>
                     <ul className={styles.menuAccount} style={{ display: isOpen ? 'block' : 'none' }} >
                         <li className={styles.dropdownItem}>

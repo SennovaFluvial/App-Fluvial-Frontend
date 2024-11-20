@@ -50,20 +50,20 @@ export const BranchSection = ({ isCollapsed }) => {
             <div className={styles.Section}>
                 <ul className={styles.navbarNav}>
                     <li className={styles.sectionAccountPart2}>
-                        <button onClick={() => { toggleMenu(); console.log(`Menu toggled, isOpen: ${!isOpen}`) }} className={styles.navLink} aria-haspopup="true" aria-expanded={isOpen} >
+                        <button onClick={() => { toggleMenu(); console.log(`Menu toggled, isOpen: ${!isOpen}`); }} className={styles.navLink} aria-haspopup="true" aria-expanded={isOpen} >
                             <i className={`fas fa-map-marked-alt me-2${isCollapsed ? styles.iconCentered : ''}`}></i>
                             {!isCollapsed && <span className="menu-text"> Sucursales</span>}
                         </button>
                         <ul className={styles.menuAccount} style={{ display: isOpen ? 'block' : 'none' }} >
                             <li className={styles.dropdownItem}>
                                 <Link to={'show-branch'} className={styles.link} onClick={closeMenu}>
-                                    <i className="fa-solid fa-box"></i> Listado de Sucursales
+                                    <i className="fa-solid fa-box me-2"></i>Listado de Sucursales
                                 </Link>
                             </li>
 
                             <li className={styles.dropdownItem}>
                                 <button onClick={onStatusChange} className={styles.buttonLink}>
-                                    <i className="fa-solid fa-circle-plus me-2"></i> Creación de Sucursales
+                                    <i className="fa-solid fa-circle-plus me-2"></i>Creación de Sucursales
                                 </button>
                             </li>
 

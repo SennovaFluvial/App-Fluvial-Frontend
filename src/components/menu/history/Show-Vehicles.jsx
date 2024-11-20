@@ -37,7 +37,7 @@ export const ShowVehicles = () => {
   return (
     <>
       <div className="container my-5">
-        <div className="row text-center bg-info">
+        <div className="row text-center bg-info" style={{ marginLeft: "0px", marginRight: "0px" }}>
           <div className="col-md-12 py-3">
             <h1>
               <b>LISTADO DE VEHICULOS</b> <i className="fa-solid fa-sailboat ms-5"></i>
@@ -49,7 +49,7 @@ export const ShowVehicles = () => {
           <div className="col-md-4 my-3">
             <input
               type="text"
-              className="form-control"  
+              className="form-control"
               placeholder="Buscar..."
               value={searchTerm}
               onChange={handleSearchChange}

@@ -70,7 +70,7 @@ export const ShowWarehouse = () => {
     return (
         <>
             <div className="container my-5">
-                <div className="row text-center bg-info">
+                <div className="row text-center bg-info"  style={{ marginLeft: "0px", marginRight: "0px" }}>
                     <div className="col-md-12 py-3">
                         <h1>
                             <b>LISTADO DE BODEGAS</b> <i className="fa-solid fa-warehouse ms-5"></i>
@@ -107,7 +107,7 @@ export const ShowWarehouse = () => {
                             <th scope="col">Nombre de la Bodega</th>
                             <th scope="col">Ubicación</th>
                             <th scope="col">Capacidad</th>
-                            <th scope="col">Estado</th>
+                            <th scope="col">Unidad de medida</th>
                             <th scope="col">Actualizar</th>
                             <th scope="col">Detalles</th>
                         </tr>
@@ -120,8 +120,7 @@ export const ShowWarehouse = () => {
                                     <td>{item.name}</td>
                                     <td>{item.location}</td>
                                     <td>{item.capacity}</td>
-                                    <td>{item.warehouseType}</td>
-                                    <td>{item.status}</td>
+                                    <td>{item.unitOfMeasurement}</td>
                                     <td>
                                         <Link to={`../add-warehouse/${item.id}/update`} state={{ from: 'listado' }}>
                                             <button className='btn btn-edit icon-link-hover text-primary'>
@@ -129,6 +128,7 @@ export const ShowWarehouse = () => {
                                             </button>
                                         </Link>
                                     </td>
+
                                     <td>
                                         <Link to={`#`}>
                                             <button className='btn btn-view icon-link-hover text-warning'>

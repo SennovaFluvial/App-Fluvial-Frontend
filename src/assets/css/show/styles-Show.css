@@ -28,6 +28,9 @@
     margin-right: 5px;
     font-size: 20px; /* Tamaño aumentado de los iconos */
 }
+.row{
+    border: 12px
+}
 
 @media (max-width: 768px) {
     .btn {

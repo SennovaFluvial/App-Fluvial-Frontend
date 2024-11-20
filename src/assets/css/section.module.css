@@ -22,24 +22,29 @@
     color: #007bff;
     font-weight: bold;
     cursor: pointer;
-    padding: 8px 16px;
+    padding: auto;
     /* Ajuste de padding */
-    width: 100%;
-    text-align: center;
+    /* width: 100%; */
+    /* text-align: center; */
     display: flex;
     align-items: center;
-    justify-content: center;
+    /* justify-content: center; */
 }
+
+    
 
 .navLink:hover {
     color: #0056b3;
 }
 
 .collapsed .navLink {
+    width: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 8px 16px;
+    padding: 10px auto;
+    justify-content: center;
+    text-align: center;
 }
 
 .menuAccount {
@@ -58,7 +63,8 @@
     border-radius: 0.25rem;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     padding: 8px 0;
-    /* Espaciado adecuado */
+
+
 }
 
 .collapsed .menuAccount {
@@ -73,6 +79,7 @@
     /* Ajusta el centro */
     width: auto;
     /* Se ajusta al contenido */
+    align-items: center;
 }
 
 .dropdownItem {
@@ -82,17 +89,19 @@
 }
 
 .link {
-    color: #333;
+    color: #007bff;
     text-decoration: none;
     padding: auto;
     display: block;
-    text-align: center;
+    font-family: 'Arial', sans-serif;
+    /* text-align: center; */
     /* Hace que los enlaces sean bloques */
 }
 
 .collapsed .link {
     padding: 0;
     margin: 0;
+    /* text-align: center; */
 }
 
 .link:hover {
@@ -101,7 +110,7 @@
 }
 
 .buttonLink {
-    color: #333;
+    color: #007bff;
     text-decoration: none;
     padding: 10px;
     display: block;
@@ -109,7 +118,8 @@
     border: none;
     cursor: pointer;
     width: 100%;
-    /* text-align: left; */
+    text-align: left;
+    font-family: 'Arial', sans-serif;
 }
 
 .collapsed .buttonLink {
@@ -119,7 +129,16 @@
 
 .buttonLink:hover {
     background-color: #007bff;
-    /* Fondo azul al pasar el ratón */
-    color: #ffffff;
-    /* Texto blanco al pasar el ratón */
+    background-color: transparent;
+
+}
+
+.iconCentered {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.icon-text-container {
+    gap: 8px;
 }

@@ -86,7 +86,6 @@ export const DashBoard = ({ user, setUser }) => {
                                 <h1>{isCollapsed ? 'TF' : 'Transporte Fluvial'}</h1>
                             </div>
                             <div className="icono">
-                                <div className="row section-account">
                                     <div className="col-md-12 section-account-part1 text-center">
                                         <i className="fa-solid fa-user-gear icono-user mt-2"></i>
                                     </div>
@@ -108,17 +107,26 @@ export const DashBoard = ({ user, setUser }) => {
                                             </li>
                                         </ul>
                                     </div>
-                                </div>
                             </div>
                             <nav className="menu">
                                 <ul>
                                     <li>
-                                        <Link to="/adminSection" className={styles.navLink}>
-                                            <span><i className="fa-solid fa-home"></i></span>
+                                        <button className={`${styles.navLink}`} onClick={() => nav("/adminSection")}>
+                                            <i className={`fa-solid fa-home ${isCollapsed ? styles.iconCentered : ''}`} style={{ marginRight: isCollapsed ? '0' : '8px' }}></i>
                                             {!isCollapsed && <span className="menu-text"> Dashboard</span>}
-                                        </Link>
+                                        </button>
                                     </li>
                                 </ul>
+
+                                <ul>
+                                    <li>
+                                        <button className={`${styles.navLink}`} onClick={() => nav("/adminSection/smartChat", { state: { from: "menu" } })}>
+                                            <i className={`fa-regular fa-comments ${isCollapsed ? styles.iconCentered : ''}`} style={{ marginRight: isCollapsed ? '0' : '8px' }}></i>
+                                            {!isCollapsed && <span className="menu-text"> Chat Inteligente</span>}
+                                        </button>
+                                    </li>
+                                </ul>
+
 
                                 {user?.rol?.includes('SUPERADMIN') && <CompanySection />}
 
@@ -142,10 +150,10 @@ export const DashBoard = ({ user, setUser }) => {
 
                                 <ul>
                                     <li>
-                                        <Link to="/adminSection/reports" className={styles.navLink} >
-                                            <span><i className="fa-solid fa-file-alt"></i></span>
+                                        <button className={`${styles.navLink}`} onClick={() => nav("/adminSection/reports")}>
+                                            <i className={`fa-solid fa-file-alt ${isCollapsed ? styles.iconCentered : ''}`} style={{ marginRight: isCollapsed ? '0' : '8px' }}></i>
                                             {!isCollapsed && <span className="menu-text"> Informes</span>}
-                                        </Link>
+                                        </button>
                                     </li>
                                 </ul>
                             </nav>
