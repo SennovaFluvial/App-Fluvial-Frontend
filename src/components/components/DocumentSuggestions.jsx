@@ -37,7 +37,7 @@ export const DocumentSuggestions = ({ numDocumentToSearch, setFormData, setError
             element.numDocument.includes(numDocumentToSearch)
         )
 
-        setFilteredDocuments(elementsFilter)
+        setFilteredDocuments(elementsFilter.slice(0, 5))
     }, [listNumDocuments, numDocumentToSearch])
 
     // FUNCIONES --
@@ -78,7 +78,7 @@ export const DocumentSuggestions = ({ numDocumentToSearch, setFormData, setError
         }))
         setIsSelectedOption(false)
     }
-    
+
     return (
         <div>
             {filteredDocuments.map((option, index) => (
