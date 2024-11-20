@@ -286,7 +286,7 @@ export const CreateUpdateControllerShiptment = () => {
                 // if (action === 'update') {
                 //     await ApiService.put(`/api/v1/product/update/${id}`, dataToSend) 
                 // } else {
-                const responseApi = await ApiService.post('/api/v1/envios/save', dataToSend)
+                const responseApi = await ApiService.post('/api/v1/envios/crear-con-costo', dataToSend)
                 setNumeroGuia(responseApi.numeroGuia)
                 // }
 
