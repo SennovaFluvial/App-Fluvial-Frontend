@@ -3,22 +3,15 @@ import { useSearchFields } from '../../search/SearchFields';
 import { ApiService } from '../../../../../class/ApiServices';
 
 export const useControllerShowBranches = () => {
-    
+
     const [branches, setBranches] = useState([]);
     const [elementForPage, setElementForPage] = useState(6);
     const [currentPage, setCurrentPage] = useState(1);
     const [loading, setLoading] = useState(true);
-    const [formData, setFormData] = useState({
-        nombre: "",
-        direccion: "",
-        departamento: "",
-        municipio: "",
-        companiaNombre: ""
-    });
 
     const getBranches = async () => {
         try {
-            const response = await ApiService.get("/api/v1/branches/all");
+            const response = await ApiService.get("/api/v1/sucursales/all");
             setBranches(response);
         } catch (error) {
             console.error("Error fetching branches:", error);
