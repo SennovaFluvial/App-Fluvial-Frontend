@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { VerifyUserChangePassword } from './agregar/controllers/VerifyUserChangePassword';
-import { ModalRequestPassword } from './agregar/ModalRequestPassword';
-import styles from '../../assets/css/section.module.css';
+import { VerifyUserChangePassword } from './agregar/controllers/VerifyUserChangePassword'
+import { ModalRequestPassword } from './agregar/ModalRequestPassword'
+import styles from '../../assets/css/section.module.css'
 
 export const BranchSection = ({ isCollapsed }) => {
 
-    const nav = useNavigate();
-    const [showModal, setShowModal] = useState(false);
-    const [isOpen, setIsOpen] = useState(false);
+    const nav = useNavigate()
+    const [showModal, setShowModal] = useState(false)
+    const [isOpen, setIsOpen] = useState(false)
 
     const { updatePassword,
         handleChangeVerify,
@@ -16,41 +16,41 @@ export const BranchSection = ({ isCollapsed }) => {
         handleSubmitVerify,
         formLogin,
         userName,
-        setUpdatePassword } = VerifyUserChangePassword();
+        setUpdatePassword } = VerifyUserChangePassword()
 
     const handleChangeShowModal = () => {
-        setShowModal(!showModal);
+        setShowModal(!showModal)
     }
     const handleCloseModal = () => {
-        setShowModal(false);
+        setShowModal(false)
     }
 
     const onStatusChange = () => {
         handleChangeShowModal()
-        return;
-    };
+        return
+    }
 
     useEffect(() => {
         if (updatePassword) {
-            nav('add-branch', { state: { from: 'menu' } });
-            setUpdatePassword(false);
+            nav('add-branch', { state: { from: 'menu' } })
+            setUpdatePassword(false)
         }
     }, [updatePassword])
 
     const toggleMenu = () => {
-        setIsOpen(!isOpen);
-    };
+        setIsOpen(!isOpen)
+    }
 
     const closeMenu = () => {
-        setIsOpen(false);
-    };
+        setIsOpen(false)
+    }
 
     return (
         <>
             <div className={styles.Section}>
                 <ul className={styles.navbarNav}>
                     <li className={styles.sectionAccountPart2}>
-                        <button onClick={() => { toggleMenu(); console.log(`Menu toggled, isOpen: ${!isOpen}`); }} className={styles.navLink} aria-haspopup="true" aria-expanded={isOpen} >
+                        <button onClick={() => { toggleMenu(); console.log(`Menu toggled, isOpen: ${!isOpen}`) }} className={styles.navLink} aria-haspopup="true" aria-expanded={isOpen} >
                             <i className={`fas fa-map-marked-alt me-2${isCollapsed ? styles.iconCentered : ''}`}></i>
                             {!isCollapsed && <span className="menu-text"> Sucursales</span>}
                         </button>

@@ -173,17 +173,18 @@ export const AddProduct = ({ funcChangeState = null, dataOfUser = null }) => {
                                 {errorsForms.unitOfMeasurement && <div className="text-danger">{errorsForms.unitOfMeasurement}</div>}
                             </div>
 
-                            <div className="col-md-2 ">
+                            <div className="col-md-2 "> {/** Dimenciones a digitar solas */}
                                 <Inputs
                                     text="Dimensiones"
                                     placeholder='30x20x2'
                                     name="dimensions"
                                     value={formData.dimensions}
                                     event={handleChange}
+                                    isReadOnly={true}
                                 />
                                 {errorsForms.dimensions && <div className="text-danger">{errorsForms.dimensions}</div>}
                             </div>
-                        </div>
+                        </div>  
 
 
 
