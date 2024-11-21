@@ -13,7 +13,11 @@ import { CancelButton } from '../../components/BackButton';
 export const ShowWarehouse = () => {
 
     const nav = useNavigate();
-    const [showModal, setShowModal] = useState(false);
+    const [modalState, setModalState] = useState({
+        showModal: false,
+        isUpdate: false,
+        selectedId: null,
+    })
 
     const {
         searchTerm,
@@ -35,24 +39,33 @@ export const ShowWarehouse = () => {
         userName,
         setUpdatePassword } = VerifyUserChangePassword();
 
-    const handleChangeShowModal = () => {
-        setShowModal(!showModal);
-    }
-    const handleCloseModal = () => {
-        setShowModal(false);
+    const toggleModal = (isUpdate = null, id = null) => {
+        setModalState({
+            showModal: !modalState.showModal,
+            isUpdate,
+            selectedId: id,
+        })
     }
 
-    const onStatusChange = () => {
-        handleChangeShowModal()
-        return;
-    };
+    const closeModal = () => {
+        setModalState((prevState) => ({
+            ...prevState,
+            showModal: false,
+        }))
+    }
 
     useEffect(() => {
         if (updatePassword) {
-            nav('/adminSection/add-warehouse', { state: { from: 'listado' } });
-            setUpdatePassword(false);
+            const url = modalState.isUpdate === null
+                ? '/adminSection/add-warehouse'
+                : modalState.isUpdate
+                    ? `../add-warehouse/${modalState.selectedId}/update`
+                    : '/adminSection/add-warehouse';
+
+            nav(url, { state: { from: 'listado' } })
+            setUpdatePassword(false)
         }
-    }, [updatePassword])
+    }, [updatePassword, modalState])
 
     const location = useLocation();
     const from = location.state?.from || 'menu';
@@ -70,7 +83,7 @@ export const ShowWarehouse = () => {
     return (
         <>
             <div className="container my-5">
-                <div className="row text-center bg-info"  style={{ marginLeft: "0px", marginRight: "0px" }}>
+                <div className="row text-center bg-info" style={{ marginLeft: "0px", marginRight: "0px" }}>
                     <div className="col-md-12 py-3">
                         <h1>
                             <b>LISTADO DE BODEGAS</b> <i className="fa-solid fa-warehouse ms-5"></i>
@@ -89,7 +102,10 @@ export const ShowWarehouse = () => {
                         />
                     </div>
                     <div className="col-md-2 my-3 d-flex justify-content-end ms-auto">
-                        <button className='btn btn-primary rounded-pill p-2 ps-2' onClick={onStatusChange}>
+                        <button
+                            className='btn btn-primary rounded-pill p-2 ps-2'
+                            onClick={() => toggleModal(null, null)}
+                        >
                             <i className="fa-regular fa-square-plus me-3"></i> Nueva Bodega
                         </button>
                     </div>
@@ -122,11 +138,12 @@ export const ShowWarehouse = () => {
                                     <td>{item.capacity}</td>
                                     <td>{item.unitOfMeasurement}</td>
                                     <td>
-                                        <Link to={`../add-warehouse/${item.id}/update`} state={{ from: 'listado' }}>
-                                            <button className='btn btn-edit icon-link-hover text-primary'>
-                                                <i className="fa-solid fa-pen-to-square icon-option"></i>
-                                            </button>
-                                        </Link>
+                                        <button
+                                            onClick={() => toggleModal(true, item.id)}
+                                            className='btn btn-edit icon-link-hover text-primary'
+                                        >
+                                            <i className="fa-solid fa-pen-to-square icon-option"></i>
+                                        </button>
                                     </td>
 
                                     <td>
@@ -165,16 +182,17 @@ export const ShowWarehouse = () => {
             </div>
 
 
-            {showModal && (
+            {modalState.showModal && (
                 <ModalRequestPassword
                     userNameUser={userName}
-                    showModal={showModal}
-                    handleClose={handleCloseModal}
+                    showModal={modalState.showModal}
+                    handleClose={closeModal}
                     handleChangeVerify={handleChangeVerify}
                     errorsFormsVerify={errorsFormsVerify}
                     handleSubmitVerify={handleSubmitVerify}
                     formLogin={formLogin}
-                />)}
+                />
+            )}
 
         </>
     );

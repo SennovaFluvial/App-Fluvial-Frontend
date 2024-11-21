@@ -23,12 +23,13 @@ export const DocumentSuggestions = ({ numDocumentToSearch, setFormData, setError
     const [filteredDocuments, setFilteredDocuments] = useState([])
     const { shouldUpdateFlag, setShouldUpdateFlag } = useGlobalContext() // Variables globales
     const [isSelectedOption, setIsSelectedOption] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     //EFECTOS --
     useEffect(() => {
         handleChangelistState()
-
         setShouldUpdateFlag(false)
+
     }, [shouldUpdateFlag])
 
     useEffect(() => {
@@ -43,6 +44,7 @@ export const DocumentSuggestions = ({ numDocumentToSearch, setFormData, setError
     // FUNCIONES --
     const handleChangelistState = async () => {
         try {
+            setLoading(true)
             const urlApi = "/api/v1/customers/all"
             const response = await ApiService.get(urlApi)
 
@@ -51,12 +53,13 @@ export const DocumentSuggestions = ({ numDocumentToSearch, setFormData, setError
                     name: `${item.name} ${item.lastName}`,
                     numDocument: item.numDocument
                 }))
-
                 setListNumDocuments(formattedData)
                 setFilteredDocuments(formattedData)
             }
         } catch (error) {
             console.error("Error al obtener documentos:", error)
+        } finally {
+            setLoading(false)
         }
     }
 
@@ -78,6 +81,12 @@ export const DocumentSuggestions = ({ numDocumentToSearch, setFormData, setError
         }))
         setIsSelectedOption(false)
     }
+
+    if (loading) return (
+        <>
+            Cargando datos...
+        </>
+    )
 
     return (
         <div>
