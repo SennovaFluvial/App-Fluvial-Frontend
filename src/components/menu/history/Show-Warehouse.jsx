@@ -13,7 +13,6 @@ import { CancelButton } from '../../components/BackButton';
 export const ShowWarehouse = () => {
 
     const nav = useNavigate();
-    // const [showModal, setShowModal] = useState(false);
     const [modalState, setModalState] = useState({
         showModal: false,
         isUpdate: false,
@@ -40,18 +39,6 @@ export const ShowWarehouse = () => {
         userName,
         setUpdatePassword } = VerifyUserChangePassword();
 
-    // const handleChangeShowModal = () => {
-    //     setShowModal(!showModal);
-    // }
-    // const handleCloseModal = () => {
-    //     setShowModal(false);
-    // }
-
-    // const onStatusChange = () => {
-    //     handleChangeShowModal()
-    //     return;
-    // };
-
     const toggleModal = (isUpdate = null, id = null) => {
         setModalState({
             showModal: !modalState.showModal,
@@ -66,13 +53,6 @@ export const ShowWarehouse = () => {
             showModal: false,
         }))
     }
-
-    // useEffect(() => {
-    //     if (updatePassword) {
-    //         nav('/adminSection/add-warehouse', { state: { from: 'listado' } });
-    //         setUpdatePassword(false);
-    //     }
-    // }, [updatePassword])
 
     useEffect(() => {
         if (updatePassword) {

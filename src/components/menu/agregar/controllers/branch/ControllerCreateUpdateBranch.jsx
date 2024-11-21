@@ -93,7 +93,7 @@ export const ControllerCreateUpdateBranch = ({ id, action }) => {
 
             if (result) {
                 if (action === 'update') {
-                    await ApiService.put(`/api/v1/branches/update/${id}`, formData);
+                    await ApiService.put(`/api/v1/sucursales/update/${id}`, formData);
                 } else {
                     await ApiService.post('/api/v1/sucursales/save', formData);
                 }
