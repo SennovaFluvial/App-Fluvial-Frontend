@@ -103,7 +103,6 @@ export const ShowBranch = () => {
                             <th scope="col">Departamento</th>
                             <th scope="col">Municipio</th>
                             <th scope="col">Compañía</th>
-                            <th scope="col">Estado</th>
                             <th scope="col">Actualizar</th>
                             <th scope="col">Detalles</th>
                         </tr>

@@ -90,7 +90,7 @@ export const ShowProducts = () => {
                     <tbody>
                         {paginatedItems.length > 0 ? (
                             paginatedItems.map((item, index) => (
-                                <tr key={index}>
+                                <tr key={item.id}>
                                     <td>
                                         <b>{firstIndex + index + 1}</b>
                                     </td>

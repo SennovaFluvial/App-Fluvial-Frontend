@@ -123,39 +123,10 @@ export const MoreDetails = ({ data = null }) => {
                                                         </p>
                                                     </>
                                                 )}
-                                                <p className="col-md-3">
+                                                <div className="col-md-3">
                                                     <strong>Estado civil:</strong> {item.maritalStatus}
-                                                </p>
-                                            </>
-                                        )}
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div className="col-md-12">
-                                <h3 className="subTitle">{category === "vehicle" ? "Capaciades de carga" : "Información de contacto"}</h3>
-                                <div className="section">
-                                    <div className="row">
-
-                                        {category === "vehicle" && (
-                                            <>
-                                                <div className="col-md-3">
-                                                    <p><strong>Capaciad de peso:</strong> {item.weightCapacity + '' + item.weightUnit} </p>
                                                 </div>
 
-                                                <div className="col-md-3">
-                                                    <strong>Capacidad de volumen:</strong> {item.volumeCapacity + '' + item.volumeUnit}
-                                                </div>
-
-                                                <div className="col-md-3">
-                                                    <strong>Capacidad de pasajeros:</strong> {item.passengerSpace}
-                                                </div>
-                                            </>
-                                        )}
-
-                                        {category !== "vehicle" && (
-                                            <>
                                                 <div className="col-md-3">
                                                     <strong>Correo electrónico:</strong> {category === "customer" || category === "crew" ? item.email : (category === "employee" ? item.username : "")}
                                                 </div>
@@ -177,12 +148,37 @@ export const MoreDetails = ({ data = null }) => {
                                                 )}
                                             </>
                                         )}
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            {category === "vehicle" && (
+                            <div className="col-md-12">
+                                <h3 className="subTitle">Capaciades de carga</h3>
+                                <div className="section">
+                                    <div className="row">                                       
+                                            <>
+                                                <div className="col-md-3">
+                                                    <p><strong>Capaciad de peso:</strong> {item.weightCapacity + '' + item.weightUnit} </p>
+                                                </div>
+
+                                                <div className="col-md-3">
+                                                    <strong>Capacidad de volumen:</strong> {item.volumeCapacity + '' + item.volumeUnit}
+                                                </div>
+
+                                                <div className="col-md-3">
+                                                    <strong>Capacidad de pasajeros:</strong> {item.passengerSpace}
+                                                </div>
+                                            </>
+                                       
 
 
                                     </div>
 
                                 </div>
                             </div>
+                            )}
 
                             {category !== "crew" && category !== "vehicle" && (
                                 <>
@@ -300,6 +296,41 @@ export const MoreDetails = ({ data = null }) => {
                                 </>
                             )
                             }
+                            
+                            {category === "product" && (
+                                <div className="col-md-12">
+                                    <h3 className="subTitle">Detalles del Producto</h3>
+                                    <div className="section">
+                                        <div className="row">
+                                            <div className="col-md-3">
+                                                <strong>Nombre del Producto:</strong> {item.name}
+                                            </div>
+                                            <div className="col-md-3">
+                                                <strong>Precio:</strong> ${item.price}
+                                            </div>
+                                            <div className="col-md-3">
+                                                <strong>Categoría:</strong> {item.category}
+                                            </div>
+                                            <div className="col-md-3">
+                                                <strong>Stock:</strong> {item.stock}
+                                            </div>
+                                            <div className="col-md-12 mt-3">
+                                                <strong>Descripción:</strong> {item.description}
+                                            </div>
+                                            {item.supplier && (
+                                                <div className="col-md-3">
+                                                    <strong>Proveedor:</strong> {item.supplier}
+                                                </div>
+                                            )}
+                                            {item.warranty && (
+                                                <div className="col-md-3">
+                                                    <strong>Garantía:</strong> {item.warranty}
+                                                </div>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
 
                             < div className="button-container" >
 
