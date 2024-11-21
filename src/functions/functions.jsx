@@ -242,7 +242,6 @@ export const handleCancel = ({ from, urlPageList, navigate }) => {
  */
 export const completeFields = ({ formData, id, arrayApiResponse, nameFieldId }) => {
     const copyFormData = { ...formData }
-
     const filteredElement = arrayApiResponse.find((itemFilter) => itemFilter[nameFieldId] === parseInt(id, 10))
 
     if (filteredElement) {

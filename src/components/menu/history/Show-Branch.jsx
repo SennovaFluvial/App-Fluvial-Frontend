@@ -1,16 +1,24 @@
 import React, { useEffect, useState } from 'react'
-import '../../../assets/css/show/styles-Show.css';
-import { Link, useNavigate } from 'react-router-dom';
-import { Spinner } from '../../animations/Spiner';
-import { Grid } from '../../animations/Grid';
-import { VerifyUserChangePassword } from '../agregar/controllers/VerifyUserChangePassword';
-import { ModalRequestPassword } from '../agregar/ModalRequestPassword';
-import { useLocation } from 'react-router-dom';
-import { CancelButton } from '../../components/BackButton';
+import '../../../assets/css/show/styles-Show.css'
+import { Link, useNavigate } from 'react-router-dom'
+import { Spinner } from '../../animations/Spiner'
+import { Grid } from '../../animations/Grid'
+import { VerifyUserChangePassword } from '../agregar/controllers/VerifyUserChangePassword'
+import { ModalRequestPassword } from '../agregar/ModalRequestPassword'
+import { useLocation } from 'react-router-dom'
+import { CancelButton } from '../../components/BackButton'
 import { Pagination } from './Pagination'
 import { useControllerShowBranches } from './controllers/Branch/ControllerShowBranch'
 
 export const ShowBranch = () => {
+
+    const [modalState, setModalState] = useState({
+        showModal: false,
+        isUpdate: false,
+        selectedId: null,
+    })
+
+    const nav = useNavigate()
 
     const {
         searchTerm,
@@ -24,8 +32,6 @@ export const ShowBranch = () => {
         firstIndex
     } = useControllerShowBranches()
 
-    const nav = useNavigate();
-    const [showModal, setShowModal] = useState(false);
 
     const { updatePassword,
         handleChangeVerify,
@@ -33,29 +39,38 @@ export const ShowBranch = () => {
         handleSubmitVerify,
         formLogin,
         userName,
-        setUpdatePassword } = VerifyUserChangePassword();
+        setUpdatePassword } = VerifyUserChangePassword()
 
-    const handleChangeShowModal = () => {
-        setShowModal(!showModal);
-    }
-    const handleCloseModal = () => {
-        setShowModal(false);
+    const toggleModal = (isUpdate = null, id = null) => {
+        setModalState({
+            showModal: !modalState.showModal,
+            isUpdate,
+            selectedId: id,
+        })
     }
 
-    const onStatusChange = () => {
-        handleChangeShowModal()
-        return;
-    };
+    const closeModal = () => {
+        setModalState((prevState) => ({
+            ...prevState,
+            showModal: false,
+        }))
+    }
 
     useEffect(() => {
         if (updatePassword) {
-            nav('/adminSection/add-branch', { state: { from: 'listado' } });
-            setUpdatePassword(false);
-        }
-    }, [updatePassword])
+            const url = modalState.isUpdate === null
+                ? '/adminSection/add-branch'
+                : modalState.isUpdate
+                    ? `../add-branch/${modalState.selectedId}/update`
+                    : '/adminSection/add-branch';
 
-    const location = useLocation();
-    const from = location.state?.from || 'menu';
+            nav(url, { state: { from: 'listado' } })
+            setUpdatePassword(false)
+        }
+    }, [updatePassword, modalState])
+
+    const location = useLocation()
+    const from = location.state?.from || 'menu'
 
     if (loading) {
         return (
@@ -64,7 +79,7 @@ export const ShowBranch = () => {
                     <Spinner />
                 </Grid>
             </div>
-        );
+        )
     }
 
     return (
@@ -80,15 +95,20 @@ export const ShowBranch = () => {
 
                 <div className="row">
                     <div className="col-md-4 my-3">
-                        <input type="text" className="form-control" placeholder="Buscar..." value={searchTerm} onChange={handleSearchChange}/>
+                        <input type="text" className="form-control" placeholder="Buscar..." value={searchTerm} onChange={handleSearchChange} />
                     </div>
                     <div className="col-md-2 my-3 d-flex justify-content-end ms-auto">
-                        <button className='btn btn-primary rounded-pill p-2 ps-2' onClick={onStatusChange}>
+                        <button
+                            className='btn btn-primary rounded-pill p-2 ps-2'
+                            onClick={() => toggleModal(null, null)}
+                        >
                             <i className="fa-regular fa-square-plus me-3"></i> Nueva Sucursal
                         </button>
                     </div>
                     <div className="col-md-2 my-3 d-flex justify-content-end ms-2">
-                        <button className='btn btn-warning rounded-pill p-2 ps-2'>
+                        <button
+                            className='btn btn-warning rounded-pill p-2 ps-2'
+                        >
                             <i className="fa-solid fa-print me-3"></i> Imprimir Informe
                         </button>
                     </div>
@@ -119,15 +139,16 @@ export const ShowBranch = () => {
                                     <td>{item.municipio}</td>
                                     <td>{item.companiaNombre}</td>
                                     <td>
-                                        <Link to={`#`}>
-                                            <button className='btn btn-edit icon-link-hover text-primary'>
-                                                <i className="fa-solid fa-pen-to-square icon-option"></i>
-                                            </button>
-                                        </Link>
+                                        <button
+                                            onClick={() => toggleModal(true, item.id)}
+                                            className='btn btn-edit icon-link-hover text-primary'
+                                        >
+                                            <i className="fa-solid fa-pen-to-square icon-option"></i>
+                                        </button>
                                     </td>
 
                                     <td>
-                                        <Link to={`#`}>
+                                        <Link to={`#`}> {/* CONFIGURAR EL COMPONENTE DE MAS DETALLES PARA LAS SUCURSALES */}
                                             <button className='btn btn-view icon-link-hover text-warning'>
                                                 <i className="fa-solid fa-eye icon-option"></i>
                                             </button>
@@ -161,16 +182,17 @@ export const ShowBranch = () => {
                 </div>
             </div>
 
-            {showModal && (
+            {modalState.showModal && (
                 <ModalRequestPassword
                     userNameUser={userName}
-                    showModal={showModal}
-                    handleClose={handleCloseModal}
+                    showModal={modalState.showModal}
+                    handleClose={closeModal}
                     handleChangeVerify={handleChangeVerify}
                     errorsFormsVerify={errorsFormsVerify}
                     handleSubmitVerify={handleSubmitVerify}
                     formLogin={formLogin}
-                />)}
+                />
+            )}
 
         </>
     )

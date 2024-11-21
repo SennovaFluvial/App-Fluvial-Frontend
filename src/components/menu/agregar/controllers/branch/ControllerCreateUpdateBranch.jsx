@@ -20,13 +20,18 @@ export const ControllerCreateUpdateBranch = ({ id, action }) => {
         getCompanyUser("/api/v1/companie/users", "companiaNombre", setFormData);
     }, []);
 
+
     useEffect(() => {
-        if (action && action === 'update' && id) {
-            const arrayApiResponse = getElementByEndpoint("/api/v1/sucursales/all");
-            const updateFields = completeFields({ formData, id, arrayApiResponse });
-            setFormData(updateFields);
+        const fetchData = async () => {
+            if (action === "update" && id) {
+                const arrayApiResponse = await getElementByEndpoint("/api/v1/sucursales/all")
+                const updateFields = completeFields({ formData, id, arrayApiResponse, nameFieldId: 'id' });
+                setFormData(updateFields)
+            }
         }
-    }, [action, id]);
+
+        fetchData()
+    }, [action, id])
 
     const handleChange = (event) => {
         const { name, value } = event.target;

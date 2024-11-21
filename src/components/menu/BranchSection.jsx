@@ -71,7 +71,7 @@ export const BranchSection = ({ isCollapsed }) => {
                     </li>
                 </ul >
             </div>
-
+            
             {showModal && (
                 <ModalRequestPassword
                     userNameUser={userName}
