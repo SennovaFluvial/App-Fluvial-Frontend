@@ -8,34 +8,39 @@ export const ControllerMoreDetails = ({ id, category, from = null }) => {
     const [loading, setLoading] = useState(true)  // Estado de carga
     const { shouldUpdateFlag, setShouldUpdateFlag } = useGlobalContext() // Variables globales
 
-    const urlUpdateData = category === "employee"
-        ? `../add-employed/${id}?action=update`
-        : (category === "customer")
-            ? `${from ? "../" : ""}../add-customer/${id}/update`
-            : (category === "vehicle"
-                ? `../add-vehicle/${id}/update`
-                : ""
-            )
+    const urlMappings = {
+        employee: `../add-employed/${id}?action=update`,
+        customer: `${from ? "../" : ""}../add-customer/${id}/update`,
+        vehicle: `../add-vehicle/${id}/update`,
+        product: `../add-product/${id}/update`,
+    }
+
+    const urlUpdateData = urlMappings[category] || ""
 
     useEffect(() => {
+        const apiEndpoints = {
+            customer: "/api/v1/customers/all",
+            employee: "/api/v1/companie/users",
+            crew: "/api/v1/employeefluvial/all",
+            vehicle: "/api/v1/vehicles/all",
+            product: "/api/v1/product/all",
+        }
+
         const fetchCustomers = async () => {
-            setLoading(true)   // Activa el estado de carga
-            const urlApi = category === "customer"
-                ? "/api/v1/customers/all"
-                : (category === "employee"
-                    ? "/api/v1/companie/users"
-                    : (category === "crew"
-                        ? "/api/v1/employeefluvial/all"
-                        : (category === "vehicle"
-                            ? "/api/v1/vehicles/all"
-                            : "")))
+            setLoading(true)  // Activa el estado de carga
+            const urlApi = apiEndpoints[category] || ""
 
             try {
-                await showCustomers(setPeopleInfo, urlApi)
+                if (urlApi) {
+                    await showCustomers(setPeopleInfo, urlApi)
+                } else {
+                    console.warn("Categoría no reconocida:", category)
+                }
             } finally {
-                setLoading(false)   // Desactiva el estado de carga cuando termina
+                setLoading(false)  // Desactiva el estado de carga cuando termina
             }
         }
+
         fetchCustomers()
         setShouldUpdateFlag(false)
     }, [category, shouldUpdateFlag])  // Dependencia para cuando cambia `category` o `shouldUpdateFlag`

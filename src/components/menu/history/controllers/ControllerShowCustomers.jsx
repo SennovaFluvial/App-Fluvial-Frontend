@@ -42,10 +42,12 @@ export const useControllerShowCustomers = () => {
         getCustomers();
     }, []);
 
+    const field_search = ["numDocument", "name", "lastName", "email", "phone", "address", "cityName", "personType"]
+
     // para buscar
     const { searchTerm, handleSearchChange, filteredItems } = useSearchFields(
-        customers,
-        ["numDocument", "name", "lastName", "email", "phone", "address", "cityName", "personType"]
+        customers,  
+        field_search
     );
 
     const totalFilteredItems = filteredItems.length;
