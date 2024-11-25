@@ -1,33 +1,40 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import styles from '../../assets/css/section.module.css';
 
-export const CompanySection = () => {
+export const CompanySection = ({ isCollapsed }) => {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setIsOpen(!isOpen);
+    };
+
+    const closeMenu = () => {
+        setIsOpen(false);
+    };
     return (
-        <>
-            <ul className='navbar-nav me-auto mb-2 mb-lg-0'>
-                <li className='nav-item dropdown section-account-part2'>
-                    <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Empresas
-                    </a>
-                    <ul className="dropdown-menu menu-account">
-                        <>
-                            <li className='dropdown-item text-black'>
-                                <Link to={'show-companies'}>
-                                    <i className="fa-solid fa-building me-2"></i> Listado de Empresas
+            <div className={styles.Section}>
+                <ul className={styles.navbarNav}>
+                    <li className={styles.sectionAccountPart2}>
+                        <button onClick={() => { toggleMenu(); console.log(`Menu toggled, isOpen: ${!isOpen}`); }} className={styles.navLink} aria-haspopup="true" aria-expanded={isOpen} >
+                            <i className={`fa-solid fa-building ${isCollapsed ? styles.iconCentered : ''}`} style={{ marginRight: isCollapsed ? '0' : '8px' }}></i>
+                            {!isCollapsed && <span className={styles.menuText}> Empresas</span>}
+                        </button>
+                        <ul className={styles.menuAccount} style={{ display: isOpen ? 'block' : 'none' }} >
+                            <li className={styles.dropdownItem}>
+                                <Link to={'show-vehicles'} className={styles.link} onClick={closeMenu}>
+                                    <i className="fa-solid fa-building me-2"></i>Listado de Empresas
                                 </Link>
                             </li>
 
-                            <li className='dropdown-item text-black'>
-                                <Link to={'add-company'} state={{ from: 'menu' }}>
-                                    <i className="fa-solid fa-circle-plus"></i> Creación de Empresas
+                            <li className={styles.dropdownItem}>
+                                <Link to={'add-vehicle'} state={{ from: 'menu' }} className={styles.link} onClick={closeMenu}>
+                                    <i className="fa-solid fa-circle-plus me-2"></i>Creación de Empresas
                                 </Link>
                             </li>
-                        </>
-                    </ul>
-
-                </li>
-
-            </ul>
-        </>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
     )
 }

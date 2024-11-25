@@ -98,6 +98,10 @@
     /* Hace que los enlaces sean bloques */
 }
 
+.link .text {
+width: auto;
+}
+
 .collapsed .link {
     padding: 0;
     margin: 0;

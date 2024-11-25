@@ -122,7 +122,11 @@ export const ComponentRouter = () => {
                     <Route path='show-vehicles/more-details/:id?/:category?' element={< MoreDetails />} />
                     <Route path="show-shipment" element={< ShowShipment />} /> {/* Ruta para ver vehículos */}
                     <Route path="show-products" element={< ShowProducts />} /> {/* Ruta para ver productos */}
+                    <Route path='show-products/more-details/:id?/:product?' element={< MoreDetails />} />
+
                     <Route path="show-warehouse" element={< ShowWarehouse />} /> {/* Ruta para ver bodegas */}
+                    <Route path='show-warehouse/more-details/:id?/:warehouse?' element={< MoreDetails />} />
+
                     <Route path="show-branch" element={< ShowBranch />} /> {/* Ruta para ver bodegas */}
 
                     <Route path="register-shipment" element={< RegisterShipment />} > {/* Ruta padre para los moudulos de envío */}
