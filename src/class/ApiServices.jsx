@@ -47,7 +47,7 @@ export class ApiService {
         } catch (error) {
 
             // Muestra un mensaje de error en la consola si ocurre un problema con la solicitud
-            console.error('Error al crear el usuario:', error.response ? error.response.data : error.message);
+            console.error('Error al crear:', error.response ? error.response.data : error.message);
 
             throw error;
         }
@@ -73,7 +73,7 @@ export class ApiService {
         } catch (error) {
 
             // Muestra un mensaje de error en la consola si ocurre un problema con la solicitud
-            console.error('Error al Actualizar el usuario:', error.response ? error.response.data : error.message);
+            console.error('Error al Actualizar:', error.response ? error.response.data : error.message);
 
             throw error;
         }
@@ -116,6 +116,33 @@ export class ApiService {
         } catch (error) {
             // Muestra un mensaje de error en la consola, incluyendo información del error si está disponible
             console.error("Error al obtener los datos:", error.response ? error.response.data : error.message);
+            throw error;
+        }
+    }
+
+    static async patch(url_api, data) {
+        try {
+
+            // Convierte los datos a formato JSON
+            const jsonData = JSON.stringify(data);
+
+            // Realiza una solicitud POST a la API con los datos y encabezados proporcionados
+            const response = await instance.patch(url_api, jsonData, {
+                headers: {
+                    'Content-Type': 'application/json',  // Encabezado predeterminado para especificar el tipo de contenido
+                    ...headers // Combina encabezados predeterminados con los proporcionados por el usuario
+                },
+            });
+
+            // Muestra un mensaje en la consola si la solicitud es exitosa
+            // console.log("Respuesta del servidor:", response.data);
+            return response.data;
+
+        } catch (error) {
+
+            // Muestra un mensaje de error en la consola si ocurre un problema con la solicitud
+            console.error('Error al actualziar parcialmente:', error.response ? error.response.data : error.message);
+
             throw error;
         }
     }

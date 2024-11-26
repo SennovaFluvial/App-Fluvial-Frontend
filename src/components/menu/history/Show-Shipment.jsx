@@ -7,7 +7,6 @@ import { Grid } from '../../animations/Grid'
 import { Spinner } from '../../animations/Spiner'
 import { Pagination } from './Pagination'
 import { Select } from '../../html components/Selects'
-import { useState } from 'react'
 import { useDeliveryStatuses, usePaymentStatuses, usePaymentTypes } from '../update/options/arrays'
 import { SelectToChangeStatus } from './components.selects/SelectToChangeStatus'
 
@@ -25,8 +24,7 @@ export const ShowShipment = () => {
         },
     };
 
-    const {
-        searchTerm,
+    const { searchTerm,
         handleSearchChange,
         paginatedItems,
         elementForPage,
@@ -38,8 +36,12 @@ export const ShowShipment = () => {
         handleChange,
         selectFilterData,
         selectOptionsByFilter,
-        valueToFilter
-    } = ControllerShowShipment()
+        valueToFilter,
+        changePaymentStatus,
+        changeArrivalStatus,
+        showSelect,
+        handeChange,
+        formData } = ControllerShowShipment()
 
 
 
@@ -210,29 +212,29 @@ export const ShowShipment = () => {
 
                     </tbody>
                 </table>
-
-                {showModalChangeStatePay.changePaymentStatus && (
+                {showSelect.modalPaymentStatus && (
                     <>
+                        cambiar estado de pago
                         <SelectToChangeStatus
                             options={usePaymentStatuses}
                             name={estadoPago}
-                            onClick={hola} // aun no definido
-                            value={newStateOf.estadoPago}
+                            onClick={handeChange}
+                            value={formData.estadoPago}
                         />
                     </>
                 )}
 
-                {showModalChangeStatePay.changeArrivalStatus && (
+                {showSelect.modalDeliveryStatus && (
                     <>
-                        <SelectToChangeStatus
+                        cambiar estado de entrega
+                        {/* <SelectToChangeStatus
                             options={usePaymentStatuses}
                             name={useDeliveryStatuses}
-                            onClick={hola} // aun no definido
+                            onClick={hola} 
                             value={newStateOf.estadoPago}
-                        />
+                        /> */}
                     </>
                 )}
-
 
                 <div className="d-flex w-100">
                     <div className="d-flex justify-content-start w-25">
