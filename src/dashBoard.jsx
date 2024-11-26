@@ -157,7 +157,8 @@ export const DashBoard = ({ user, setUser }) => {
 
                                         <Inventories isCollapsed={isCollapsed} />
                                         
-                                        <BranchSection isCollapsed={isCollapsed} />
+                                        {!user?.rol?.includes('EMPLOYEE') && <BranchSection isCollapsed={isCollapsed} />}
+                                        
                                     </>
                                 )}
 
