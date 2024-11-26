@@ -13,6 +13,7 @@ export const ControllerMoreDetails = ({ id, category, from = null }) => {
         customer: `${from ? "../" : ""}../add-customer/${id}/update`,
         vehicle: `../add-vehicle/${id}/update`,
         product: `../add-product/${id}/update`,
+        warehouse: `../add-warehouse/${id}/update`
     }
 
     const urlUpdateData = urlMappings[category] || ""
@@ -24,12 +25,12 @@ export const ControllerMoreDetails = ({ id, category, from = null }) => {
             crew: "/api/v1/employeefluvial/all",
             vehicle: "/api/v1/vehicles/all",
             product: "/api/v1/product/all",
+            warehouse: "/api/v1/warehouse/all"
         }
 
         const fetchCustomers = async () => {
             setLoading(true)  // Activa el estado de carga
             const urlApi = apiEndpoints[category] || ""
-
             try {
                 if (urlApi) {
                     await showCustomers(setPeopleInfo, urlApi)
@@ -50,7 +51,8 @@ export const ControllerMoreDetails = ({ id, category, from = null }) => {
         if (peopleInfo.length > 0) {
             setLoading(true)
             const parsedId = parseInt(id, 10)
-            const data = peopleInfo.find((item) => item.id === parsedId)
+            const nameFieldId = category === "product" ? "productId" : "id"
+            const data = peopleInfo.find((item) => item[nameFieldId] === parsedId)
 
             setFilterData(data ? [data] : [])
             setLoading(false)   // Finaliza el estado de carga al terminar

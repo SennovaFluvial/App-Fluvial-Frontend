@@ -26,9 +26,11 @@
 
 .icon-option {
     margin-right: 5px;
-    font-size: 20px; /* Tamaño aumentado de los iconos */
+    font-size: 20px;
+    /* Tamaño aumentado de los iconos */
 }
-.row{
+
+.row {
     border: 12px
 }
 
@@ -38,3 +40,6 @@
         margin: 5px 0;
     }
 }
+
+/* MODAL DE SELECCION PARA CAMBIAR ESTADO DE PAGO Y DE ENTREGA */
+

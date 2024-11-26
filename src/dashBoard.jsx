@@ -34,7 +34,6 @@ import { BranchSection } from './components/menu/BranchSection'
 export const DashBoard = ({ user, setUser }) => {
     const location = useLocation()
 
-    const [users, setUsers] = useState([])
     const [filteredUser, setFilteredUser] = useState(null)
     const [isCollapsed, setIsCollapsed] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -48,14 +47,13 @@ export const DashBoard = ({ user, setUser }) => {
         setUser(null)
         nav('/Login')
     }
-
+    
     useEffect(() => {
         const fetchUsers = async () => {
             try {
                 setLoading(true);
 
                 const response = await ApiService.get("/api/v1/companie/users");
-                setUsers(response);
 
                 const userToView = JSON.parse(localStorage.getItem("user"));
                 const username = userToView ? userToView.username : null;
@@ -140,25 +138,41 @@ export const DashBoard = ({ user, setUser }) => {
                                     </li>
                                 </ul>
 
+                                {/* SUPERADMIN SECCIONES */}
+                                {user?.rol?.includes('SUPERADMIN') && (
+                                    <>
+                                        <CompanySection isCollapsed={isCollapsed} />
+                                        <EmployeeSection isCollapsed={isCollapsed} />
+                                        {/* <BranchSection isCollapsed={isCollapsed} /> */}
+                                        {/* <SailorSection isCollapsed={isCollapsed} /> */}
+                                        {/* <VehicleSection isCollapsed={isCollapsed} /> */}
+                                        {/* <CustomerSection isCollapsed={isCollapsed} /> */}
+                                        {/* <ShipmentSection isCollapsed={isCollapsed} /> */}
+                                        {/* <Inventories isCollapsed={isCollapsed} /> */}
+                                    </>
+                                )}
 
-                                {user?.rol?.includes('SUPERADMIN') && <CompanySection isCollapsed={isCollapsed} />}
+                                {/* ADMIN SECCIONES */}
+                                {user?.rol?.includes('ADMIN') && (
+                                    <>
+                                        <EmployeeSection isCollapsed={isCollapsed} />
+                                        <SailorSection isCollapsed={isCollapsed} />
+                                        <VehicleSection isCollapsed={isCollapsed} />
+                                        <CustomerSection isCollapsed={isCollapsed} />
+                                        <ShipmentSection isCollapsed={isCollapsed} />
+                                        <BranchSection isCollapsed={isCollapsed} />
+                                        <Inventories isCollapsed={isCollapsed} />
+                                    </>
+                                )}
 
-                                {!user?.rol?.includes('EMPLOYEE') && <EmployeeSection isCollapsed={isCollapsed} />}
-
-                                {!user?.rol?.includes('SUPERADMIN') && (
+                                {/* EMPLOYEE SECCIONES */}
+                                {user?.rol?.includes('EMPLOYEE') && (
                                     <>
                                         <SailorSection isCollapsed={isCollapsed} />
-
                                         <VehicleSection isCollapsed={isCollapsed} />
-
                                         <CustomerSection isCollapsed={isCollapsed} />
-
                                         <ShipmentSection isCollapsed={isCollapsed} />
-
                                         <Inventories isCollapsed={isCollapsed} />
-                                        
-                                        {!user?.rol?.includes('EMPLOYEE') && <BranchSection isCollapsed={isCollapsed} />}
-                                        
                                     </>
                                 )}
 

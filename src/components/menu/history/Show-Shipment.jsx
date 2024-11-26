@@ -7,30 +7,23 @@ import { Grid } from '../../animations/Grid'
 import { Spinner } from '../../animations/Spiner'
 import { Pagination } from './Pagination'
 import { Select } from '../../html components/Selects'
+import { useState } from 'react'
+import { useDeliveryStatuses, usePaymentStatuses, usePaymentTypes } from '../update/options/arrays'
+import { SelectToChangeStatus } from './components.selects/SelectToChangeStatus'
 
 export const ShowShipment = () => {
 
     const name_fields_shipment = {
         tipoPago: {
-            EFECTIVO: "Efectivo",
-            TARJETA_CREDITO: "Tarjeta de Crédito",
-            TRANSFERENCIA: "Transferencia",
-            PAYPAL: "PayPal",
+            usePaymentTypes,
         },
         estadoPago: {
-            PAGADO: "Pagado",
-            PENDIENTE: "Pendiente",
-            RECHAZADO: "Rechazado",
+            usePaymentStatuses
         },
         estadoEntrega: {
-            EN_PREPARACION: "En Preparación",
-            EN_TRANSITO: "En Tránsito",
-            ENTREGADO: "Entregado",
-            DEVUELTO: "Devuelto",
-            CANCELADO: "Cancelado",
+            useDeliveryStatuses
         },
     };
-
 
     const {
         searchTerm,
@@ -62,8 +55,6 @@ export const ShowShipment = () => {
             </div>
         )
     }
-
-
 
     return (
         <>
@@ -112,7 +103,7 @@ export const ShowShipment = () => {
                                         name="filter_data_to"
                                         value={selectFilterData.filter_data_to}
                                     >
-                                        <option value="" disabled>Seleccione</option>
+                                        <option value="">Seleccione</option>
                                         <option value="tipoPago">Tipo de pago</option>
                                         <option value="estadoPago">Estado de pago</option>
                                         <option value="estadoEntrega">Estado de entrega</option>
@@ -178,14 +169,20 @@ export const ShowShipment = () => {
                                     </th>
                                     <th>
                                         {name_fields_shipment.estadoPago[item.estadoPago] || item.estadoPago}
-                                        <button className="btn">
-                                            <i className="fa-solid fa-pen"></i>
+                                        <button
+                                            onClick={changePaymentStatus}
+                                            className='btn btn-customer-change'
+                                        >
+                                            <i className="fa-solid fa-pencil"></i>
                                         </button>
                                     </th>
                                     <th>
                                         {name_fields_shipment.estadoEntrega[item.estadoEntrega] || item.estadoEntrega}
-                                        <button className="btn">
-                                            <i className="fa-solid fa-pen"></i>
+                                        <button
+                                            onClick={changeArrivalStatus}
+                                            className='btn btn-customer-change'
+                                        >
+                                            <i className="fa-solid fa-pencil"></i>
                                         </button>
                                     </th>
 
@@ -213,6 +210,30 @@ export const ShowShipment = () => {
 
                     </tbody>
                 </table>
+
+                {showModalChangeStatePay.changePaymentStatus && (
+                    <>
+                        <SelectToChangeStatus
+                            options={usePaymentStatuses}
+                            name={estadoPago}
+                            onClick={hola} // aun no definido
+                            value={newStateOf.estadoPago}
+                        />
+                    </>
+                )}
+
+                {showModalChangeStatePay.changeArrivalStatus && (
+                    <>
+                        <SelectToChangeStatus
+                            options={usePaymentStatuses}
+                            name={useDeliveryStatuses}
+                            onClick={hola} // aun no definido
+                            value={newStateOf.estadoPago}
+                        />
+                    </>
+                )}
+
+
                 <div className="d-flex w-100">
                     <div className="d-flex justify-content-start w-25">
                         <CancelButton
