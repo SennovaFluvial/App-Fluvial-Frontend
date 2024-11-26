@@ -34,7 +34,7 @@ export const AddVehicle = () => {
                             <div className="col-md-6">
                                 <Inputs
                                     event={handleChange}
-                                    text="Nombres de la embarcación"
+                                    text="Nombre de la embarcación"
                                     name="nombre"
                                     icon="fa-solid fa-car"
                                     value={formData.nombre}
