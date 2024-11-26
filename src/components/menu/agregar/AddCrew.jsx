@@ -28,8 +28,8 @@ export const AddCrew = () => {
                             {errorsForms.lastName && <div className="text-danger">{errorsForms.lastName}</div>}
                         </div>
                         <div className="col-md-4">
-                            <Select text="Tipo de tripulante" name="crewType" options={crewType} value={formData.crewType} event={handleChange} />
-                            {/* {errorsForms.crewType && <div className="text-danger">{errorsForms.typeDocument}</div>} */}
+                            <Select text="Tipo de tripulante" name="typeName" options={crewType} value={formData.employeeType.typeName} event={handleChange} />
+                            {errorsForms.crewType && <div className="text-danger">{errorsForms.typeDocument}</div>}
                         </div>
                         <div className="col-md-4">
                             <Select text="Tipo de Documento" name="typeDocument" options={OptionsTypeDocument} value={formData.typeDocument} event={handleChange} />
@@ -78,7 +78,7 @@ export const AddCrew = () => {
                             <h3><b>INFORMACIÓN LABORAL</b></h3>
                         </div>
                         <div className="col-md-4">
-                            <Inputs text="Licencia" name="licencia" event={handleChange} icon={"fa-regular fa-id-badge"} value={formData.licencia} />
+                            <Inputs type="text" text="Licencia" name="licencia" event={handleChange} icon={"fa-regular fa-id-badge"} value={formData.licencia} />
                             {errorsForms.licencia && <div className="text-danger">{errorsForms.licencia}</div>}
                         </div>
                         <div className="col-md-4">
@@ -92,7 +92,7 @@ export const AddCrew = () => {
                     </div>
 
                     <div className="text-center">
-                        <button type="submit" className={`${styles.guardar + " ms-2"} ${isDisabled ? "is-disabled-button" : ""}`}>{action === "update" ? "Actualizar" : "Crear"} Capitan <i className="fa-solid fa-id-card-clip"></i></button>
+                        <button type="submit" className={`${styles.guardar + " ms-2"} ${isDisabled ? "is-disabled-button" : ""}`}>{action === "update" ? "Actualizar" : "Crear"} Tripulante <i className="fa-solid fa-id-card-clip"></i></button>
                     </div>
                 </form>
             </div>

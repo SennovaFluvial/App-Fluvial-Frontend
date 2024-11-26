@@ -76,7 +76,7 @@ export const AddCaptain = () => {
                             <h3><b>INFORMACIÓN LABORAL</b></h3>
                         </div>
                         <div className="col-md-4">
-                            <Inputs text="Licencia" name="licencia" event={handleChange} icon={"fa-regular fa-id-badge"} value={formData.licencia} />
+                            <Inputs type="text" text="Licencia" name="licencia" event={handleChange} icon={"fa-regular fa-id-badge"} value={formData.licencia} />
                             {errorsForms.licencia && <div className="text-danger">{errorsForms.licencia}</div>}
                         </div>
                         <div className="col-md-4">

@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
-import { ApiService } from "../../../../class/ApiServices";
-import Swal from 'sweetalert';
-import { Alert } from "../../../../class/alerts";
-import { clearError, completeFields, getElementByEndpoint, handleStatusError, sanitizedValue, validationFieldSubmit } from "../../../../functions/functions";
+import { useState, useEffect } from "react"
+import { useNavigate } from "react-router"
+import { ApiService } from "../../../../class/ApiServices"
+import Swal from 'sweetalert'
+import { Alert } from "../../../../class/alerts"
+import { clearError, completeFields, getElementByEndpoint, handleStatusError, sanitizedValue, validationFieldSubmit } from "../../../../functions/functions"
 
 /**
  * Controlador para la creación y actualización de capitán.
@@ -26,25 +26,52 @@ import { clearError, completeFields, getElementByEndpoint, handleStatusError, sa
 
 export const ControllerCreateUpdateCaptain = ({ id, action }) => {
 
-    const navigate = useNavigate();
-    const [errorsForms, setErrorsForms] = useState({});
+    const navigate = useNavigate()
+    const [errorsForms, setErrorsForms] = useState({})
     const [isDisabled, setIsDisabled] = useState(false)
     const [formData, setFormData] = useState({
-        name: '', lastName: '', typeDocument: '', numDocument: '', licencia: '',
-        email: '', dateOfBirth: '', nationality: '', maritalStatus: '', phone: '',
-        address: '', sex: '', status: '', employeeType: { typeName: 'Capitan' },
+        name: '',
+        lastName: '',
+        typeDocument: '',
+        numDocument: '',
+        licencia: '',
+        email: '',
+        dateOfBirth: '',
+        nationality: '',
+        maritalStatus: '',
+        phone: '',
+        address: '',
+        sex: '',
+        status: '',
+        employeeType: {
+            typeName: ''
+        }
     });
+
 
     // Efecto para reiniciar los valores del formulario cuando no existen los parámetros `action` e `id`.
     useEffect(() => {
 
         if (!action && !id) {
             setFormData({
-                name: '', lastName: '', typeDocument: '', numDocument: '', licencia: '',
-                email: '', dateOfBirth: '', nationality: '', maritalStatus: '', phone: '',
-                address: '', sex: '', status: '', employeeType: { typeName: 'Capitan' },
-            });
-            setErrorsForms({});
+                name: '',
+                lastName: '',
+                typeDocument: '',
+                numDocument: '',
+                licencia: '',
+                email: '',
+                dateOfBirth: '',
+                nationality: '',
+                maritalStatus: '',
+                phone: '',
+                address: '',
+                sex: '',
+                status: '',
+                employeeType: {
+                    typeName: ''
+                }
+            })
+            setErrorsForms({})
         }
 
     }, [id, action])
@@ -52,56 +79,67 @@ export const ControllerCreateUpdateCaptain = ({ id, action }) => {
     useEffect(() => {
         const fetchData = async () => {
             if (action && action === 'update' && id) {
-                const arrayApiResponse = await getElementByEndpoint("/api/v1/employeefluvial/all");
-                const updateFields = completeFields({ formData, id, arrayApiResponse, nameFieldId: 'id' });
-                setFormData(updateFields);
+                const arrayApiResponse = await getElementByEndpoint("/api/v1/employeefluvial/all")
+                const updateFields = completeFields({ formData, id, arrayApiResponse, nameFieldId: 'id' })
+                setFormData(updateFields)
             }
-        };
+        }
 
-        fetchData();
-    }, [action, id]);
+        fetchData()
+    }, [action, id])
 
     const handleChange = (event) => {
-        const { name, value } = event.target;
+        const { name, value } = event.target
 
-        setFormData(prevState => ({
-            ...prevState,
-            [name]: sanitizedValue(value)
-        }));
+        if (name === "typeName") {
+            setFormData(prevState => ({
+                ...prevState,
+                employeeType: {
+                    ...prevState.employeeType,
+                    typeName: sanitizedValue(value)
+                }
+            }));
+        } else {
+            setFormData(prevState => ({
+                ...prevState,
+                [name]: sanitizedValue(value)
+            }));
+        }
 
-        const expresionEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const birthYear = name === "dateOfBirth" ? new Date(value).getFullYear() : null;
-        const currentYear = new Date().getFullYear();
+
+        const expresionEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        const birthYear = name === "dateOfBirth" ? new Date(value).getFullYear() : null
+        const currentYear = new Date().getFullYear()
 
         if (!value.trim()) {
-            handleStatusError(setErrorsForms, name, "Campo obligatorio");
+            handleStatusError(setErrorsForms, name, "Campo obligatorio")
         } else if ((name === "numDocument" || name === "phone") && isNaN(value)) {
-            handleStatusError(setErrorsForms, name, "Debe ser un número válido");
+            handleStatusError(setErrorsForms, name, "Debe ser un número válido")
         } else if ((name === "numDocument" && (value.length < 5 || value.length > 11)) ||
             (name === "phone" && (value.length < 5 || value.length > 11))) {
-            handleStatusError(setErrorsForms, name, "Debe tener entre 5 y 11 dígitos");
+            handleStatusError(setErrorsForms, name, "Debe tener entre 5 y 11 dígitos")
         } else if (name === "email" && !expresionEmail.test(value)) {
-            handleStatusError(setErrorsForms, name, "No es un correo válido, recuerda usar el formato: ejemplo@gmail.com");
+            handleStatusError(setErrorsForms, name, "No es un correo válido, recuerda usar el formato: ejemplo@gmail.com")
         } else if (name === "dateOfBirth" && (birthYear < 1700 || birthYear > 2000 || birthYear >= currentYear)) {
-            handleStatusError(setErrorsForms, "dateOfBirth", "Fecha no válida. Debe estar entre 1700 y 2000.");
+            handleStatusError(setErrorsForms, "dateOfBirth", "Fecha no válida. Debe estar entre 1700 y 2000.")
         } else {
             // Elimina el error si todas las validaciones son correctas
-            clearError(setErrorsForms, name);
+            clearError(setErrorsForms, name)
         }
-    };
+    }
 
     useEffect(() => {
         if (Object.keys(errorsForms).length > 0) {
-            setIsDisabled(true);
+            setIsDisabled(true)
         } else {
-            setIsDisabled(false);
+            setIsDisabled(false)
         }
     }, [errorsForms])
 
     const handleSubmit = async (event) => {
-        event.preventDefault();
+        event.preventDefault()
 
-        const validationResponse = validationFieldSubmit(setErrorsForms, formData, event);
+        const validationResponse = validationFieldSubmit(setErrorsForms, formData, event)
 
         if (validationResponse) {
             swal({
@@ -109,14 +147,14 @@ export const ControllerCreateUpdateCaptain = ({ id, action }) => {
                 text: 'Hubo un error al procesar la solicitud. Por favor, intente de nuevo.',
                 icon: 'error',
                 timer: 4000
-            });
-            return;
+            })
+            return
         }
 
         // Confirmación de envío
         const confirmationMessage = action === 'update' ?
             `¿Está seguro que quiere actualizar al capitán?\nNombre: ${formData.name} ${formData.lastName}` :
-            `¿Está seguro que quiere crear al capitán?\nNombre: ${formData.name} ${formData.lastName}`;
+            `¿Está seguro que quiere crear al capitán?\nNombre: ${formData.name} ${formData.lastName}`
 
         try {
             const result = await Alert.alertConfirm(
@@ -127,26 +165,28 @@ export const ControllerCreateUpdateCaptain = ({ id, action }) => {
                     : 'Capitan creado correctamente',
                 navigate,
                 "../../../adminSection/show-crew"
-            );
+            )
 
             if (result) {
                 if (action === 'update') {
-                    await ApiService.put(`/api/v1/employeefluvial/update/${id}`, formData);
+                    await ApiService.put(`/api/v1/employeefluvial/update/${id}`, formData)
                 } else {
-                    await ApiService.post('/api/v1/employeefluvial/save', formData);
+                    await ApiService.post('/api/v1/employeefluvial/save', formData)
                 }
             }
         } catch (error) {
-            console.error('Error al procesar la solicitud:', error);
+            console.error('Error al procesar la solicitud:', error)
             Swal({
                 title: 'Error',
                 text: 'Hubo un error al procesar la solicitud. Por favor, intente de nuevo.',
                 icon: 'error',
                 timer: 2000
-            });
+            })
         }
 
-    };
+    }
+
+    console.log(formData)
 
     return {
         formData,
