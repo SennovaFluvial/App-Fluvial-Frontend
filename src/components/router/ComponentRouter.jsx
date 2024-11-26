@@ -121,7 +121,11 @@ export const ComponentRouter = () => {
                     <Route path="show-vehicles" element={< ShowVehicles />} /> {/* Ruta para ver vehículos */}
                     <Route path='show-vehicles/more-details/:id?/:category?' element={< MoreDetails />} />
                     <Route path="show-shipment" element={< ShowShipment />} /> {/* Ruta para ver vehículos */}
+
                     <Route path="show-products" element={< ShowProducts />} /> {/* Ruta para ver productos */}
+                    <Route path='show-products/more-details/:id?/:category?' element={< MoreDetails />} />
+
+
                     <Route path="show-warehouse" element={< ShowWarehouse />} /> {/* Ruta para ver bodegas */}
                     <Route path="show-branch" element={< ShowBranch />} /> {/* Ruta para ver bodegas */}
 
@@ -140,7 +144,7 @@ export const ComponentRouter = () => {
                     <Route path="inventories" element={< Inventories />} /> {/* Ruta para ver los inventarios */}
                     <Route path="reports" element={< Reports />} />
                     <Route path="smartChat" element={< ChatSection />} />
-                
+
 
                 </Route>
             </Route>

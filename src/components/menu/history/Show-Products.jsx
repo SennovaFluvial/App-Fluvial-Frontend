@@ -20,10 +20,10 @@ export const ShowProducts = () => {
         loading,
         firstIndex
     } = useControllerShowProducts();
-    
+
     const location = useLocation();
     const from = location.state?.from || 'menu';
-    
+
     if (loading) {
         return (
             <>
@@ -90,7 +90,7 @@ export const ShowProducts = () => {
                     <tbody>
                         {paginatedItems.length > 0 ? (
                             paginatedItems.map((item, index) => (
-                                <tr key={index}>
+                                <tr key={item.id || index}>
                                     <td>
                                         <b>{firstIndex + index + 1}</b>
                                     </td>
