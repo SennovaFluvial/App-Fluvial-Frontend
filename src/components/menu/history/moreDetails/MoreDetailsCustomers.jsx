@@ -39,7 +39,6 @@ export const MoreDetails = ({ data = null }) => {
         )
     }
 
-
     return (
         <>
 
@@ -60,7 +59,7 @@ export const MoreDetails = ({ data = null }) => {
 
                 return (
 
-                    <div className="container mt-4 more-details-container" key={item.id}>
+                    <div className="container mt-4 more-details-container" key={category === 'product' ? item.productId : item.id}>
                         <div className="row more-details-row">
                             {!from && (<>
                                 <h1 className='text-center mb-5 more-details-title'>

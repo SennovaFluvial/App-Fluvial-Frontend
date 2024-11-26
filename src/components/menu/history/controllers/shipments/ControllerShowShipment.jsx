@@ -48,8 +48,7 @@ export const ControllerShowShipment = () => {
             let url_api = "/api/v1/envios/all"
 
             if (valueToFilter) {
-                console.log('selectFilterData:: ', selectFilterData.filter_data_to)
-                console.log('valueToFilter:: ', valueToFilter)
+
                 switch (selectFilterData.filter_data_to) {
                     case "tipoPago":
                         url_api = `/api/v1/envios/tipo-pago/${valueToFilter}`
