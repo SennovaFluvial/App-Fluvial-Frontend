@@ -82,8 +82,8 @@ export const AddCrew = () => {
                             {errorsForms.licencia && <div className="text-danger">{errorsForms.licencia}</div>}
                         </div>
                         <div className="col-md-4">
-                            <Inputs type="date" text="Fecha de expiración de licencia" name="#" event={handleChange} icon={"fa-regular fa-clock"} value={formData.licencia} />
-                            {/* {errorsForms.licencia && <div className="text-danger">{errorsForms.licencia}</div>} */}
+                            <Inputs type="date" text="Fecha de expiración de licencia" name="expLicencia" event={handleChange} icon={"fa-regular fa-clock"} value={formData.expLicencia} />
+                            {errorsForms.expLicencia && <div className="text-danger">{errorsForms.expLicencia}</div>}
                         </div>
                         <div className="col-md-4">
                             <Select text="Estado" name="status" event={handleChange} value={formData.status} options={status} />

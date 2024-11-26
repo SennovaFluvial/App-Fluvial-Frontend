@@ -35,6 +35,7 @@ export const ControllerCreateUpdateCaptain = ({ id, action }) => {
         typeDocument: '',
         numDocument: '',
         licencia: '',
+        expLicencia: '',
         email: '',
         dateOfBirth: '',
         nationality: '',
@@ -49,6 +50,7 @@ export const ControllerCreateUpdateCaptain = ({ id, action }) => {
     });
 
 
+
     // Efecto para reiniciar los valores del formulario cuando no existen los parámetros `action` e `id`.
     useEffect(() => {
 
@@ -59,6 +61,7 @@ export const ControllerCreateUpdateCaptain = ({ id, action }) => {
                 typeDocument: '',
                 numDocument: '',
                 licencia: '',
+                expLicencia: '',
                 email: '',
                 dateOfBirth: '',
                 nationality: '',
@@ -153,8 +156,8 @@ export const ControllerCreateUpdateCaptain = ({ id, action }) => {
 
         // Confirmación de envío
         const confirmationMessage = action === 'update' ?
-            `¿Está seguro que quiere actualizar al capitán?\nNombre: ${formData.name} ${formData.lastName}` :
-            `¿Está seguro que quiere crear al capitán?\nNombre: ${formData.name} ${formData.lastName}`
+            `¿Está seguro que quiere actualizar al ${formData.employeeType.typeName}?\nNombre: ${formData.name} ${formData.lastName}` :
+            `¿Está seguro que quiere crear al ${formData.employeeType.typeName}?\nNombre: ${formData.name} ${formData.lastName}`
 
         try {
             const result = await Alert.alertConfirm(
