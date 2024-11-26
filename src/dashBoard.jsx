@@ -130,7 +130,7 @@ export const DashBoard = ({ user, setUser }) => {
 
                                 {user?.rol?.includes('SUPERADMIN') && <CompanySection isCollapsed={isCollapsed} />}
 
-                                <EmployeeSection isCollapsed={isCollapsed} />
+                                {!user?.rol?.includes('EMPLOYEE') && <EmployeeSection isCollapsed={isCollapsed} />}
 
                                 {!user?.rol?.includes('SUPERADMIN') && (
                                     <>
@@ -143,8 +143,8 @@ export const DashBoard = ({ user, setUser }) => {
                                         <ShipmentSection isCollapsed={isCollapsed} />
 
                                         <Inventories isCollapsed={isCollapsed} />
-                                        
-                                        <BranchSection isCollapsed={isCollapsed} />
+
+                                        {!user?.rol?.includes('EMPLOYEE') && <BranchSection isCollapsed={isCollapsed} />}
                                     </>
                                 )}
 
