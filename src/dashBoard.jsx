@@ -128,7 +128,7 @@ export const DashBoard = ({ user, setUser }) => {
                                 </ul>
 
 
-                                {user?.rol?.includes('SUPERADMIN') && <CompanySection />}
+                                {user?.rol?.includes('SUPERADMIN') && <CompanySection isCollapsed={isCollapsed} />}
 
                                 <EmployeeSection isCollapsed={isCollapsed} />
 

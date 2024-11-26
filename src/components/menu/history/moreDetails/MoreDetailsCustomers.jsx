@@ -154,10 +154,10 @@ export const MoreDetails = ({ data = null }) => {
                             </div>
 
                             {category === "vehicle" && (
-                            <div className="col-md-12">
-                                <h3 className="subTitle">Capaciades de carga</h3>
-                                <div className="section">
-                                    <div className="row">                                       
+                                <div className="col-md-12">
+                                    <h3 className="subTitle">Capaciades de carga</h3>
+                                    <div className="section">
+                                        <div className="row">
                                             <>
                                                 <div className="col-md-3">
                                                     <p><strong>Capaciad de peso:</strong> {item.weightCapacity + '' + item.weightUnit} </p>
@@ -171,13 +171,13 @@ export const MoreDetails = ({ data = null }) => {
                                                     <strong>Capacidad de pasajeros:</strong> {item.passengerSpace}
                                                 </div>
                                             </>
-                                       
 
+
+
+                                        </div>
 
                                     </div>
-
                                 </div>
-                            </div>
                             )}
 
                             {category !== "crew" && category !== "vehicle" && (
@@ -296,7 +296,7 @@ export const MoreDetails = ({ data = null }) => {
                                 </>
                             )
                             }
-                            
+
                             {category === "product" && (
                                 <div className="col-md-12">
                                     <h3 className="subTitle">Detalles del Producto</h3>
@@ -317,16 +317,37 @@ export const MoreDetails = ({ data = null }) => {
                                             <div className="col-md-12 mt-3">
                                                 <strong>Descripción:</strong> {item.description}
                                             </div>
-                                            {item.supplier && (
-                                                <div className="col-md-3">
-                                                    <strong>Proveedor:</strong> {item.supplier}
-                                                </div>
-                                            )}
-                                            {item.warranty && (
-                                                <div className="col-md-3">
-                                                    <strong>Garantía:</strong> {item.warranty}
-                                                </div>
-                                            )}
+                                            <div className="col-md-3">
+                                                <strong>Proveedor:</strong> {item.supplier}
+                                            </div>
+                                            <div className="col-md-3">
+                                                <strong>Garantía:</strong> {item.warranty}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+
+                            {category === "warehouse" && (
+                                <div className="col-md-12">
+                                    <h3 className="subTitle">Detalles de la Bodega</h3>
+                                    <div className="section">
+                                        <div className="row">
+                                            <div className="col-md-3">
+                                                <strong>Nombre de la Bodega:</strong> {item.name}
+                                            </div>
+                                            <div className="col-md-3">
+                                                <strong>Ubicación:</strong> {item.location}
+                                            </div>
+                                            <div className="col-md-3">
+                                                <strong>Capacidad:</strong> {item.capacity}
+                                            </div>
+                                            <div className="col-md-3">
+                                                <strong>Unidad de Medida:</strong> {item.unitOfMeasurement}
+                                            </div>
+                                            <div className="col-md-12 mt-3">
+                                                <strong>Descripción:</strong> {item.description}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

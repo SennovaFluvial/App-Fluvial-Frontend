@@ -131,7 +131,7 @@ export const ShowWarehouse = () => {
                     <tbody>
                         {paginatedItems.length > 0 ? (
                             paginatedItems.map((item, index) => (
-                                <tr key={index}>
+                                <tr key={item.id}>
                                     <td><b>{firstIndex + index + 1}</b></td>
                                     <td>{item.name}</td>
                                     <td>{item.location}</td>
@@ -147,7 +147,7 @@ export const ShowWarehouse = () => {
                                     </td>
 
                                     <td>
-                                        <Link to={`#`}>
+                                        <Link to={`more-details/${item.id}/warehouse`}>
                                             <button className='btn btn-view icon-link-hover text-warning'>
                                                 <i className="fa-solid fa-eye icon-option"></i>
                                             </button>
