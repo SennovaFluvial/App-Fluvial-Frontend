@@ -38,6 +38,28 @@ export const ControllerShowShipment = () => {
         estadoEntrega: useDeliveryStatuses,
     }
 
+    // Mapa de nombre de ESTADOS DE PAGO, TIPO DE PAGO Y ESTADO DE ENTREGA
+    const name_fields_shipment = {
+        tipoPago: {
+            EFECTIVO: "Efectivo",
+            TARJETA_CREDITO: "Tarjeta de Crédito",
+            TRANSFERENCIA: "Transferencia",
+            PAYPAL: "PayPal",
+        },
+        estadoPago: {
+            PAGADO: "Pagado",
+            PENDIENTE: "Pendiente",
+            RECHAZADO: "Rechazado",
+        },
+        estadoEntrega: {
+            EN_PREPARACION: "En Preparación",
+            EN_TRANSITO: "En Tránsito",
+            ENTREGADO: "Entregado",
+            DEVUELTO: "Devuelto",
+            CANCELADO: "Cancelado",
+        },
+    }
+
     const handleChange = (event) => {
         const { value, name } = event.target
 
@@ -232,6 +254,7 @@ export const ControllerShowShipment = () => {
         showSelect,
         formData,
         handeChange,
-        setShowSelect
+        setShowSelect,
+        name_fields_shipment
     }
 }
