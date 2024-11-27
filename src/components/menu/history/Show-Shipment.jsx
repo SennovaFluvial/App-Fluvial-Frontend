@@ -8,7 +8,6 @@ import { Spinner } from '../../animations/Spiner'
 import { Pagination } from './Pagination'
 import { Select } from '../../html components/Selects'
 import { useDeliveryStatuses, usePaymentStatuses, usePaymentTypes } from '../update/options/arrays'
-import { SelectToChangeStatus } from './components.selects/SelectToChangeStatus'
 
 export const ShowShipment = () => {
 
@@ -24,7 +23,8 @@ export const ShowShipment = () => {
         },
     };
 
-    const { searchTerm,
+    const {
+        searchTerm,
         handleSearchChange,
         paginatedItems,
         elementForPage,
@@ -40,8 +40,10 @@ export const ShowShipment = () => {
         changePaymentStatus,
         changeArrivalStatus,
         showSelect,
+        formData,
         handeChange,
-        formData } = ControllerShowShipment()
+        setShowSelect
+    } = ControllerShowShipment()
 
 
 
@@ -172,7 +174,7 @@ export const ShowShipment = () => {
                                     <th>
                                         {name_fields_shipment.estadoPago[item.estadoPago] || item.estadoPago}
                                         <button
-                                            onClick={changePaymentStatus}
+                                            onClick={() => changePaymentStatus(item.id)}
                                             className='btn btn-customer-change'
                                         >
                                             <i className="fa-solid fa-pencil"></i>
@@ -181,7 +183,7 @@ export const ShowShipment = () => {
                                     <th>
                                         {name_fields_shipment.estadoEntrega[item.estadoEntrega] || item.estadoEntrega}
                                         <button
-                                            onClick={changeArrivalStatus}
+                                            onClick={() => changeArrivalStatus(item.id)}
                                             className='btn btn-customer-change'
                                         >
                                             <i className="fa-solid fa-pencil"></i>
@@ -214,25 +216,32 @@ export const ShowShipment = () => {
                 </table>
                 {showSelect.modalPaymentStatus && (
                     <>
-                        cambiar estado de pago
-                        <SelectToChangeStatus
-                            options={usePaymentStatuses}
-                            name={estadoPago}
-                            onClick={handeChange}
-                            value={formData.estadoPago}
-                        />
+                        <div className="row align-items-center">
+                            <div className="col-md-4">
+                                <Select
+                                    text="Eliga el nuevo estado de pago"
+                                    name="estadoPago"
+                                    value={formData.estadoPago}
+                                    options={usePaymentStatuses}
+                                    event={handeChange}
+                                />
+                            </div>
+                            <div className="col-md-1 d-flex align-items-center">
+                                <button
+                                    onClick={() => setShowSelect(prevState => ({ ...prevState, modalPaymentStatus: "" }))}
+                                    className="btn ms-2">
+                                    <i className="fa-solid fa-circle-xmark text-danger"></i>
+                                </button>
+                            </div>
+                        </div>
+
                     </>
                 )}
 
                 {showSelect.modalDeliveryStatus && (
                     <>
                         cambiar estado de entrega
-                        {/* <SelectToChangeStatus
-                            options={usePaymentStatuses}
-                            name={useDeliveryStatuses}
-                            onClick={hola} 
-                            value={newStateOf.estadoPago}
-                        /> */}
+
                     </>
                 )}
 

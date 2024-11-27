@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSearchFields } from '../../search/SearchFields'
 import { ApiService } from '../../../../../class/ApiServices'
 import { useDeliveryStatuses, usePaymentStatuses, usePaymentTypes } from '../../../update/options/arrays'
-
+import swal from 'sweetalert'
 export const ControllerShowShipment = () => {
 
     // Estados para paginacione y mostrar datos en listado
@@ -10,17 +10,18 @@ export const ControllerShowShipment = () => {
     const [elementForPage, setElementForPage] = useState(6)
     const [currentPage, setCurrentPage] = useState(1)
     const [loading, setLoading] = useState(true)
-
     // Estados para realizar filtrado
     const [selectFilterData, setSelectFilterData] = useState({})
     const [selectOptionsByFilter, setSelectOptionsByFilter] = useState([])
-    const [valueToFilter, setValueToFilter] = useState("")
+    const [valueToFilter, setValueToFilter] = useState('')
 
     // Estado de los modales para cambiar estado de entrega y pago
     const [showSelect, setShowSelect] = useState({
         modalPaymentStatus: false,
         modalDeliveryStatus: false
     })
+
+    const [idSelect, setIdSelect] = useState(null)
 
     // Estado para almacenar las varibles a hacer el PATCH
     const [formData, setFormData] = useState({
@@ -90,7 +91,8 @@ export const ControllerShowShipment = () => {
 
     useEffect(() => {
         getListShipment()
-    }, [valueToFilter])
+        setFlagUpdate(false)
+    }, [valueToFilter, flagUpdate])
 
     const fieldSearch = [
         "numeroGuia",
@@ -134,36 +136,54 @@ export const ControllerShowShipment = () => {
 
     // CAMBIAR ESTADO DE PAGO Y ENTREGA
     // Abrir modales
-    const changePaymentStatus = () => {
+    const changePaymentStatus = (id) => {
         setShowSelect(
             prevState => ({
                 ...prevState,
                 modalPaymentStatus: true,
                 modalDeliveryStatus: false
-            })
-        )
+            }))
+        setIdSelect(id)
+
     }
-    const changeArrivalStatus = () => {
+    const changeArrivalStatus = (id) => {
         setShowSelect(
             prevState => ({
                 ...prevState,
                 modalDeliveryStatus: true,
                 modalPaymentStatus: false
-            })
-        )
+            }))
+
+        setIdSelect(id)
     }
 
     // Funciones
     // Cambiar a nuevo estado
     const handleSubmit = async (data) => {
         try {
-            const response = await ApiService.patch("", data)
-            console.log(response)
-        } catch (error) {
-            console.error("No se puedo actualizar el estado de pago o de entrega", error);
+            setLoading(true)
+            const response = await ApiService.patch(`/api/v1/envios/${idSelect}/estado-pago`, data)
+            if (response) {
+                swal({
+                    title: '¡Éxito!',
+                    text: 'Se actualizó correctamente.',
+                    icon: 'success',
+                    button: 'Aceptar',
+                })
 
+                setShowSelect(prevState => ({
+                    ...prevState, modalDeliveryStatus: '', modalPaymentStatus: ''
+                }))
+                setIdSelect(null)
+                setFlagUpdate(true)
+
+            }
+        } catch (error) {
+            console.error("No se puedo actualizar el estado de pago o de entrega", error)
+        } finally {
+            setLoading(false)
         }
-    } 
+    }
 
     // Definir valor a enviar
     const handeChange = (event) => {
@@ -190,7 +210,7 @@ export const ControllerShowShipment = () => {
 
             }
         }
-    }, [])
+    }, [formData.estadoPago, formData.estadoEntrega])
 
 
     return {
@@ -211,6 +231,7 @@ export const ControllerShowShipment = () => {
         changeArrivalStatus,
         showSelect,
         formData,
-        handeChange
+        handeChange,
+        setShowSelect
     }
 }

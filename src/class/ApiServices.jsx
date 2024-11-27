@@ -120,7 +120,7 @@ export class ApiService {
         }
     }
 
-    static async patch(url_api, data) {
+    static async patch(url_api, data, headers = {}) {
         try {
 
             // Convierte los datos a formato JSON
