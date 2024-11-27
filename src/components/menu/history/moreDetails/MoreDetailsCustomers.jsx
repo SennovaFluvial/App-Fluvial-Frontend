@@ -61,13 +61,326 @@ export const MoreDetails = ({ data = null }) => {
 
                     <div className="container mt-4 more-details-container" key={category === 'product' ? item.productId : item.id}>
                         <div className="row more-details-row">
-                            {!from && (<>
+                            {/* {!from && (<>
                                 <h1 className='text-center mb-5 more-details-title'>
                                     Más detalles de {category === "vehicle" ? "la embarcación " : ""} <strong> {category === "vehicle" ? item.nombre : item.name + ' ' + item.lastName} </strong> <i className="fa-solid fa-eye ms-5"></i>
                                 </h1>
-                            </>)}
+                            </>)} */}
 
-                            <div className="col-md-12">
+                            {category === "employee" && (
+                                <>
+                                    <h1 className='text-center mb-5 more-details-title'>
+                                        Más detalles de <strong> {item.name + ' ' + item.lastName} </strong> <i className="fa-solid fa-eye ms-5"></i>
+                                    </h1>
+
+                                    <div className="col-md-12">
+                                        <h3 className="subTitle">Información personal</h3>
+                                        <div className="section">
+                                            <div className="row">
+                                                <div className="col-md-3">
+                                                    <strong>Nombres:</strong> {item.name}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Apellidos:</strong> {item.lastName}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Tipo de documento:</strong> {item.typeDocument}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Número de documento:</strong> {item.numDocument}
+                                                </div>
+
+                                                <p className="col-md-3">
+                                                    <strong>Fecha de nacimiento:</strong> {item.birthDate}
+                                                </p>
+                                                <div className="col-md-3">
+                                                    <strong>Estado civil:</strong> {item.maritalStatus}
+                                                </div>
+
+                                                <div className="col-md-3">
+                                                    <strong>Correo electrónico:</strong>  {item.username}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Teléfono:</strong> {item.phone}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Dirección de residencia:</strong> {item.address}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Género:</strong> {item.sex}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-md-12">
+                                        <h3 className="subTitle">Información de Ubicación</h3>
+                                        <div className="section">
+                                            <div className="row">
+                                                {item.city && (
+                                                    <>
+                                                        <div className="col-md-6">
+                                                            <strong>Ciudad de residencia:</strong> {item.city.ciudad}
+                                                        </div>
+
+                                                        <div className="col-md-6">
+                                                            <strong>Departamento de residencia:</strong> {item.city.departamento.departamento}
+                                                        </div>
+                                                    </>
+                                                )}
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div className="col-md-12">
+                                        <h3 className="subTitle">Información de Empresa</h3>
+                                        <div className="section">
+                                            <div className="row">
+
+                                                <div className="col-md-3">
+                                                    <p><strong>Estado de cuenta: </strong><b className={item.status === "activo" ? "text-success" : "text-danger"}>{item.status}</b></p>
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <p> <strong>Cargo en la empresa:</strong> <b className='text-warning'>{item.roles[0]?.roleEnum === "ADMIN"
+                                                        ? "Administrador"
+                                                        : (item.roles[0]?.roleEnum === "EMPLOYEE"
+                                                            ? "Empleado"
+                                                            : (item.roles[0]?.roleEnum === "SUPERADMIN"
+                                                                ? "SuperAdministrador"
+                                                                : ""))}</b></p>
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Empresa asociada:</strong> {item.company.name}
+                                                </div>
+
+                                                <div className="col-md-3">
+                                                    <p> <strong>Estado de la empresa asociada:</strong><b className={item.company.status === "activo" ? "text-success" : "text-danger"}> {item.company.status}</b></p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </>
+                            )}
+
+                            {category === "crew" && (
+                                <>
+                                    <h1 className='text-center mb-5 more-details-title'>
+                                        Más detalles de <strong> {item.name + ' ' + item.lastName} </strong> <i className="fa-solid fa-eye ms-5"></i>
+                                    </h1>
+
+                                    <div className="col-md-12">
+                                        <h3 className="subTitle">Información personal</h3>
+                                        <div className="section">
+                                            <div className="row">
+                                                <div className="col-md-3">
+                                                    <strong>Nombres:</strong> {item.name}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Apellidos:</strong> {item.lastName}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Tipo de documento:</strong> {item.typeDocument}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Número de documento:</strong> {item.numDocument}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Fecha de nacimiento:</strong> {item.dateOfBirth}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Nacionalidad:</strong> {item.nationality}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Número de licencia:</strong> {item.licencia}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Expiración licencia:</strong> {item.expLicencia}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Estado civil:</strong> {item.maritalStatus}
+                                                </div>
+
+                                                <div className="col-md-3">
+                                                    <strong>Correo electrónico:</strong>  {item.email}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Teléfono:</strong> {item.phone}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Dirección de residencia:</strong> {item.address}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Género:</strong> {item.sex}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-md-12">
+                                        <h3 className="subTitle">Información de Empresa</h3>
+                                        <div className="section">
+                                            <div className="row">
+                                                <div className="col-md-3">
+                                                    <p><strong>Estado de cuenta: </strong><b className={item.status === "activo" ? "text-success" : "text-danger"}>{item.status}</b></p>
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Empresa asociada:</strong> {item.companyName}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Tipo de marinero:</strong> {item.employeeType.typeName}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </>
+                            )}
+
+                            {category === "vehicle" && (
+                                <>
+                                    <h1 className='text-center mb-5 more-details-title'>
+                                        Más detalles de la embarcación<strong> {item.nombre} </strong> <i className="fa-solid fa-eye ms-5"></i>
+                                    </h1>
+
+                                    <div className="col-md-12">
+                                        <h3 className="subTitle">Información personal</h3>
+                                        <div className="section">
+                                            <div className="row">
+                                                <div className="col-md-3">
+                                                    <strong>Nombre:</strong> {item.nombre}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Tipo de vehiculo:</strong> {item.type}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Model de vehiculo:</strong> {item.model}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Matricual de vehiculo:</strong> {item.registration}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Licencia del vehiculo:</strong> {item.licensePlate}
+                                                </div>
+                                                {/* <div className="col-md-3">
+                                                    <strong>Expiración licencia:</strong> {item.fechaExpPatente}
+                                                </div> */}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-md-12">
+                                        <h3 className="subTitle">Capaciades de carga</h3>
+                                        <div className="section">
+                                            <div className="row">
+                                                <div className="col-md-3">
+                                                    <p><strong>Capaciad de peso:</strong> {item.weightCapacity + ' ' + item.weightUnit} </p>
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Capacidad de volumen:</strong> {item.volumeCapacity + ' ' + item.volumeUnit}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Capacidad de pasajeros:</strong> {item.passengers}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </>
+                            )}
+
+                            {category === "customer" && (
+                                <>
+                                    <h1 className='text-center mb-5 more-details-title'>
+                                        Más detalles de <strong> {item.name + ' ' + item.lastName} </strong> <i className="fa-solid fa-eye ms-5"></i>
+                                    </h1>
+
+                                    <div className="col-md-12">
+                                        <h3 className="subTitle">Información personal</h3>
+                                        <div className="section">
+                                            <div className="row">
+                                                <div className="col-md-3">
+                                                    <strong>Nombres:</strong> {item.name}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Apellidos:</strong> {item.lastName}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Tipo de documento:</strong> {item.typeDocument}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Número de documento:</strong> {item.numDocument}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Fecha de nacimiento:</strong> {item.dateOfBirth}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Nacionalidad:</strong> {item.nationality}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Estado civil:</strong> {item.maritalStatus}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Correo electrónico:</strong>  {item.email}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Teléfono:</strong> {item.phone}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Dirección de residencia:</strong> {item.address}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Género:</strong> {item.sex}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Tipo de persona:</strong> {item.personType}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-md-12">
+                                        <h3 className="subTitle">Información de Ubicación</h3>
+                                        <div className="section">
+                                            <div className="row">
+                                                <div className="col-md-6">
+                                                    <strong>Ciudad de residencia:</strong> {item.cityName}
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div className="col-md-12">
+                                        <h3 className="subTitle">Información de Empresa</h3>
+                                        <div className="section">
+                                            <div className="row">
+                                                {item.personType && (
+                                                    item.personType === "Juridica" ? (
+                                                        <>
+                                                            <div className="col-md-4">
+                                                                <strong>Nombre de la compañía:</strong> {item.companyName}
+                                                            </div>
+                                                            <div className="col-md-4">
+                                                                <strong>NIT de la compañía:</strong> {item.nitCompany}
+                                                            </div>
+                                                        </>
+                                                    ) : (
+                                                        <div className="col-md-4">No aplica (persona natural).</div>
+                                                    )
+                                                )}
+                                                <div className="col-md-4">
+                                                    <strong>Empresa asociada:</strong> {item.companyName}
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </>
+                            )}
+
+
+                            {/* <div className="col-md-12">
                                 <h3 className="subTitle">Información {category === "vehicle" ? "de la embarcación" : "personal"}</h3>
                                 <div className="section">
                                     <div className="row">
@@ -294,63 +607,145 @@ export const MoreDetails = ({ data = null }) => {
                                     </div>
                                 </>
                             )
-                            }
+                            } */}
 
                             {category === "product" && (
-                                <div className="col-md-12">
-                                    <h3 className="subTitle">Detalles del Producto</h3>
-                                    <div className="section">
-                                        <div className="row">
-                                            <div className="col-md-3">
-                                                <strong>Nombre del Producto:</strong> {item.name}
-                                            </div>
-                                            <div className="col-md-3">
-                                                <strong>Precio:</strong> ${item.price}
-                                            </div>
-                                            <div className="col-md-3">
-                                                <strong>Categoría:</strong> {item.category}
-                                            </div>
-                                            <div className="col-md-3">
-                                                <strong>Stock:</strong> {item.stock}
-                                            </div>
-                                            <div className="col-md-12 mt-3">
-                                                <strong>Descripción:</strong> {item.description}
-                                            </div>
-                                            <div className="col-md-3">
-                                                <strong>Proveedor:</strong> {item.supplier}
-                                            </div>
-                                            <div className="col-md-3">
-                                                <strong>Garantía:</strong> {item.warranty}
+                                <>
+                                    <h1 className='text-center mb-5 more-details-title'>
+                                        Más detalles del Producto<i className="fa-solid fa-eye ms-5"></i>
+                                    </h1>
+                                    <div className="col-md-12">
+                                        <h3 className="subTitle">Detalles del Producto</h3>
+                                        <div className="section">
+                                            <div className="row">
+                                                <div className="col-md-4">
+                                                    <strong>Nombre del Producto:</strong> {item.productName}
+                                                </div>
+                                                <div className="col-md-6">
+                                                    <strong>Categoría:</strong> {item.categoryName}
+                                                </div>
+                                                <div className="col-md-12">
+                                                    <strong>Descripción:</strong> {item.description}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+
+                                    <div className="col-md-12">
+                                        <h3 className="subTitle">Características del Producto</h3>
+                                        <div className="section">
+                                            <div className="row">
+                                                <div className="col-md-4">
+                                                    <strong>Número de unidades:</strong> {item.number}
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <strong>Peso:</strong> {item.weight + ' ' + item.unitOfMeasurement}
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <strong>Dimenciones:</strong> {item.dimensions + " Cm"}
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <strong>Tipo de embalaje:</strong> {item.packagingType}
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <strong>¿Es Perecedero?:</strong> {item.isPerishable ? 'Si' : 'No'}
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <strong>¿Esta Asegurado?:</strong> {item.insured ? 'Si' : 'No'}
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <strong>¿Materiales Peligrosos?:</strong> {item.hazardousMaterials ? 'Si' : 'No'}
+                                                </div>
+                                                <div className="col-md-12">
+                                                    <strong>Instrucciones de manejo especial:</strong> {item.specialHandlingInstructions}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-md-12">
+                                        <h3 className="subTitle">Compañia y Almacenamiento</h3>
+                                        <div className="section">
+                                            <div className="row">
+                                                <div className="col-md-4">
+                                                    <strong>Nombre del vehículo:</strong> {item.vehicleName || 'N/A'}
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <strong>Nombre de la compañía:</strong> {item.companyName}
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <strong>Documento del cliente:</strong> {item.customerNumDocument}
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <strong>Bodega:</strong> {item.warehouseName || 'N/A'}
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </>
                             )}
 
                             {category === "warehouse" && (
-                                <div className="col-md-12">
-                                    <h3 className="subTitle">Detalles de la Bodega</h3>
-                                    <div className="section">
-                                        <div className="row">
-                                            <div className="col-md-3">
-                                                <strong>Nombre de la Bodega:</strong> {item.name}
-                                            </div>
-                                            <div className="col-md-3">
-                                                <strong>Ubicación:</strong> {item.location}
-                                            </div>
-                                            <div className="col-md-3">
-                                                <strong>Capacidad:</strong> {item.capacity}
-                                            </div>
-                                            <div className="col-md-3">
-                                                <strong>Unidad de Medida:</strong> {item.unitOfMeasurement}
-                                            </div>
-                                            <div className="col-md-12 mt-3">
-                                                <strong>Descripción:</strong> {item.description}
+                                <>
+                                    <h1 className='text-center mb-5 more-details-title'>
+                                        Más detalles la Bodega <strong>{item.name}</strong> <i className="fa-solid fa-eye ms-5"></i>
+                                    </h1>
+                                    <div className="col-md-12">
+                                        <h3 className="subTitle">Detalles de la Bodega</h3>
+                                        <div className="section">
+                                            <div className="row">
+                                                <div className="col-md-5">
+                                                    <strong>Nombre de la Bodega:</strong> {item.name}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Ubicación:</strong> {item.location}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Capacidad:</strong> {item.capacity + ' ' + item.unitOfMeasurement}
+                                                </div>
+                                                {/* <div className="col-md-3">
+                                                    <strong>Unidad de Medida:</strong> {item.unitOfMeasurement}
+                                                </div> */}
+                                                <div className="col-md-12">
+                                                    <strong>Descripción:</strong> {item.description}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </>
                             )}
+
+                            {category === "branch" && (
+                                <>
+                                    <h1 className='text-center mb-5 more-details-title'>
+                                        Más detalles la Sucursal <strong>{item.nombre}</strong><i className="fa-solid fa-eye ms-5"></i>
+                                    </h1>
+                                    <div className="col-md-12">
+                                        <h3 className="subTitle">Detalles de la Sucursal</h3>
+                                        <div className="section">
+                                            <div className="row">
+                                                <div className="col-md-5">
+                                                    <strong>Nombre de la Sucursal:</strong> {item.nombre}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Dirección:</strong> {item.direccion}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Departamento:</strong> {item.departamento}
+                                                </div>
+                                                <div className="col-md-5">
+                                                    <strong>Municipio:</strong> {item.municipio}
+                                                </div>
+                                                <div className="col-md-4">
+                                                    <strong>Nombre de la compañia:</strong> {item.companiaNombre}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </>
+                            )}
+
 
                             < div className="button-container" >
 
