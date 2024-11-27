@@ -160,8 +160,8 @@ export const DashBoard = ({ user, setUser }) => {
                                         <VehicleSection isCollapsed={isCollapsed} />
                                         <CustomerSection isCollapsed={isCollapsed} />
                                         <ShipmentSection isCollapsed={isCollapsed} />
-                                        <BranchSection isCollapsed={isCollapsed} />
                                         <Inventories isCollapsed={isCollapsed} />
+                                        <BranchSection isCollapsed={isCollapsed} />
                                     </>
                                 )}
 

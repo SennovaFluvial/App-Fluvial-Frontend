@@ -130,7 +130,7 @@ export const ShowBranch = () => {
                     <tbody>
                         {paginatedItems.length > 0 ? (
                             paginatedItems.map((item, index) => (
-                                <tr key={index}>
+                                <tr key={item.id}>
                                     <td><b>{firstIndex + index + 1}</b></td>
                                     <td>{item.nombre}</td>
                                     <td>{item.direccion}</td>
@@ -147,7 +147,7 @@ export const ShowBranch = () => {
                                     </td>
 
                                     <td>
-                                        <Link to={`#`}> {/* CONFIGURAR EL COMPONENTE DE MAS DETALLES PARA LAS SUCURSALES */}
+                                        <Link to={`more-details/${item.id}/branch`}>
                                             <button className='btn btn-view icon-link-hover text-warning'>
                                                 <i className="fa-solid fa-eye icon-option"></i>
                                             </button>

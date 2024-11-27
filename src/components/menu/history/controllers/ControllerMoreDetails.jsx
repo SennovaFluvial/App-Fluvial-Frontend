@@ -13,7 +13,8 @@ export const ControllerMoreDetails = ({ id, category, from = null }) => {
         customer: `${from ? "../" : ""}../add-customer/${id}/update`,
         vehicle: `../add-vehicle/${id}/update`,
         product: `../add-product/${id}/update`,
-        warehouse: `../add-warehouse/${id}/update`
+        warehouse: `../add-warehouse/${id}/update`,
+        branch: `../add-branch/${id}/update`
     }
 
     const urlUpdateData = urlMappings[category] || ""
@@ -25,7 +26,8 @@ export const ControllerMoreDetails = ({ id, category, from = null }) => {
             crew: "/api/v1/employeefluvial/all",
             vehicle: "/api/v1/vehicles/all",
             product: "/api/v1/product/all",
-            warehouse: "/api/v1/warehouse/all"
+            warehouse: "/api/v1/warehouse/all",
+            branch: "/api/v1/sucursales/all"
         }
 
         const fetchCustomers = async () => {
