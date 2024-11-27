@@ -7,9 +7,7 @@ import { Grid } from '../../animations/Grid'
 import { Spinner } from '../../animations/Spiner'
 import { Pagination } from './Pagination'
 import { Select } from '../../html components/Selects'
-import { useState } from 'react'
 import { useDeliveryStatuses, usePaymentStatuses, usePaymentTypes } from '../update/options/arrays'
-import { SelectToChangeStatus } from './components.selects/SelectToChangeStatus'
 
 export const ShowShipment = () => {
 
@@ -38,7 +36,13 @@ export const ShowShipment = () => {
         handleChange,
         selectFilterData,
         selectOptionsByFilter,
-        valueToFilter
+        valueToFilter,
+        changePaymentStatus,
+        changeArrivalStatus,
+        showSelect,
+        formData,
+        handeChange,
+        setShowSelect
     } = ControllerShowShipment()
 
 
@@ -170,7 +174,7 @@ export const ShowShipment = () => {
                                     <th>
                                         {name_fields_shipment.estadoPago[item.estadoPago] || item.estadoPago}
                                         <button
-                                            onClick={changePaymentStatus}
+                                            onClick={() => changePaymentStatus(item.id)}
                                             className='btn btn-customer-change'
                                         >
                                             <i className="fa-solid fa-pencil"></i>
@@ -179,7 +183,7 @@ export const ShowShipment = () => {
                                     <th>
                                         {name_fields_shipment.estadoEntrega[item.estadoEntrega] || item.estadoEntrega}
                                         <button
-                                            onClick={changeArrivalStatus}
+                                            onClick={() => changeArrivalStatus(item.id)}
                                             className='btn btn-customer-change'
                                         >
                                             <i className="fa-solid fa-pencil"></i>
@@ -210,29 +214,36 @@ export const ShowShipment = () => {
 
                     </tbody>
                 </table>
-
-                {showModalChangeStatePay.changePaymentStatus && (
+                {showSelect.modalPaymentStatus && (
                     <>
-                        <SelectToChangeStatus
-                            options={usePaymentStatuses}
-                            name={estadoPago}
-                            onClick={hola} // aun no definido
-                            value={newStateOf.estadoPago}
-                        />
+                        <div className="row align-items-center">
+                            <div className="col-md-4">
+                                <Select
+                                    text="Eliga el nuevo estado de pago"
+                                    name="estadoPago"
+                                    value={formData.estadoPago}
+                                    options={usePaymentStatuses}
+                                    event={handeChange}
+                                />
+                            </div>
+                            <div className="col-md-1 d-flex align-items-center">
+                                <button
+                                    onClick={() => setShowSelect(prevState => ({ ...prevState, modalPaymentStatus: "" }))}
+                                    className="btn ms-2">
+                                    <i className="fa-solid fa-circle-xmark text-danger"></i>
+                                </button>
+                            </div>
+                        </div>
+
                     </>
                 )}
 
-                {showModalChangeStatePay.changeArrivalStatus && (
+                {showSelect.modalDeliveryStatus && (
                     <>
-                        <SelectToChangeStatus
-                            options={usePaymentStatuses}
-                            name={useDeliveryStatuses}
-                            onClick={hola} // aun no definido
-                            value={newStateOf.estadoPago}
-                        />
+                        cambiar estado de entrega
+
                     </>
                 )}
-
 
                 <div className="d-flex w-100">
                     <div className="d-flex justify-content-start w-25">

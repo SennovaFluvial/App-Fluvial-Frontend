@@ -2,18 +2,36 @@ import { useEffect, useState } from 'react'
 import { useSearchFields } from '../../search/SearchFields'
 import { ApiService } from '../../../../../class/ApiServices'
 import { useDeliveryStatuses, usePaymentStatuses, usePaymentTypes } from '../../../update/options/arrays'
-
+import swal from 'sweetalert'
 export const ControllerShowShipment = () => {
 
+    // Estados para paginacione y mostrar datos en listado
     const [shipments, setShipments] = useState([])
     const [elementForPage, setElementForPage] = useState(6)
     const [currentPage, setCurrentPage] = useState(1)
     const [loading, setLoading] = useState(true)
-
+    // Estados para realizar filtrado
     const [selectFilterData, setSelectFilterData] = useState({})
     const [selectOptionsByFilter, setSelectOptionsByFilter] = useState([])
-    const [valueToFilter, setValueToFilter] = useState("")
+    const [valueToFilter, setValueToFilter] = useState('')
 
+    // Estado de los modales para cambiar estado de entrega y pago
+    const [showSelect, setShowSelect] = useState({
+        modalPaymentStatus: false,
+        modalDeliveryStatus: false
+    })
+
+    const [idSelect, setIdSelect] = useState(null)
+
+    // Estado para almacenar las varibles a hacer el PATCH
+    const [formData, setFormData] = useState({
+        estadoPago: '',
+        estadoEntrega: ''
+    })
+
+    const [flagUpdate, setFlagUpdate] = useState(false)
+
+    // Opciones segun el tipo de categoria a filtrar
     const nameField = {
         tipoPago: usePaymentTypes,
         estadoPago: usePaymentStatuses,
@@ -73,7 +91,8 @@ export const ControllerShowShipment = () => {
 
     useEffect(() => {
         getListShipment()
-    }, [valueToFilter])
+        setFlagUpdate(false)
+    }, [valueToFilter, flagUpdate])
 
     const fieldSearch = [
         "numeroGuia",
@@ -115,6 +134,85 @@ export const ControllerShowShipment = () => {
     const firstIndex = lastIndex - elementForPage
     const paginatedItems = filteredItems.slice(firstIndex, lastIndex)
 
+    // CAMBIAR ESTADO DE PAGO Y ENTREGA
+    // Abrir modales
+    const changePaymentStatus = (id) => {
+        setShowSelect(
+            prevState => ({
+                ...prevState,
+                modalPaymentStatus: true,
+                modalDeliveryStatus: false
+            }))
+        setIdSelect(id)
+
+    }
+    const changeArrivalStatus = (id) => {
+        setShowSelect(
+            prevState => ({
+                ...prevState,
+                modalDeliveryStatus: true,
+                modalPaymentStatus: false
+            }))
+
+        setIdSelect(id)
+    }
+
+    // Funciones
+    // Cambiar a nuevo estado
+    const handleSubmit = async (data) => {
+        try {
+            setLoading(true)
+            const response = await ApiService.patch(`/api/v1/envios/${idSelect}/estado-pago`, data)
+            if (response) {
+                swal({
+                    title: '¡Éxito!',
+                    text: 'Se actualizó correctamente.',
+                    icon: 'success',
+                    button: 'Aceptar',
+                })
+
+                setShowSelect(prevState => ({
+                    ...prevState, modalDeliveryStatus: '', modalPaymentStatus: ''
+                }))
+                setIdSelect(null)
+                setFlagUpdate(true)
+
+            }
+        } catch (error) {
+            console.error("No se puedo actualizar el estado de pago o de entrega", error)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    // Definir valor a enviar
+    const handeChange = (event) => {
+        const { name, value } = event.target
+        setFormData(prevState => ({
+            ...prevState, [name]: value
+        }))
+    }
+
+    // Efecto de cambio
+    useEffect(() => {
+        if (formData) {
+            if (formData.estadoPago) {
+                const copyFormData = { ...formData }
+                delete copyFormData.estadoEntrega
+
+                handleSubmit(copyFormData)
+
+            } else if (formData.estadoEntrega) {
+                const copyFormData = { ...formData }
+                delete copyFormData.estadoPago
+
+                handleSubmit(copyFormData)
+
+            }
+        }
+    }, [formData.estadoPago, formData.estadoEntrega])
+
+
     return {
         searchTerm,
         handleSearchChange,
@@ -128,6 +226,12 @@ export const ControllerShowShipment = () => {
         handleChange,
         selectFilterData,
         selectOptionsByFilter,
-        valueToFilter
+        valueToFilter,
+        changePaymentStatus,
+        changeArrivalStatus,
+        showSelect,
+        formData,
+        handeChange,
+        setShowSelect
     }
 }
