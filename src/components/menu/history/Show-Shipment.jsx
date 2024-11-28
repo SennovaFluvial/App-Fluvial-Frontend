@@ -7,21 +7,9 @@ import { Grid } from '../../animations/Grid'
 import { Spinner } from '../../animations/Spiner'
 import { Pagination } from './Pagination'
 import { Select } from '../../html components/Selects'
-import { useDeliveryStatuses, usePaymentStatuses, usePaymentTypes } from '../update/options/arrays'
+import { usePaymentStatuses } from '../update/options/arrays'
 
 export const ShowShipment = () => {
-
-    const name_fields_shipment = {
-        tipoPago: {
-            usePaymentTypes,
-        },
-        estadoPago: {
-            usePaymentStatuses
-        },
-        estadoEntrega: {
-            useDeliveryStatuses
-        },
-    };
 
     const {
         searchTerm,
@@ -42,9 +30,9 @@ export const ShowShipment = () => {
         showSelect,
         formData,
         handeChange,
-        setShowSelect
+        setShowSelect,
+        name_fields_shipment
     } = ControllerShowShipment()
-
 
 
     const location = useLocation()
@@ -107,7 +95,7 @@ export const ShowShipment = () => {
                                         name="filter_data_to"
                                         value={selectFilterData.filter_data_to}
                                     >
-                                        <option value="">Seleccione</option>
+                                        <option value="">Mostrar todos</option>
                                         <option value="tipoPago">Tipo de pago</option>
                                         <option value="estadoPago">Estado de pago</option>
                                         <option value="estadoEntrega">Estado de entrega</option>
