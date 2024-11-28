@@ -51,7 +51,7 @@ export const ShowShipment = () => {
     return (
         <>
             <div className="container my-5">
-                <div className="row text-center bg-info">
+                <div className="row text-center bg-info" style={{ marginLeft: "0px", marginRight: "0px" }}>
                     <div className="col-md-12 py-3">
                         <h1>
                             <b>LISTADO DE ENVíOS</b> <i className="fa-solid fa-box ms-5"></i>
@@ -84,8 +84,8 @@ export const ShowShipment = () => {
                         </button>
                     </div>
 
-                    <div className="col-md-12">
-                        <div className="col-md-3 text-center mt-4 py-3 border rounded shadow-sm">
+                    <div className="row d-flex ms-1">
+                        <div className="col-md-4 text-center mt-4 py-3 border rounded shadow-sm">
                             <span className="d-block fw-bold mb-2">Filtrar por</span>
                             <div className="row g-2">
                                 <div className="col-md-12 ms-1">
@@ -113,8 +113,55 @@ export const ShowShipment = () => {
                                         />
                                     </div>
                                 )}
+
                             </div>
                         </div>
+                        {showSelect.modalPaymentStatus && (
+                            <>
+                                <div className="col-md-4 text-center mt-4 py-3 border rounded shadow-sm ms-2">
+                                    <div className="row align-items-center">
+                                        <div className="col-md-10">
+                                            <Select
+                                                text="Eliga el nuevo estado de pago"
+                                                name="estadoPago"
+                                                value={formData.estadoPago}
+                                                options={usePaymentStatuses}
+                                                event={handeChange}
+                                            />
+                                        </div>
+                                        <div className="col-md-1 d-flex align-items-center">
+                                            <button
+                                                onClick={() => setShowSelect(prevState => ({ ...prevState, modalPaymentStatus: "" }))}
+                                                className="btn ms-1">
+                                                <i className="fa-solid fa-circle-xmark text-danger"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </>
+                        )}
+                        {showSelect.modalDeliveryStatus && (
+                            <>
+                                <div className='col-md-4 text-center mt-4 py-3 border rounded shadow-sm ms-2'>
+                                    <div className="row align-items-center">
+                                        <div className="col-md-10">
+                                            <Select
+                                                text="Cambiar estado de entrega"
+                                                name="estadoEntrega"
+                                            />
+                                        </div>
+                                        <div className="col-md-1 d-flex align-items-center">
+                                            <button
+                                                onClick={() => setShowSelect(prevState => ({ ...prevState, modalPaymentStatus: "" }))}
+                                                className="btn ms-1">
+                                                <i className="fa-solid fa-circle-xmark text-danger"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </>
+                        )}
                     </div>
                 </div>
 
@@ -202,36 +249,9 @@ export const ShowShipment = () => {
 
                     </tbody>
                 </table>
-                {showSelect.modalPaymentStatus && (
-                    <>
-                        <div className="row align-items-center">
-                            <div className="col-md-4">
-                                <Select
-                                    text="Eliga el nuevo estado de pago"
-                                    name="estadoPago"
-                                    value={formData.estadoPago}
-                                    options={usePaymentStatuses}
-                                    event={handeChange}
-                                />
-                            </div>
-                            <div className="col-md-1 d-flex align-items-center">
-                                <button
-                                    onClick={() => setShowSelect(prevState => ({ ...prevState, modalPaymentStatus: "" }))}
-                                    className="btn ms-2">
-                                    <i className="fa-solid fa-circle-xmark text-danger"></i>
-                                </button>
-                            </div>
-                        </div>
 
-                    </>
-                )}
 
-                {showSelect.modalDeliveryStatus && (
-                    <>
-                        cambiar estado de entrega
 
-                    </>
-                )}
 
                 <div className="d-flex w-100">
                     <div className="d-flex justify-content-start w-25">
