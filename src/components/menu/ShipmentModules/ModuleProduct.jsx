@@ -110,8 +110,8 @@ export const ModuleProduct = () => {
 
                         <hr />
 
-                        {productosRemitente.products && productosRemitente.products.length > 0 ? (
-                            // productosRemitente.products
+                        {productosRemitente && productosRemitente.length > 0 ? (
+
                             paginatedItems && paginatedItems
                                 .filter(item => !productsToSend.some(product => product.id === item.id))
                                 .map((item) => (

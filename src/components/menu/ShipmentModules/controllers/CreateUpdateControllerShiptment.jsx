@@ -104,7 +104,7 @@ export const CreateUpdateControllerShiptment = () => {
     // Funcion para la paginacion
 
     const { searchTerm, handleSearchChange, filteredItems } = useSearchFields(
-        productosRemitente.products,
+        productosRemitente,
         [
             "productName",
             "description",
@@ -174,7 +174,7 @@ export const CreateUpdateControllerShiptment = () => {
     /** */
     useEffect(() => {
         if (formData.productosIds.length > 0) {
-            const responseOfProducts = showProductsToSend(productosRemitente.products, formData.productosIds)
+            const responseOfProducts = showProductsToSend(productosRemitente, formData.productosIds)
             setProductsToSend(responseOfProducts)
         }
     }, [formData.productosIds])

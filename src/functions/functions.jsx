@@ -378,7 +378,8 @@ export const getProductsByDocumentNumber = async (numDocument) => {
 
     try {
         const response = await ApiService.get(`/api/v1/product/document/${numDocument}/products`)
-        return response || []
+        const filterproducts = response.products.filter((product) => product.numeroGuiaEnvio === null)
+        return filterproducts || []
     } catch (error) {
         console.error(`Error al obtener los productos para el documento ${numDocument}:`, error)
         return []
