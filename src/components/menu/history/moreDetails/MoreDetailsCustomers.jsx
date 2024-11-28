@@ -746,6 +746,80 @@ export const MoreDetails = ({ data = null }) => {
                                 </>
                             )}
 
+                            {category === "shipment" && ( 
+                                <>
+                                    <h1 className='text-center mb-5 more-details-title'>
+                                        Más detalles del envío <strong> {item.numeroGuia} </strong> <i className="fa-solid fa-eye ms-5"></i>
+                                    </h1>
+
+                                    <div className="col-md-12">
+                                        <h3 className="subTitle">Detalles del envío</h3>
+                                        <div className="section">
+                                            <div className="row">
+                                                <div className="col-md-3">
+                                                    <strong>Remitente:</strong> {item.remitenteCedula}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Destinatario:</strong> {item.destinatarioCedula}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Nombre de la compañia:</strong> {item.companiaNombre}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Nombre del vehículo:</strong> {item.vehiculoNombre}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Nombre de la sucursal:</strong> {item.sucursalNombre}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Descripción del envío:</strong> {item.descripcionEnvio}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Estado de entrega:</strong> {item.estadoEntrega}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Costo de envío:</strong> {item.costoEnvio}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Tipo de pago:</strong> {item.tipoPago}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Estado de pago:</strong> {item.estadoPago}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-md-12">
+                                        <h3 className="subTitle">Ubicación y Destino</h3>
+                                        <div className="section">
+                                            <div className="row">
+                                                <div className="col-md-3">
+                                                    <strong>Dirección de envío:</strong> {item.direccionEnvio}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Departamento de salida:</strong> {item.departamentoSalida}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Municipio de salida:</strong> {item.municipioSalida}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Departamento de llegada:</strong> {item.departamentoLlegada}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Municipio de llegada:</strong> {item.municipioLlegada}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Nombre de la sucursal:</strong> {item.sucursalNombre}
+                                                </div>
+                                                <div className="col-md-3">
+                                                    <strong>Dirección de envío:</strong> {item.direccionEnvio}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </>
+                            )}
+
 
                             < div className="button-container" >
 

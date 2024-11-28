@@ -121,6 +121,7 @@ export const ComponentRouter = () => {
                     <Route path="show-vehicles" element={< ShowVehicles />} /> {/* Ruta para ver vehículos */}
                     <Route path='show-vehicles/more-details/:id?/:category?' element={< MoreDetails />} />
                     <Route path="show-shipment" element={< ShowShipment />} /> {/* Ruta para ver vehículos */}
+                    <Route path='show-shipment/more-details/:id?/:category?' element={< MoreDetails />} />
 
                     <Route path="show-products" element={< ShowProducts />} /> {/* Ruta para ver productos */}
                     <Route path='show-products/more-details/:id?/:category?' element={< MoreDetails />} />
@@ -142,6 +143,7 @@ export const ComponentRouter = () => {
                         <Route path="module-finish" element={< ModuleFinish />} /> {/* Ruta para ver modulo de envio finalizado */}
 
                     </Route>
+                    <Route path='show-shipment/more-details/:id?/:category?' element={< MoreDetails />} />
 
                     <Route path="inventories" element={< Inventories />} /> {/* Ruta para ver los inventarios */}
                     <Route path="reports" element={< Reports />} />

@@ -155,7 +155,7 @@ export const ShowShipment = () => {
 
                         {paginatedItems.length > 0 ? (
                             paginatedItems.map((item, index) => (
-                                <tr key={index}>
+                                <tr key={item.id}>
                                     <td>
                                         <b>{firstIndex + index + 1}</b>
                                     </td>
@@ -191,14 +191,14 @@ export const ShowShipment = () => {
                                     </th>
 
                                     <td>
-                                        <Link to={`../add-product/${item.productId}/update`} state={{ from: 'listado' }}>
+                                        <Link to={`../register-shipment/${item.id}/update`} state={{ from: 'listado' }}>
                                             <button className='btn btn-edit icon-link-hover text-primary'>
                                                 <i className="fa-solid fa-pen-to-square icon-option"></i>
                                             </button>
                                         </Link>
                                     </td>
                                     <td>
-                                        <Link to={`more-details/${item.productId}/product`}>
+                                        <Link to={`more-details/${item.id}/shipment`}>
                                             <button className='btn btn-view icon-link-hover text-warning'>
                                                 <i className="fa-solid fa-eye icon-option"></i>
                                             </button>
