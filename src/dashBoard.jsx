@@ -133,7 +133,7 @@ export const DashBoard = ({ user, setUser }) => {
                                     <li>
                                         <button className={`${styles.navLink}`} onClick={() => nav("/adminSection/smartChat", { state: { from: "menu" } })}>
                                             <i className={`fa-regular fa-comments ${isCollapsed ? styles.iconCentered : ''}`} style={{ marginRight: isCollapsed ? '0' : '8px' }}></i>
-                                            {!isCollapsed && <span className="menu-text"> Chat Inteligente</span>}
+                                            {!isCollapsed && <span className="menu-text"> Asistente Inteligente</span>}
                                         </button>
                                     </li>
                                 </ul>

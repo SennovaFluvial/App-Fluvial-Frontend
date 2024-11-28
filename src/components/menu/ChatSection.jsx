@@ -11,24 +11,27 @@ export const ChatSection = () => {
         <>
             <div className={styles.outerContainer}>
                 <div className={styles.chatContainer}>
-                    <h2 className={styles.chatTitle}>Chat Inteligente</h2>
+                    <h2 className={styles.chatTitle}>Asistente Inteligente</h2>
                     <div className={styles.chatInputContainer}>
                         <input
                             type="text"
                             className={styles.chatInput}
+<<<<<<< HEAD
                             placeholder={(
                                 <>
                                     Envía un mensaje al chat Inteligente <i className="fa-solid fa-comments"></i>
                                 </>
                             )}
+=======
+                            placeholder="Envía un mensaje al Asistente Inteligente"
+>>>>>>> 93d783d198526e1462366d5fb6561e0ab8c7f59d
                         />
                         <button className={styles.chatSendButton}>
                             <i className="fa-solid fa-paper-plane"></i>
                         </button>
                     </div>
                     <div className={styles.chatResponse}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Phasellus maximus lorem in diam elementum, id lacinia nunc scelerisque. Nulla facilisi.
+                       
                     </div>
                     <div className={styles.backButtonContainer}>
                         <CancelButton from={from} />
