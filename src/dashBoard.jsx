@@ -1,12 +1,11 @@
 import { Outlet } from 'react-router-dom' // Importa herramientas para navegación
-import React from 'react' // Importa React y useEffect
 import { Info } from "../src/Info"
 import { useLocation } from 'react-router-dom'
 import './assets/css/DashBoard.css'
 import { useEffect, useState } from 'react'
 import './assets/css/sidebar.css'
 import Logo from './assets/img/LogoSena.png'
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { ApiService } from './class/ApiServices'
 import styles from './assets/css/section.module.css'
 
