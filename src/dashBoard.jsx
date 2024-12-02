@@ -47,7 +47,7 @@ export const DashBoard = ({ user, setUser }) => {
         setUser(null)
         nav('/Login')
     }
-    
+
     useEffect(() => {
         const fetchUsers = async () => {
             try {
@@ -139,21 +139,15 @@ export const DashBoard = ({ user, setUser }) => {
                                 </ul>
 
                                 {/* SUPERADMIN SECCIONES */}
-                                {user?.rol?.includes('SUPERADMIN') && (
+                                {user.rol === "SUPERADMIN" && (
                                     <>
                                         <CompanySection isCollapsed={isCollapsed} />
                                         <EmployeeSection isCollapsed={isCollapsed} />
-                                        {/* <BranchSection isCollapsed={isCollapsed} /> */}
-                                        {/* <SailorSection isCollapsed={isCollapsed} /> */}
-                                        {/* <VehicleSection isCollapsed={isCollapsed} /> */}
-                                        {/* <CustomerSection isCollapsed={isCollapsed} /> */}
-                                        {/* <ShipmentSection isCollapsed={isCollapsed} /> */}
-                                        {/* <Inventories isCollapsed={isCollapsed} /> */}
                                     </>
                                 )}
 
                                 {/* ADMIN SECCIONES */}
-                                {user?.rol?.includes('ADMIN') && (
+                                {user.rol === "ADMIN" && (
                                     <>
                                         <EmployeeSection isCollapsed={isCollapsed} />
                                         <SailorSection isCollapsed={isCollapsed} />
@@ -166,7 +160,7 @@ export const DashBoard = ({ user, setUser }) => {
                                 )}
 
                                 {/* EMPLOYEE SECCIONES */}
-                                {user?.rol?.includes('EMPLOYEE') && (
+                                {user.rol === "EMPLOYEE" && (
                                     <>
                                         <SailorSection isCollapsed={isCollapsed} />
                                         <VehicleSection isCollapsed={isCollapsed} />

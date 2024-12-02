@@ -16,22 +16,14 @@ export const ChatSection = () => {
                         <input
                             type="text"
                             className={styles.chatInput}
-<<<<<<< HEAD
-                            placeholder={(
-                                <>
-                                    Envía un mensaje al chat Inteligente <i className="fa-solid fa-comments"></i>
-                                </>
-                            )}
-=======
                             placeholder="Envía un mensaje al Asistente Inteligente"
->>>>>>> 93d783d198526e1462366d5fb6561e0ab8c7f59d
                         />
                         <button className={styles.chatSendButton}>
                             <i className="fa-solid fa-paper-plane"></i>
                         </button>
                     </div>
                     <div className={styles.chatResponse}>
-                       
+
                     </div>
                     <div className={styles.backButtonContainer}>
                         <CancelButton from={from} />
