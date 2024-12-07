@@ -22,13 +22,13 @@ export const CompanySection = ({ isCollapsed }) => {
                         </button>
                         <ul className={styles.menuAccount} style={{ display: isOpen ? 'block' : 'none' }} >
                             <li className={styles.dropdownItem}>
-                                <Link to={'show-vehicles'} className={styles.link} onClick={closeMenu}>
+                                <Link to={'show-companies'} className={styles.link} onClick={closeMenu}>
                                     <i className="fa-solid fa-building me-2"></i>Listado de Empresas
                                 </Link>
                             </li>
 
                             <li className={styles.dropdownItem}>
-                                <Link to={'add-vehicle'} state={{ from: 'menu' }} className={styles.link} onClick={closeMenu}>
+                                <Link to={'add-company'} state={{ from: 'menu' }} className={styles.link} onClick={closeMenu}>
                                     <i className="fa-solid fa-circle-plus me-2"></i>Creación de Empresas
                                 </Link>
                             </li>

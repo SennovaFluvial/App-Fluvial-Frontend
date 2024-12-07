@@ -1,12 +1,11 @@
 import { Outlet } from 'react-router-dom' // Importa herramientas para navegación
-import React from 'react' // Importa React y useEffect
 import { Info } from "../src/Info"
 import { useLocation } from 'react-router-dom'
 import './assets/css/DashBoard.css'
 import { useEffect, useState } from 'react'
 import './assets/css/sidebar.css'
 import Logo from './assets/img/LogoSena.png'
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { ApiService } from './class/ApiServices'
 import styles from './assets/css/section.module.css'
 
@@ -47,7 +46,7 @@ export const DashBoard = ({ user, setUser }) => {
         setUser(null)
         nav('/Login')
     }
-    
+
     useEffect(() => {
         const fetchUsers = async () => {
             try {
@@ -139,21 +138,15 @@ export const DashBoard = ({ user, setUser }) => {
                                 </ul>
 
                                 {/* SUPERADMIN SECCIONES */}
-                                {user?.rol?.includes('SUPERADMIN') && (
+                                {user.rol === "SUPERADMIN" && (
                                     <>
                                         <CompanySection isCollapsed={isCollapsed} />
                                         <EmployeeSection isCollapsed={isCollapsed} />
-                                        {/* <BranchSection isCollapsed={isCollapsed} /> */}
-                                        {/* <SailorSection isCollapsed={isCollapsed} /> */}
-                                        {/* <VehicleSection isCollapsed={isCollapsed} /> */}
-                                        {/* <CustomerSection isCollapsed={isCollapsed} /> */}
-                                        {/* <ShipmentSection isCollapsed={isCollapsed} /> */}
-                                        {/* <Inventories isCollapsed={isCollapsed} /> */}
                                     </>
                                 )}
 
                                 {/* ADMIN SECCIONES */}
-                                {user?.rol?.includes('ADMIN') && (
+                                {user.rol === "ADMIN" && (
                                     <>
                                         <EmployeeSection isCollapsed={isCollapsed} />
                                         <SailorSection isCollapsed={isCollapsed} />
@@ -166,7 +159,7 @@ export const DashBoard = ({ user, setUser }) => {
                                 )}
 
                                 {/* EMPLOYEE SECCIONES */}
-                                {user?.rol?.includes('EMPLOYEE') && (
+                                {user.rol === "EMPLOYEE" && (
                                     <>
                                         <SailorSection isCollapsed={isCollapsed} />
                                         <VehicleSection isCollapsed={isCollapsed} />

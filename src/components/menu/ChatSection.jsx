@@ -16,7 +16,6 @@ export const ChatSection = () => {
                         <input
                             type="text"
                             className={styles.chatInput}
-
                             placeholder={(
                                 <>
                                     Envía un mensaje al chat Inteligente <i className="fa-solid fa-comments"></i>
@@ -28,7 +27,7 @@ export const ChatSection = () => {
                         </button>
                     </div>
                     <div className={styles.chatResponse}>
-                       
+
                     </div>
                     <div className={styles.backButtonContainer}>
                         <CancelButton from={from} />
