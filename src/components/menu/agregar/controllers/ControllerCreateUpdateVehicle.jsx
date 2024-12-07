@@ -6,22 +6,22 @@ import { Alert } from '../../../../class/alerts';
 import { clearError, completeFields, getElementByEndpoint, handleStatusError, sanitizedValue, validationFieldSubmit } from '../../../../functions/functions';
 
 /**
- * Controlador para la creación y actualización de vehículos.
+ * Controlador para la creación y actualización de embarcaciones.
  *
  * Este hook gestiona el estado del formulario, la validación de los campos y
- * la interacción con la API para obtener y enviar datos de vehículos. Permite
- * reiniciar los valores del formulario, cargar datos de un vehículo existente 
+ * la interacción con la API para obtener y enviar datos de embarcaciones. Permite
+ * reiniciar los valores del formulario, cargar datos de un embarcación existente 
  * para edición, y manejar el envío del formulario.
  *
- * @param {string} id - El ID del vehículo que se está actualizando. Si es null, se crea un nuevo vehículo.
- * @param {string} action - La acción que indica si se está creando o actualizando un vehículo.
+ * @param {string} id - El ID del embarcación que se está actualizando. Si es null, se crea un nuevo embarcación.
+ * @param {string} action - La acción que indica si se está creando o actualizando un embarcación.
  * 
  * @returns {Object} Un objeto que contiene:
  * - errorsForms: Errores de validación del formulario.
  * - formData: Los datos del formulario.
  * - handleChange: Función para manejar los cambios en los campos del formulario.
  * - handleSubmit: Función para manejar el envío del formulario.
- * - userName: Nombre de usuario del creador del vehículo.
+ * - userName: Nombre de usuario del creador del embarcación.
  * - isDisabled: Booleano que indica si el formulario está deshabilitado por errores de validación.
  */
 export const ControllerCreateUpdateVehicle = ({ id, action }) => {
@@ -137,10 +137,10 @@ export const ControllerCreateUpdateVehicle = ({ id, action }) => {
         }
 
         const messegueConfirmation = action && action === "update" ?
-            `¿Estás seguro de actualizar el vehículo ${formData.type} - ${formData.licensePlate}?` :
-            `¿Estás seguro de crear el vehículo ${formData.type} - ${formData.licensePlate}?`;
+            `¿Estás seguro de actualizar la embarcación ${formData.type} - ${formData.licensePlate}?` :
+            `¿Estás seguro de crear el la embarcación ${formData.type} - ${formData.licensePlate}?`;
 
-        const textResponse = action && action === "update" ? "Vehículo actualizado exitosamente." : "Vehículo creado exitosamente.";
+        const textResponse = action && action === "update" ? "Embarcación actualizado exitosamente." : "Embarcación creado exitosamente.";
         try {
 
             const result = await Alert.alertConfirm(

@@ -344,21 +344,21 @@ export const optionsWarehouse = () => {
 }
 
 /**
- * Hook para obtener la lista de vehículos desde la API.
+ * Hook para obtener la lista de embarcación desde la API.
  *
- * Este hook realiza una solicitud a la API para obtener todos los vehículos
+ * Este hook realiza una solicitud a la API para obtener todos las embarcaciones
  * disponibles y los formatea en un arreglo de objetos que contienen las propiedades
  * `label` y `value`.
  *
  * @returns {Array<{ label: string, value: string }>} - Devuelve un arreglo de objetos
- * que representan los vehículos disponibles, cada uno con las propiedades
+ * que representan las embarcaciones disponibles, cada uno con las propiedades
  * `label` y `value`.
  *
  * @example
  * const vehicles = optionsVehicles() 
  * // vehicles = [
- * //   { label: 'Vehículo A', value: 'Vehículo A' },
- * //   { label: 'Vehículo B', value: 'Vehículo B' }
+ * //   { label: 'Embarcación A', value: 'Embarcación A' },
+ * //   { label: 'Embarcación B', value: 'Embarcación B' }
  * // ]
  */
 export const optionsVehicles = () => {

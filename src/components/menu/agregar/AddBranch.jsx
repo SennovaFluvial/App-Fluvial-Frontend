@@ -21,7 +21,7 @@ export const AddBranch = () => {
         <>
             <div className={styles.card}>
                 <div className={styles.container}>
-                    <h2 className={styles.title}>CREAR SUCURSAL</h2>
+                    <h2 className={styles.title}>{action === "update" ? 'ACTUALIZAR' : 'CREAR'}SUCURSAL</h2>
                     <form onSubmit={handleSubmit}>
                         <div className={styles.h3}>
                             <h3><b>INFORMACIÓN DE LA SUCURSAL</b></h3>

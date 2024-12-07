@@ -39,7 +39,7 @@ export const AddProduct = ({ funcChangeState = null, dataOfUser = null }) => {
         <>
             <div className={styles.card}>
                 <div className={styles.container}>
-                    <h2 className={styles.title}>{action === "update" ? 'ACTUALIZAR' : 'CREAR'} PRODUCTO</h2>
+                    <h2 className={styles.title}>    PRODUCTO</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="row">
                             <div className={styles.h3}>
@@ -279,7 +279,7 @@ export const AddProduct = ({ funcChangeState = null, dataOfUser = null }) => {
                             {formData.productLocation === "vehicle" && (
                                 <div className="col-md-3 ">
                                     <Select
-                                        text="¿En qué vehículo se encuentra?"
+                                        text="¿En qué embarcación se encuentra?"
                                         name="vehicleName"
                                         options={useOptionsVehicles}
                                         value={formData.vehicleName}
