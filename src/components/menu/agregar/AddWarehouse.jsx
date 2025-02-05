@@ -18,7 +18,7 @@ export const AddWarehouse = () => {
         <>
             <div className={styles.card}>
                 <div className={styles.container}>
-                    <h2 className={styles.title}>CREAR BODEGA</h2>
+                    <h2 className={styles.title}>{action === "update" ? 'ACTUALIZAR' : 'CREAR'} BODEGA</h2>
                     <form onSubmit={handleSubmit}>
                         <div className={styles.h3}>
                             <h3><b>INFORMACIÓN DE LA BODEGA</b></h3>

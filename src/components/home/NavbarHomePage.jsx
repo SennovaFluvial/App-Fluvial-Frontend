@@ -20,7 +20,7 @@ export const NavbarHomePage = () => {
                     <div className="container-fluid barraNavegacion">
                         <a className="navbar-brand" href="#">
                             <img src={logoSena} alt="Logo App" width="60" className="d-inline-block align-text-top" />
-                            <label className='nombreApp'>APP FLUVIAL</label>
+                            <label className='nombreApp'>TransFluvial De Carga del Guaviare</label>
                         </a>
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse"
                             data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"

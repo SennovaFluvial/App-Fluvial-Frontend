@@ -18,7 +18,7 @@ export const AddVehicle = () => {
         <>
             <div className={styles.card}>
                 <div className={styles.container}>
-                    <h2 className={styles.title}>{action === "update" ? "ACTUALIZAR" : "CREAR"} VEHÍCULO</h2>
+                    <h2 className={styles.title}>{action === "update" ? "ACTUALIZAR" : "CREAR"} EMBARCACIÓN</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="row">
                             <div className="col-md-6">
@@ -163,7 +163,7 @@ export const AddVehicle = () => {
                                 from={from}
                                 urlPageList={"../show-vehicles"}
                             />
-                            <button type="submit" className={`${styles.guardar + " ms-2"} ${isDisabled ? "is-disabled-button" : ""}`}>{action === "update" ? "Actualizar" : "Crear"} Vehículo <i className="fa-solid fa-floppy-disk"></i></button>
+                            <button type="submit" className={`${styles.guardar + " ms-2"} ${isDisabled ? "is-disabled-button" : ""}`}>{action === "update" ? "Actualizar" : "Crear"} Embarcación <i className="fa-solid fa-floppy-disk"></i></button>
                         </div>
                     </form>
                 </div>

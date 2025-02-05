@@ -40,13 +40,13 @@ export const ModuleShipment = () => {
                     <h2 className={styles.tittle}>DATOS DE ENVÍO</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="row">
-                            {/* Vehículo y Sucursal */}
+                            {/* Embarcación y Sucursal */}
                             <div className="col-md-12">
-                                <h1>Vehículo y Sucursal</h1>
+                                <h1>Embarcación y Sucursal</h1>
                             </div>
                             <div className="col-md-4">
                                 <Select
-                                    text="Vehículo de envio"
+                                    text="Embarcación de envio"
                                     name="vehiculoNombre"
                                     options={useOptionsVehicles}
                                     value={formData.vehiculoNombre}

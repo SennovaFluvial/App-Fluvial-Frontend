@@ -10,7 +10,7 @@ export const Configuraciones = () => {
                         Configuraciones
                     </a>
                     <ul className="dropdown-menu menu-account">
-                        <li className='dropdown-item text-black' ><Link to={'add-vehicle'}>Agregar Vehículo</Link></li>
+                        <li className='dropdown-item text-black' ><Link to={'add-vehicle'}>Agregar Embarcación</Link></li>
                         <li className='dropdown-item text-black' ><Link to={'add-salior'}>Agregar Marinero</Link></li>
                     </ul>
                 </li>

@@ -75,8 +75,8 @@ export const ControllerCreateUpdateWarehouse = ({ id, action }) => {
         }
 
         const confirmationMessage = action === 'update' ?
-            `¿Está seguro que quiere actualizar el producto? \nNombre: ${formData.name}` :
-            `¿Está seguro que quiere registrar el producto? \nNombre: ${formData.name}`;
+            `¿Está seguro que quiere actualizar la bodega? \nNombre: ${formData.name}` :
+            `¿Está seguro que quiere registrar la bodega? \nNombre: ${formData.name}`;
 
 
         try {

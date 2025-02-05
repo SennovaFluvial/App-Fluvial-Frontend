@@ -180,7 +180,7 @@ export const ShowCrew = () => {
                                             </Link>
                                         </td>
                                         <td>
-                                            <button className='btn' onClick={() => onStatusChange(item.id)}>
+                                            <button className='btn btn-toggle' onClick={() => onStatusChange(item.id)}>
                                                 {item.status === "activo"
                                                     ? <i className="fa-solid fa-toggle-on text-success"></i>
                                                     : <i className="fa-solid fa-toggle-off text-danger"></i>}

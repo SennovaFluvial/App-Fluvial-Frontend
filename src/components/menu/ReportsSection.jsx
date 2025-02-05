@@ -5,6 +5,7 @@ import Motorista from "../../assets/img/canoa.jpg"
 import Empleado from "../../assets/img/empleados.jpg"
 import Tripulante from "../../assets/img/tripulantes.jpg"
 import Vehiculo from "../../assets/img/vehiculos.jpg"
+import Cliente from "../../assets/img/clientes.jpg"
 
 const reportsType = [
     {
@@ -16,12 +17,12 @@ const reportsType = [
         image: Tripulante,
     },
     {
-        title: 'Imprimir Vehículos',
+        title: 'Imprimir Embarcaciones',
         image: Vehiculo,
     },
     {
         title: 'Imprimir Clientes',
-        image: Motorista,
+        image: Cliente,
     }
 
 

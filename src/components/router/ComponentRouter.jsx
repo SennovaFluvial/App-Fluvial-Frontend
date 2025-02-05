@@ -56,7 +56,7 @@ import { ChatSection } from '../menu/ChatSection.jsx';
  *
  * - Rutas protegidas:
  *   - `/adminSection`: Panel de administración, requiere validación.
- *     - Sub-rutas para agregar y mostrar datos (empresas, empleados, vehículos, etc.)
+ *     - Sub-rutas para agregar y mostrar datos (empresas, empleados, Embarcaciones, etc.)
  *     - Módulos para gestionar envíos e inventarios.
  *
  * - Ruta para manejar errores 404: `*`
@@ -94,7 +94,7 @@ export const ComponentRouter = () => {
 
                     <Route path="add-company/:id?/:action?" element={< AddCompany />} />{/* Ruta para agregar empresas */}
                     <Route path="add-employed/:id?" element={< AddEmployed />} />{/* Ruta para agregar empleados */}
-                    <Route path="add-vehicle/:id?/:action?" element={< AddVehicle />} /> {/* Ruta para agregar vehículos */}
+                    <Route path="add-vehicle/:id?/:action?" element={< AddVehicle />} /> {/* Ruta para agregar Embarcaciones */}
                     <Route path="add-customer/:id?/:action?" element={< AddCustomer />} />{/* Ruta para agregar clientes */}
                     <Route path="add-product/:id?/:action?" element={< AddProduct />} />{/* Ruta para agregar productos */}
                     <Route path="add-warehouse/:id?/:action?" element={< AddWarehouse />} />{/* Ruta para agregar bodegas */}
@@ -118,9 +118,9 @@ export const ComponentRouter = () => {
                     <Route path="show-crew" element={< ShowCrew />} /> {/* Ruta para ver tripualntes */}
                     <Route path='show-crew/more-details/:id?/:category?' element={< MoreDetails />} />
 
-                    <Route path="show-vehicles" element={< ShowVehicles />} /> {/* Ruta para ver vehículos */}
+                    <Route path="show-vehicles" element={< ShowVehicles />} /> {/* Ruta para ver Embarcaciones */}
                     <Route path='show-vehicles/more-details/:id?/:category?' element={< MoreDetails />} />
-                    <Route path="show-shipment" element={< ShowShipment />} /> {/* Ruta para ver vehículos */}
+                    <Route path="show-shipment" element={< ShowShipment />} /> {/* Ruta para ver Embarcaciones */}
                     <Route path='show-shipment/more-details/:id?/:category?' element={< MoreDetails />} />
 
                     <Route path="show-products" element={< ShowProducts />} /> {/* Ruta para ver productos */}

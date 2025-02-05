@@ -668,7 +668,7 @@ export const MoreDetails = ({ data = null }) => {
                                         <div className="section">
                                             <div className="row">
                                                 <div className="col-md-4">
-                                                    <strong>Nombre del vehículo:</strong> {item.vehicleName || 'N/A'}
+                                                    <strong>Nombre de la embarcación:</strong> {item.vehicleName || 'N/A'}
                                                 </div>
                                                 <div className="col-md-4">
                                                     <strong>Nombre de la compañía:</strong> {item.companyName}
@@ -766,7 +766,7 @@ export const MoreDetails = ({ data = null }) => {
                                                     <strong>Nombre de la compañia:</strong> {item.companiaNombre}
                                                 </div>
                                                 <div className="col-md-3">
-                                                    <strong>Nombre del vehículo:</strong> {item.vehiculoNombre}
+                                                    <strong>Nombre de la embarcación:</strong> {item.vehiculoNombre}
                                                 </div>
                                                 <div className="col-md-3">
                                                     <strong>Nombre de la sucursal:</strong> {item.sucursalNombre}
