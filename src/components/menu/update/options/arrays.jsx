@@ -245,7 +245,8 @@ export const crewType = [
     { label: "Capitan", value: "Capitan" },
     { label: "Marinero", value: "Marinero" },
     { label: "Motorista", value: "Motorista" },
-    { label: "Auxiliar de cocina", value: "Auxiliar de cocina" }
+    { label: "Piloto", value: "Piloto" },
+    { label: "Maquinista", value: "Maquinista" }
 ]
 
 /**
