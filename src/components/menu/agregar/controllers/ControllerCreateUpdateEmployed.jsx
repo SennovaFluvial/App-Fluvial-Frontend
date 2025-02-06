@@ -226,7 +226,7 @@ export const ControllerCreateUpdateEmployed = ({ updatePassword }) => {
         else if (name === "password" && (!expresionPassword.test(value) || value.length < 5)) {
             handleStatusError(setErrorsForms, name, "Contraseña insegura: usa al menos 5 caracteres, con una mayúscula, un número y un símbolo especial (@, #, $, %, &, *)")
         }
-        else if (name === "birthDate" && (birthYear < 1700 || birthYear > 2000 || birthYear >= currentYear)) {
+        else if (name === "birthDate" && (birthYear < 1700 || birthYear > currentYear)) {
             handleStatusError(setErrorsForms, "birthDate", "Fecha no válida. Debe estar entre 1700 y 2000.")
         } else {
             // Elimina el error si todas las validaciones son correctas

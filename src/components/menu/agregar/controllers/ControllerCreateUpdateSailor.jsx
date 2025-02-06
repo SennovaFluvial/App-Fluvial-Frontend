@@ -82,7 +82,7 @@ export const ControllerCreateUpdateSailor = ({ id, action }) => {
             handleStatusError(setErrorsForms, name, "Debe tener entre 5 y 11 dígitos");
         } else if (name === "email" && !expresionEmail.test(value)) {
             handleStatusError(setErrorsForms, name, "No es un correo válido, recuerda usar el formato: ejemplo@gmail.com");
-        } else if (name === "dateOfBirth" && (birthYear < 1700 || birthYear > 2000 || birthYear >= currentYear)) {
+        } else if (name === "dateOfBirth" && (birthYear < 1700 || birthYear > currentYear)) {
             handleStatusError(setErrorsForms, "dateOfBirth", "Fecha no válida. Debe estar entre 1700 y 2000.");
         } else {
             // Elimina el error si todas las validaciones son correctas
